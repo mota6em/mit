@@ -16,8 +16,8 @@ const NavBar = () => {
   ];
 
   return (
-    <header className="bg-white">
-      <div className="container mx-auto flex justify-between items-center p-4 py-1">
+    <header className="bg-white sticky top-0 z-50 px-2 md:px-0">
+      <div className="container flex justify-between items-center px-0 py-2">
         <div className="flex items-center">
           <div className="flex items-center space-x-4">
             <div className="relative w-14 h-14">
@@ -41,14 +41,8 @@ const NavBar = () => {
                 </span>
               </div>
               <div className="flex space-x-0.5">
-                <span className="text-xs font-medium text-[#4d93fb]">
-                  Muszlim
-                </span>
-                <span className="text-xs font-medium text-[#11b505]">
-                  Ifjúsági
-                </span>
-                <span className="text-xs font-medium text-[#f1c34c]">
-                  Társaság
+                <span className="text-xs font-medium text-yellow-600">
+                  Muszlim Ifjúsági Társaság
                 </span>
               </div>
             </div>
