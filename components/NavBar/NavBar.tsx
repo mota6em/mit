@@ -3,17 +3,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { CgMenuRight } from "react-icons/cg";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { X } from "lucide-react";
 import LanguageSwitch from "./LanguageSwitch";
+import { CgMenuRight } from "react-icons/cg";
 
-const NavBar = () => {
+const navLinks = [
+  { href: "/", label: "HOME" },
+  { href: "/pages", label: "PAGES" },
+  { href: "/events", label: "EVENTS" },
+  { href: "/give", label: "GIVE" },
+];
+
+export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navLinks = [
-    { href: "/", label: "HOME" },
-    { href: "/pages", label: "PAGES" },
-    { href: "/events", label: "EVENTS" },
-    { href: "/give", label: "GIVE" },
-  ];
 
   return (
     <header className="bg-white sticky top-0 z-50 px-2 md:px-0">
@@ -29,7 +38,7 @@ const NavBar = () => {
               />
             </div>
             <div className="flex flex-col">
-              <div>
+              <div className="flex space-x-0.5">
                 <span className="text-2xl font-bold text-[#4d93fb] monstera-font tracking-widest">
                   M
                 </span>
@@ -40,54 +49,64 @@ const NavBar = () => {
                   T
                 </span>
               </div>
-              <div className="flex space-x-0.5">
-                <span className="text-xs font-medium text-yellow-600">
-                  Muszlim Ifjúsági Társaság
-                </span>
-              </div>
+              <span className="text-xs font-medium text-yellow-600">
+                Muszlim Ifjúsági Társaság
+              </span>
             </div>
           </div>
         </Link>
+
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center space-x-6 md:me-3">
           <LanguageSwitch />
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-black text-sm font-serif hover:text-yellow-700 hover:outline rounded-lg px-2 outline-yellow-700"
+              className="text-black text-sm font-serif hover:text-yellow-700 px-2"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="md:hidden flex items-center gap-x-1">
+
+        {/* Mobile nav trigger */}
+        <div className="md:hidden flex items-center gap-x-2">
           <LanguageSwitch />
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-gray-600 hover:text-black"
-          >
-            <CgMenuRight size={24} />
-          </button>
+          <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant={null}
+                className="p-2 text-black rounded-md hover:bg-white/30 focus:outline-none focus:ring-0"
+              >
+                {isMenuOpen ? (
+                  <X className="!w-6 !h-6" />
+                ) : (
+                  <CgMenuRight className="!w-6 !h-6" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              sideOffset={5}
+              className="bg-white/90 backdrop-blur-md p-4 me-2 min-w-[150px] flex flex-col gap-3"
+            >
+              {navLinks.map((link) => (
+                <DropdownMenuItem
+                  key={link.label}
+                  asChild
+                  className="text-gray-800 font-medium hover:bg-yellow-100 rounded-md"
+                >
+                  <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
+                    {link.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
-      {isMenuOpen && (
-        <div className="md:hidden bg-white">
-          <nav className="flex flex-col items-center space-y-4 p-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-gray-600 hover:text-black"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
     </header>
   );
-};
-
-export default NavBar;
+}
