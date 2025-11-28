@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -71,26 +70,21 @@ export default function NavBar() {
         </nav>
 
         {/* Mobile nav trigger */}
-        <div className="md:hidden flex items-center gap-x-2">
+        <div className="md:hidden flex items-center">
           <LanguageSwitch />
           <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant={null}
-                className="p-2 text-black rounded-md hover:bg-white/30 focus:outline-none focus:ring-0"
-              >
-                {isMenuOpen ? (
-                  <X className="!w-6 !h-6" />
-                ) : (
-                  <CgMenuRight className="!w-6 !h-6" />
-                )}
-              </Button>
+              {isMenuOpen ? (
+                <X className="!w-6 !h-6" />
+              ) : (
+                <CgMenuRight className="!w-6 !h-6" />
+              )}
             </DropdownMenuTrigger>
 
             <DropdownMenuContent
               align="end"
               sideOffset={5}
-              className="bg-white/90 backdrop-blur-md p-4 me-2 min-w-[150px] flex flex-col gap-3"
+              className="bg-white/90 backdrop-blur-md p-4 min-w-[150px] flex flex-col gap-3"
             >
               {navLinks.map((link) => (
                 <DropdownMenuItem

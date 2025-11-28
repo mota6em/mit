@@ -29,17 +29,14 @@ export default function LanguageSwitch() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant={null}
-          className="cursor-pointer font-serif hover:text-yellow-900 text-black px-2 flex items-center gap-1 focus:outline-none focus:ring-0 active:outline-none active:ring-0"
-        >
+        <div className="cursor-pointer font-serif hover:text-yellow-900 text-black px-2 flex items-center gap-1 focus:outline-none focus:ring-0 active:outline-none active:ring-0">
           <img
             src={current.flag}
             alt={current.code}
             className="w-5 h-5 rounded-sm"
           />
           {open ? <X size={14} /> : <ChevronDown size={14} />}
-        </Button>
+        </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
