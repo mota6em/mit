@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { CgMenuRight } from "react-icons/cg";
+import LanguageSwitch from "./LanguageSwitch";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,6 +49,7 @@ const NavBar = () => {
           </div>
         </Link>
         <nav className="hidden md:flex items-center space-x-6 md:me-3">
+          <LanguageSwitch />
           {navLinks.map((link) => (
             <Link
               key={link.label}
@@ -58,7 +60,8 @@ const NavBar = () => {
             </Link>
           ))}
         </nav>
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center gap-x-1">
+          <LanguageSwitch />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-gray-600 hover:text-black"
