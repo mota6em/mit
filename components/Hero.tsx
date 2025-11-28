@@ -68,10 +68,10 @@ export default function Hero() {
           Muszlim Ifjúsági Társaság
         </h1>
         <div className="flex flex-col font-serif items-center justify-center">
-          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 backdrop-blur-xs font-semibold drop-shadow-[black_0_0_2px] p-0 rounded-lg">
+          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 font-semibold drop-shadow-[black_0_0_2px] p-0 shadow-none">
             Welcome to the official page!
           </p>
-          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 backdrop-blur-xs font-semibold drop-shadow-[black_0_0_2px] p-0 rounded-lg">
+          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 font-semibold drop-shadow-[black_0_0_2px] p-0 shadow-none">
             Events for Muslim Students & Community.
           </p>
         </div>
