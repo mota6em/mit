@@ -66,11 +66,14 @@ export default function Hero() {
         <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
           Muszlim Ifjúsági Társaság
         </h1>
-        <p className="text-md md:text-xl max-w-2xl bg-yellow-600/50 backdrop-blur-sm shadow-lg text-white font-semibold px-4 py-2 rounded-lg">
-          Welcome to the official page! <br /> Events for Muslim Students &
-          Community.
-        </p>
-
+        <div className="flex flex-col font-serif items-center justify-center">
+          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 backdrop-blur-xs font-semibold drop-shadow-[black_0_0_2px] p-0 rounded-lg">
+            Welcome to the official page!
+          </p>
+          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 backdrop-blur-xs font-semibold drop-shadow-[black_0_0_2px] p-0 rounded-lg">
+            Events for Muslim Students & Community.
+          </p>
+        </div>
         {/* social icons */}
         <div className="flex gap-5 mt-4">
           <a
