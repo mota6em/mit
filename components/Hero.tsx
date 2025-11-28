@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
 
 const images = [
   "/imgs/hero/hero-bg-1.jpg",
@@ -85,7 +86,6 @@ export default function Hero() {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 animate-gradient-x backdrop-blur-md"></div>
             <FaFacebookF size={20} className="relative z-10" />
           </a>
-
           <a
             href="https://www.instagram.com/muszlimifjusag/"
             target="_blank"
@@ -95,7 +95,6 @@ export default function Hero() {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 animate-gradient-x backdrop-blur-md"></div>
             <FaInstagram size={20} className="relative z-10" />
           </a>
-
           <a
             href="https://wa.me/123456789"
             target="_blank"
@@ -104,6 +103,13 @@ export default function Hero() {
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 via-lime-500 to-teal-500 animate-gradient-x backdrop-blur-md"></div>
             <FaWhatsapp size={20} className="relative z-10" />
+          </a>
+          <a
+            href="mailto:muszlimifjusag@gmail.com"
+            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
+          >
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 animate-gradient-x backdrop-blur-md"></div>
+            <HiOutlineMail size={20} className="relative z-10" />
           </a>
         </div>
       </div>
