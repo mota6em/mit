@@ -119,3 +119,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+.danger-zone-font {
+  font-family: "Danger Zone", sans-serif;
+}
+
+@font-face {
+  font-family: "Danger Zone";
+  src: url("/fonts/DangerZone.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.monstera-font {
+  font-family: "Monstera", sans-serif;
+}
+
+@font-face {
+  font-family: "Monstera";
+  src: url("/fonts/Monstera.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
