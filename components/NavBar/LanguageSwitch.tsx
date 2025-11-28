@@ -26,7 +26,7 @@ export default function LanguageSwitch() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="none"
+          variant={null}
           className="cursor-pointer font-serif hover:text-yellow-900  text-black px-2 focus:outline-none focus:ring-0 active:outline-none active:ring-0"
         >
           {currentLocale.toUpperCase()}
