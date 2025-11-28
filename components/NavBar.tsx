@@ -16,7 +16,7 @@ const NavBar = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white">
       <div className="container mx-auto flex justify-between items-center p-4 py-1">
         <div className="flex items-center">
           <div className="flex items-center space-x-4">
@@ -54,12 +54,12 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6 md:me-3">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-gray-600 hover:text-black"
+              className="text-black text-sm font-serif hover:text-yellow-500"
             >
               {link.label}
             </Link>
