@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import { motion } from "framer-motion";
-import { Variants, Easing } from "framer-motion";
 
 const images = [
   "/imgs/hero/hero-bg-1.jpg",
@@ -16,18 +14,6 @@ const images = [
   "/imgs/hero/hero-bg-6.jpg",
 ];
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: [0.42, 0, 0.58, 1] as Easing,  
-      delay: i * 0.25,
-    },
-  }),
-};
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -93,31 +79,21 @@ export default function Hero() {
 
       {/* CONTENT */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-4">
-        <motion.h1
-          className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-        >
+        <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
           Muszlim Ifjúsági Társaság
-        </motion.h1>
+        </h1>
 
-        <div className="flex flex-col font-serif items-center">
+        <div className="flex flex-col font-serif items-center space-y-1">
           {[
             "Welcome to the official page!",
             "Events for Muslim Students & Community.",
           ].map((line, i) => (
-            <motion.p
+            <p
               key={i}
-              className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px]"
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={i + 1}
+              className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500"
             >
               {line}
-            </motion.p>
+            </p>
           ))}
         </div>
 
@@ -147,22 +123,18 @@ export default function Hero() {
           ].map((s, i) => {
             const Icon = s.icon;
             return (
-              <motion.a
+              <a
                 key={i}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                custom={i + 2}
+                className={`relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden`}
               >
                 <div
                   className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x`}
                 ></div>
                 <Icon size={20} className="relative z-10" />
-              </motion.a>
+              </a>
             );
           })}
         </div>
