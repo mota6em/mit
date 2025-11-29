@@ -80,16 +80,16 @@ export default function Hero() {
       </div>
 
       {/* CONTENT */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-4">
-        <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-3">
+        <h1 className="text-4xl font-serif md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
           {t("title")}
         </h1>
 
-        <div className="flex flex-col font-serif items-center space-y-1">
-          <p className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500">
+        <div className="flex flex-col w-fit p-2 font-serif backdrop-blur-md rounded-md items-center space-y-1">
+          <p className="text-sm md:text-xl w-fit max-w-2xl  md:backdrop-blur-none text-yellow-300 font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle1")}
           </p>
-          <p className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500">
+          <p className="text-sm  md:text-xl w-fit max-w-2xl-0 p-0 text-yellow-300  md:backdrop-blur-none font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle2")}
           </p>
         </div>
