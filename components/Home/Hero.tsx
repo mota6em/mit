@@ -79,8 +79,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           custom={0}
-          variants={textVariants}
-        >
+         >
           Muszlim Ifjúsági Társaság
         </motion.h1>
 
@@ -95,8 +94,7 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               custom={i + 1}
-              variants={textVariants}
-            >
+             >
               {line}
             </motion.p>
           ))}
