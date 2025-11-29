@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -9,16 +9,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import { ChevronDown, X } from "lucide-react";
 
 export default function LanguageSwitch() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const segments = pathname.split("/");
-  const currentLocale = segments[1] || "en";
-  const rest = segments.slice(2).join("/");
+  // split the path
+  const segments = pathname.split("/").filter(Boolean);
+  const currentLocale = segments[0] || "en";
+  const restOfPath = segments.slice(1).join("/");
 
   const locales = [
     { code: "en", label: "English", flag: "/imgs/uk.png" },
@@ -26,10 +26,11 @@ export default function LanguageSwitch() {
   ];
 
   const current = locales.find((l) => l.code === currentLocale) || locales[0];
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="cursor-pointer font-serif hover:text-yellow-900 text-black px-2 flex items-center gap-1 focus:outline-none focus:ring-0 active:outline-none active:ring-0">
+        <div className="cursor-pointer flex items-center gap-1 px-2 font-serif hover:text-yellow-900">
           <img
             src={current.flag}
             alt={current.code}
@@ -46,10 +47,10 @@ export default function LanguageSwitch() {
         {locales.map((locale) => (
           <DropdownMenuItem
             key={locale.code}
-            className="cursor-pointer drop-shadow-[0_0_2px_black] hover:bg-white/20 transition font-medium flex items-center gap-2"
+            className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/20 transition"
             asChild
           >
-            <Link href={`/${locale.code}/${rest}`}>
+            <Link href={`/${locale.code}/${restOfPath}`}>
               <img
                 src={locale.flag}
                 alt={locale.code}
