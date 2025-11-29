@@ -19,7 +19,9 @@ export default async function LocaleLayout({ children, params }: any) {
   return (
     <html lang={locale}>
       <body>
-        <I18nProvider messages={messages}>{children}</I18nProvider>
+        <I18nProvider messages={messages} locale={locale}>
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );
