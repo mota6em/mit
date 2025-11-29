@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 const images = [
   "/imgs/hero/hero-bg-1.jpg",
@@ -25,6 +26,15 @@ export default function Hero() {
   }, []);
 
   const currentStack = images.slice(currentIndex, currentIndex + 3);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.3, duration: 0.8, ease: "easeOut" },
+    }),
+  };
 
   return (
     <div className="relative w-full min-h-[90vh] max-h-[90vh] overflow-hidden">
@@ -64,53 +74,79 @@ export default function Hero() {
 
       {/* overlay content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-2 md:px-6 space-y-4 md:space-y-6">
-        <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]"
+          initial="hidden"
+          animate="visible"
+          custom={0}
+          variants={textVariants}
+        >
           Muszlim Ifjúsági Társaság
-        </h1>
+        </motion.h1>
+
         <div className="flex flex-col font-serif items-center justify-center">
-          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 font-semibold drop-shadow-[black_0_0_2px] p-0 shadow-none">
-            Welcome to the official page!
-          </p>
-          <p className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 font-semibold drop-shadow-[black_0_0_2px] p-0 shadow-none">
-            Events for Muslim Students & Community.
-          </p>
+          {[
+            "Welcome to the official page!",
+            "Events for Muslim Students & Community.",
+          ].map((line, i) => (
+            <motion.p
+              key={i}
+              className="text-xs md:text-xl w-fit max-w-2xl text-yellow-400 font-semibold drop-shadow-[black_0_0_2px] p-0 shadow-none"
+              initial="hidden"
+              animate="visible"
+              custom={i + 1}
+              variants={textVariants}
+            >
+              {line}
+            </motion.p>
+          ))}
         </div>
+
         {/* social icons */}
         <div className="flex gap-5 mt-4">
-          <a
-            href="https://www.facebook.com/muszlimifjusag/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 animate-gradient-x backdrop-blur-md"></div>
-            <FaFacebookF size={20} className="relative z-10" />
-          </a>
-          <a
-            href="https://www.instagram.com/muszlimifjusag/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 animate-gradient-x backdrop-blur-md"></div>
-            <FaInstagram size={20} className="relative z-10" />
-          </a>
-          <a
-            href="https://wa.me/123456789"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 via-lime-500 to-teal-500 animate-gradient-x backdrop-blur-md"></div>
-            <FaWhatsapp size={20} className="relative z-10" />
-          </a>
-          <a
-            href="mailto:muszlimifjusag@gmail.com"
-            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 animate-gradient-x backdrop-blur-md"></div>
-            <HiOutlineMail size={20} className="relative z-10" />
-          </a>
+          {[
+            {
+              icon: FaFacebookF,
+              href: "https://www.facebook.com/muszlimifjusag/",
+              gradient: "from-blue-500 via-indigo-500 to-purple-500",
+            },
+            {
+              icon: FaInstagram,
+              href: "https://www.instagram.com/muszlimifjusag/",
+              gradient: "from-pink-500 via-red-500 to-yellow-500",
+            },
+            {
+              icon: FaWhatsapp,
+              href: "https://wa.me/123456789",
+              gradient: "from-green-400 via-lime-500 to-teal-500",
+            },
+            {
+              icon: HiOutlineMail,
+              href: "mailto:muszlimifjusag@gmail.com",
+              gradient: "from-purple-400 via-pink-500 to-yellow-400",
+            },
+          ].map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <motion.a
+                key={i}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  s.href.startsWith("http") ? "noopener noreferrer" : undefined
+                }
+                className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition overflow-hidden"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 + i * 0.2, duration: 0.5 }}
+              >
+                <div
+                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x backdrop-blur-md`}
+                ></div>
+                <Icon size={20} className="relative z-10" />
+              </motion.a>
+            );
+          })}
         </div>
       </div>
     </div>
