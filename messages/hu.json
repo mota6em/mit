@@ -13,5 +13,25 @@
     "title": "Muszlim Ifjúsági Társaság",
     "subtitle1": "Üdvözöljük a hivatalos oldalon!",
     "subtitle2": "Események muszlim diákoknak és a közösségnek."
+  },
+  "impact": {
+    "heading": "Muszlim Fiatalok Támogatása Magyarországon",
+    "description": "Közösség építése, lehetőségek teremtése és jelentős hatás elérése elkötelezettség és támogatás révén.",
+    "community": {
+      "title": "Közösség",
+      "desc": "Egység, barátságok és életre szóló kapcsolatok létrehozása."
+    },
+    "education": {
+      "title": "Oktatás",
+      "desc": "Workshopok, tanulócsoportok és készségfejlesztő foglalkozások."
+    },
+    "support": {
+      "title": "Támogatás",
+      "desc": "Barátságos környezet diákok és újonnan érkezők számára."
+    },
+    "events": {
+      "title": "Események",
+      "desc": "Kis és nagy rendezvények muszlim fiatalok összekapcsolására."
+    }
   }
 }

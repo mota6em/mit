@@ -6,41 +6,43 @@ import {
   FaHandsHelping,
   FaRegSmile,
 } from "react-icons/fa";
-
-const features = [
-  {
-    icon: FaUsers,
-    title: "Community",
-    desc: "Creating unity, friendships, and lifelong bonds.",
-  },
-  {
-    icon: FaBookOpen,
-    title: "Education",
-    desc: "Workshops, study groups, and skill-building sessions.",
-  },
-  {
-    icon: FaHandsHelping,
-    title: "Support",
-    desc: "A welcoming environment for students & newcomers.",
-  },
-  {
-    icon: FaRegSmile,
-    title: "Events",
-    desc: "Small & large gatherings to connect Muslim youth.",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function MITFeaturesPremium() {
+  const t = useTranslations("impact");
+
+  const features = [
+    {
+      icon: FaUsers,
+      title: t("community.title"),
+      desc: t("community.desc"),
+    },
+    {
+      icon: FaBookOpen,
+      title: t("education.title"),
+      desc: t("education.desc"),
+    },
+    {
+      icon: FaHandsHelping,
+      title: t("support.title"),
+      desc: t("support.desc"),
+    },
+    {
+      icon: FaRegSmile,
+      title: t("events.title"),
+      desc: t("events.desc"),
+    },
+  ];
+
   return (
     <section className="py-10 bg-gray-50">
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-3 text-yellow-600 font-serif">
-          Empowering Muslim Youth in Hungary
+          {t("heading")}
         </h2>
 
         <p className="text-md md:text-lg text-gray-700 mb-12 max-w-2xl mx-auto">
-          Building community, opportunities, and meaningful impact through
-          engagement and support.
+          {t("description")}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
