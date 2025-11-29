@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { useTranslations } from "next-intl";
 
 const images = [
   "/imgs/hero/hero-bg-1.jpg",
@@ -16,6 +17,7 @@ const images = [
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const t = useTranslations("hero");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -80,21 +82,16 @@ export default function Hero() {
       {/* CONTENT */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-4">
         <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
-          Muszlim Ifjúsági Társaság
+          {t("title")}
         </h1>
 
         <div className="flex flex-col font-serif items-center space-y-1">
-          {[
-            "Welcome to the official page!",
-            "Events for Muslim Students & Community.",
-          ].map((line, i) => (
-            <p
-              key={i}
-              className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500"
-            >
-              {line}
-            </p>
-          ))}
+          <p className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500">
+            {t("subtitle1")}
+          </p>
+          <p className="text-sm md:text-xl w-fit max-w-2xl text-yellow-300 font-semibold drop-shadow-[black_0_0_2px] transition-all duration-500">
+            {t("subtitle2")}
+          </p>
         </div>
 
         {/* SOCIAL ICONS */}

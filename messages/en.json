@@ -8,5 +8,10 @@
     "events": "EVENTS",
     "give": "GIVE",
     "subtitle": "Muslim Youth Association"
+  },
+  "hero": {
+    "title": "Muslim Youth Association",
+    "subtitle1": "Welcome to the official page!",
+    "subtitle2": "Events for Muslim Students & Community."
   }
 }
