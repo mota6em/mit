@@ -12,21 +12,28 @@ import {
 import { X } from "lucide-react";
 import LanguageSwitch from "./LanguageSwitch";
 import { CgMenuRight } from "react-icons/cg";
-
-const navLinks = [
-  { href: "/", label: "HOME" },
-  { href: "/pages", label: "PAGES" },
-  { href: "/events", label: "EVENTS" },
-  { href: "/give", label: "GIVE" },
-];
+import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations("nav");
+  const pathname = usePathname();
+
+  // Extract locale from pathname
+  const locale = pathname.split("/")[1] || "en";
+
+  const navLinks = [
+    { href: `/${locale}`, label: t("home") },
+    { href: `/${locale}/pages`, label: t("pages") },
+    { href: `/${locale}/events`, label: t("events") },
+    { href: `/${locale}/give`, label: t("give") },
+  ];
 
   return (
     <header className="bg-white sticky top-0 z-50 px-2 md:px-0">
       <div className="container flex justify-between items-center px-0 py-2">
-        <Link href="/" className="flex items-center">
+        <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-4">
             <div className="relative w-14 h-14">
               <Image
@@ -49,7 +56,7 @@ export default function NavBar() {
                 </span>
               </div>
               <span className="text-xs font-medium text-yellow-600">
-                Muszlim Ifjúsági Társaság
+                {t("subtitle")}
               </span>
             </div>
           </div>
@@ -75,9 +82,9 @@ export default function NavBar() {
           <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <DropdownMenuTrigger asChild>
               {isMenuOpen ? (
-                <X className="!w-6 !h-6" />
+                <X className="w-6! h-6!" />
               ) : (
-                <CgMenuRight className="!w-6 !h-6" />
+                <CgMenuRight className="w-6! h-6!" />
               )}
             </DropdownMenuTrigger>
 

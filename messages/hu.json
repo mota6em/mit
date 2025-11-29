@@ -1,5 +1,12 @@
 {
   "common": {
     "welcome": "Üdvözöljük"
+  },
+  "nav": {
+    "home": "FŐOLDAL",
+    "pages": "OLDALAK",
+    "events": "ESEMÉNYEK",
+    "give": "ADOMÁNYOZÁS",
+    "subtitle": "Muszlim Ifjúsági Társaság"
   }
 }

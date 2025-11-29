@@ -1,5 +1,12 @@
 {
   "common": {
     "welcome": "Welcome"
+  },
+  "nav": {
+    "home": "HOME",
+    "pages": "PAGES",
+    "events": "EVENTS",
+    "give": "GIVE",
+    "subtitle": "Muslim Youth Association"
   }
 }
