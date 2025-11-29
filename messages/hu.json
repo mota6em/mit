@@ -1,6 +1,6 @@
 {
   "common": {
-    "welcome": "Üdvözöljük"
+    "welcome": "Üdvözlünk"
   },
   "nav": {
     "home": "FŐOLDAL",
@@ -11,27 +11,27 @@
   },
   "hero": {
     "title": "Muszlim Ifjúsági Társaság",
-    "subtitle1": "Üdvözöljük a hivatalos oldalon!",
-    "subtitle2": "Események muszlim diákoknak és a közösségnek."
+    "subtitle1": "Üdvözlünk az oldalunkon!",
+    "subtitle2": "Programok muszlim diákoknak és a közösségnek."
   },
   "impact": {
-    "heading": "Muszlim Fiatalok Támogatása Magyarországon",
-    "description": "Közösség építése, lehetőségek teremtése és jelentős hatás elérése elkötelezettség és támogatás révén.",
+    "heading": "Muszlim Fiatalokat Támogatjuk Magyarországon",
+    "description": "Közösséget építünk, lehetőségeket teremtünk és valódi hatást érünk el együtt.",
     "community": {
       "title": "Közösség",
-      "desc": "Egység, barátságok és életre szóló kapcsolatok létrehozása."
+      "desc": "Összetartás, barátságok és életre szóló kapcsolatok."
     },
     "education": {
       "title": "Oktatás",
-      "desc": "Workshopok, tanulócsoportok és készségfejlesztő foglalkozások."
+      "desc": "Workshopok, tanulócsoportok és készségfejlesztő programok."
     },
     "support": {
       "title": "Támogatás",
-      "desc": "Barátságos környezet diákok és újonnan érkezők számára."
+      "desc": "Barátságos közeg diákoknak és újonnan érkezőknek."
     },
     "events": {
       "title": "Események",
-      "desc": "Kis és nagy rendezvények muszlim fiatalok összekapcsolására."
+      "desc": "Kis és nagy rendezvények, hogy összehozzuk a muszlim fiatalokat."
     }
   }
 }
