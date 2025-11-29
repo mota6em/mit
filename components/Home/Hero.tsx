@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { Variants, Easing } from "framer-motion";
 
 const images = [
   "/imgs/hero/hero-bg-1.jpg",
@@ -15,19 +16,18 @@ const images = [
   "/imgs/hero/hero-bg-6.jpg",
 ];
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 18 },
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.55,
-      ease: "easeOut",
+      ease: [0.42, 0, 0.58, 1] as Easing,  
       delay: i * 0.25,
     },
   }),
 };
-
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 

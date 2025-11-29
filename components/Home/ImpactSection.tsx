@@ -7,6 +7,7 @@ import {
   FaRegSmile,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { Variants } from "framer-motion";
 
 const features = [
   {
@@ -31,15 +32,15 @@ const features = [
   },
 ];
 
-const cardMotion = {
+const cardMotion: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
+  visible: (i = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
       delay: i * 0.15,
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.25, 0.1, 0.25, 1], // use cubic-bezier array instead of string
     },
   }),
 };
