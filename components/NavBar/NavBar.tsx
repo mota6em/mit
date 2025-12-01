@@ -97,7 +97,7 @@ export default function NavBar() {
                 <DropdownMenuItem
                   key={link.label}
                   asChild
-                  className="text-gray-800 font-medium hover:bg-yellow-100 rounded-md"
+                  className="text-gray-800 font-medium Carena-font hover:bg-yellow-100 rounded-md"
                 >
                   <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
                     {link.label}
