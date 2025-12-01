@@ -35,7 +35,7 @@ export default function NavBar() {
       <div className="container flex justify-between items-center px-0 py-2">
         <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-4">
-            <div className="relative w-14 h-14">
+            <div className="relative w-12 h-12">
               <Image
                 src="/imgs/nav-logo.jpg"
                 alt="MIT Logo"
@@ -63,13 +63,13 @@ export default function NavBar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center space-x-6 md:me-3">
+        <nav className="hidden md:flex items-center space-x-4 md:me-3">
           <LanguageSwitch />
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-black text-sm hover:outline outline-yellow-700 rounded-4xl font-serif hover:text-yellow-700 px-2"
+              className="text-black Carena-font text-sm pt-1 tracking-wider hover:outline outline-yellow-700 rounded-4xl font-serif hover:text-yellow-700 px-2"
             >
               {link.label}
             </Link>
