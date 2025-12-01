@@ -23,7 +23,6 @@ const LatestPrograms = () => {
         <iframe
           src="//lightwidget.com/widgets/5d467ed9d1ed57079391fc105e12b026.html"
           scrolling="no"
-          allowtransparency="true"
           className="w-full"
           style={{ border: 0, overflow: "hidden", width: "100%" }}
         ></iframe>
