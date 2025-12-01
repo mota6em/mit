@@ -29,7 +29,7 @@ export default function BlogCard({
       />
 
       {/* Top: Author */}
-      <div className="absolute top-2 left-2 flex items-center gap-3 backdrop-blur-xs p-2 rounded-2xl">
+      <div className="absolute top-2 left-2 flex items-center gap-3 backdrop-blur-xs bg-yellow-900/30 p-2 rounded-2xl">
         <Image
           src={authorImg}
           alt={authorName}
@@ -44,7 +44,7 @@ export default function BlogCard({
       </div>
 
       {/* Bottom: Title & Description */}
-      <div className="absolute bottom-4 backdrop-blur-xs p-2 rounded-2xl left-4 right-4 text-white">
+      <div className="absolute bottom-4 backdrop-blur-xs bg-yellow-950/30 p-2 rounded-2xl left-4 right-4 text-white">
         <h3 className="text-xl font-bold">{title}</h3>
         <p className="text-sm mt-1 line-clamp-3">{desc}</p>
       </div>
