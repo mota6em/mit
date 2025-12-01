@@ -17,7 +17,7 @@ export default function WhoWeAre() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="relative mt-8 md:mt-0 flex flex-col gap-4 items-center justify-center w-full py-20 px-6 md:px-12 lg:px-20 font-serif"
+        className="relative flex flex-col gap-4 items-center justify-center w-full py-10 px-6 md:px-12 lg:px-20 font-serif"
       >
         <div
           className="
