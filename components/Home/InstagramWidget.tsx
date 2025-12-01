@@ -15,7 +15,7 @@ const LatestPrograms = () => {
 
   return (
     <section className="py-12 bg-white">
-      <h2 className="text-3xl md:text-5xl font-bold text-center mb-8">
+      <h2 className="text-3xl Carena-font md:text-5xl text-yellow-700 font-bold text-center mb-8">
         Our Latest Programs
       </h2>
 
