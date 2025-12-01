@@ -31,5 +31,25 @@
         "meaning": "represent unity, growth, and light."
       }
     }
+  },
+  "latestPrograms": {
+    "title": "Our Latest Programs",
+    "showAll": "Show all programs",
+    "authorName": "Muslim Youth Association",
+    "newProgram": "New Program",
+    "programs": {
+      "youthLeadership": {
+        "title": "Youth Leadership Workshop",
+        "desc": "Empowering young minds ✨ Learn leadership, teamwork, public speaking, and more."
+      },
+      "communityFootball": {
+        "title": "Community Football Day",
+        "desc": "Teamwork, vibes, good energy ⚽ Bring friends and join local mini-tournaments."
+      },
+      "winterCharity": {
+        "title": "Winter Charity Drive",
+        "desc": "Small acts, big impact ❄️ Collect donations for families in need."
+      }
+    }
   }
 }

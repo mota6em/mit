@@ -31,5 +31,25 @@
         "meaning": "az egységet, növekedést és fényt szimbolizálják."
       }
     }
+  },
+  "latestPrograms": {
+    "title": "Legfrissebb Programjaink",
+    "showAll": "Összes program megtekintése",
+    "authorName": "Muszlim Ifjúsági Társaság",
+    "newProgram": "Új Program",
+    "programs": {
+      "youthLeadership": {
+        "title": "Fiatal Vezetők Workshopja",
+        "desc": "Fiatal elmék fejlesztése ✨ Tanulj vezetést, csapatmunkát, nyilvános beszédet és még sok mást."
+      },
+      "communityFootball": {
+        "title": "Közösségi Foci Nap",
+        "desc": "Csapatmunka, jó hangulat, pozitív energia ⚽ Hozd a haverjaidat és csatlakozz a helyi mini tornákhoz."
+      },
+      "winterCharity": {
+        "title": "Téli Jótékonysági Akció",
+        "desc": "Kis tettek, nagy hatás ❄️ Adományokat gyűjtünk rászoruló családoknak."
+      }
+    }
   }
 }
