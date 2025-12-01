@@ -66,13 +66,13 @@ export default function WhoWeAre() {
           transition={{ duration: 0.6 }}
           className="w-full max-w-md"
         >
-          <div>
+          <div className="flex flex-col items-center">
             <Image
               src="/imgs/hero/mit-logo-full.png"
               alt="MIT Visual"
               width={900}
               height={900}
-              className="w-full h-auto drop-shadow-xl"
+              className="w-10/12 h-auto drop-shadow-xl"
             />
             <div className="flex space-x-0.5 w-full justify-center align-center">
               <span className="text-6xl font-bold text-[#4d93fb] monstera-font tracking-widest">
