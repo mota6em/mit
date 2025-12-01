@@ -81,12 +81,20 @@ export default function Hero() {
 
       {/* CONTENT */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-1">
-        <h1 className="text-4xl font-serif md:text-6xl font-bold text-white drop-shadow-[0_0_2px_black]">
-          {t("title")}
+        <h1 className="text-4xl Carena-font font-serif md:text-6xl font-bold relative">
+          <span className="text-[#f1c34c] drop-shadow-[0_0_4px_black]">
+            {t("title").split(" ")[0]}{" "}
+          </span>
+          <span className="text-[#11b505] drop-shadow-[0_0_4px_black]">
+            {t("title").split(" ")[1]}{" "}
+          </span>
+          <span className="text-[#4d93fb] drop-shadow-[0_0_4px_black]">
+            {t("title").split(" ")[2]}
+          </span>
         </h1>
 
         <div className="flex flex-col w-fit p-2 font-serif rounded-md items-center">
-          <p className="text-sm  md:text-xl w-fit max-w-2xl-0 p-0 text-yellow-300  font-semibold drop-shadow-[black_0_0_2px]">
+          <p className="text-sm  md:text-xl w-fit max-w-2xl-0 p-0 text-white font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle1")}
           </p>
         </div>
