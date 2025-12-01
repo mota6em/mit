@@ -1,5 +1,4 @@
 import Hero from "@/components/Home/Hero";
-import ImpactSection from "@/components/Home/ImpactSection";
 import WhoWeAre from "@/components/Home/WhoWeAre";
 import NavBar from "@/components/NavBar/NavBar";
 
@@ -9,7 +8,6 @@ const Page = () => {
       <NavBar />
       <Hero />
       <WhoWeAre />
-      <ImpactSection />
     </div>
   );
 };
