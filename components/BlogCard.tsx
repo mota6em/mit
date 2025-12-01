@@ -21,7 +21,12 @@ export default function BlogCard({
   return (
     <div className="relative w-full h-80 rounded-2xl overflow-hidden shadow-lg cursor-pointer group">
       {/* Background image */}
-      <Image src={bgImg} alt={title} fill className="object-cover" />
+      <Image
+        src={bgImg}
+        alt={title}
+        fill
+        className="object-cover group-hover:scale-110 transition-all duration-300 ease-in-out"
+      />
 
       {/* Top: Author */}
       <div className="absolute top-2 left-2 flex items-center gap-3 backdrop-blur-xs p-2 rounded-2xl">
