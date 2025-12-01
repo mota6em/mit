@@ -1,8 +1,11 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 export default function WhoWeAre() {
+  const t = useTranslations("whoWeAre");
+
   return (
     <section className="w-full py-20 px-6 md:px-12 lg:px-20 font-serif">
       <div
@@ -21,31 +24,38 @@ export default function WhoWeAre() {
         >
           <div className="flex space-x-0.5 mb-4 align-center">
             <span className="text-4xl font-bold text-[#4d93fb] monstera-font tracking-widest">
-              Who
+              {t("title.who")}
             </span>
             <span className="text-4xl font-bold text-[#11b505] monstera-font tracking-widest">
-              Are
+              {t("title.are")}
             </span>
             <span className="text-4xl font-bold text-[#f1c34c] monstera-font tracking-widest">
-              We?
+              {t("title.we")}
             </span>
           </div>
 
           <p className="text-lg md:text-xl leading-relaxed text-gray-700 font-medium">
-            MIT is a student-run community built to support Muslim students in
-            Hungary, help them connect, grow, and feel at home.
+            {t("description.intro")}
             <br />
             <br />
-            We organize events, gatherings, study sessions, charity activities,
-            and spiritual programs — all in a positive, respectful, and
-            welcoming environment.
+            {t("description.activities")}
             <br />
             <br />
-            Our colors —{" "}
-            <span className="font-semibold text-blue-500">blue</span>,
-            <span className="font-semibold text-green-500"> green</span>, and
-            <span className="font-semibold text-yellow-500"> yellow</span> —
-            represent unity, growth, and light.
+            {t("description.colors.intro")}{" "}
+            <span className="font-semibold text-blue-500">
+              {t("description.colors.blue")}
+            </span>
+            ,
+            <span className="font-semibold text-green-500">
+              {" "}
+              {t("description.colors.green")}
+            </span>
+            , {t("description.colors.and")}
+            <span className="font-semibold text-yellow-500">
+              {" "}
+              {t("description.colors.yellow")}
+            </span>{" "}
+            —{t("description.colors.meaning")}
           </p>
         </motion.div>
 

@@ -32,5 +32,24 @@
       "title": "Events",
       "desc": "Small & large gatherings to connect Muslim youth."
     }
+  },
+  "whoWeAre": {
+    "title": {
+      "who": "Who",
+      "are": "Are",
+      "we": "We?"
+    },
+    "description": {
+      "intro": "MIT is a student-run community built to support Muslim students in Hungary, help them connect, grow, and feel at home.",
+      "activities": "We organize events, gatherings, study sessions, charity activities, and spiritual programs — all in a positive, respectful, and welcoming environment.",
+      "colors": {
+        "intro": "Our colors —",
+        "blue": "blue",
+        "green": "green",
+        "and": "and",
+        "yellow": "yellow",
+        "meaning": "represent unity, growth, and light."
+      }
+    }
   }
 }

@@ -32,5 +32,24 @@
       "title": "Események",
       "desc": "Kis és nagy rendezvények, hogy összehozzuk a muszlim fiatalokat."
     }
+  },
+  "whoWeAre": {
+    "title": {
+      "who": "Kik",
+      "are": "Vagyunk",
+      "we": "Mi?"
+    },
+    "description": {
+      "intro": "A MIT egy diákok által vezetett közösség, amely azért jött létre, hogy támogassa a magyarországi muszlim diákokat, segítse őket az összekapcsolódásban, fejlődésben és otthon érzésben.",
+      "activities": "Rendezvényeket, összejöveteleket, tanulási alkalmakat, jótékonysági programokat és spirituális eseményeket szervezünk — mindezt pozitív, tiszteletteljes és barátságos környezetben.",
+      "colors": {
+        "intro": "A színeink —",
+        "blue": "kék",
+        "green": "zöld",
+        "and": "és",
+        "yellow": "sárga",
+        "meaning": "az egységet, növekedést és fényt szimbolizálják."
+      }
+    }
   }
 }
