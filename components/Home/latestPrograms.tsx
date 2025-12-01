@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import ProgramCard from "@/src/components/cards-demo-3";
 import BlogCard from "../BlogCard";
 
 export default function LatestPrograms() {
