@@ -1,4 +1,5 @@
 import Hero from "@/components/Home/Hero";
+import LatestProgramsIG from "@/components/Home/latestPrograms";
 import WhoWeAre from "@/components/Home/WhoWeAre";
 import NavBar from "@/components/NavBar/NavBar";
 
@@ -8,6 +9,7 @@ const Page = () => {
       <NavBar />
       <Hero />
       <WhoWeAre />
+      <LatestProgramsIG />
     </div>
   );
 };
