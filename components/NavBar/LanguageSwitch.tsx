@@ -41,7 +41,7 @@ export default function LanguageSwitch() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="min-w-[120px] backdrop-blur-lg bg-white/10 border-white/20 text-white"
+        className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black"
         align="end"
       >
         {locales.map((locale) => (
