@@ -33,14 +33,14 @@ export default function WhoWeAre() {
             transition={{ duration: 0.6 }}
             className="max-w-xl text-center lg:text-left"
           >
-            <div className="flex space-x-0.5 mb-4 align-center">
-              <span className="text-4xl font-bold text-[#4d93fb] monstera-font tracking-widest">
+            <div className="flex space-x-0.5 mb-4 align-center justify-center md:justify-start">
+              <span className="text-4xl md:font-semibold text-gray-800 md:text-[#4d93fb] monstera-font tracking-widest">
                 {t("title.who")}
               </span>
-              <span className="text-4xl font-bold text-[#11b505] monstera-font tracking-widest">
+              <span className="text-4xl  md:font-semibold text-gray-800 md:text-[#11b505] monstera-font tracking-widest">
                 {t("title.are")}
               </span>
-              <span className="text-4xl font-bold text-[#f1c34c] monstera-font tracking-widest">
+              <span className="text-4xl md:font-semibold text-gray-800 md:text-[#f1c34c] monstera-font tracking-widest">
                 {t("title.we")}
               </span>
             </div>
