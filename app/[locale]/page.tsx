@@ -1,5 +1,4 @@
 import Hero from "@/components/Home/Hero";
-import InstagramWidget from "@/components/Home/InstagramWidget";
 import WhoWeAre from "@/components/Home/WhoWeAre";
 import NavBar from "@/components/NavBar/NavBar";
 
@@ -9,7 +8,6 @@ const Page = () => {
       <NavBar />
       <Hero />
       <WhoWeAre />
-      <InstagramWidget />
     </div>
   );
 };

@@ -178,7 +178,3 @@
   animation: gradient-x 5s ease infinite;
 }
 
-.instagram-widget-container iframe:hover {
-  filter: brightness(1.05) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-  transition: all 0.3s ease;
-}
