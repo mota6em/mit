@@ -14,6 +14,7 @@ interface BlogCardProps {
   index?: number;
   isVerified?: boolean;
   eventUrl?: string;
+  isPastEvent?: boolean;
 }
 
 export default function BlogCard({
@@ -25,6 +26,7 @@ export default function BlogCard({
   desc,
   index = 0,
   eventUrl = "#",
+  isPastEvent = false,
 }: BlogCardProps) {
   const isLongText = desc.length > DESCRIPTION_CHAR_LIMIT;
   const displayDesc = isLongText
@@ -79,7 +81,7 @@ export default function BlogCard({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 448px"
-            className="object-cover"
+            className={`object-cover ${isPastEvent ? "!grayscale" : ""}`}
           />
         </motion.div>
       </div>
