@@ -50,7 +50,7 @@ export default function BlogCard({
       }}
     >
       {/* Header */}
-      <header className="flex items-center justify-between px-1 py-2 md:p-3 border-b">
+      <header className="flex items-center justify-between p-2 md:p-3 border-b">
         <div className="flex items-center gap-3">
           <Image
             src={authorImg}
@@ -59,22 +59,13 @@ export default function BlogCard({
             height={32}
             className="rounded-full object-cover"
           />
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-gray-900">
-              {authorName}
-            </span>
-            {isVerified && <span className="text-blue-500 text-sm">✓</span>}
-          </div>
+          <span className="text-sm font-semibold text-gray-900">
+            {authorName}
+          </span>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick();
-          }}
-          className="text-xs md:text-sm rounded-full px-2 py-1 font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors"
-        >
+        <span className="text-xs md:text-sm text-center rounded-full font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors">
           View Event
-        </button>
+        </span>
       </header>
 
       {/* Image */}
@@ -95,7 +86,7 @@ export default function BlogCard({
       </div>
 
       {/* Caption */}
-      <div className="px-3 pb-3 pt-2 mb-4 space-y-1">
+      <div className="px-3 pb-4 pt-2 mb-4 space-y-1">
         <div className="text-sm">
           <span className="font-semibold text-gray-900">{authorName}</span>{" "}
           <span className="text-gray-700">{title}</span>
