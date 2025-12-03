@@ -50,7 +50,7 @@ export default function BlogCard({
       }}
     >
       {/* Header */}
-      <header className="flex items-center justify-between p-3 border-b">
+      <header className="flex items-center justify-between px-1 py-2 md:p-3 border-b">
         <div className="flex items-center gap-3">
           <Image
             src={authorImg}
