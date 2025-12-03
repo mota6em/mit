@@ -25,9 +25,8 @@ export default function NavBar() {
 
   const navLinks = [
     { href: `/${locale}`, label: t("home") },
-    { href: `/${locale}/pages`, label: t("pages") },
     { href: `/${locale}/events`, label: t("events") },
-    { href: `/${locale}/give`, label: t("give") },
+    { href: `/${locale}/about-mit`, label: t("about mit") },
   ];
 
   return (
@@ -63,24 +62,26 @@ export default function NavBar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center space-x-4 md:me-3">
+        <nav className="hidden md:flex items-center space-x-1 md:me-3">
           <LanguageSwitch />
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`Carena-font text-sm pt-1 tracking-wider rounded-4xl font-serif px-2 ${
-                  isActive
-                    ? "outline outline-yellow-700 text-yellow-700"
-                    : "text-black hover:outline outline-yellow-700 hover:text-yellow-700"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          <div className="flex items-center space-x-6">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`Carena-font text-sm pt-1 tracking-wider rounded-4xl font-serif px-2 ${
+                    isActive
+                      ? "outline outline-yellow-700 text-yellow-700"
+                      : "text-black hover:outline outline-yellow-700 hover:text-yellow-700"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Mobile nav trigger */}
