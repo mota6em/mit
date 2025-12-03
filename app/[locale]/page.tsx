@@ -5,12 +5,29 @@ import Home from "@/components/Home/Home";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Page() {
-  const [showQuote, setShowQuote] = useState(true);
+  const [showQuote, setShowQuote] = useState(() => {
+    if (typeof window !== "undefined") {
+      const hasShownQuote = sessionStorage.getItem("hasShownQuote");
+      return !hasShownQuote;
+    }
+    return true;
+  });
+
+  const [hasEverShownQuote, setHasEverShownQuote] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("hasShownQuote") === "true";
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowQuote(false), 2500);
-    return () => clearTimeout(timer);
-  }, []);
+    if (showQuote) {
+      sessionStorage.setItem("hasShownQuote", "true");
+      setHasEverShownQuote(true);
+      const timer = setTimeout(() => setShowQuote(false), 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [showQuote]);
 
   return (
     <AnimatePresence>
@@ -25,6 +42,8 @@ export default function Page() {
         >
           <QuranQuote />
         </motion.div>
+      ) : hasEverShownQuote ? (
+        <Home />
       ) : (
         <motion.div
           key="home"
