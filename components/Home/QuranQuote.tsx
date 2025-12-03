@@ -1,14 +1,19 @@
 "use client";
 
+import Image from "next/image";
+
 export default function QuranQuote() {
   return (
-    <section className="relative w-full h-screen overflow-hidden flex items-center justify-center  bg-yellow-800/70 md:bg-yellow-600/70 px-4 md:px-10">
-      {/* subtle geometric pattern background */}
-      <div
-        className="absolute inset-0 m-0.5 md:m-2 
-             bg-[url('/imgs/patterns/quba-alsakhra-mobile-view-3.jpg')] 
-             md:bg-[url('/imgs/patterns/quba-alsakhra.jpg')] 
-             bg-cover bg-center"
+    <section className="relative w-full h-screen flex items-center justify-center px-4 md:px-10 overflow-hidden">
+      {/* Background image with Next.js Image for fast loading */}
+      <Image
+        src="/imgs/patterns/quba-alsakhra-mobile-view-3.jpg"
+        alt="Quba Al-Sakhra"
+        fill
+        priority
+        placeholder="blur"
+        blurDataURL="/imgs/patterns/quba-alsakhra-mobile-view-3-lowres.jpg"
+        className="object-cover"
       />
 
       {/* content */}

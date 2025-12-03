@@ -7,7 +7,7 @@ export default function Page() {
   const [showQuote, setShowQuote] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowQuote(false), 2000);
+    const timer = setTimeout(() => setShowQuote(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
