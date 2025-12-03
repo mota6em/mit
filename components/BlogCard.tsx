@@ -3,7 +3,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const DESCRIPTION_CHAR_LIMIT = 100;
-const DESCRIPTION_CHAR_LIMIT = 100;
 
 interface BlogCardProps {
   bgImg: string;
