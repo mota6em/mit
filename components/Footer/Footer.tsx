@@ -19,7 +19,7 @@ export default function Footer() {
   return (
     <footer className="bg-white border border-t border-gray-200 text-black py-2 mt-auto">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2">
           {/* Logo and Name Section */}
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16">
@@ -40,7 +40,7 @@ export default function Footer() {
               <span className="text-sm font-medium">{t("subtitle")}</span>
             </div>
           </div>
-
+          {/* Social Media Section */}
           <div className="flex gap-5 mt-2">
             {[
               {
@@ -111,7 +111,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center mt-2 text-sm opacity-90">
+        <div className="text-center mt-4 md:mt-2 text-sm opacity-90">
           © {new Date().getFullYear()} MIT - {t("subtitle")}.
         </div>
       </div>
