@@ -3,7 +3,7 @@ import { AuroraBackground } from "@/src/components/ui/aurora-background";
 
 export default function QuranQuote() {
   return (
-    <AuroraBackground className="h-screen w-screen bg-gradient-to-b from-green-900 via-blue-900 to-zinc-900 flex items-center justify-center px-4 md:px-10">
+    <AuroraBackground className=" h-screen md:h-screen min-h-[120vh] w-screen bg-gradient-to-b from-green-900 via-blue-900 to-zinc-900 flex items-center justify-center px-4 md:px-10">
       <div className="relative text-center z-10">
         {/* Ayah */}
         <p className="text-2xl md:text-5xl font-semibold font-serif text-white leading-relaxed tracking-wide">
