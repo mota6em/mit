@@ -71,7 +71,7 @@ export default function BlogCard({
             e.stopPropagation();
             handleClick();
           }}
-          className="text-sm rounded-full px-2 py-1 font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors"
+          className="text-xs md:text-sm rounded-full px-2 py-1 font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors"
         >
           View Event
         </button>
