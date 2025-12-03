@@ -48,6 +48,7 @@ export default function EventsSection({
             eventUrl={`/programs/${p.id}`}
             index={index}
             isVerified={true}
+            isPastEvent={type === "past"}
           />
         ))}
       </div>
