@@ -3,6 +3,7 @@ import BlogCard from "../BlogCard";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { programs, Program } from "@/data/programs";
+import { motion } from "framer-motion";
 
 interface EventsSectionProps {
   type: "upcoming" | "past";
@@ -31,9 +32,15 @@ export default function EventsSection({
 
   return (
     <section className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6">
-      <h2 className="text-4xl font-bold Carena-font text-center text-yellow-800">
+      <motion.h2
+        className="text-4xl font-bold Carena-font text-center text-yellow-800"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         {t(titleKey)}
-      </h2>
+      </motion.h2>
 
       <div className="grid md:grid-cols-3 gap-6 w-full">
         {displayedPrograms.map((p, index) => (
