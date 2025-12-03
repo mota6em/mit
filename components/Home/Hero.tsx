@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaCheck } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 
@@ -17,7 +17,15 @@ const images = [
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCopied, setShowCopied] = useState(false);
   const t = useTranslations("hero");
+  const tNav = useTranslations("nav");
+
+  const copyEmailToClipboard = () => {
+    navigator.clipboard.writeText("muszlimifjusag@gmail.com");
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -121,9 +129,36 @@ export default function Hero() {
               icon: HiOutlineMail,
               href: "mailto:muszlimifjusag@gmail.com",
               gradient: "from-purple-400 via-pink-500 to-yellow-400",
+              isEmail: true,
             },
           ].map((s, i) => {
             const Icon = s.icon;
+            
+            if (s.isEmail) {
+              return (
+                <div key={i} className="relative">
+                  {showCopied && (
+                    <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full whitespace-nowrap z-20">
+                      {tNav("copied")}
+                    </span>
+                  )}
+                  <button
+                    onClick={copyEmailToClipboard}
+                    className={`relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden`}
+                  >
+                    <div
+                      className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x`}
+                    ></div>
+                    {showCopied ? (
+                      <FaCheck size={20} className="relative z-10" />
+                    ) : (
+                      <Icon size={20} className="relative z-10" />
+                    )}
+                  </button>
+                </div>
+              );
+            }
+            
             return (
               <a
                 key={i}
