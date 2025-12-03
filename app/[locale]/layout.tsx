@@ -2,6 +2,7 @@ import I18nProvider from "../i18n-provider";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import type { Metadata } from "next";
+import Footer from "@/components/Footer/Footer";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "hu" }];
@@ -53,12 +54,12 @@ export default async function LocaleLayout({ children, params }: any) {
   } catch {
     return notFound();
   }
-
   return (
     <html lang={locale}>
-      <body>
+      <body className="flex flex-col min-h-screen">
         <I18nProvider messages={messages} locale={locale}>
-          {children}
+          <div className="flex-1">{children}</div>
+          <Footer />
         </I18nProvider>
       </body>
     </html>
