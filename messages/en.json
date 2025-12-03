@@ -36,6 +36,8 @@
   },
   "latestPrograms": {
     "title": "Our Latest Programs",
+    "upcomingTitle": "Upcoming Events",
+    "pastTitle": "Past Events",
     "showAll": "Show all programs",
     "authorName": "Muslim Youth Association",
     "newProgram": "New Program",
@@ -51,6 +53,18 @@
       "winterCharity": {
         "title": "Winter Charity Drive",
         "desc": "Small acts, big impact ❄️ Collect donations for families in need."
+      },
+      "ramadanIftar": {
+        "title": "Ramadan Iftar Gathering",
+        "desc": "Breaking fast together 🌙 Join us for a blessed Iftar meal with the community."
+      },
+      "quranStudy": {
+        "title": "Quran Study Circle",
+        "desc": "Deepen your understanding 📖 Weekly Quran study sessions with scholars and peers."
+      },
+      "charityDrive": {
+        "title": "Autumn Charity Drive",
+        "desc": "Giving back to community 🍂 Collecting essentials for those in need."
       }
     }
   },

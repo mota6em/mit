@@ -36,6 +36,8 @@
   },
   "latestPrograms": {
     "title": "Legfrissebb Programjaink",
+    "upcomingTitle": "Következő Események",
+    "pastTitle": "Korábbi Események",
     "showAll": "Összes program megtekintése",
     "authorName": "Muszlim Ifjúsági Társaság",
     "newProgram": "Új Program",
@@ -51,6 +53,18 @@
       "winterCharity": {
         "title": "Téli Jótékonysági Akció",
         "desc": "Kis tettek, nagy hatás ❄️ Adományokat gyűjtünk rászoruló családoknak."
+      },
+      "ramadanIftar": {
+        "title": "Ramadán Iftar Összejövetel",
+        "desc": "Együtt böjtölünk 🌙 Csatlakozz hozzánk egy áldott Iftar vacsorához a közösséggel."
+      },
+      "quranStudy": {
+        "title": "Korán Tanulmányi Kör",
+        "desc": "Mélyítsd el tudásodat 📖 Heti Korán tanulmányi alkalmak tudósokkal és társakkal."
+      },
+      "charityDrive": {
+        "title": "Őszi Jótékonysági Akció",
+        "desc": "Visszaadni a közösségnek 🍂 Alapvető dolgokat gyűjtünk rászorulóknak."
       }
     }
   },

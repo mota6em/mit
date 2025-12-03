@@ -1,6 +1,6 @@
 import NavBar from "../NavBar/NavBar";
 import Hero from "./Hero";
-import LatestPrograms from "./latestPrograms";
+import EventsSection from "../Events/EventsSection";
 import Testimonials from "./Testimonials";
 import WhoWeAre from "./WhoWeAre";
 
@@ -10,7 +10,8 @@ const Home = () => {
       <NavBar />
       <Hero />
       <WhoWeAre />
-      <LatestPrograms />
+      <EventsSection type="upcoming" limit={3} />
+      <EventsSection type="past" limit={3} />
       <Testimonials />
     </div>
   );
