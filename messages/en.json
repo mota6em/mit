@@ -51,5 +51,36 @@
         "desc": "Small acts, big impact ❄️ Collect donations for families in need."
       }
     }
+  },
+  "testimonials": {
+    "title": "What Our Community Says",
+    "subtitle": "Hear from members who have experienced the warmth and growth of our community",
+    "reviews": [
+      {
+        "quote": "MIT has been a second home for me. The events are always meaningful, and I've made lifelong friends here. It's amazing to be part of such a supportive community.",
+        "name": "Ahmad Hassan",
+        "title": "University Student"
+      },
+      {
+        "quote": "The programs organized by MIT helped me connect with my faith while pursuing my studies. The environment is welcoming and the people are genuine.",
+        "name": "Fatima Rahman",
+        "title": "Medical Student"
+      },
+      {
+        "quote": "I was new to Hungary and felt lost until I found MIT. The community embraced me with open arms and helped me adjust to life here. Forever grateful!",
+        "name": "Omar Abdullah",
+        "title": "Engineering Student"
+      },
+      {
+        "quote": "The charity drives and community service events taught me the true meaning of giving back. MIT is doing incredible work in bringing people together.",
+        "name": "Aisha Khan",
+        "title": "Graduate Student"
+      },
+      {
+        "quote": "From football tournaments to study circles, MIT offers something for everyone. It's not just an organization, it's a family that supports your growth.",
+        "name": "Yusuf Ahmed",
+        "title": "Business Student"
+      }
+    ]
   }
 }

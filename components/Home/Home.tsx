@@ -1,6 +1,7 @@
 import NavBar from "../NavBar/NavBar";
 import Hero from "./Hero";
 import LatestPrograms from "./latestPrograms";
+import Testimonials from "./Testimonials";
 import WhoWeAre from "./WhoWeAre";
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
       <Hero />
       <WhoWeAre />
       <LatestPrograms />
+      <Testimonials />
     </div>
   );
 };

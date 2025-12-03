@@ -49,6 +49,14 @@
       background-position: 350% 50%, 350% 50%;
     }
   }
+  --animate-scroll: scroll var(--animation-duration, 40s)
+    var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
 }
 
 :root {
@@ -84,6 +92,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  font-family: serif;
 }
 
 .dark {
@@ -177,4 +186,3 @@
   background-size: 300% 300%;
   animation: gradient-x 5s ease infinite;
 }
-

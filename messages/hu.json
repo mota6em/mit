@@ -51,5 +51,36 @@
         "desc": "Kis tettek, nagy hatás ❄️ Adományokat gyűjtünk rászoruló családoknak."
       }
     }
+  },
+  "testimonials": {
+    "title": "Mit Mond Közösségünk",
+    "subtitle": "Hallgasd meg azokat a tagokat, akik megtapasztalták közösségünk melegségét és fejlődését",
+    "reviews": [
+      {
+        "quote": "A MIT második otthonom lett. A rendezvények mindig jelentőségteljesek, és életre szóló barátságokat kötöttem itt. Csodálatos egy ilyen támogató közösség részének lenni.",
+        "name": "Ahmad Hassan",
+        "title": "Egyetemi Hallgató"
+      },
+      {
+        "quote": "A MIT által szervezett programok segítettek kapcsolódni a hitemhez, miközben tanulmányaimat folytattam. A környezet barátságos és az emberek őszinték.",
+        "name": "Fatima Rahman",
+        "title": "Orvostanhallgató"
+      },
+      {
+        "quote": "Új voltam Magyarországon és elveszettnek éreztem magam, amíg meg nem találtam a MIT-et. A közösség tárt karokkal fogadott és segített alkalmazkodni az itteni élethez. Örökké hálás vagyok!",
+        "name": "Omar Abdullah",
+        "title": "Mérnökhallgató"
+      },
+      {
+        "quote": "A jótékonysági akciók és közösségi szolgálat események megtanították nekem a visszaadás valódi jelentését. A MIT hihetetlen munkát végez az emberek összehozásában.",
+        "name": "Aisha Khan",
+        "title": "Mesterszakos Hallgató"
+      },
+      {
+        "quote": "A focitornáktól a tanulási körökig, a MIT mindenkinek kínál valamit. Ez nem csak egy szervezet, hanem egy család, amely támogatja a fejlődésedet.",
+        "name": "Yusuf Ahmed",
+        "title": "Gazdasági Hallgató"
+      }
+    ]
   }
 }
