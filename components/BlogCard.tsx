@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const DESCRIPTION_CHAR_LIMIT = 20;
+const DESCRIPTION_CHAR_LIMIT = 100;
 
 interface BlogCardProps {
   bgImg: string;
@@ -24,7 +24,6 @@ export default function BlogCard({
   title,
   desc,
   index = 0,
-  isVerified = true,
   eventUrl = "#",
 }: BlogCardProps) {
   const isLongText = desc.length > DESCRIPTION_CHAR_LIMIT;
@@ -63,7 +62,7 @@ export default function BlogCard({
             {authorName}
           </span>
         </div>
-        <span className="text-xs md:text-sm text-center rounded-full font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors">
+        <span className="text-xs md:text-sm outline outline-blue-800 mt-1 px-2 pt-0.5 pb-1 text-center rounded-full font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors">
           View Event
         </span>
       </header>
