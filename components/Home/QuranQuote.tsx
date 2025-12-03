@@ -5,16 +5,31 @@ import Image from "next/image";
 export default function QuranQuote() {
   return (
     <section className="relative w-full h-screen flex items-center justify-center px-4 md:px-10 overflow-hidden">
-      {/* Background image with Next.js Image for fast loading */}
-      <Image
-        src="/imgs/patterns/quba-alsakhra-mobile-view-3.jpg"
-        alt="Quba Al-Sakhra"
-        fill
-        priority
-        placeholder="blur"
-        blurDataURL="/imgs/patterns/quba-alsakhra-mobile-view-3-lowres.jpg"
-        className="object-cover"
-      />
+      {/* Mobile background */}
+      <div className="absolute inset-0 md:hidden">
+        <Image
+          src="/imgs/patterns/quba-alsakhra-mobile-view-3.jpg"
+          alt="Quba Al-Sakhra Mobile"
+          fill
+          priority
+          placeholder="blur"
+          blurDataURL="/imgs/patterns/quba-alsakhra-mobile-view-3-lowres.jpg"
+          className="object-cover"
+        />
+      </div>
+
+      {/* Desktop background */}
+      <div className="absolute inset-0 hidden md:block">
+        <Image
+          src="/imgs/patterns/quba-alsakhra.jpg"
+          alt="Quba Al-Sakhra"
+          fill
+          priority
+          placeholder="blur"
+          blurDataURL="/imgs/patterns/quba-alsakhra-lowres.jpg"
+          className="object-cover"
+        />
+      </div>
 
       {/* content */}
       <div className="relative max-w-4xl mx-auto text-center">
