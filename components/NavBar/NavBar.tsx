@@ -65,15 +65,22 @@ export default function NavBar() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center space-x-4 md:me-3">
           <LanguageSwitch />
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-black Carena-font text-sm pt-1 tracking-wider hover:outline outline-yellow-700 rounded-4xl font-serif hover:text-yellow-700 px-2"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`Carena-font text-sm pt-1 tracking-wider rounded-4xl font-serif px-2 ${
+                  isActive
+                    ? "outline outline-yellow-700 text-yellow-700"
+                    : "text-black hover:outline outline-yellow-700 hover:text-yellow-700"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Mobile nav trigger */}
@@ -93,17 +100,24 @@ export default function NavBar() {
               sideOffset={5}
               className="bg-white/90 backdrop-blur-md p-4 min-w-[150px] flex flex-col gap-3"
             >
-              {navLinks.map((link) => (
-                <DropdownMenuItem
-                  key={link.label}
-                  asChild
-                  className="text-gray-800 font-medium Carena-font hover:bg-yellow-100 rounded-md"
-                >
-                  <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
-                    {link.label}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <DropdownMenuItem
+                    key={link.label}
+                    asChild
+                    className={`font-medium Carena-font hover:bg-yellow-100 rounded-md ${
+                      isActive
+                        ? "outline outline-yellow-700 text-yellow-700"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
