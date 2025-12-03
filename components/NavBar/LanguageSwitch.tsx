@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -31,9 +32,11 @@ export default function LanguageSwitch() {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <div className="cursor-pointer flex items-center gap-1 px-2 font-serif hover:text-yellow-900">
-          <img
+          <Image
             src={current.flag}
             alt={current.code}
+            width={20}
+            height={20}
             className="w-5 h-5 rounded-sm"
           />
           {open ? <X size={14} /> : <ChevronDown size={14} />}
@@ -51,9 +54,11 @@ export default function LanguageSwitch() {
             asChild
           >
             <Link href={`/${locale.code}/${restOfPath}`}>
-              <img
+              <Image
                 src={locale.flag}
                 alt={locale.code}
+                width={20}
+                height={20}
                 className="w-5 h-5 rounded-sm"
               />
               {locale.label}
