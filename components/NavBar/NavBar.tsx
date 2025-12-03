@@ -25,8 +25,9 @@ export default function NavBar() {
 
   const navLinks = [
     { href: `/${locale}`, label: t("home") },
-    { href: `/${locale}/events`, label: t("events") },
     { href: `/${locale}/about-mit`, label: t("about mit") },
+    { href: `/${locale}/events`, label: t("events") },
+    { href: `/${locale}/join-mit`, label: t("join mit") },
   ];
 
   return (

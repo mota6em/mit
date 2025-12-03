@@ -7,6 +7,7 @@
     "pages": "PAGES",
     "events": "EVENTS",
     "about mit": "ABOUT MIT",
+    "join mit": "JOIN MIT",
     "subtitle": "Muszlim Ifjúsági Társaság"
   },
   "hero": {
@@ -82,5 +83,39 @@
         "title": "Business Student"
       }
     ]
+  },
+  "joinMIT": {
+    "title": "Join MIT",
+    "subtitle": "Connect with us and become part of our vibrant community",
+    "stats": {
+      "members": "Active Members",
+      "events": "Events Yearly",
+      "dedication": "Dedication"
+    },
+    "connectWithUs": "Connect With Us",
+    "followTag": "Stay Connected",
+    "socialDescription": "Follow us on social media to stay updated with our latest events, programs, and community activities.",
+    "followUs": "Follow Us",
+    "socialText": {
+      "facebook": "Join our Facebook community for daily updates and discussions",
+      "instagram": "Follow our journey through photos and stories",
+      "whatsapp": "Join our WhatsApp group for instant updates",
+      "email": "Reach out to us directly via email"
+    },
+    "stayUpdated": "Stay Updated",
+    "newsletterTag": "Newsletter",
+    "subscriptionDescription": "Subscribe to our newsletter and never miss an event, program, or important announcement.",
+    "emailPlaceholder": "Enter your email address",
+    "subscribe": "Subscribe Now",
+    "subscribing": "Subscribing...",
+    "subscribed": "Subscribed!",
+    "successMessage": "Thank you! You've successfully subscribed to our newsletter.",
+    "privacyNote": "We respect your privacy. Unsubscribe anytime.",
+    "callToAction": "Join us in building a stronger, more connected community",
+    "tag1": "Unity",
+    "tag2": "Growth",
+    "tag3": "Community",
+    "finalMessage": "Together, we create meaningful experiences and lasting bonds that strengthen our faith and community.",
+    "scrollTop": "Scroll to top to explore more"
   }
 }

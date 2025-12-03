@@ -7,6 +7,7 @@
     "pages": "OLDALAK",
     "events": "ESEMÉNYEK",
     "about mit": "RÓLUNK",
+    "join mit": "CSATLAKOZZ",
     "subtitle": "Muszlim Ifjúsági Társaság"
   },
   "hero": {
@@ -82,5 +83,39 @@
         "title": "Gazdasági Hallgató"
       }
     ]
+  },
+  "joinMIT": {
+    "title": "Csatlakozz MIT",
+    "subtitle": "Kapcsolódj hozzánk és légy részese élénk közösségünknek",
+    "stats": {
+      "members": "Aktív Tagok",
+      "events": "Éves Események",
+      "dedication": "Elkötelezettség"
+    },
+    "connectWithUs": "Kapcsolódj Hozzánk",
+    "followTag": "Maradj Kapcsolatban",
+    "socialDescription": "Kövess minket a közösségi médiában, hogy értesülj a legfrissebb eseményeinkről, programjainkról és közösségi tevékenységeinkről.",
+    "followUs": "Kövess Minket",
+    "socialText": {
+      "facebook": "Csatlakozz Facebook közösségünkhöz a napi frissítésekért",
+      "instagram": "Kövesd utunkat fotókon és történeteken keresztül",
+      "whatsapp": "Csatlakozz WhatsApp csoportunkhoz az azonnali frissítésekért",
+      "email": "Lépj velünk kapcsolatba közvetlenül emailen"
+    },
+    "stayUpdated": "Maradj Naprakész",
+    "newsletterTag": "Hírlevél",
+    "subscriptionDescription": "Iratkozz fel hírlevelünkre, hogy ne maradj le egyetlen eseményről, programról vagy fontos bejelentésről sem.",
+    "emailPlaceholder": "Add meg az email címed",
+    "subscribe": "Feliratkozás Most",
+    "subscribing": "Feliratkozás...",
+    "subscribed": "Feliratkozva!",
+    "successMessage": "Köszönjük! Sikeresen feliratkoztál a hírlevelünkre.",
+    "privacyNote": "Tiszteletben tartjuk az adataidat. Bármikor leiratkozhatsz.",
+    "callToAction": "Csatlakozz hozzánk egy erősebb, összetartóbb közösség építésében",
+    "tag1": "Egység",
+    "tag2": "Fejlődés",
+    "tag3": "Közösség",
+    "finalMessage": "Együtt értelmes élményeket és tartós kapcsolatokat teremtünk, amelyek erősítik hitünket és közösségünket.",
+    "scrollTop": "Görgess fel és fedezz fel többet"
   }
 }
