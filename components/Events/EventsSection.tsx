@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { programs, Program } from "@/data/programs";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 
 interface EventsSectionProps {
   type: "upcoming" | "past";
@@ -17,6 +18,8 @@ export default function EventsSection({
   showViewAll = true,
 }: EventsSectionProps) {
   const t = useTranslations("latestPrograms");
+  const params = useParams();
+  const locale = params.locale as string;
 
   // Filter programs by type
   const filteredPrograms = programs.filter((p) => p.status === type);
@@ -28,7 +31,10 @@ export default function EventsSection({
 
   // Determine title and link based on type
   const titleKey = type === "upcoming" ? "upcomingTitle" : "pastTitle";
-  const linkHref = type === "upcoming" ? "/events/upcoming" : "/events/past";
+  const linkHref =
+    type === "upcoming"
+      ? `/${locale}/events/upcoming`
+      : `/${locale}/events/past`;
 
   return (
     <section className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6">
