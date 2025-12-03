@@ -21,7 +21,7 @@ export default function Page() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center overflow-hidden justify-center bg-black/60"
+          className="fixed inset-0 z-50 flex items-center overflow-hidden justify-center bg-white"
         >
           <QuranQuote />
         </motion.div>
