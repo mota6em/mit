@@ -2,34 +2,33 @@
 
 export default function QuranQuote() {
   return (
-    <section className="relative w-full my-10 py-20 px-4 overflow-hidden">
+    <section className="relative w-full h-screen overflow-hidden flex items-center justify-center  bg-yellow-800/70 md:bg-yellow-600/70 px-4 md:px-10">
       {/* subtle geometric pattern background */}
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/imgs/patterns/islamic-pattern.jpg')",
-          backgroundRepeat: "repeat",
-        }}
+        className="absolute inset-0 m-0.5 md:m-2 
+             bg-[url('/imgs/patterns/quba-alsakhra-mobile-view-3.jpg')] 
+             md:bg-[url('/imgs/patterns/quba-alsakhra.jpg')] 
+             bg-cover bg-center"
       />
 
       {/* content */}
       <div className="relative max-w-4xl mx-auto text-center">
         <div
-          className="bg-white/40 backdrop-blur-md border border-white/50 
-                        shadow-xl rounded-3xl px-2 md:px-10 py-4 md:py-12"
+          className="bg-yellow-600/10 md:bg-yellow-500/20 backdrop-blur-xs border border-white/30 
+                        shadow-2xl rounded-lg md:rounded-3xl px-2 md:px-4 py-3 md:py-8"
         >
           {/* Arabic */}
-          <p className="text-[28px] md:text-[36px] font-semibold text-white leading-relaxed tracking-wide">
-            ( وَتَعَاوَنُوا۟ عَلَى ٱلْبِرِّ وَٱلتَّقْوَىٰ ۖ )
+          <p className="text-[26px] md:text-[36px] font-semibold text-white leading-relaxed tracking-wide">
+            ( وَتَعَاوَنُوا۟ عَلَى ٱلْبِرِّ وَٱلتَّقْوَىٰۖ )
           </p>
 
           {/* English translation */}
-          <p className="mt-2 text-[20px] md:text-[24px] font-medium text-white tracking-wide">
+          <p className="mt-1 md:mt-3 text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] font-medium text-white tracking-wide">
             “Cooperate with one another in goodness and righteousness.”
           </p>
 
           {/* reference */}
-          <p className="mt-3 text-white font-medium tracking-wider">
+          <p className="mt-1 md:mt-3 text-white font-medium tracking-wider text-sm sm:text-base md:text-lg">
             — Quran 5:2
           </p>
         </div>
