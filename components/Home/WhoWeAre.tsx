@@ -12,6 +12,7 @@ export default function WhoWeAre() {
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{
           delay: 0.3,
           duration: 0.8,
@@ -30,17 +31,18 @@ export default function WhoWeAre() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="max-w-xl text-center lg:text-left"
           >
             <div className="flex space-x-0.5 mb-4 align-center justify-center md:justify-start">
-              <span className="text-4xl md:font-semibold text-gray-800 md:text-[#4d93fb] monstera-font tracking-widest">
+              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#4d93fb] font-semibold tracking-widest">
                 {t("title.who")}
               </span>
-              <span className="text-4xl  md:font-semibold text-gray-800 md:text-[#11b505] monstera-font tracking-widest">
+              <span className="text-3xl  md:font-semibold text-gray-700 md:text-[#11b505] font-semibold tracking-widest">
                 {t("title.are")}
               </span>
-              <span className="text-4xl md:font-semibold text-gray-800 md:text-[#f1c34c] monstera-font tracking-widest">
+              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#f1c34c] font-semibold tracking-widest">
                 {t("title.we")}
               </span>
             </div>
@@ -74,6 +76,7 @@ export default function WhoWeAre() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="w-full max-w-md"
           >
