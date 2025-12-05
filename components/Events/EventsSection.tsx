@@ -48,21 +48,22 @@ export default function EventsSection({
         {t(titleKey)}
       </motion.h2>
 
-      <div className="grid md:grid-cols-3 gap-6 w-full">
+      <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
         {displayedPrograms.map((p, index) => (
-          <BlogCard
-            key={p.id}
-            bgImg={p.img}
-            authorImg="/imgs/icon.jpg"
-            authorName={t("authorName")}
-            readTime={p.date}
-            title={t(p.titleKey)}
-            desc={t(p.descKey)}
-            eventUrl={`/programs/${p.id}`}
-            index={index}
-            isVerified={true}
-            isPastEvent={type === "past"}
-          />
+          <div key={p.id} className="min-w-[75vw] md:min-w-0 snap-start">
+            <BlogCard
+              bgImg={p.img}
+              authorImg="/imgs/icon.jpg"
+              authorName={t("authorName")}
+              readTime={p.date}
+              title={t(p.titleKey)}
+              desc={t(p.descKey)}
+              eventUrl={`/programs/${p.id}`}
+              index={index}
+              isVerified={true}
+              isPastEvent={type === "past"}
+            />
+          </div>
         ))}
       </div>
 
