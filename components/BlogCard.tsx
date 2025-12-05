@@ -41,7 +41,7 @@ export default function BlogCard({
     <motion.article
       onClick={handleClick}
       className="w-full max-w-md bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0.50, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
