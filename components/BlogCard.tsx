@@ -41,7 +41,7 @@ export default function BlogCard({
     <motion.article
       onClick={handleClick}
       className="w-full max-w-md bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative"
-      initial={{ opacity: 0.50, y: 0 }}
+      initial={{ opacity: 0.5, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
@@ -64,7 +64,7 @@ export default function BlogCard({
             {authorName}
           </span>
         </div>
-        <span className="text-xs md:text-sm outline outline-blue-800 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:text-blue-800 transition-colors">
+        <span className="text-xs md:text-sm outline outline-blue-700 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
           View Event
         </span>
       </header>

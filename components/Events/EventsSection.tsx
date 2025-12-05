@@ -35,7 +35,7 @@ export default function EventsSection({
     type === "upcoming"
       ? `/${locale}/events/upcoming`
       : `/${locale}/events/past`;
-  
+
   // Split title into words
   const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
@@ -51,7 +51,9 @@ export default function EventsSection({
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <span className={type === "upcoming" ? "text-green-600" : "text-gray-500"}>
+        <span
+          className={type === "upcoming" ? "text-green-600" : "text-gray-500"}
+        >
           {firstWord}
         </span>
         {secondWord && (
