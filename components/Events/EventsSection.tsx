@@ -35,17 +35,31 @@ export default function EventsSection({
     type === "upcoming"
       ? `/${locale}/events/upcoming`
       : `/${locale}/events/past`;
+  
+  // Split title into words
+  const titleText = t(titleKey);
+  const titleWords = titleText.split(" ");
+  const firstWord = titleWords[0] || "";
+  const secondWord = titleWords.slice(1).join(" ") || "";
 
   return (
     <section className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6">
       <motion.h2
-        className="text-4xl font-bold Carena-font text-center text-yellow-800"
+        className="text-4xl md:text-5xl font-bold Carena-font text-center tracking-wide"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        {t(titleKey)}
+        <span className={type === "upcoming" ? "text-green-600" : "text-gray-500"}>
+          {firstWord}
+        </span>
+        {secondWord && (
+          <>
+            {" "}
+            <span className="text-gray-900">{secondWord}</span>
+          </>
+        )}
       </motion.h2>
 
       <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
