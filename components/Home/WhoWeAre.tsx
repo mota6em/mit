@@ -1,11 +1,15 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { AuroraBackground } from "@/src/components/ui/aurora-background";
 
 export default function WhoWeAre() {
   const t = useTranslations("whoWeAre");
+  const params = useParams();
+  const locale = params.locale as string;
 
   return (
     <AuroraBackground>
@@ -102,6 +106,25 @@ export default function WhoWeAre() {
             </div>
           </motion.div>
         </div>
+        
+        {/* Learn More Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-8 md:mt-12"
+        >
+          <Link
+            href={`/${locale}/about`}
+            className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-colors group"
+          >
+            <span>{t("learnMore")}</span>
+            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </motion.div>
       </motion.div>
     </AuroraBackground>
   );
