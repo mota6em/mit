@@ -1,26 +1,17 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaWhatsapp,
-  FaUsers,
-  FaCalendarAlt,
-  FaHeart,
-} from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaHeart } from "react-icons/fa";
 import { HiOutlineMail, HiSparkles } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function JoinMIT() {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
   const { scrollY } = useScroll();
   const t = useTranslations("joinMIT");
+  const tNav = useTranslations("nav");
 
   // Parallax effect for hero
   const heroY = useTransform(scrollY, [0, 500], [0, 150]);
@@ -54,33 +45,22 @@ export default function JoinMIT() {
     },
     {
       icon: HiOutlineMail,
-      href: "mailto:muszlimifjusag@gmail.com",
+      href: "#",
       gradient: "from-yellow-500 to-orange-600",
       bgColor: "bg-yellow-600",
       name: "Email",
     },
   ];
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    setIsSubscribed(true);
-    setEmail("");
-
-    setTimeout(() => {
-      setIsSubscribed(false);
-    }, 5000);
+  const handleEmailCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("muszlimifjusag@gmail.com");
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy email:", err);
+    }
   };
-
-  const stats = [
-    { icon: FaUsers, value: "500+", label: t("stats.members") },
-    { icon: FaCalendarAlt, value: "50+", label: t("stats.events") },
-    { icon: FaHeart, value: "100%", label: t("stats.dedication") },
-  ];
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -155,6 +135,64 @@ export default function JoinMIT() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-10 space-y-16 md:px-10">
+        {/* Become a Volunteer Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50 rounded-3xl shadow-lg overflow-hidden p-8 md:p-16 border border-gray-100"
+        >
+          {/* Decorative circles */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#4d93fb]/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#11b505]/5 rounded-full blur-3xl" />
+
+          <div className="relative z-10">
+            <div className="max-w-4xl mx-auto">
+              {/* Icon and Title */}
+              <div className="text-center mb-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-50 to-pink-50 rounded-full mb-6 shadow-md"
+                >
+                  <FaHeart className="text-4xl text-red-500" />
+                </motion.div>
+
+                <h2 className="text-3xl md:text-5xl font-bold Carena-font mb-4">
+                  <span className="text-[#4d93fb]">
+                    {t("volunteer.title").split(" ")[0]}{" "}
+                  </span>
+                  <span className="text-[#11b505]">
+                    {t("volunteer.title").split(" ")[1]}{" "}
+                  </span>
+                  <span className="text-[#f1c34c]">
+                    {t("volunteer.title").split(" ")[2]}
+                  </span>
+                </h2>
+
+                <p className="text-gray-700 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                  {t("volunteer.description")}
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <div className="text-center">
+                <a
+                  href="https://forms.gle/your-google-form-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-8 py-3 bg-white border-2 border-[#4d93fb] text-[#4d93fb] font-semibold text-base rounded-md hover:bg-[#4d93fb] hover:text-white transition-colors duration-300"
+                >
+                  {t("volunteer.button")}
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Social Media Cards Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -195,7 +233,50 @@ export default function JoinMIT() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {socialLinks.map((social, index) => {
               const Icon = social.icon;
-              return (
+              const isEmail = social.name === "Email";
+
+              return isEmail ? (
+                <motion.div
+                  key={index}
+                  onClick={handleEmailCopy}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="group cursor-pointer"
+                >
+                  <div className="relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-transparent">
+                    {/* Gradient overlay */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                    />
+
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine" />
+                    </div>
+
+                    <div className="relative p-8 flex flex-col items-center text-center space-y-4 transform group-hover:-translate-y-1 transition-transform duration-300">
+                      <div
+                        className={`p-6 rounded-full ${social.bgColor} text-white group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg`}
+                      >
+                        <Icon size={36} />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-white transition-colors duration-300">
+                        {social.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm group-hover:text-white/90 transition-colors duration-300 line-clamp-2">
+                        {t(`socialText.${social.name.toLowerCase()}`)}
+                      </p>
+                      <div className="flex items-center gap-2 text-sm font-semibold text-gray-800 group-hover:text-white transition-colors duration-300">
+                        <span>
+                          {emailCopied ? tNav("copied") : t("copyEmail")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
                 <motion.a
                   key={index}
                   href={social.href}
@@ -298,13 +379,33 @@ export default function JoinMIT() {
               </div>
             </div>
 
-            {/* Right: Newsletter Form */}
-            <div className="relative bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-t-4 border-[#11b505] overflow-hidden">
+            {/* Right: Newsletter Form - Coming Soon */}
+            <div className="relative bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-t-4 border-gray-300 overflow-hidden">
               {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#4d93fb]/5 to-[#11b505]/5 rounded-full blur-3xl -z-0" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[#f1c34c]/5 to-[#11b505]/5 rounded-full blur-3xl -z-0" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full blur-3xl -z-0" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-gray-200 to-gray-100 rounded-full blur-3xl -z-0" />
 
-              <div className="relative z-10">
+              {/* Overlay to indicate disabled state */}
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-20 flex items-center justify-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center px-4"
+                >
+                  <div className="inline-flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-full mb-4">
+                    <HiSparkles className="text-gray-400 text-2xl" />
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold Carena-font text-gray-700 mb-3">
+                    Coming Soon
+                  </h3>
+                  <p className="text-gray-500 text-lg max-w-md mx-auto">
+                    Newsletter subscription will be available soon. Stay tuned!
+                  </p>
+                </motion.div>
+              </div>
+
+              <div className="relative z-10 opacity-30">
                 <div className="mb-8 text-center lg:text-left">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -331,95 +432,33 @@ export default function JoinMIT() {
                   </p>
                 </div>
 
-                <form onSubmit={handleSubscribe} className="space-y-4">
+                <div className="space-y-4 pointer-events-none">
                   <div className="relative group">
-                    <HiOutlineMail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-[#11b505] transition-colors duration-300" />
+                    <HiOutlineMail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
                       placeholder={t("emailPlaceholder")}
-                      required
-                      className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-[#11b505] focus:ring-4 focus:ring-[#11b505]/10 outline-none transition-all duration-300 text-gray-800 text-lg shadow-sm hover:shadow-md"
-                      disabled={isLoading || isSubscribed}
+                      disabled
+                      className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-200 outline-none text-gray-800 text-lg shadow-sm bg-gray-50"
                     />
                   </div>
 
-                  <motion.button
-                    type="submit"
-                    disabled={isLoading || isSubscribed}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`relative w-full py-5 rounded-2xl font-bold text-lg text-white transition-all duration-300 shadow-lg overflow-hidden ${
-                      isSubscribed
-                        ? "bg-green-600"
-                        : "bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c]"
-                    } disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-2xl`}
+                  <button
+                    type="button"
+                    disabled
+                    className="relative w-full py-5 rounded-2xl font-bold text-lg text-white bg-gray-400 cursor-not-allowed shadow-lg"
                   >
-                    {/* Button shimmer effect */}
-                    {!isSubscribed && !isLoading && (
-                      <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500">
-                        <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-shine" />
-                      </div>
-                    )}
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isLoading ? (
-                        <>
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              repeat: Infinity,
-                              duration: 1,
-                              ease: "linear",
-                            }}
-                            className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                          />
-                          {t("subscribing")}
-                        </>
-                      ) : isSubscribed ? (
-                        <>
-                          <motion.span
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            ✓
-                          </motion.span>
-                          {t("subscribed")}
-                        </>
-                      ) : (
-                        <>
-                          {t("subscribe")}
-                          <HiSparkles className="text-xl" />
-                        </>
-                      )}
+                      {t("subscribe")}
+                      <HiSparkles className="text-xl" />
                     </span>
-                  </motion.button>
-
-                  {isSubscribed && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                      className="p-5 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl text-center text-green-700 font-semibold shadow-sm"
-                    >
-                      <div className="flex items-center justify-center gap-2">
-                        <motion.span
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ repeat: Infinity, duration: 2 }}
-                        >
-                          🎉
-                        </motion.span>
-                        <span>{t("successMessage")}</span>
-                      </div>
-                    </motion.div>
-                  )}
+                  </button>
 
                   <p className="text-sm text-gray-500 text-center flex items-center justify-center gap-1">
                     <span>🔒</span>
                     {t("privacyNote")}
                   </p>
-                </form>
+                </div>
               </div>
             </div>
           </div>

@@ -132,6 +132,18 @@
     "tag2": "Fejlődés",
     "tag3": "Közösség",
     "finalMessage": "Együtt értelmes élményeket és tartós kapcsolatokat teremtünk, amelyek erősítik hitünket és közösségünket.",
-    "scrollTop": "Görgess fel és fedezz fel többet"
+    "scrollTop": "Görgess fel és fedezz fel többet",
+    "copyEmail": "Email Másolása",
+    "volunteer": {
+      "title": "Légy Önkéntes",
+      "description": "Csatlakozz szenvedélyes önkénteseink csapatához és segíts nekünk értelmes eseményeket szervezni, közösségi kapcsolatokat építeni, és tartós hatást gyakorolni a magyarországi muszlim diákokra.",
+      "button": "Jelentkezz Önkéntesnek",
+      "note": "48 órán belül válaszolunk",
+      "benefits": {
+        "impact": "Valódi Hatás",
+        "network": "Kapcsolatépítés",
+        "leadership": "Vezetői Lehetőségek"
+      }
+    }
   }
 }

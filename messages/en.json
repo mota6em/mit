@@ -132,6 +132,18 @@
     "tag2": "Growth",
     "tag3": "Community",
     "finalMessage": "Together, we create meaningful experiences and lasting bonds that strengthen our faith and community.",
-    "scrollTop": "Scroll to top to explore more"
+    "scrollTop": "Scroll to top to explore more",
+    "copyEmail": "Copy Email",
+    "volunteer": {
+      "title": "Become a Volunteer",
+      "description": "Join our team of passionate volunteers and help us organize meaningful events, build community connections, and make a lasting impact on Muslim students in Hungary.",
+      "button": "Apply to Volunteer",
+      "note": "We'll respond within 48 hours",
+      "benefits": {
+        "impact": "Make Real Impact",
+        "network": "Build Your Network",
+        "leadership": "Leadership Opportunities"
+      }
+    }
   }
 }
