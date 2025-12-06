@@ -453,15 +453,17 @@ export default function JoinMIT() {
               </motion.div>
 
               <h2 className="text-4xl md:text-6xl font-bold Carena-font leading-tight">
-                <span className="text-[#4d93fb] inline-block hover:scale-105 transition-transform">
-                  {t("volunteer.title").split(" ")[0]}{" "}
-                </span>
-                <span className="text-[#11b505] inline-block hover:scale-105 transition-transform">
-                  {t("volunteer.title").split(" ")[1]}{" "}
-                </span>
-                <span className="text-[#f1c34c] inline-block hover:scale-105 transition-transform">
-                  {t("volunteer.title").split(" ")[2] || ""}
-                </span>
+                {t("volunteer.title").split(" ").map((word, index) => {
+                  const colors = ["text-[#4d93fb]", "text-[#11b505]", "text-[#f1c34c]"];
+                  return (
+                    <span
+                      key={index}
+                      className={`${colors[index % colors.length]} inline-block hover:scale-105 transition-transform`}
+                    >
+                      {word}{" "}
+                    </span>
+                  );
+                })}
               </h2>
 
               <p className="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
@@ -476,7 +478,7 @@ export default function JoinMIT() {
                 className="pt-4"
               >
                 <a
-                  href="https://forms.google.com"
+                  href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-block"
