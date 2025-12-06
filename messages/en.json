@@ -132,6 +132,13 @@
     "tag2": "Growth",
     "tag3": "Community",
     "finalMessage": "Together, we create meaningful experiences and lasting bonds that strengthen our faith and community.",
-    "scrollTop": "Scroll to top to explore more"
+    "scrollTop": "Scroll to top to explore more",
+    "volunteer": {
+      "title": "Become a Volunteer",
+      "subtitle": "Join our team and make a difference",
+      "description": "We're always looking for passionate individuals to help organize events, support community initiatives, and contribute to our mission of building a stronger Muslim community in Hungary.",
+      "applyNow": "Apply Now",
+      "formDescription": "Fill out our volunteer application form to get started"
+    }
   }
 }

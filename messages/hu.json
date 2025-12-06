@@ -132,6 +132,13 @@
     "tag2": "Fejlődés",
     "tag3": "Közösség",
     "finalMessage": "Együtt értelmes élményeket és tartós kapcsolatokat teremtünk, amelyek erősítik hitünket és közösségünket.",
-    "scrollTop": "Görgess fel és fedezz fel többet"
+    "scrollTop": "Görgess fel és fedezz fel többet",
+    "volunteer": {
+      "title": "Légy Önkéntes",
+      "subtitle": "Csatlakozz csapatunkhoz és tégy különbséget",
+      "description": "Mindig keresünk lelkes egyéneket, akik segítenek eseményeket szervezni, közösségi kezdeményezéseket támogatni, és hozzájárulni küldetésünkhöz, hogy erősebb muszlim közösséget építsünk Magyarországon.",
+      "applyNow": "Jelentkezz Most",
+      "formDescription": "Töltsd ki önkéntes jelentkezési űrlapunkat az induláshoz"
+    }
   }
 }

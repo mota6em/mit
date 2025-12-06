@@ -424,6 +424,91 @@ export default function JoinMIT() {
             </div>
           </div>
         </motion.div>
+
+        {/* Volunteer Application Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative"
+        >
+          <div className="relative bg-gradient-to-br from-[#4d93fb]/5 via-[#11b505]/5 to-[#f1c34c]/5 rounded-3xl shadow-xl p-8 md:p-12 overflow-hidden border border-gray-100">
+            {/* Background decoration */}
+            <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-[#4d93fb]/10 to-transparent rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-to-tl from-[#f1c34c]/10 to-transparent rounded-full blur-3xl" />
+
+            <div className="relative z-10 text-center space-y-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 bg-white px-6 py-2 rounded-full mb-4 shadow-sm"
+              >
+                <FaHeart className="text-[#4d93fb] text-xl" />
+                <span className="text-sm font-semibold text-gray-700">
+                  {t("volunteer.subtitle")}
+                </span>
+              </motion.div>
+
+              <h2 className="text-4xl md:text-6xl font-bold Carena-font leading-tight">
+                <span className="text-[#4d93fb] inline-block hover:scale-105 transition-transform">
+                  {t("volunteer.title").split(" ")[0]}{" "}
+                </span>
+                <span className="text-[#11b505] inline-block hover:scale-105 transition-transform">
+                  {t("volunteer.title").split(" ")[1]}{" "}
+                </span>
+                <span className="text-[#f1c34c] inline-block hover:scale-105 transition-transform">
+                  {t("volunteer.title").split(" ")[2] || ""}
+                </span>
+              </h2>
+
+              <p className="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+                {t("volunteer.description")}
+              </p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="pt-4"
+              >
+                <a
+                  href="https://forms.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-block"
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative px-12 py-6 bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] text-white font-bold text-xl rounded-2xl shadow-2xl overflow-hidden"
+                  >
+                    {/* Button shimmer effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-shine" />
+                    </div>
+
+                    <span className="relative z-10 flex items-center justify-center gap-3">
+                      {t("volunteer.applyNow")}
+                      <motion.span
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                      >
+                        →
+                      </motion.span>
+                    </span>
+                  </motion.button>
+                </a>
+                <p className="text-sm text-gray-600 mt-4">
+                  {t("volunteer.formDescription")}
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
