@@ -108,7 +108,7 @@ export default function NavBar() {
                   <DropdownMenuItem
                     key={link.label}
                     asChild
-                    className={`font-medium Carena-font hover:bg-yellow-100 rounded-md ${
+                    className={`font-medium hover:bg-yellow-100 rounded-md ${
                       isActive
                         ? "outline outline-yellow-700 text-yellow-700"
                         : "text-gray-800"
