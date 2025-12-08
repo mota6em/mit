@@ -171,6 +171,18 @@
   font-family: "CarenaHopen", "Arial", sans-serif;
 }
 
+@font-face {
+  font-family: "Ang";
+  src: url("/fonts/Ang.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.Ang-font {
+  font-family: "Ang", "Arial", sans-serif;
+}
+
 @keyframes gradient-x {
   0%,
   100% {
