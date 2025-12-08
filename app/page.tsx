@@ -10,7 +10,7 @@ export default function RootPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/en");
-    }, 2500);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [router]);
 
