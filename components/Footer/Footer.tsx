@@ -37,7 +37,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-center mt-4 md:mt-2 text-sm opacity-90">
-          © {new Date().getFullYear()} MIT - {t("subtitle")}.
+          ©{new Date().getFullYear()} MIT - {t("subtitle")}.
         </div>
       </div>
     </footer>
