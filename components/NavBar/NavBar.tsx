@@ -31,7 +31,7 @@ export default function NavBar() {
   ];
 
   return (
-    <header className="bg-white sticky top-0 z-50 px-2 md:px-0">
+    <header className="bg-white sticky top-0 z-50 px-2 md:px-10">
       <div className="container flex justify-between items-center px-0 py-2">
         <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-4">

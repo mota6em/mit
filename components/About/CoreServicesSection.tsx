@@ -31,28 +31,28 @@ const CoreServicesSection = () => {
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20 bg-white">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 text-gray-800 tracking-widest Ang-font">
-          <span className="text-[#4d93fb]">OUR </span>
-          <span className="text-[#11b505]">CORE </span>
-          <span className="text-[#f1c34c]">SERVICES</span>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-20 tracking-widest Ang-font bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent">
+          OUR CORE SERVICES
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-lg border-2 border-gray-200"
+              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group"
             >
               <div
                 style={{ backgroundColor: service.color }}
-                className="w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto"
+                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg  transition-transform duration-300"
               >
-                <service.icon className="w-8 h-8 text-white" />
+                <service.icon className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold text-center mb-3 text-gray-800">
                 {service.title}
               </h3>
-              <p className="text-center text-gray-600">{service.desc}</p>
+              <p className="text-center text-gray-600 leading-relaxed">
+                {service.desc}
+              </p>
             </div>
           ))}
         </div>

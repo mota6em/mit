@@ -1,12 +1,12 @@
 const HeroSection = () => {
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#2c3e50] text-white">
+    <section className="py-18 px-6 md:px-12 lg:px-20 bg-white">
       <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-widest Ang-font text-[#f1c34c] mb-8">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-widest Ang-font bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent mb-8">
           Who We Are
         </h1>
 
-        <p className="text-lg md:text-xl lg:text-2xl leading-relaxed text-white font-medium max-w-4xl mx-auto">
+        <p className="text-lg md:text-xl lg:text-2xl leading-relaxed text-gray-700 font-normal max-w-4xl mx-auto">
           The Youth Muslims of Hungary (MIT) is a volunteer-driven organization
           dedicated to uniting and empowering Muslim youth across Hungary. We
           provide a space for learning, collaboration, and personal growth,

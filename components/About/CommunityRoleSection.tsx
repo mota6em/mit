@@ -25,25 +25,27 @@ const CommunityRoleSection = () => {
   ];
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#2c3e50] text-white">
+    <section className="py-24 px-6 md:px-12 lg:px-20 bg-white">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 text-[#f1c34c] tracking-widest Ang-font">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-20 tracking-widest Ang-font bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent">
           OUR ROLE IN THE COMMUNITY
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {roleItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 bg-white/10 p-6 rounded-lg border border-white/20"
+              className="flex items-start gap-5 bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 "
             >
               <div
                 style={{ backgroundColor: item.color }}
-                className="p-3 rounded-full flex-shrink-0"
+                className="p-4 rounded-xl flex-shrink-0 shadow-md"
               >
-                <item.icon className="w-6 h-6 text-white" />
+                <item.icon className="w-7 h-7 text-white" />
               </div>
-              <p className="text-lg md:text-xl leading-relaxed">{item.text}</p>
+              <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+                {item.text}
+              </p>
             </div>
           ))}
         </div>
