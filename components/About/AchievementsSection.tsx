@@ -8,7 +8,7 @@ const AchievementsSection = () => {
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20 bg-white">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 tracking-widest Ang-font bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 tracking-widest Ang-font text-yellow-600">
           {t("title")}
         </h2>
 

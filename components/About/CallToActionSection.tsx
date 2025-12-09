@@ -10,11 +10,11 @@ const CallToActionSection = () => {
       <div className="max-w-4xl mx-auto text-center">
         <div className="bg-gradient-to-br from-[#4d93fb]/5 via-[#11b505]/5 to-[#f1c34c]/5 p-12 md:p-16 rounded-3xl shadow-xl border border-gray-100">
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-10 tracking-widest Ang-font">
-            <span className="bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent">
+            <span className="text-yellow-600">
               {t("title")}
             </span>
             <br />
-            <span className="bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] bg-clip-text text-transparent">
+            <span className="text-yellow-600">
               {t("subtitle")}
             </span>
           </h2>
