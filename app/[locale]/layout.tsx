@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
+import NavBar from "@/components/NavBar/NavBar";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "hu" }];
@@ -58,6 +59,7 @@ export default async function LocaleLayout({ children, params }: any) {
     <html lang={locale}>
       <body className="flex flex-col min-h-screen">
         <I18nProvider messages={messages} locale={locale}>
+          <NavBar />
           <div className="flex-1">{children}</div>
           <Footer />
         </I18nProvider>
