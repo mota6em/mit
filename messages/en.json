@@ -145,5 +145,99 @@
         "leadership": "Leadership Opportunities"
       }
     }
+  },
+  "aboutMIT": {
+    "hero": {
+      "badge": "About MIT",
+      "title": "Who We Are",
+      "description": "The Youth Muslims of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of sincerity, community, and excellence (ihsan), MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose."
+    },
+    "visionMission": {
+      "title": "MIT VISION AND MISSION",
+      "vision": {
+        "title": "MIT Vision",
+        "description": "To empower Muslim youth in Hungary to become active, confident, and united leaders in faith and society."
+      },
+      "mission": {
+        "title": "MIT Mission",
+        "description": "Our mission is to serve Allah through teamwork, growth, and service to our community. Through education, events, and community service, MIT nurtures the next generation of Muslim leaders."
+      }
+    },
+    "coreServices": {
+      "title": "OUR CORE SERVICES",
+      "services": [
+        {
+          "title": "Education & Development",
+          "description": "Quran circles, workshops, mentoring."
+        },
+        {
+          "title": "Community Events",
+          "description": "Iftars, social gatherings, sports, volunteering."
+        },
+        {
+          "title": "Media Outreach",
+          "description": "Campaigns, awareness projects, online da'wah."
+        },
+        {
+          "title": "Human Resources",
+          "description": "Volunteer programs and leadership training."
+        }
+      ]
+    },
+    "communityRole": {
+      "title": "OUR ROLE IN THE COMMUNITY",
+      "roles": [
+        "Acts as a bridge between youth and community institutions.",
+        "Supports mosque initiatives while filling youth engagement gaps.",
+        "Builds unity between Hungarian reverts and international Muslims.",
+        "Expands volunteerism culture among young Muslims."
+      ]
+    },
+    "achievements": {
+      "title": "KEY ACHIEVEMENTS",
+      "list": [
+        "Organized Ramadan Sadaqa Programs supporting families in need.",
+        "Launched a Youth Internship Project to empower young Muslims.",
+        "Initiated the Gaza Student Support Campaign.",
+        "First to start Marriage Education & Matching Programs in Hungary.",
+        "Introduced the first Du'aa Training Program.",
+        "Hosted successful events in multiple mosques.",
+        "Operated fully through volunteer work without financial support.",
+        "First Muslim youth group to collaborate with Hungarian universities.",
+        "Helped build a successful, empowered Muslim generation."
+      ]
+    },
+    "futureGoals": {
+      "title": "LOOKING AHEAD",
+      "shortTerm": {
+        "title": "Short-Term (Next 3-6 Months)",
+        "goals": [
+          "Launch Gaza/Sadaka campaign.",
+          "Complete volunteer onboarding automation.",
+          "Organize Monthly events calendar.",
+          "Start MIT Academy training sessions.",
+          "Get Use to the new system and new Leadership style."
+        ]
+      },
+      "longTerm": {
+        "title": "Long-Term (Next 1-2 Years)",
+        "goals": [
+          "Build strong partnerships with Hungarian institutions.",
+          "Develop consistent professional branding.",
+          "Establish MIT as a recognized youth platform in HU.",
+          "Begin community activism and representation projects."
+        ]
+      },
+      "button": "Join MIT Today"
+    },
+    "callToAction": {
+      "title": "Call to Action:",
+      "subtitle": "Together for Allah's Cause",
+      "points": [
+        "Each team member has a vital role (Amanah).",
+        "Focus on consistency and collaboration.",
+        "Strive for excellence in all actions."
+      ]
+    }
   }
 }

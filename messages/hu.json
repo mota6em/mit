@@ -145,5 +145,99 @@
         "leadership": "Vezetői Lehetőségek"
       }
     }
+  },
+  "aboutMIT": {
+    "hero": {
+      "badge": "A MIT-ről",
+      "title": "Kik Vagyunk Mi",
+      "description": "A Magyarországi Ifjú Muszlimok (MIT) egy önkéntesek által működtetett szervezet, ami azért jött létre, hogy összefogjuk és megerősítsük a magyarországi muszlim fiatalokat. Nyújtunk egy helyet tanulásra, együttműködésre és személyes fejlődésre, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám őszinteség, közösség és kiválóság (ihsan) értékeire építkezve a MIT arra törekszik, hogy olyan generációt neveljünk, amely integritással és elkötelezetten szolgálja az Ummát és a szélesebb társadalmat."
+    },
+    "visionMission": {
+      "title": "MIT VÍZIÓ ÉS MISSZIÓ",
+      "vision": {
+        "title": "MIT Vízió",
+        "description": "Megerősíteni a magyarországi muszlim fiatalokat, hogy aktív, magabiztos és egységes vezetőivé váljanak a hitüknek és a társadalomnak."
+      },
+      "mission": {
+        "title": "MIT Misszió",
+        "description": "Küldetésünk, hogy Allahot szolgáljuk csapatmunka, fejlődés és közösségünk szolgálata által. Oktatással, rendezvényekkel és közösségi munkával a MIT a muszlim vezetők következő generációját neveli."
+      }
+    },
+    "coreServices": {
+      "title": "FŐ SZOLGÁLTATÁSAINK",
+      "services": [
+        {
+          "title": "Oktatás & Fejlesztés",
+          "description": "Korán körök, workshopok, mentorálás."
+        },
+        {
+          "title": "Közösségi Események",
+          "description": "Iftarok, összejövetelek, sport, önkéntesség."
+        },
+        {
+          "title": "Média Kapcsolatok",
+          "description": "Kampányok, tudatosság projektek, online da'wah."
+        },
+        {
+          "title": "Emberierőforrás",
+          "description": "Önkéntes programok és vezetői képzések."
+        }
+      ]
+    },
+    "communityRole": {
+      "title": "SZEREPÜNK A KÖZÖSSÉGBEN",
+      "roles": [
+        "Hidat képezünk a fiatalok és a közösségi intézmények között.",
+        "Támogatjuk a mecset kezdeményezéseket, miközben kitöltjük a fiatalkori részvétel hiányosságait.",
+        "Egységet építünk a magyar muszlim konvertáltak és a nemzetközi muszlimok között.",
+        "Terjesztjük az önkéntesség kultúráját a fiatal muszlimok körében."
+      ]
+    },
+    "achievements": {
+      "title": "FŐBB EREDMÉNYEINK",
+      "list": [
+        "Szerveztünk Ramadáni Szadaka Programokat rászoruló családoknak.",
+        "Elindítottuk a Fiatal Gyakornoki Projektet a muszlim fiatalok megerősítésére.",
+        "Kezdeményeztük a Gázai Diák Támogatási Kampányt.",
+        "Elsőként indítottunk Házassági Oktatási és Párkereső Programokat Magyarországon.",
+        "Bevezettük az első Du'aa Képzési Programot.",
+        "Sikeres eseményeket szerveztünk több mecsetben.",
+        "Teljesen önkéntes munkával működünk anyagi támogatás nélkül.",
+        "Első muszlim ifjúsági csoport, ami magyar egyetemekkel működik együtt.",
+        "Segítettünk felépíteni egy sikeres, megerősített muszlim generációt."
+      ]
+    },
+    "futureGoals": {
+      "title": "ELŐRETEKINTÉS",
+      "shortTerm": {
+        "title": "Rövidtávú (Következő 3-6 Hónap)",
+        "goals": [
+          "Gázai/Szadaka kampány indítása.",
+          "Önkéntes beléptetés automatizálásának befejezése.",
+          "Havi eseménynaptár szervezése.",
+          "MIT Akadémia képzési alkalmak indítása.",
+          "Megszokni az új rendszert és az új Vezetési stílust."
+        ]
+      },
+      "longTerm": {
+        "title": "Hosszútávú (Következő 1-2 Év)",
+        "goals": [
+          "Erős partnerségek kiépítése magyar intézményekkel.",
+          "Következetes professzionális branding kifejlesztése.",
+          "MIT elismertetése meghatározó fiataloknak szóló platformként Magyarországon.",
+          "Közösségi aktivizmus és képviseleti projektek indítása."
+        ]
+      },
+      "button": "Csatlakozz a MIT-hez Ma"
+    },
+    "callToAction": {
+      "title": "Cselekvésre Fel:",
+      "subtitle": "Együtt Allah Ügyéért",
+      "points": [
+        "Minden csapattagnak létfontosságú szerepe van (Amanah).",
+        "Összpontosítsunk a következetességre és az együttműködésre.",
+        "Törekedjünk kiválóságra minden tettünkben."
+      ]
+    }
   }
 }
