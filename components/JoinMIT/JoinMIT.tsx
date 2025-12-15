@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Reusable "Pill" Tag Component from the design
 const SectionTag = ({ text, color = "green" }) => {
   const colorClasses = {
     green: "bg-green-100 text-green-600",
@@ -80,26 +79,26 @@ export default function JoinMIT() {
 
   return (
     <div className="relative w-full min-h-screen bg-[#fafafa] overflow-hidden font-sans">
-      {/* Background Decor (Subtle blobs like the screenshot) */}
+      {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
 
       {/* --- HERO SECTION --- */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
+      <div className="max-w-7xl md:ms-2 mx-auto px-4 sm:px-6 lg:px-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center z-10"
+            className="text-center z-10 mt-10 md:mt-0"
           >
             <SectionTag
               text={t("joinUsTag") || "Be Part of Us"}
               color="green"
             />
 
-            <h1 className="text-5xl md:text-7xl font-bold Carena-font mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold Carena-font mb-2 leading-tight">
               <span className="text-[#e8b030] drop-shadow-sm">
                 {t("title").split(" ")[0] || "Join"}{" "}
               </span>
@@ -111,14 +110,48 @@ export default function JoinMIT() {
               </span>
             </h1>
 
-            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+            {/* Image Collage - mobile screens view */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative h-[400px] md:h-[500px] md:hidden"
+            >
+              {/* Image 1 - Tilted Left */}
+              <div className="absolute top-0 left-2 md:left-15 w-64 h-80 rotate-[-6deg] z-10">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+                  <Image
+                    src="/imgs/hero/hero-bg-1.jpg"
+                    alt="Youth"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Image 2 - Tilted Right */}
+              <div className="absolute top-28 md:top-20 left-26 md:left-58 w-60 h-60 rotate-[12deg] z-20">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+                  <Image
+                    src="/imgs/hero/hero-bg-3.jpg"
+                    alt="Community"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Decorative Leaf Icon similar to screenshot */}
+                <div className="absolute -bottom-6 -right-6 bg-white p-3 rounded-full shadow-md z-30">
+                  <HiSparkles className="text-[#e8b030] text-2xl" />
+                </div>
+              </div>
+            </motion.div>
+            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-4 max-w-lg mx-auto lg:mx-0">
               {t("subtitle")}
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center ">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mx-10 md:mx-0">
               <a
                 href="#volunteer"
-                className="px-8 py-3 bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-colors shadow-lg shadow-green-200"
+                className="px-8 py-3  bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-colors shadow-lg shadow-green-200"
               >
                 {t("volunteer.button") || "Start Volunteering"}
               </a>
@@ -129,17 +162,16 @@ export default function JoinMIT() {
                 {t("connect") || "Connect With Us"}
               </a>
             </div>
-          </motion.div>
-
-          {/* Image Collage (Sticker Style) */}
+          </motion.div>{" "}
+          {/* Image Collage - big screens view */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[400px] md:h-[500px] hidden lg:block"
+            className="relative h-[400px] md:h-[500px] hidden md:block"
           >
             {/* Image 1 - Tilted Left */}
-            <div className="absolute top-10 left-15 w-64 h-80 rotate-[-6deg] z-10">
+            <div className="absolute top-10 left-2 md:left-10 w-70 h-84 rotate-[-6deg] z-10">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
                   src="/imgs/hero/hero-bg-1.jpg"
@@ -151,7 +183,7 @@ export default function JoinMIT() {
             </div>
 
             {/* Image 2 - Tilted Right */}
-            <div className="absolute top-20 left-58 w-60 h-60 rotate-[12deg] z-20">
+            <div className="absolute top-45 md:top-30 left-26 md:left-50 w-64 h-68 rotate-[12deg] z-20">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
                   src="/imgs/hero/hero-bg-3.jpg"
@@ -169,11 +201,9 @@ export default function JoinMIT() {
         </div>
       </div>
 
-      {/* --- VOLUNTEER SECTION --- 
-          Matching "Our Role in the Community" wide cards
-      */}
-      <div id="volunteer" className="max-w-6xl mx-auto px-4 py-16">
-        <div className="text-center mb-12">
+      {/* --- VOLUNTEER SECTION ---   */}
+      <div id="volunteer" className="max-w-6xl mx-auto px-4 py-25 pb-0">
+        <div className="text-center mb-8">
           <SectionTag text={t("impactTag") || "Make an Impact"} color="gold" />
           <h2 className="text-4xl md:text-5xl font-bold Carena-font text-[#e8b030] mb-4">
             {t("volunteer.title")}
@@ -212,41 +242,45 @@ export default function JoinMIT() {
           </div>
         </motion.div>
       </div>
-
-      {/* --- SOCIAL MEDIA SECTION --- 
-          Matching "Our Core Services" vertical cards 
-      */}
+      {/* --- SOCIAL MEDIA SECTION --- */}
       <div
         id="socials"
-        className="max-w-7xl mx-auto px-4 py-16 bg-white/50 rounded-[3rem] my-10"
+        className="max-w-7xl mx-auto px-4 py-14 md:py-10 bg-white/50 rounded-[2rem] md:rounded-[3rem] my-6 md:my-10"
       >
-        <div className="text-center mb-16">
+        <div className="text-center mb-6 md:mb-10">
           <SectionTag text={t("socialTag") || "Stay Connected"} color="blue" />
-          <h2 className="text-4xl md:text-5xl font-bold Carena-font text-[#4d93fb]">
+          <h2 className="text-3xl md:text-5xl font-bold Carena-font text-[#4d93fb]">
             {t("connectWithUs")}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {socialLinks.map((social, index) => {
             const Icon = social.icon;
             const isEmail = social.name === "Email";
 
             const content = (
-              <div className="h-full bg-white rounded-3xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+              <div className="h-full bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] md:shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-center justify-center">
+                {/* Compact Icon Container */}
                 <div
-                  className={`w-16 h-16 mx-auto ${social.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+                  className={`w-10 h-10 md:w-16 md:h-16 mx-auto ${social.bg} rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform`}
                 >
-                  <Icon className={`text-3xl ${social.color}`} />
+                  <Icon className={`text-lg md:text-3xl ${social.color}`} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+
+                {/* Compact Title */}
+                <h3 className="text-sm md:text-xl font-bold text-gray-800 mb-1 md:mb-2">
                   {social.name}
                 </h3>
-                <p className="text-gray-500 text-sm mb-4 line-clamp-2">
+
+                {/* Compact Description (Line clamped to 2 lines) */}
+                <p className="text-gray-500 text-[10px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
                   {t(`socialText.${social.name.toLowerCase()}`)}
                 </p>
+
+                {/* Action Text */}
                 <div
-                  className={`text-sm font-semibold ${social.color} opacity-80 group-hover:opacity-100`}
+                  className={`text-[10px] md:text-sm font-semibold ${social.color} opacity-80 group-hover:opacity-100 mt-auto`}
                 >
                   {isEmail && emailCopied
                     ? tNav("copied")
@@ -264,6 +298,7 @@ export default function JoinMIT() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="h-full" // Ensure card takes full height of grid cell
               >
                 {isEmail ? (
                   <button
@@ -288,9 +323,7 @@ export default function JoinMIT() {
         </div>
       </div>
 
-      {/* --- NEWSLETTER SECTION --- 
-          Matching the "Looking Ahead" dark blue card style
-      */}
+      {/* --- NEWSLETTER SECTION ---   */}
       <div className="max-w-7xl mx-auto px-4 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -321,7 +354,7 @@ export default function JoinMIT() {
                   "Join our community newsletter to receive updates on events, workshops, and volunteer opportunities."}
               </p>
 
-              {/* Feature List (bullet points like Looking Ahead) */}
+              {/* Feature List  */}
               <ul className="space-y-3 text-sm text-gray-300 hidden md:block">
                 <li className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#e8b030]" />
