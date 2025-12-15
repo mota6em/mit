@@ -1,10 +1,13 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion"; // 1. Import Variants
+import { motion, Variants } from "framer-motion";
+import { useState } from "react";
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
+  const [img1Loaded, setImg1Loaded] = useState(false);
+  const [img2Loaded, setImg2Loaded] = useState(false);
 
   const floatingAnimation: Variants = {
     initial: { y: 0 },
@@ -76,8 +79,7 @@ const HeroSection = () => {
             {t("description")}
           </motion.p>
 
-          {/* Optional decorative line or small action */}
-          <motion.div
+           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -87,39 +89,53 @@ const HeroSection = () => {
 
         {/* RIGHT COLUMN: Creative Image Collage */}
         <div className="relative h-[500px] w-full hidden lg:block">
-          {/* Image 1: Top Left (Floating Up/Down) */}
+          {/* Image 1 */}
           <motion.div
             variants={floatingAnimation}
             initial="initial"
             animate="animate"
-            className="absolute top-0 left-0 w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105"
+            className="absolute top-0 left-0 w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6"
           >
+            {/* Loading Skeleton */}
+            {!img1Loaded && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+            )}
             <Image
               src="/imgs/hero/hero-bg-1.jpg"
               alt="Community Event"
               fill
-              className="object-cover"
+              className={`object-cover transition-opacity duration-500 ${
+                img1Loaded ? "opacity-100" : "opacity-0"
+              }`}
               sizes="(max-width: 768px) 100vw, 33vw"
+              onLoad={() => setImg1Loaded(true)}
             />
           </motion.div>
 
-          {/* Image 2: Bottom Right (Floating Down/Up) */}
+          {/* Image 2  */}
           <motion.div
             variants={floatingAnimationDelayed}
             initial="initial"
             animate="animate"
-            className="absolute bottom-10 right-10 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105"
+            className="absolute bottom-10 right-10 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
           >
+            {/* Loading Skeleton */}
+            {!img2Loaded && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+            )}
             <Image
               src="/imgs/hero/hero-bg-2.jpg"
               alt="Youth Gathering"
               fill
-              className="object-cover"
+              className={`object-cover transition-opacity duration-500 ${
+                img2Loaded ? "opacity-100" : "opacity-0"
+              }`}
               sizes="(max-width: 768px) 100vw, 33vw"
+              onLoad={() => setImg2Loaded(true)}
             />
           </motion.div>
 
-          {/* Image 3: Center Small (Logo or Highlight) */}
+          {/* Image 3  */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -132,10 +148,10 @@ const HeroSection = () => {
               width={130}
               height={130}
               className="object-contain p-2"
+              priority
             />
           </motion.div>
 
-          {/* Decorative colored blobs behind images */}
           <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
           <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
           <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
