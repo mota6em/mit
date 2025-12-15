@@ -93,8 +93,12 @@
     ]
   },
   "joinMIT": {
-    "title": "Join MIT",
+    "title": "Join MIT Family",
     "subtitle": "Connect with us and become part of our vibrant community",
+    "joinUsTag": "Be Part of Us",
+    "impactTag": "Make an Impact",
+    "socialTag": "Stay Connected",
+    "connect": "Connect With Us",
     "stats": {
       "members": "Active Members",
       "events": "Events Yearly",
@@ -110,7 +114,7 @@
       "whatsapp": "Join our WhatsApp group for instant updates",
       "email": "Reach out to us directly via email"
     },
-    "stayUpdated": "Stay Updated",
+    "stayUpdated": "Stay In The Loop",
     "newsletterTag": "Newsletter",
     "subscriptionDescription": "Subscribe to our newsletter and never miss an event, program, or important announcement.",
     "emailPlaceholder": "Enter your email address",

@@ -1,21 +1,35 @@
 "use client";
 import { useState, useEffect } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaHeart } from "react-icons/fa";
-import { HiOutlineMail, HiSparkles } from "react-icons/hi";
+import { HiOutlineMail, HiSparkles, HiArrowRight } from "react-icons/hi";
 import { useTranslations } from "next-intl";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
+
+// Reusable "Pill" Tag Component from the design
+const SectionTag = ({ text, color = "green" }) => {
+  const colorClasses = {
+    green: "bg-green-100 text-green-600",
+    gold: "bg-yellow-100 text-yellow-600",
+    blue: "bg-blue-100 text-blue-600",
+  };
+
+  return (
+    <div
+      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 ${
+        colorClasses[color] || colorClasses.green
+      }`}
+    >
+      {text}
+    </div>
+  );
+};
 
 export default function JoinMIT() {
   const [mounted, setMounted] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
-  const { scrollY } = useScroll();
   const t = useTranslations("joinMIT");
   const tNav = useTranslations("nav");
-
-  // Parallax effect for hero
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   useEffect(() => {
     setMounted(true);
@@ -25,29 +39,29 @@ export default function JoinMIT() {
     {
       icon: FaFacebookF,
       href: "https://www.facebook.com/muszlimifjusag/",
-      gradient: "from-blue-600 to-blue-800",
-      bgColor: "bg-blue-600",
+      color: "text-blue-600",
+      bg: "bg-blue-50",
       name: "Facebook",
     },
     {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
-      gradient: "from-pink-600 via-purple-600 to-orange-500",
-      bgColor: "bg-pink-600",
+      color: "text-pink-600",
+      bg: "bg-pink-50",
       name: "Instagram",
     },
     {
       icon: FaWhatsapp,
       href: "https://wa.me/123456789",
-      gradient: "from-green-500 to-green-700",
-      bgColor: "bg-green-600",
+      color: "text-green-600",
+      bg: "bg-green-50",
       name: "WhatsApp",
     },
     {
       icon: HiOutlineMail,
       href: "#",
-      gradient: "from-yellow-500 to-orange-600",
-      bgColor: "bg-yellow-600",
+      color: "text-yellow-600",
+      bg: "bg-yellow-50",
       name: "Email",
     },
   ];
@@ -62,402 +76,287 @@ export default function JoinMIT() {
     }
   };
 
+  if (!mounted) return null;
+
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section with Background Image */}
-      <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
-        <motion.div
-          style={{ y: mounted ? heroY : 0 }}
-          className="absolute inset-0"
-        >
-          <Image
-            src="/imgs/patterns/quba-alsakhra-lowres.jpg"
-            alt="Join MIT Background"
-            fill
-            className="object-cover brightness-[0.45]"
-            priority
-          />
-        </motion.div>
+    <div className="relative w-full min-h-screen bg-[#fafafa] overflow-hidden font-sans">
+      {/* Background Decor (Subtle blobs like the screenshot) */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
 
-        {/* Animated pattern overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(77,147,251,0.3),transparent_50%)] animate-pulse" />
-        </div>
-
-        {/* Hero Content */}
-        <motion.div
-          style={{ opacity: mounted ? heroOpacity : 1 }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-        >
+      {/* --- HERO SECTION --- */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Text Content */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8 relative"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center z-10"
           >
-            <div className="absolute inset-0 bg-[#4d93fb]/30 blur-3xl rounded-full animate-pulse" />
-            <Image
-              src="/imgs/hero/mit-logo-full.png"
-              alt="MIT Logo"
-              width={200}
-              height={200}
-              className="w-36 h-36 md:w-56 md:h-56 drop-shadow-2xl relative z-10"
+            <SectionTag
+              text={t("joinUsTag") || "Be Part of Us"}
+              color="green"
             />
+
+            <h1 className="text-5xl md:text-7xl font-bold Carena-font mb-6 leading-tight">
+              <span className="text-[#e8b030] drop-shadow-sm">
+                {t("title").split(" ")[0] || "Join"}{" "}
+              </span>
+              <span className="text-[#11b505] drop-shadow-sm">
+                {t("title").split(" ")[1] || "The"}
+              </span>{" "}
+              <span className="text-[#4d93fb] drop-shadow-sm">
+                {t("title").split(" ")[2] || "Family"}
+              </span>
+            </h1>
+
+            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+              {t("subtitle")}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center ">
+              <a
+                href="#volunteer"
+                className="px-8 py-3 bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-colors shadow-lg shadow-green-200"
+              >
+                {t("volunteer.button") || "Start Volunteering"}
+              </a>
+              <a
+                href="#socials"
+                className="px-8 py-3 bg-white text-gray-600 border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition-colors"
+              >
+                {t("connect") || "Connect With Us"}
+              </a>
+            </div>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-5xl md:text-8xl font-bold Carena-font mb-4"
+          {/* Image Collage (Sticker Style) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative h-[400px] md:h-[500px] hidden lg:block"
           >
-            <span className="text-[#4d93fb] drop-shadow-[0_4px_20px_rgba(77,147,251,0.6)] inline-block hover:scale-110 transition-transform duration-300">
-              {t("title").split(" ")[0]}{" "}
-            </span>
-            <span className="text-[#f1c34c] drop-shadow-[0_4px_20px_rgba(241,195,76,0.6)] inline-block hover:scale-110 transition-transform duration-300">
-              {t("title").split(" ")[1]}
-            </span>
-          </motion.h1>
+            {/* Image 1 - Tilted Left */}
+            <div className="absolute top-10 left-15 w-64 h-80 rotate-[-6deg] z-10">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+                <Image
+                  src="/imgs/hero/hero-bg-1.jpg"
+                  alt="Youth"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl text-white font-medium max-w-3xl drop-shadow-lg mb-8"
-          >
-            {t("subtitle")}
-          </motion.p>
+            {/* Image 2 - Tilted Right */}
+            <div className="absolute top-20 left-58 w-60 h-60 rotate-[12deg] z-20">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+                <Image
+                  src="/imgs/hero/hero-bg-3.jpg"
+                  alt="Community"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              {/* Decorative Leaf Icon similar to screenshot */}
+              <div className="absolute -bottom-6 -right-6 bg-white p-3 rounded-full shadow-md z-30">
+                <HiSparkles className="text-[#e8b030] text-2xl" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* --- VOLUNTEER SECTION --- 
+          Matching "Our Role in the Community" wide cards
+      */}
+      <div id="volunteer" className="max-w-6xl mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <SectionTag text={t("impactTag") || "Make an Impact"} color="gold" />
+          <h2 className="text-4xl md:text-5xl font-bold Carena-font text-[#e8b030] mb-4">
+            {t("volunteer.title")}
+          </h2>
+        </div>
+
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 relative overflow-hidden"
+        >
+          {/* Decorative Corner Icon */}
+          <div className="absolute top-0 left-0 w-24 h-24 bg-[#e8b030]/10 rounded-br-[4rem] -z-0" />
+
+          <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+            <div className="flex-shrink-0 w-24 h-24 bg-red-50 rounded-full flex items-center justify-center">
+              <FaHeart className="text-4xl text-red-500" />
+            </div>
+
+            <div className="flex-grow text-center md:text-left">
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                Become a Volunteer
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                {t("volunteer.description")}
+              </p>
+              <a
+                href="https://forms.gle/your-link"
+                target="_blank"
+                className="inline-flex items-center gap-2 text-[#11b505] font-bold hover:gap-4 transition-all"
+              >
+                {t("volunteer.button")} <HiArrowRight />
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-10 space-y-16 md:px-10">
-        {/* Become a Volunteer Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative bg-gradient-to-br from-blue-50 via-green-50 to-yellow-50 rounded-3xl shadow-lg overflow-hidden p-8 md:p-16 border border-gray-100"
-        >
-          {/* Decorative circles */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#4d93fb]/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#11b505]/5 rounded-full blur-3xl" />
+      {/* --- SOCIAL MEDIA SECTION --- 
+          Matching "Our Core Services" vertical cards 
+      */}
+      <div
+        id="socials"
+        className="max-w-7xl mx-auto px-4 py-16 bg-white/50 rounded-[3rem] my-10"
+      >
+        <div className="text-center mb-16">
+          <SectionTag text={t("socialTag") || "Stay Connected"} color="blue" />
+          <h2 className="text-4xl md:text-5xl font-bold Carena-font text-[#4d93fb]">
+            {t("connectWithUs")}
+          </h2>
+        </div>
 
-          <div className="relative z-10">
-            <div className="max-w-4xl mx-auto">
-              {/* Icon and Title */}
-              <div className="text-center mb-8">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-50 to-pink-50 rounded-full mb-6 shadow-md"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {socialLinks.map((social, index) => {
+            const Icon = social.icon;
+            const isEmail = social.name === "Email";
+
+            const content = (
+              <div className="h-full bg-white rounded-3xl p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                <div
+                  className={`w-16 h-16 mx-auto ${social.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
                 >
-                  <FaHeart className="text-4xl text-red-500" />
-                </motion.div>
-
-                <h2 className="text-3xl md:text-5xl font-bold Carena-font mb-4">
-                  <span className="text-[#4d93fb]">
-                    {t("volunteer.title").split(" ")[0]}{" "}
-                  </span>
-                  <span className="text-[#11b505]">
-                    {t("volunteer.title").split(" ")[1]}{" "}
-                  </span>
-                  <span className="text-[#f1c34c]">
-                    {t("volunteer.title").split(" ")[2]}
-                  </span>
-                </h2>
-
-                <p className="text-gray-700 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                  {t("volunteer.description")}
+                  <Icon className={`text-3xl ${social.color}`} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  {social.name}
+                </h3>
+                <p className="text-gray-500 text-sm mb-4 line-clamp-2">
+                  {t(`socialText.${social.name.toLowerCase()}`)}
                 </p>
-              </div>
-
-              {/* CTA Button */}
-              <div className="text-center">
-                <a
-                  href="https://forms.gle/your-google-form-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-8 py-3 bg-white border-2 border-[#4d93fb] text-[#4d93fb] font-semibold text-base rounded-md hover:bg-[#4d93fb] hover:text-white transition-colors duration-300"
+                <div
+                  className={`text-sm font-semibold ${social.color} opacity-80 group-hover:opacity-100`}
                 >
-                  {t("volunteer.button")}
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Social Media Cards Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
-          <div className="text-center space-y-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#4d93fb]/10 via-[#11b505]/10 to-[#f1c34c]/10 px-6 py-2 rounded-full mb-4"
-            >
-              <HiSparkles className="text-[#f1c34c] text-xl" />
-              <span className="text-sm font-semibold text-gray-700">
-                {t("followTag")}
-              </span>
-            </motion.div>
-            <h2 className="text-4xl md:text-6xl font-bold Carena-font leading-tight">
-              <span className="text-[#4d93fb] inline-block hover:scale-105 transition-transform">
-                {t("connectWithUs").split(" ")[0]}{" "}
-              </span>
-              <span className="text-[#11b505] inline-block hover:scale-105 transition-transform">
-                {t("connectWithUs").split(" ")[1]}{" "}
-              </span>
-              <span className="text-[#f1c34c] inline-block hover:scale-105 transition-transform">
-                {t("connectWithUs").split(" ")[2]}
-              </span>
-            </h2>
-            <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              {t("socialDescription")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {socialLinks.map((social, index) => {
-              const Icon = social.icon;
-              const isEmail = social.name === "Email";
-
-              return isEmail ? (
-                <motion.div
-                  key={index}
-                  onClick={handleEmailCopy}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="group cursor-pointer"
-                >
-                  <div className="relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-transparent">
-                    {/* Gradient overlay */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                    />
-
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine" />
-                    </div>
-
-                    <div className="relative p-8 flex flex-col items-center text-center space-y-4 transform group-hover:-translate-y-1 transition-transform duration-300">
-                      <div
-                        className={`p-6 rounded-full ${social.bgColor} text-white group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg`}
-                      >
-                        <Icon size={36} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-white transition-colors duration-300">
-                        {social.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm group-hover:text-white/90 transition-colors duration-300 line-clamp-2">
-                        {t(`socialText.${social.name.toLowerCase()}`)}
-                      </p>
-                      <div className="flex items-center gap-2 text-sm font-semibold text-gray-800 group-hover:text-white transition-colors duration-300">
-                        <span>
-                          {emailCopied ? tNav("copied") : t("copyEmail")}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="group"
-                >
-                  <div className="relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full border border-gray-100 hover:border-transparent">
-                    {/* Gradient overlay */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-                    />
-
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-0 -left-full w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-shine" />
-                    </div>
-
-                    <div className="relative p-8 flex flex-col items-center text-center space-y-4 transform group-hover:-translate-y-1 transition-transform duration-300">
-                      <div
-                        className={`p-6 rounded-full ${social.bgColor} text-white group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg`}
-                      >
-                        <Icon size={36} />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-white transition-colors duration-300">
-                        {social.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm group-hover:text-white/90 transition-colors duration-300 line-clamp-2">
-                        {t(`socialText.${social.name.toLowerCase()}`)}
-                      </p>
-                      <div className="flex items-center gap-2 text-sm font-semibold text-gray-800 group-hover:text-white transition-colors duration-300">
-                        <span>{t("followUs")}</span>
-                        <motion.span
-                          animate={{ x: [0, 5, 0] }}
-                          transition={{ repeat: Infinity, duration: 1.5 }}
-                        >
-                          →
-                        </motion.span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.a>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Newsletter Section with Images */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative"
-        >
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            {/* Left: Images Grid */}
-            <div className="relative h-[400px] md:h-[500px] hidden lg:block">
-              <div className="grid grid-cols-2 gap-4 h-full">
-                <div className="space-y-4">
-                  <div className="relative h-1/2 rounded-2xl overflow-hidden">
-                    <Image
-                      src="/imgs/hero/hero-bg-1.jpg"
-                      alt="Community"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="relative h-1/2 rounded-2xl overflow-hidden">
-                    <Image
-                      src="/imgs/hero/hero-bg-3.jpg"
-                      alt="Events"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-4 pt-8">
-                  <div className="relative h-1/2 rounded-2xl overflow-hidden">
-                    <Image
-                      src="/imgs/hero/hero-bg-2.jpg"
-                      alt="Activities"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="relative h-1/2 rounded-2xl overflow-hidden">
-                    <Image
-                      src="/imgs/hero/hero-bg-4.jpg"
-                      alt="Gatherings"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
+                  {isEmail && emailCopied
+                    ? tNav("copied")
+                    : isEmail
+                    ? "Copy Email"
+                    : "Follow Us"}
                 </div>
               </div>
-            </div>
+            );
 
-            {/* Right: Newsletter Form - Coming Soon */}
-            <div className="relative bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-t-4 border-gray-300 overflow-hidden">
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full blur-3xl -z-0" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-gray-200 to-gray-100 rounded-full blur-3xl -z-0" />
-
-              {/* Overlay to indicate disabled state */}
-              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-20 flex items-center justify-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-center px-4"
-                >
-                  <div className="inline-flex items-center gap-2 bg-gray-100 px-6 py-3 rounded-full mb-4">
-                    <HiSparkles className="text-gray-400 text-2xl" />
-                  </div>
-                  <h3 className="text-3xl md:text-4xl font-bold Carena-font text-gray-700 mb-3">
-                    Coming Soon
-                  </h3>
-                  <p className="text-gray-500 text-lg max-w-md mx-auto">
-                    Newsletter subscription will be available soon. Stay tuned!
-                  </p>
-                </motion.div>
-              </div>
-
-              <div className="relative z-10 opacity-30">
-                <div className="mb-8 text-center lg:text-left">
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-[#11b505]/10 to-[#4d93fb]/10 px-4 py-2 rounded-full mb-4"
-                  >
-                    <HiOutlineMail className="text-[#11b505]" />
-                    <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-                      {t("newsletterTag")}
-                    </span>
-                  </motion.div>
-                  <h2 className="text-4xl md:text-5xl font-bold Carena-font mb-4">
-                    <span className="text-[#4d93fb] inline-block hover:scale-105 transition-transform">
-                      {t("stayUpdated").split(" ")[0]}{" "}
-                    </span>
-                    <span className="text-[#f1c34c] inline-block hover:scale-105 transition-transform">
-                      {t("stayUpdated").split(" ")[1]}
-                    </span>
-                  </h2>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    {t("subscriptionDescription")}
-                  </p>
-                </div>
-
-                <div className="space-y-4 pointer-events-none">
-                  <div className="relative group">
-                    <HiOutlineMail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
-                    <input
-                      type="email"
-                      placeholder={t("emailPlaceholder")}
-                      disabled
-                      className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-200 outline-none text-gray-800 text-lg shadow-sm bg-gray-50"
-                    />
-                  </div>
-
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                {isEmail ? (
                   <button
-                    type="button"
-                    disabled
-                    className="relative w-full py-5 rounded-2xl font-bold text-lg text-white bg-gray-400 cursor-not-allowed shadow-lg"
+                    onClick={handleEmailCopy}
+                    className="w-full h-full block text-left"
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                      {t("subscribe")}
-                      <HiSparkles className="text-xl" />
-                    </span>
+                    {content}
                   </button>
+                ) : (
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block h-full"
+                  >
+                    {content}
+                  </a>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
 
-                  <p className="text-sm text-gray-500 text-center flex items-center justify-center gap-1">
-                    <span>🔒</span>
-                    {t("privacyNote")}
+      {/* --- NEWSLETTER SECTION --- 
+          Matching the "Looking Ahead" dark blue card style
+      */}
+      <div className="max-w-7xl mx-auto px-4 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative bg-[#1a2332] rounded-[2.5rem] p-8 md:p-16 overflow-hidden text-center md:text-left"
+        >
+          {/* Background Patterns for the dark card */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#e8b030]/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#4d93fb]/10 rounded-full blur-3xl" />
+
+          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Text */}
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10">
+                <HiOutlineMail className="text-[#e8b030]" />
+                <span className="text-white text-xs font-bold uppercase tracking-wider">
+                  {t("newsletterTag") || "Newsletter"}
+                </span>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-bold Carena-font text-white leading-tight">
+                {t("stayUpdated") || "Stay In The Loop"}
+              </h2>
+
+              <p className="text-gray-300 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
+                {t("subscriptionDescription") ||
+                  "Join our community newsletter to receive updates on events, workshops, and volunteer opportunities."}
+              </p>
+
+              {/* Feature List (bullet points like Looking Ahead) */}
+              <ul className="space-y-3 text-sm text-gray-300 hidden md:block">
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#e8b030]" />
+                  <span>Weekly community updates</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#e8b030]" />
+                  <span>Exclusive event registrations</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right: Form (Blocked/Coming Soon) */}
+            <div className="relative">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 relative">
+                {/* Coming Soon Overlay */}
+                <div className="absolute inset-0 bg-[#1a2332]/80 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center rounded-3xl border border-white/10">
+                  <div className="bg-[#e8b030] text-[#1a2332] px-4 py-1 rounded-full text-sm font-bold mb-2">
+                    Coming Soon
+                  </div>
+                  <p className="text-white font-medium">
+                    Subscriptions opening shortly
                   </p>
+                </div>
+
+                {/* Dummy Form (Visual only) */}
+                <div className="space-y-4 opacity-30 pointer-events-none">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400"
+                  />
+                  <button className="w-full py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl">
+                    Subscribe
+                  </button>
                 </div>
               </div>
             </div>

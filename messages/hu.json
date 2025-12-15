@@ -93,8 +93,12 @@
     ]
   },
   "joinMIT": {
-    "title": "Csatlakozz MIT",
+    "title": "Csatlakozz az MIT-hez",
     "subtitle": "Kapcsolódj hozzánk és légy részese élénk közösségünknek",
+    "joinUsTag": "Tarts Velünk",
+    "impactTag": "Valódi Hatás",
+    "socialTag": "Közösségi Média",
+    "connect": "Kapcsolatfelvétel",
     "stats": {
       "members": "Aktív Tagok",
       "events": "Éves Események",
