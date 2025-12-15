@@ -141,8 +141,8 @@
   "aboutMIT": {
     "hero": {
       "badge": "A MIT-ről",
-      "title": "Kik Vagyunk Mi",
-      "description": "A Magyarországi Ifjú Muszlimok (MIT) egy önkéntesek által működtetett szervezet, ami azért jött létre, hogy összefogjuk és megerősítsük a magyarországi muszlim fiatalokat. Nyújtunk egy helyet tanulásra, együttműködésre és személyes fejlődésre, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám őszinteség, közösség és kiválóság (ihsan) értékeire építkezve a MIT arra törekszik, hogy olyan generációt neveljünk, amely integritással és elkötelezetten szolgálja az Ummát és a szélesebb társadalmat."
+      "title": "Kik Vagyunk",
+      "description": "A Magyarországi Ifjúsági Muszlimok (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát. Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám alapelvei – az őszinteség, a közösség és a kiválóság (ihsan) – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel és céltudatosan szolgálja mind az Ummát, mind a társadalmat."
     },
     "visionMission": {
       "title": "MIT VÍZIÓ ÉS MISSZIÓ",
@@ -208,7 +208,7 @@
           "Önkéntes beléptetés automatizálásának befejezése.",
           "Havi eseménynaptár szervezése.",
           "MIT Akadémia képzési alkalmak indítása.",
-          "Megszokni az új rendszert és az új Vezetési stílust."
+          "Megszokni az új rendszert és az új vezetési stílust."
         ]
       },
       "longTerm": {
