@@ -1,44 +1,94 @@
 "use client";
 import { BookOpen, Users, Megaphone, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 const CoreServicesSection = () => {
   const t = useTranslations("aboutMIT.coreServices");
 
   const serviceIcons = [BookOpen, Users, Megaphone, UserPlus];
-  const serviceColors = ["#4d93fb", "#11b505", "#f1c34c", "#9b59b6"];
+
+  // Brand colors map for dynamic styling
+  const brandColors = [
+    { main: "#4d93fb", bg: "bg-blue-50", text: "text-blue-600" }, // Blue
+    { main: "#11b505", bg: "bg-green-50", text: "text-green-600" }, // Green
+    { main: "#f1c34c", bg: "bg-yellow-50", text: "text-yellow-600" }, // Yellow
+    { main: "#2c3e50", bg: "bg-slate-50", text: "text-slate-700" }, // Dark Blue/Grey
+  ];
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0 },
+  };
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-20 tracking-widest Ang-font text-yellow-600">
-          {t("title")}
-        </h2>
+    <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <span className="text-[#f1c34c] font-bold tracking-widest uppercase text-sm mb-3 block">
+            {t("label")}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-widest Ang-font text-yellow-600">
+            {t("title")}
+          </h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           {[0, 1, 2, 3].map((index) => {
             const Icon = serviceIcons[index];
+            const color = brandColors[index];
+
             return (
-              <div
+              <motion.div
                 key={index}
-                className="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+                variants={item}
+                className="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
+                style={{ borderTop: `6px solid ${color.main}` }}
               >
+                {/* Icon Container with Soft Background */}
                 <div
-                  style={{ backgroundColor: serviceColors[index] }}
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg  transition-transform duration-300"
+                  className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 ${color.bg} ${color.text} shadow-sm`}
                 >
-                  <Icon className="w-10 h-10 text-white" />
+                  <Icon className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-bold text-center mb-3 text-gray-800">
+
+                {/* Content */}
+                <h3 className="text-xl font-bold mb-4 text-gray-900">
                   {t(`services.${index}.title`)}
                 </h3>
-                <p className="text-center text-gray-600 leading-relaxed">
+
+                <p className="text-gray-600 leading-relaxed text-sm md:text-base">
                   {t(`services.${index}.description`)}
                 </p>
-              </div>
+
+                {/* Decorative bottom corner blob */}
+                <div
+                  className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full opacity-5 pointer-events-none"
+                  style={{ backgroundColor: color.main }}
+                />
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

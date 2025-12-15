@@ -160,6 +160,7 @@
     },
     "coreServices": {
       "title": "FŐ SZOLGÁLTATÁSAINK",
+      "label": "Mivel Foglalkozunk",
       "services": [
         {
           "title": "Oktatás & Fejlesztés",

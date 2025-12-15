@@ -160,6 +160,7 @@
     },
     "coreServices": {
       "title": "OUR CORE SERVICES",
+      "label": "What We Do",
       "services": [
         {
           "title": "Education & Development",
