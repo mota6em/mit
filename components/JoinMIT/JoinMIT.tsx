@@ -6,8 +6,16 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const SectionTag = ({ text, color = "green" }) => {
-  const colorClasses = {
+type SectionTagColor = "green" | "gold" | "blue";
+
+const SectionTag = ({
+  text,
+  color = "green",
+}: {
+  text: string;
+  color?: SectionTagColor;
+}) => {
+  const colorClasses: Record<SectionTagColor, string> = {
     green: "bg-green-100 text-green-600",
     gold: "bg-yellow-100 text-yellow-600",
     blue: "bg-blue-100 text-blue-600",
@@ -16,7 +24,7 @@ const SectionTag = ({ text, color = "green" }) => {
   return (
     <div
       className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 ${
-        colorClasses[color] || colorClasses.green
+        colorClasses[color]
       }`}
     >
       {text}
