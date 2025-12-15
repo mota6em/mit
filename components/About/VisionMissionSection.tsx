@@ -18,26 +18,13 @@ const VisionMissionSection = () => {
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-5 md:mb-14"
         >
           <span className="text-[#f1c34c] font-bold tracking-widest uppercase text-sm mb-3 block">
             {t("coreFoundations")}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-widest Ang-font">
-            {words.map((word, index) => {
-              let colorClass = "text-yellow-600";
-              if (index === 1 || index === 0) {
-                colorClass = "text-blue-800";
-              } else {
-                colorClass = "text-[#11b505]";
-              }
-
-              return (
-                <span key={index} className={`inline-block mx-1 ${colorClass}`}>
-                  {word}
-                </span>
-              );
-            })}
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-widest Ang-font text-yellow-600">
+            {t("title")}
           </h2>
         </motion.div>
 
