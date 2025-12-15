@@ -13,22 +13,22 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-2">
           {/* Logo and Name Section */}
           <div className="flex items-center gap-4">
-            <div className="relative w-16 h-16">
+            <div className="relative w-14 h-14">
               <Image src="/imgs/hero/mit-logo-full.png" alt="MIT Logo" fill />
             </div>
             <div className="flex flex-col">
               <div className="flex space-x-0.5">
-                <span className="text-2xl font-bold text-[#4d93fb] monstera-font tracking-widest">
+                <span className="text-xl font-bold text-[#4d93fb] monstera-font tracking-widest">
                   M
                 </span>
-                <span className="text-2xl font-bold text-[#11b505] monstera-font tracking-widest">
+                <span className="text-xl font-bold text-[#11b505] monstera-font tracking-widest">
                   I
                 </span>
-                <span className="text-2xl font-bold text-[#f1c34c] monstera-font tracking-widest">
+                <span className="text-xl font-bold text-[#f1c34c] monstera-font tracking-widest">
                   T
                 </span>
               </div>
-              <span className="text-sm font-medium">{t("subtitle")}</span>
+              <span className="text-xs text-yellow-600 font-medium">{t("subtitle")}</span>
             </div>
           </div>
           {/* Social Media Section */}
