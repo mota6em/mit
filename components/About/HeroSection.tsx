@@ -38,7 +38,7 @@ const HeroSection = () => {
     <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         {/* LEFT COLUMN: Creative Image Collage */}
-        <div className="relative h-[500px] w-full hidden lg:block">
+        <div className="relative h-[500px] w-full ">
           {/* Image 1 */}
           <motion.div
             variants={floatingAnimation}
@@ -67,7 +67,30 @@ const HeroSection = () => {
             variants={floatingAnimationDelayed}
             initial="initial"
             animate="animate"
-            className="absolute bottom-10 right-10 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
+            className="absolute bottom-33   md:bottom-25 right-0 md:right-2 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
+          >
+            {/* Loading Skeleton */}
+            {!img2Loaded && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+            )}
+            <Image
+              src="/imgs/hero/hero-bg-4.jpg"
+              alt="Youth Gathering"
+              fill
+              className={`object-cover transition-opacity duration-500 ${
+                img2Loaded ? "opacity-100" : "opacity-0"
+              }`}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              onLoad={() => setImg2Loaded(true)}
+            />
+          </motion.div>
+
+          {/* Image 3  */}
+          <motion.div
+            variants={floatingAnimationDelayed}
+            initial="initial"
+            animate="animate"
+            className="absolute md:hidden bottom-0 md:bottom-10 left-5 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
           >
             {/* Loading Skeleton */}
             {!img2Loaded && (
@@ -85,7 +108,7 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          {/* Image 3  */}
+          {/* Image 4 logo  */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
