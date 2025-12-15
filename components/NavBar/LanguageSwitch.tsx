@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -22,8 +22,8 @@ export default function LanguageSwitch() {
   const restOfPath = segments.slice(1).join("/");
 
   const locales = [
-    { code: "en", label: "English", flag: "/imgs/uk.jpg" },
-    { code: "hu", label: "Magyar", flag: "/imgs/hun.jpg" },
+    { code: "en", label: "English", flag: "/imgs/uk.png" },
+    { code: "hu", label: "Magyar", flag: "/imgs/hun.png" },
   ];
 
   const current = locales.find((l) => l.code === currentLocale) || locales[0];
@@ -31,36 +31,44 @@ export default function LanguageSwitch() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="cursor-pointer flex items-center gap-1 px-2 font-serif hover:text-yellow-900">
-          <Image
-            src={current.flag}
-            alt={current.code}
-            width={20}
-            height={20}
-            className="w-5 h-5 rounded-sm"
-          />
+        <div className="cursor-pointer flex items-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
+          <div className="relative w-5 h-5 flex-shrink-0">
+            <Image
+              src={current.flag}
+              alt={current.code}
+              fill
+              sizes="20px"
+              priority
+              unoptimized
+              className="rounded-sm object-cover"
+            />
+          </div>
           {open ? <X size={14} /> : <ChevronDown size={14} />}
         </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black"
+        className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black shadow-lg"
         align="end"
       >
         {locales.map((locale) => (
           <DropdownMenuItem
             key={locale.code}
-            className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/20 transition"
+            className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/40 focus:bg-white/40 transition"
             asChild
           >
             <Link href={`/${locale.code}/${restOfPath}`}>
-              <Image
-                src={locale.flag}
-                alt={locale.code}
-                width={20}
-                height={20}
-                className="w-5 h-5 rounded-sm"
-              />
+              <div className="relative w-5 h-5 flex-shrink-0">
+                <Image
+                  src={locale.flag}
+                  alt={locale.code}
+                  fill
+                  sizes="20px"
+                  priority
+                  unoptimized
+                  className="rounded-sm object-cover"
+                />
+              </div>
               {locale.label}
             </Link>
           </DropdownMenuItem>
