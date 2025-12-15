@@ -10,16 +10,20 @@ export default function RootPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/en");
-    }, 2000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [router]);
 
   return (
     <motion.div
-      initial={{ opacity: 0.5, y: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      initial={{ opacity: 0.85, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{
+        delay: 0.3,
+        duration: 0.8,
+        ease: "easeInOut",
+      }}
       className="fixed inset-0 z-[9999] flex items-center overflow-hidden justify-center bg-white"
       style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
     >
