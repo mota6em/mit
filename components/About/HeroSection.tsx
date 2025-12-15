@@ -36,15 +36,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20">
-      {/* Background Decor (Optional pattern) */}
-      <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none">
-        <Image
-          src="/imgs/patterns/islamic-pattern.jpg"
-          alt="Pattern"
-          fill
-          className="object-cover"
-        />
-      </div>
+  
 
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         {/* LEFT COLUMN: Text Content */}
@@ -79,7 +71,7 @@ const HeroSection = () => {
             {t("description")}
           </motion.p>
 
-           <motion.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
