@@ -55,24 +55,7 @@ export default function WhoWeAre() {
               {t("description.intro")}
               <br />
               <br />
-              {t("description.activities")}
-              <br />
-              <br />
-              {t("description.colors.intro")}{" "}
-              <span className="font-semibold text-blue-500">
-                {t("description.colors.blue")}
-              </span>
-              ,
-              <span className="font-semibold text-green-500">
-                {" "}
-                {t("description.colors.green")}
-              </span>
-              , {t("description.colors.and")}
-              <span className="font-semibold text-yellow-500">
-                {" "}
-                {t("description.colors.yellow")}
-              </span>{" "}
-              —{t("description.colors.meaning")}
+              {t("description.mission")}
             </p>
           </motion.div>
 
@@ -106,7 +89,7 @@ export default function WhoWeAre() {
             </div>
           </motion.div>
         </div>
-        
+
         {/* Learn More Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -120,8 +103,18 @@ export default function WhoWeAre() {
             className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-colors group"
           >
             <span>{t("learnMore")}</span>
-            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            <svg
+              className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
             </svg>
           </Link>
         </motion.div>
