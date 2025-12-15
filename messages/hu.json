@@ -146,13 +146,16 @@
     },
     "visionMission": {
       "title": "MIT VÍZIÓ ÉS MISSZIÓ",
+      "coreFoundations": "Alappillérek",
       "vision": {
         "title": "MIT Vízió",
-        "description": "Megerősíteni a magyarországi muszlim fiatalokat, hogy aktív, magabiztos és egységes vezetőivé váljanak a hitüknek és a társadalomnak."
+        "description": "Megerősíteni a magyarországi muszlim fiatalokat, hogy aktív, magabiztos és egységes vezetőivé váljanak a hitüknek és a társadalomnak.",
+        "tagline": "Fókusz és Tisztánlátás"
       },
       "mission": {
         "title": "MIT Misszió",
-        "description": "Küldetésünk, hogy Allahot szolgáljuk csapatmunka, fejlődés és közösségünk szolgálata által. Oktatással, rendezvényekkel és közösségi munkával a MIT a muszlim vezetők következő generációját neveli."
+        "description": "Küldetésünk, hogy Allahot szolgáljuk csapatmunka, fejlődés és közösségünk szolgálata által. Oktatással, rendezvényekkel és közösségi munkával a MIT a muszlim vezetők következő generációját neveli.",
+        "tagline": "Növekedés és Cselekvés"
       }
     },
     "coreServices": {

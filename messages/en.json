@@ -146,13 +146,16 @@
     },
     "visionMission": {
       "title": "MIT VISION AND MISSION",
+      "coreFoundations": "Core Foundations",
       "vision": {
         "title": "MIT Vision",
-        "description": "To empower Muslim youth in Hungary to become active, confident, and united leaders in faith and society."
+        "description": "To empower Muslim youth in Hungary to become active, confident, and united leaders in faith and society.",
+        "tagline": "Focus & Clarity"
       },
       "mission": {
         "title": "MIT Mission",
-        "description": "Our mission is to serve Allah through teamwork, growth, and service to our community. Through education, events, and community service, MIT nurtures the next generation of Muslim leaders."
+        "description": "Our mission is to serve Allah through teamwork, growth, and service to our community. Through education, events, and community service, MIT nurtures the next generation of Muslim leaders.",
+        "tagline": "Growth & Action"
       }
     },
     "coreServices": {

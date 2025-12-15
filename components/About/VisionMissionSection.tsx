@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 const VisionMissionSection = () => {
   const t = useTranslations("aboutMIT.visionMission");
 
+  // Title coloring logic
+  const titleString = t("title");
+  const words = titleString.split(" ");
+
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -17,10 +21,26 @@ const VisionMissionSection = () => {
           className="text-center mb-20"
         >
           <span className="text-[#f1c34c] font-bold tracking-widest uppercase text-sm mb-3 block">
-            Core Foundations
+            {t("coreFoundations")}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-widest Ang-font text-yellow-600">
-            {t("title")}
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-widest Ang-font">
+            {words.map((word, index) => {
+              let colorClass = "text-yellow-600";
+              // Adjust indices based on the length of words in different languages if needed
+              // For "MIT VISION AND MISSION" (4 words): Index 1 is VISION (blue), Index 3 is MISSION (green)
+              // For "MIT VÍZIÓ ÉS MISSZIÓ" (4 words): Index 1 is VÍZIÓ (blue), Index 3 is MISSZIÓ (green)
+              if (index === 1) {
+                colorClass = "text-blue-800";
+              } else if (index === 3) {
+                colorClass = "text-[#11b505]";
+              }
+
+              return (
+                <span key={index} className={`inline-block mx-1 ${colorClass}`}>
+                  {word}
+                </span>
+              );
+            })}
           </h2>
         </motion.div>
 
@@ -111,7 +131,7 @@ const VisionMissionSection = () => {
 
               <div className="flex items-center gap-2 text-[#4d93fb] font-medium ">
                 <span className="w-8 h-[2px] bg-[#4d93fb]"></span>
-                <span>Focus & Clarity</span>
+                <span>{t("vision.tagline")}</span>
               </div>
             </div>
           </motion.div>
@@ -195,7 +215,7 @@ const VisionMissionSection = () => {
 
               <div className="flex items-center gap-2 text-[#11b505] font-medium">
                 <span className="w-8 h-[2px] bg-[#11b505]"></span>
-                <span>Growth & Action</span>
+                <span>{t("mission.tagline")}</span>
               </div>
             </div>
           </motion.div>
