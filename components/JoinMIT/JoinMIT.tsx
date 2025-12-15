@@ -92,7 +92,7 @@ export default function JoinMIT() {
       <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
 
       {/* --- HERO SECTION --- */}
-      <div className="max-w-7xl md:ms-2 mx-auto px-4 sm:px-6 lg:px-20">
+      <div className="max-w-7xl md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
@@ -126,7 +126,7 @@ export default function JoinMIT() {
               className="relative h-[400px] md:h-[500px] md:hidden"
             >
               {/* Image 1 - Tilted Left */}
-              <div className="absolute top-0 left-2 md:left-15 w-64 h-80 rotate-[-6deg] z-10">
+              <div className="absolute top-0 left-4 md:left-15 w-64 h-80 rotate-[-6deg] z-10">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
                     src="/imgs/hero/hero-bg-1.jpg"
