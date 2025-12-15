@@ -1,12 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // 1. Import Variants
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
 
-  const floatingAnimation = {
+  const floatingAnimation: Variants = {
     initial: { y: 0 },
     animate: {
       y: [0, -20, 0],
@@ -18,7 +18,7 @@ const HeroSection = () => {
     },
   };
 
-  const floatingAnimationDelayed = {
+  const floatingAnimationDelayed: Variants = {
     initial: { y: 0 },
     animate: {
       y: [0, 20, 0],
