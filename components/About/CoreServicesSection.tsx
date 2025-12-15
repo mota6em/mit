@@ -30,13 +30,13 @@ const CoreServicesSection = () => {
   };
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50/50">
+    <section className="py-24 px-4 md:px-12 lg:px-20 bg-gray-50/50">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-10 md:mb-20"
         >
           <span className="text-[#f1c34c] font-bold tracking-widest uppercase text-sm mb-3 block">
             {t("label")}
@@ -51,7 +51,7 @@ const CoreServicesSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
         >
           {[0, 1, 2, 3].map((index) => {
             const Icon = serviceIcons[index];
@@ -61,7 +61,7 @@ const CoreServicesSection = () => {
               <motion.div
                 key={index}
                 variants={item}
-                className="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
+                className="bg-white p-2 md:p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
                 style={{ borderTop: `6px solid ${color.main}` }}
               >
                 {/* Icon Container with Soft Background */}
@@ -72,11 +72,11 @@ const CoreServicesSection = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold mb-4 text-gray-900">
+                <h3 className="text-xl font-bold mb-4 text-gray-600">
                   {t(`services.${index}.title`)}
                 </h3>
 
-                <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                <p className="text-gray-600 leading-relaxed mb-2 text-sm md:text-base">
                   {t(`services.${index}.description`)}
                 </p>
 
