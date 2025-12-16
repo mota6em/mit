@@ -23,6 +23,14 @@ export async function GET() {
 
 // POST: Add or Update an event
 export async function POST(req: Request) {
+  const secret = req.headers.get("x-admin-secret");
+  if (secret !== process.env.ADMIN_SECRET) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
   const body = await req.json();
   const events = getEvents();
 
@@ -38,7 +46,7 @@ export async function POST(req: Request) {
   if (existingIndex > -1) {
     events[existingIndex] = { ...events[existingIndex], ...body };
   } else {
-    events.push({ ...body, id: Date.now().toString() }); // Simple ID generation
+    events.push({ ...body, id: Date.now().toString() });
   }
 
   fs.writeFileSync(dataFilePath, JSON.stringify(events, null, 2));

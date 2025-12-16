@@ -13,6 +13,8 @@ interface EventData {
 }
 
 export default function AdminEvents() {
+  const [adminPassword, setAdminPassword] = useState("");
+
   const [events, setEvents] = useState<EventData[]>([]);
   const [form, setForm] = useState<EventData>({
     img: "",
@@ -35,11 +37,28 @@ export default function AdminEvents() {
   // Handle Image Upload
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
+
+    // Check auth first
+    if (!adminPassword) {
+      alert("Please enter admin password first");
+      return;
+    }
+
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+      headers: { "x-admin-secret": adminPassword }, 
+    });
+
+    if (res.status === 401) {
+      alert("Wrong Password!");
+      return;
+    }
+
     const data = await res.json();
     if (data.success) setForm({ ...form, img: data.url });
   };
@@ -47,16 +66,30 @@ export default function AdminEvents() {
   // Handle Form Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!adminPassword) {
+      alert("Please enter admin password");
+      return;
+    }
+
     setLoading(true);
-    await fetch("/api/events", {
+    const res = await fetch("/api/events", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-secret": adminPassword,  
+      },
       body: JSON.stringify(form),
     });
 
+    if (res.status === 401) {
+      alert("Wrong Password!");
+      setLoading(false);
+      return;
+    }
+
     // Refresh list
-    const res = await fetch("/api/events");
-    setEvents(await res.json());
+    const refresh = await fetch("/api/events");
+    setEvents(await refresh.json());
     setForm({
       img: "",
       title_en: "",
@@ -72,11 +105,26 @@ export default function AdminEvents() {
   // Delete Event
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure?")) return;
-    await fetch("/api/events", {
+    if (!adminPassword) {
+      const pass = prompt("Enter Admin Password to delete:");
+      if (!pass) return;
+      setAdminPassword(pass); // Save it for session
+    }
+
+    const res = await fetch("/api/events", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-secret": adminPassword,
+      },
       body: JSON.stringify({ action: "delete", id }),
     });
+
+    if (res.status === 401) {
+      alert("Wrong Password!");
+      return;
+    }
+
     setEvents(events.filter((e) => e.id !== id));
   };
 
@@ -89,7 +137,21 @@ export default function AdminEvents() {
 
   return (
     <div className="max-w-4xl mx-auto p-10 font-sans">
-      <h1 className="text-3xl font-bold mb-8">Admin Event Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Admin Event Dashboard</h1>
+
+        {/* PASSWORD INPUT */}
+        <div className="flex gap-2 items-center bg-gray-100 p-2 rounded-lg">
+          <span className="text-sm font-bold text-gray-500">🔒 Key:</span>
+          <input
+            type="password"
+            placeholder="Enter Admin Password"
+            value={adminPassword}
+            onChange={(e) => setAdminPassword(e.target.value)}
+            className="bg-white border px-2 py-1 rounded text-sm"
+          />
+        </div>
+      </div>
 
       {/* --- FORM --- */}
       <div className="bg-white p-6 rounded-2xl shadow-lg mb-10 border border-gray-200">

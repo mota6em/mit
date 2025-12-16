@@ -3,6 +3,13 @@ import { writeFile } from "fs/promises";
 import path from "path";
 
 export async function POST(req: Request) {
+  const secret = req.headers.get("x-admin-secret");
+  if (secret !== process.env.ADMIN_SECRET) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
   const data = await req.formData();
   const file: File | null = data.get("file") as unknown as File;
 
