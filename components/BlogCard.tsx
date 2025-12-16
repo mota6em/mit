@@ -81,7 +81,7 @@ export default function BlogCard({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 448px"
-            className={`object-cover ${isPastEvent ? "!grayscale" : ""}`}
+            className={`object-contain ${isPastEvent ? "!grayscale" : ""}`}
           />
         </motion.div>
       </div>
