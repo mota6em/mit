@@ -9,7 +9,7 @@ const eventSchema = new Schema(
     desc_hu: { type: String, required: true },
     note_en: { type: String, required: false },
     note_hu: { type: String, required: false },
-    date: { type: String, required: true },
+    date: { type: String, required: false },
     time: { type: String, required: false },
     isRecurring: { type: Boolean, default: false },
     recurringDays: { type: [String], required: false },

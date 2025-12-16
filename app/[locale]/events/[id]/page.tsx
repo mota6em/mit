@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import dbConnect from "@/lib/mongodb";
 import Event from "@/models/Event";
 import { isValidObjectId } from "mongoose";
-import EventClientPage from "@/components/Events/EventClientPage"; // Ensure you create this file next
+import EventClientPage from "@/components/Events/EventClientPage";  
 
 // Helper to fetch data
 async function getEvent(id: string) {
@@ -11,8 +11,7 @@ async function getEvent(id: string) {
   const event = await Event.findById(id).lean();
   if (!event) return null;
 
-  // Convert MongoDB Objects to plain strings for Client Component
-  return {
+   return {
     ...event,
     _id: event._id.toString(),
     date: event.date.toISOString ? event.date.toISOString() : event.date,

@@ -15,13 +15,23 @@ interface ApiEvent {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
-  date: string;
+  date?: string;
   note_en?: string;
   note_hu?: string;
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
 }
+
+const dayMap: Record<string, { en: string; hu: string }> = {
+  Monday: { en: "Mon", hu: "Hé" },
+  Tuesday: { en: "Tue", hu: "Ke" },
+  Wednesday: { en: "Wed", hu: "Sze" },
+  Thursday: { en: "Thu", hu: "Csü" },
+  Friday: { en: "Fri", hu: "Pé" },
+  Saturday: { en: "Sat", hu: "Szo" },
+  Sunday: { en: "Sun", hu: "Va" },
+};
 
 const dictionary = {
   en: {
@@ -93,8 +103,7 @@ export default function EventClientPage({
     }
   };
 
-  // --- Loading State ---
-  if (loading) {
+  if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
@@ -105,10 +114,8 @@ export default function EventClientPage({
         </div>
       </div>
     );
-  }
 
-  // --- Error State ---
-  if (error || !event) {
+  if (error || !event)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-center px-4">
         <h1 className="text-4xl font-bold text-primary mb-4 Carena-font">
@@ -125,17 +132,18 @@ export default function EventClientPage({
         </Link>
       </div>
     );
-  }
 
-  // --- Success State ---
   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
   const note = locale === "hu" ? event.note_hu : event.note_en;
 
-  const dateFormatted = new Date(event.date).toLocaleDateString(
-    locale === "hu" ? "hu-HU" : "en-US",
-    { year: "numeric", month: "long", day: "numeric" }
-  );
+  // Format Date only if it exists
+  const dateFormatted = event.date
+    ? new Date(event.date).toLocaleDateString(
+        locale === "hu" ? "hu-HU" : "en-US",
+        { year: "numeric", month: "long", day: "numeric" }
+      )
+    : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-5 pb-20 px-4 md:px-8">
@@ -184,12 +192,15 @@ export default function EventClientPage({
                 No Image
               </div>
             )}
-            {/* Mobile Date Badge */}
-            <div className="absolute top-4 left-4 lg:hidden">
-              <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
-                {dateFormatted}
-              </span>
-            </div>
+
+            {/* Mobile Date Badge - Show only if NOT recurring and date exists */}
+            {!event.isRecurring && dateFormatted && (
+              <div className="absolute top-4 left-4 lg:hidden">
+                <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
+                  {dateFormatted}
+                </span>
+              </div>
+            )}
           </motion.div>
 
           {/* TEXT */}
@@ -202,10 +213,12 @@ export default function EventClientPage({
             <div className="space-y-4 border-b border-border pb-8">
               {/* Badges Row */}
               <div className="flex flex-wrap items-center gap-3">
-                {/* Date */}
-                <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
-                  {dateFormatted}
-                </span>
+                {/* Date - Show only if NOT recurring */}
+                {!event.isRecurring && dateFormatted && (
+                  <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
+                    {dateFormatted}
+                  </span>
+                )}
 
                 {/* Time */}
                 {event.time && (
@@ -217,8 +230,14 @@ export default function EventClientPage({
                 {/* Recurring */}
                 {event.isRecurring && event.recurringDays && (
                   <span className="px-4 py-1.5 rounded-full bg-indigo-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <HiRefresh className="text-lg" />{" "}
-                    {event.recurringDays.map((d) => d.slice(0, 3)).join(", ")}
+                    <HiRefresh className="text-lg" />
+                    {/* Localize days */}
+                    {event.recurringDays
+                      .map(
+                        (day) =>
+                          dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
+                      )
+                      .join(", ")}
                   </span>
                 )}
 

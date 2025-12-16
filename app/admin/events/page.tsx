@@ -24,9 +24,9 @@ interface EventData {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
-  note_en?: string; 
-  note_hu?: string; 
-  date: string;
+  note_en?: string;
+  note_hu?: string;
+  date?: string; // Optional now
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -64,14 +64,12 @@ export default function AdminEvents() {
   const [isEditing, setIsEditing] = useState(false);
   const [uploadingImg, setUploadingImg] = useState(false);
 
-  // Fetch Events
   useEffect(() => {
     fetch("/api/events")
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);
 
-  // Dropzone Handler
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       if (!acceptedFiles?.[0]) return;
@@ -117,7 +115,6 @@ export default function AdminEvents() {
     maxFiles: 1,
   });
 
-  // Handle Day Selection for Recurring Events
   const toggleDay = (day: string) => {
     setForm((prev) => {
       const currentDays = prev.recurringDays || [];
@@ -129,7 +126,6 @@ export default function AdminEvents() {
     });
   };
 
-  // Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!adminPassword) {
@@ -137,7 +133,19 @@ export default function AdminEvents() {
       return;
     }
 
+    // --- NEW VALIDATION: Date is required ONLY if NOT recurring ---
+    if (!form.isRecurring && !form.date) {
+      alert("Please select an Event Date (or mark as Recurring)");
+      return;
+    }
+
     setLoading(true);
+
+    // If recurring, we can optionally clear the date to avoid confusion
+    const dataToSend = {
+      ...form,
+      date: form.isRecurring ? "" : form.date,
+    };
 
     const res = await fetch("/api/events", {
       method: "POST",
@@ -145,7 +153,7 @@ export default function AdminEvents() {
         "Content-Type": "application/json",
         "x-admin-secret": adminPassword,
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify(dataToSend),
     });
 
     if (res.status === 401) {
@@ -161,7 +169,6 @@ export default function AdminEvents() {
     setLoading(false);
   };
 
-  // Delete
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure?")) return;
     const res = await fetch("/api/events", {
@@ -180,7 +187,6 @@ export default function AdminEvents() {
     setEvents(events.filter((e) => (e._id || e.id) !== id));
   };
 
-  // Edit
   const handleEdit = (event: EventData) => {
     setForm({
       ...event,
@@ -189,6 +195,7 @@ export default function AdminEvents() {
       time: event.time || "",
       isRecurring: event.isRecurring || false,
       recurringDays: event.recurringDays || [],
+      date: event.date || "",
     });
     setIsEditing(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -358,7 +365,6 @@ export default function AdminEvents() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none resize-none"
                     placeholder="Description..."
                   />
-
                   {/* English Note */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
@@ -405,7 +411,6 @@ export default function AdminEvents() {
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none resize-none"
                     placeholder="Leírás..."
                   />
-
                   {/* Hungarian Note */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
@@ -431,21 +436,56 @@ export default function AdminEvents() {
                 </h3>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Date Picker */}
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">
-                      Event Date (Start Date)
+                  {/* Recurring Toggle */}
+                  <div className="md:col-span-2">
+                    <label className="flex items-center gap-3 cursor-pointer group w-fit">
+                      <div
+                        className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
+                          form.isRecurring ? "bg-blue-600" : "bg-gray-300"
+                        }`}
+                      >
+                        <div
+                          className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+                            form.isRecurring ? "translate-x-6" : "translate-x-0"
+                          }`}
+                        />
+                      </div>
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={form.isRecurring}
+                        onChange={(e) =>
+                          setForm({ ...form, isRecurring: e.target.checked })
+                        }
+                      />
+                      <span className="font-bold text-gray-700 flex items-center gap-2">
+                        <HiRefresh
+                          className={
+                            form.isRecurring ? "text-blue-600" : "text-gray-400"
+                          }
+                        />
+                        Weekly / Recurring Event
+                      </span>
                     </label>
-                    <input
-                      type="date"
-                      required
-                      value={form.date}
-                      onChange={(e) =>
-                        setForm({ ...form, date: e.target.value })
-                      }
-                      className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-blue-500 outline-none bg-white"
-                    />
                   </div>
+
+                  {/* Date Picker - HIDDEN if Recurring */}
+                  {!form.isRecurring && (
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="block text-sm font-bold text-gray-700 mb-2">
+                        Event Date (Start Date)
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        value={form.date}
+                        onChange={(e) =>
+                          setForm({ ...form, date: e.target.value })
+                        }
+                        className="block w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-blue-500 outline-none bg-white"
+                      />
+                    </div>
+                  )}
 
                   {/* Time Picker */}
                   <div>
@@ -463,66 +503,33 @@ export default function AdminEvents() {
                   </div>
                 </div>
 
-                {/* Recurring Toggle */}
-                <div className="mt-6">
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div
-                      className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
-                        form.isRecurring ? "bg-blue-600" : "bg-gray-300"
-                      }`}
-                    >
-                      <div
-                        className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                          form.isRecurring ? "translate-x-6" : "translate-x-0"
-                        }`}
-                      />
+                {/* Day Selector (Conditional) */}
+                {form.isRecurring && (
+                  <div className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <p className="text-sm font-bold text-blue-800 mb-3">
+                      Select Repeating Days:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {DAYS_OF_WEEK.map((day) => {
+                        const isSelected = form.recurringDays?.includes(day);
+                        return (
+                          <button
+                            key={day}
+                            type="button"
+                            onClick={() => toggleDay(day)}
+                            className={`px-3 py-1.5 rounded-lg text-sm font-bold border transition-all ${
+                              isSelected
+                                ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                                : "bg-white text-gray-500 border-gray-200 hover:border-blue-300"
+                            }`}
+                          >
+                            {day.slice(0, 3)}
+                          </button>
+                        );
+                      })}
                     </div>
-                    <input
-                      type="checkbox"
-                      className="hidden"
-                      checked={form.isRecurring}
-                      onChange={(e) =>
-                        setForm({ ...form, isRecurring: e.target.checked })
-                      }
-                    />
-                    <span className="font-bold text-gray-700 flex items-center gap-2">
-                      <HiRefresh
-                        className={
-                          form.isRecurring ? "text-blue-600" : "text-gray-400"
-                        }
-                      />
-                      Weekly / Recurring Event
-                    </span>
-                  </label>
-
-                  {/* Day Selector (Conditional) */}
-                  {form.isRecurring && (
-                    <div className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
-                      <p className="text-sm font-bold text-blue-800 mb-3">
-                        Select Repeating Days:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {DAYS_OF_WEEK.map((day) => {
-                          const isSelected = form.recurringDays?.includes(day);
-                          return (
-                            <button
-                              key={day}
-                              type="button"
-                              onClick={() => toggleDay(day)}
-                              className={`px-3 py-1.5 rounded-lg text-sm font-bold border transition-all ${
-                                isSelected
-                                  ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                                  : "bg-white text-gray-500 border-gray-200 hover:border-blue-300"
-                              }`}
-                            >
-                              {day.slice(0, 3)}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* Submit Buttons */}
@@ -587,14 +594,19 @@ export default function AdminEvents() {
                     </h3>
 
                     <div className="flex flex-wrap gap-2 mt-1">
-                      <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
-                        <HiCalendar /> {event.date}
-                      </span>
+                      {/* Show date only if NOT recurring */}
+                      {!event.isRecurring && event.date && (
+                        <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
+                          <HiCalendar /> {event.date}
+                        </span>
+                      )}
+
                       {event.time && (
                         <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
                           <HiClock /> {event.time}
                         </span>
                       )}
+
                       {event.isRecurring && (
                         <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded flex items-center gap-1 border border-blue-100">
                           <HiRefresh />{" "}

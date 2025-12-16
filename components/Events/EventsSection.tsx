@@ -16,7 +16,7 @@ interface ApiEvent {
   desc_hu: string;
   note_en?: string;
   note_hu?: string;
-  date: string;
+  date?: string; // Optional
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -27,6 +27,17 @@ interface EventsSectionProps {
   limit?: number;
   showViewAll?: boolean;
 }
+
+// Translations map for days
+const dayMap: Record<string, { en: string; hu: string }> = {
+  Monday: { en: "Mon", hu: "Hé" },
+  Tuesday: { en: "Tue", hu: "Ke" },
+  Wednesday: { en: "Wed", hu: "Sze" },
+  Thursday: { en: "Thu", hu: "Csü" },
+  Friday: { en: "Fri", hu: "Pé" },
+  Saturday: { en: "Sat", hu: "Szo" },
+  Sunday: { en: "Sun", hu: "Va" },
+};
 
 export default function EventsSection({
   type,
@@ -56,9 +67,17 @@ export default function EventsSection({
   }, []);
 
   const filteredPrograms = events.filter((p) => {
+    // Logic: Recurring events always appear in "Upcoming"
+    if (p.isRecurring) {
+      return type === "upcoming";
+    }
+
+    // Normal date logic for non-recurring
+    if (!p.date) return false;
     const eventDate = new Date(p.date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
     return type === "upcoming" ? eventDate >= today : eventDate < today;
   });
 
@@ -71,7 +90,6 @@ export default function EventsSection({
       ? `/${locale}/events/upcoming`
       : `/${locale}/events/past`;
 
-  // Title styling
   const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
   const firstWord = titleWords[0] || "";
@@ -111,8 +129,22 @@ export default function EventsSection({
         {displayedPrograms.map((p, index) => {
           const title = locale === "hu" ? p.title_hu : p.title_en;
           const desc = locale === "hu" ? p.desc_hu : p.desc_en;
-          // --- LOCALIZED NOTE ---
           const note = locale === "hu" ? p.note_hu : p.note_en;
+
+          // --- DATE FORMATTING LOGIC ---
+          let displayDate = "";
+          if (p.isRecurring && p.recurringDays && p.recurringDays.length > 0) {
+            // Translating days
+            const translatedDays = p.recurringDays
+              .map((day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day)
+              .join(", ");
+            displayDate =
+              locale === "hu" ? `${translatedDays}` : `${translatedDays}`;
+          } else if (p.date) {
+            displayDate = new Date(p.date).toLocaleDateString(
+              locale === "hu" ? "hu-HU" : "en-US"
+            );
+          }
 
           const eventId = p._id || p.id;
 
@@ -125,12 +157,10 @@ export default function EventsSection({
                 bgImg={p.img}
                 authorImg="/imgs/icon.jpg"
                 authorName={t("authorName")}
-                readTime={new Date(p.date).toLocaleDateString(
-                  locale === "hu" ? "hu-HU" : "en-US"
-                )}
+                readTime={displayDate} // Passing the dynamic date string
                 title={title}
                 desc={desc}
-                note={note} 
+                note={note}
                 eventUrl={`/${locale}/events/${eventId}`}
                 index={index}
                 isVerified={true}
