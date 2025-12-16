@@ -43,7 +43,10 @@ export default function EventsSection({
   const secondWord = titleWords.slice(1).join(" ") || "";
 
   return (
-    <section className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6">
+    <section
+      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
+      id={`${type}-events`}
+    >
       <motion.h2
         className="text-4xl md:text-5xl font-bold Carena-font text-center tracking-wide"
         initial={{ opacity: 0, y: -20 }}
