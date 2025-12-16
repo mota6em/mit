@@ -163,7 +163,7 @@ export default function AdminEvents() {
       return;
     }
 
-    setEvents(events.filter((e) => e.id !== id));
+    setEvents(events.filter((e) => (e._id || e.id) !== id));
   };
 
   // Populate form for edit
@@ -555,7 +555,7 @@ export default function AdminEvents() {
                     </button>
 
                     <button
-                      onClick={() => handleDelete(event.id!)}
+                      onClick={() => handleDelete(event._id!)}
                       className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-red-50 text-red-500 font-semibold text-sm hover:bg-red-100 transition-colors"
                     >
                       <HiTrash className="text-lg" />
