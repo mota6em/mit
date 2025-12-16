@@ -9,6 +9,7 @@ import {
   HiCalendar,
   HiPlus,
   HiX,
+  HiExclamation, // Icon for the note
 } from "react-icons/hi";
 import Link from "next/link";
 import AdminPasswordInput from "@/components/admin/events/AdminPasswordInput";
@@ -21,6 +22,8 @@ interface EventData {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
+  note_en: string; // New
+  note_hu: string; // New
   date: string;
 }
 
@@ -34,6 +37,8 @@ export default function AdminEvents() {
     title_hu: "",
     desc_en: "",
     desc_hu: "",
+    note_en: "", // Init
+    note_hu: "", // Init
     date: "",
   });
   const [loading, setLoading] = useState(false);
@@ -47,17 +52,14 @@ export default function AdminEvents() {
       .then((data) => setEvents(data));
   }, []);
 
-  // --- NEW DROPZONE HANDLER ---
+  // Dropzone Handler
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       if (!acceptedFiles?.[0]) return;
-
-      // Check auth first
       if (!adminPassword) {
         alert("Please enter admin password first");
         return;
       }
-
       setUploadingImg(true);
       const file = acceptedFiles[0];
       const formData = new FormData();
@@ -90,7 +92,6 @@ export default function AdminEvents() {
     [adminPassword]
   );
 
-  // Configure Dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -101,7 +102,7 @@ export default function AdminEvents() {
     maxFiles: 1,
   });
 
-  // Handle Form Submit
+  // Handle Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!adminPassword) {
@@ -125,29 +126,20 @@ export default function AdminEvents() {
       return;
     }
 
-    // Refresh list
     const refresh = await fetch("/api/events");
     setEvents(await refresh.json());
-    setForm({
-      img: "",
-      title_en: "",
-      title_hu: "",
-      desc_en: "",
-      desc_hu: "",
-      date: "",
-    });
+    resetForm();
     setIsEditing(false);
     setLoading(false);
   };
 
-  // Delete Event
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure?")) return;
-    if (!adminPassword) {
-      const pass = prompt("Enter Admin Password to delete:");
-      if (!pass) return;
-      setAdminPassword(pass); // Save it for session
-    }
+  if (!adminPassword) {
+    const pass = prompt("Enter Admin Password to delete:");
+    if (!pass) return;
+    setAdminPassword(pass); // Save it for session
+  }
 
     const res = await fetch("/api/events", {
       method: "POST",
@@ -162,21 +154,37 @@ export default function AdminEvents() {
       alert("Wrong Password!");
       return;
     }
-
     setEvents(events.filter((e) => (e._id || e.id) !== id));
   };
 
   // Populate form for edit
   const handleEdit = (event: EventData) => {
-    setForm(event);
+    setForm({
+      ...event,
+      note_en: event.note_en || "",
+      note_hu: event.note_hu || "",
+    });
     setIsEditing(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const resetForm = () => {
+    setForm({
+      img: "",
+      title_en: "",
+      title_hu: "",
+      desc_en: "",
+      desc_hu: "",
+      note_en: "",
+      note_hu: "",
+      date: "",
+    });
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-5xl mx-auto gap-4 flex flex-col">
-        {/* --- HEADER & AUTH --- */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
@@ -187,14 +195,13 @@ export default function AdminEvents() {
             </p>
             <Link href="/">
               <button className="mt-2 px-4 cursor-pointer py-2 bg-blue-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg">
-                Go Back to MIT home page
+                Go Back to Home
               </button>
             </Link>
           </div>
-
           <Suspense
             fallback={
-              <div className="w-full md:w-auto h-12 bg-gray-200 rounded-xl animate-pulse" />
+              <div className="h-12 w-40 bg-gray-200 animate-pulse rounded-xl" />
             }
           >
             <AdminPasswordInput
@@ -204,14 +211,13 @@ export default function AdminEvents() {
           </Suspense>
         </div>
 
-        {/* --- MAIN FORM CARD --- */}
+        {/* Form Card */}
         <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden border border-gray-100">
           <div
             className={`p-1 h-2 w-full ${
               isEditing ? "bg-amber-400" : "bg-blue-500"
             }`}
           />
-
           <div className="p-8">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
@@ -236,14 +242,7 @@ export default function AdminEvents() {
                 <button
                   onClick={() => {
                     setIsEditing(false);
-                    setForm({
-                      img: "",
-                      title_en: "",
-                      title_hu: "",
-                      desc_en: "",
-                      desc_hu: "",
-                      date: "",
-                    });
+                    resetForm();
                   }}
                   className="text-gray-400 hover:text-gray-600"
                 >
@@ -253,12 +252,12 @@ export default function AdminEvents() {
             </div>
 
             <form onSubmit={handleSubmit} className="gap-4 flex flex-col">
+              {/* Image Upload */}
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
                   <HiCloudUpload className="text-lg text-blue-500" />
                   Event Cover Image
                 </label>
-
                 <div
                   {...getRootProps()}
                   className={`relative w-full h-64 rounded-2xl border-2 border-dashed transition-all cursor-pointer overflow-hidden group ${
@@ -268,7 +267,6 @@ export default function AdminEvents() {
                   }`}
                 >
                   <input {...getInputProps()} />
-
                   {uploadingImg ? (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 z-20">
                       <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mb-3"></div>
@@ -286,41 +284,23 @@ export default function AdminEvents() {
                       />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white z-10">
                         <HiCloudUpload className="text-4xl mb-2" />
-                        <p className="font-bold">
-                          Click or drag to change image
-                        </p>
+                        <p className="font-bold">Click to change</p>
                       </div>
                     </>
                   ) : (
-                    // Empty State
                     <div className="flex flex-col items-center justify-center h-full text-gray-400 p-4 text-center">
-                      <HiCloudUpload
-                        className={`text-5xl mb-4 ${
-                          isDragActive ? "text-blue-500" : "text-gray-300"
-                        }`}
-                      />
-                      {isDragActive ? (
-                        <p className="text-blue-500 font-bold text-lg">
-                          Drop the image here...
-                        </p>
-                      ) : (
-                        <div>
-                          <p className="text-lg font-bold text-gray-600">
-                            Drag & drop an image here, or click to select
-                          </p>
-                          <p className="text-sm mt-2">
-                            Recommended: JPG/PNG, Max 2MB
-                          </p>
-                        </div>
-                      )}
+                      <HiCloudUpload className="text-5xl mb-4" />
+                      <p className="text-lg font-bold text-gray-600">
+                        Drag & drop or click
+                      </p>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Text Fields Grid */}
+              {/* Text Fields */}
               <div className="grid md:grid-cols-2 gap-8">
-                {/* English Column */}
+                {/* EN */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-600 border border-gray-200">
@@ -330,7 +310,6 @@ export default function AdminEvents() {
                       English Content
                     </h3>
                   </div>
-
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Title
@@ -341,11 +320,10 @@ export default function AdminEvents() {
                       onChange={(e) =>
                         setForm({ ...form, title_en: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
-                      placeholder="e.g. Summer Camp 2025"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
+                      placeholder="Event Title"
                     />
                   </div>
-
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Description
@@ -357,13 +335,28 @@ export default function AdminEvents() {
                       onChange={(e) =>
                         setForm({ ...form, desc_en: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none"
-                      placeholder="Brief summary of the event..."
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none resize-none"
+                      placeholder="Event Summary..."
+                    />
+                  </div>
+                  {/* NEW NOTE FIELD */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <HiExclamation className="text-amber-500" /> Note
+                      (Optional)
+                    </label>
+                    <input
+                      value={form.note_en}
+                      onChange={(e) =>
+                        setForm({ ...form, note_en: e.target.value })
+                      }
+                      className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-amber-500 outline-none text-sm"
+                      placeholder="e.g. Only Hungarian speakers"
                     />
                   </div>
                 </div>
 
-                {/* Hungarian Column */}
+                {/* HU */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 border border-green-200">
@@ -373,7 +366,6 @@ export default function AdminEvents() {
                       Hungarian Content
                     </h3>
                   </div>
-
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Cím (Title)
@@ -384,11 +376,10 @@ export default function AdminEvents() {
                       onChange={(e) =>
                         setForm({ ...form, title_hu: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all outline-none"
-                      placeholder="pl. Nyári Tábor 2025"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none"
+                      placeholder="Esemény Címe"
                     />
                   </div>
-
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Leírás (Description)
@@ -400,47 +391,55 @@ export default function AdminEvents() {
                       onChange={(e) =>
                         setForm({ ...form, desc_hu: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all outline-none resize-none"
-                      placeholder="Rövid összefoglaló..."
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 outline-none resize-none"
+                      placeholder="Rövid leírás..."
+                    />
+                  </div>
+                  {/* NEW NOTE FIELD */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <HiExclamation className="text-amber-500" /> Megjegyzés
+                      (Opcionális)
+                    </label>
+                    <input
+                      value={form.note_hu}
+                      onChange={(e) =>
+                        setForm({ ...form, note_hu: e.target.value })
+                      }
+                      className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-amber-500 outline-none text-sm"
+                      placeholder="pl. Csak magyar nyelven"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Date Field */}
+              {/* Date */}
               <div className="pt-4 border-t border-gray-100">
                 <label className="block text-sm font-bold text-gray-700 mb-2">
                   Event Date
                 </label>
                 <div className="relative max-w-xs">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <HiCalendar className="text-gray-400" />
-                  </div>
+                  <HiCalendar className="absolute left-3 top-3.5 text-gray-400" />
                   <input
                     type="date"
                     required
                     value={form.date}
                     onChange={(e) => setForm({ ...form, date: e.target.value })}
-                    className="block w-full pl-10 px-4 py-3 border border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none"
+                    className="block w-full pl-10 px-4 py-3 border border-gray-200 rounded-xl focus:border-blue-500 outline-none"
                   />
                 </div>
               </div>
 
-              {/* ---  BUTTONS UI --- */}
+              {/* Buttons */}
               <div className="flex items-center gap-4 pt-6 border-t border-gray-100">
                 <button
                   disabled={loading || uploadingImg}
                   type="submit"
-                  className={`flex-grow md:flex-grow-0 px-8 py-4 rounded-xl font-bold text-white shadow-md transform active:scale-95 transition-all
-                    ${
-                      isEditing
-                        ? "bg-amber-500 hover:bg-amber-600 shadow-amber-500/20"
-                        : "bg-blue-600 hover:bg-blue-700 shadow-blue-500/20"
-                    } ${
-                    loading || uploadingImg
-                      ? "opacity-70 cursor-wait"
-                      : "hover:-translate-y-1"
-                  }`}
+                  className={`flex-grow md:flex-grow-0 px-8 py-4 rounded-xl font-bold text-white shadow-md transform active:scale-95 transition-all ${
+                    isEditing
+                      ? "bg-amber-500 hover:bg-amber-600"
+                      : "bg-blue-600 hover:bg-blue-700"
+                  } ${loading ? "opacity-70 cursor-wait" : ""}`}
                 >
                   {loading
                     ? "Saving..."
@@ -448,20 +447,12 @@ export default function AdminEvents() {
                     ? "Update Event"
                     : "Create Event"}
                 </button>
-
                 {isEditing && (
                   <button
                     type="button"
                     onClick={() => {
                       setIsEditing(false);
-                      setForm({
-                        img: "",
-                        title_en: "",
-                        title_hu: "",
-                        desc_en: "",
-                        desc_hu: "",
-                        date: "",
-                      });
+                      resetForm();
                     }}
                     className="px-6 py-4 rounded-xl font-bold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors"
                   >
@@ -475,93 +466,49 @@ export default function AdminEvents() {
 
         {/* --- EVENTS LIST --- */}
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 text-sm">
-              {events.length}
-            </span>
-            Active Events
+          <h2 className="text-xl font-bold text-gray-800">
+            Active Events ({events.length})
           </h2>
-
           <div className="grid gap-4">
-            {events.length === 0 && (
-              <div className="text-center py-16 bg-white rounded-3xl border-2 border-dashed border-gray-200">
-                <HiCalendar className="text-6xl text-gray-200 mx-auto mb-4" />
-                <p className="text-gray-500 font-medium">
-                  No events found yet. Create your first one above!
-                </p>
-              </div>
-            )}
-
             {events.map((event) => (
               <div
-                key={event.id}
-                className="group flex flex-col md:flex-row bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all duration-300 overflow-hidden"
+                key={event._id || event.id}
+                className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center"
               >
-                {/* --- IMAGE SECTION --- */}
-                <div className="relative w-full h-48 md:w-72 md:h-auto shrink-0 bg-gray-200">
-                  {event.img ? (
-                    <Image
-                      src={event.img}
-                      alt={event.title_en}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center w-full h-full text-gray-300">
-                      <HiCloudUpload className="text-4xl" />
-                    </div>
-                  )}
-
-                  {/* Mobile Date Overlay */}
-                  <div className="absolute top-3 left-3 md:hidden bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-700 shadow-sm flex items-center gap-1">
-                    <HiCalendar className="text-blue-500" />
-                    {event.date}
+                <div className="flex gap-4 items-center">
+                  <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
+                    {event.img && (
+                      <Image
+                        src={event.img}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="font-bold">{event.title_en}</h3>
+                    {/* Show note in admin list if exists */}
+                    {(event.note_en || event.note_hu) && (
+                      <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 flex items-center gap-1 w-fit mt-1">
+                        <HiExclamation /> {event.note_en || event.note_hu}
+                      </span>
+                    )}
                   </div>
                 </div>
-
-                {/* --- CONTENT SECTION --- */}
-                <div className="flex flex-col flex-1 p-5 md:p-6">
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-bold text-gray-900 text-xl leading-tight">
-                          {event.title_en}
-                        </h3>
-                        <p className="text-sm text-gray-400 font-medium italic mt-1">
-                          {event.title_hu}
-                        </p>
-                      </div>
-                      <div className="hidden md:flex items-center gap-2 text-xs font-bold text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-100 shrink-0 ml-4">
-                        <HiCalendar className="text-blue-500" />
-                        <span>{event.date}</span>
-                      </div>
-                    </div>
-
-                    {/* Description*/}
-                    <p className="text-gray-600 text-sm mt-3 leading-relaxed line-clamp-2 md:line-clamp-none">
-                      {event.desc_en}
-                    </p>
-                  </div>
-
-                  {/* Lower Content: Buttons */}
-                  {/* Grid on mobile, Flex row on desktop */}
-                  <div className="grid grid-cols-2 gap-3 mt-5 pt-4 border-t border-gray-100 md:border-t-0 md:pt-0 md:mt-6 md:flex md:justify-start">
-                    <button
-                      onClick={() => handleEdit(event)}
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-blue-50 text-blue-600 font-semibold text-sm hover:bg-blue-100 transition-colors"
-                    >
-                      <HiPencil className="text-lg" />
-                      <span>Edit</span>
-                    </button>
-
-                    <button
-                      onClick={() => handleDelete(event._id!)}
-                      className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-red-50 text-red-500 font-semibold text-sm hover:bg-red-100 transition-colors"
-                    >
-                      <HiTrash className="text-lg" />
-                      <span>Delete</span>
-                    </button>
-                  </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEdit(event)}
+                    className="p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100"
+                  >
+                    <HiPencil />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(event._id || event.id!)}
+                    className="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100"
+                  >
+                    <HiTrash />
+                  </button>
                 </div>
               </div>
             ))}

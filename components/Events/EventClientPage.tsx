@@ -15,6 +15,8 @@ interface ApiEvent {
   desc_en: string;
   desc_hu: string;
   date: string;
+  note_en?: string;
+  note_hu?: string;
 }
 
 const dictionary = {
@@ -52,13 +54,13 @@ export default function EventClientPage({
   const locale = rawLocale === "hu" ? "hu" : "en";
   const dict = dictionary[locale];
 
-   const [event, setEvent] = useState<ApiEvent | null>(initialEvent);
-  const [loading, setLoading] = useState(!initialEvent); 
+  const [event, setEvent] = useState<ApiEvent | null>(initialEvent);
+  const [loading, setLoading] = useState(!initialEvent);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
 
-   useEffect(() => {
-    if (initialEvent) return;  
+  useEffect(() => {
+    if (initialEvent) return;
     const id = params?.id as string;
     if (!id) return;
 
@@ -123,6 +125,7 @@ export default function EventClientPage({
   // ---  Success State (Your UI) ---
   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
+  const note = locale === "hu" ? event.note_hu : event.note_en;
   const dateFormatted = new Date(event.date).toLocaleDateString(
     locale === "hu" ? "hu-HU" : "en-US",
     { year: "numeric", month: "long", day: "numeric" }
@@ -193,6 +196,12 @@ export default function EventClientPage({
               <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-yellow-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
                 {dateFormatted}
               </span>
+              {/* Display Note Badge if exists */}
+              {note && (
+                <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm">
+                  ⚠️ {note}
+                </span>
+              )}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold Carena-font leading-tight text-foreground">
                 {title}
               </h1>

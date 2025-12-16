@@ -7,6 +7,8 @@ const eventSchema = new Schema(
     title_hu: { type: String, required: true },
     desc_en: { type: String, required: true },
     desc_hu: { type: String, required: true },
+    note_en: { type: String, required: false },
+    note_hu: { type: String, required: false },
     date: { type: String, required: true },
   },
   { timestamps: true }

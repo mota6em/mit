@@ -11,6 +11,7 @@ interface BlogCardProps {
   readTime: string;
   title: string;
   desc: string;
+  note?: string; 
   index?: number;
   isVerified?: boolean;
   eventUrl?: string;
@@ -24,6 +25,7 @@ export default function BlogCard({
   readTime,
   title,
   desc,
+  note,  
   index = 0,
   eventUrl = "#",
   isPastEvent = false,
@@ -40,7 +42,7 @@ export default function BlogCard({
   return (
     <motion.article
       onClick={handleClick}
-      className="w-full max-w-md bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative"
+      className="w-full max-w-md bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative flex flex-col h-full"
       initial={{ opacity: 0.5, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -65,14 +67,14 @@ export default function BlogCard({
           </span>
         </div>
         <span className="text-xs md:text-sm outline outline-blue-700 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
-          View Event
+          View
         </span>
       </header>
 
-      {/* Image */}
+      {/* Image Container */}
       <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
         <motion.div
-          className="relative w-full h-full "
+          className="relative w-full h-full"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
         >
@@ -84,10 +86,17 @@ export default function BlogCard({
             className={`object-contain ${isPastEvent ? "!grayscale" : ""}`}
           />
         </motion.div>
+
+        {/* NEW: Note Badge displayed over image */}
+        {note && (
+          <div className="absolute bottom-2 left-2 bg-amber-100/90 backdrop-blur-sm border border-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10">
+            {note}
+          </div>
+        )}
       </div>
 
-      {/* Caption */}
-      <div className="px-3 pb-4 pt-2 mb-4 space-y-1">
+      {/* Content */}
+      <div className="px-3 pb-10 pt-2 mb-4 space-y-1 flex-grow">
         <div className="text-sm">
           <span className="font-semibold text-gray-900">{authorName}</span>{" "}
           <span className="text-gray-700">{title}</span>
@@ -100,7 +109,7 @@ export default function BlogCard({
         </p>
       </div>
 
-      {/* Date - Positioned absolutely on the entire card */}
+      {/* Date */}
       <p className="text-sm text-zinc-600 font-semibold absolute bottom-2 right-2">
         {readTime}
       </p>

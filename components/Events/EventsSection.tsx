@@ -14,6 +14,8 @@ interface ApiEvent {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
+  note_en: string;
+  note_hu: string;
   date: string;
 }
 
@@ -120,11 +122,15 @@ export default function EventsSection({
         {displayedPrograms.map((p, index) => {
           const title = locale === "hu" ? p.title_hu : p.title_en;
           const desc = locale === "hu" ? p.desc_hu : p.desc_en;
+          const note = locale === "hu" ? p.note_hu : p.note_en;
 
           const eventId = p._id || p.id;
 
           return (
-            <div key={eventId} className="min-w-[75vw] md:min-w-0 snap-start">
+            <div
+              key={eventId}
+              className="min-w-[75vw] md:min-w-0 snap-start h-full"
+            >
               <BlogCard
                 bgImg={p.img}
                 authorImg="/imgs/icon.jpg"
@@ -132,6 +138,7 @@ export default function EventsSection({
                 readTime={new Date(p.date).toLocaleDateString(locale)}
                 title={title}
                 desc={desc}
+                note={note}
                 eventUrl={`/${locale}/events/${eventId}`}
                 index={index}
                 isVerified={true}
