@@ -10,8 +10,16 @@ import {
 } from "react-icons/hi";
 
 // Reusing the Pill Tag from your design system
-const SectionTag = ({ text, color = "blue" }) => {
-  const colorClasses = {
+type SectionTagColor = "green" | "gold" | "blue";
+
+const SectionTag = ({
+  text,
+  color = "blue",
+}: {
+  text: string;
+  color?: SectionTagColor;
+}) => {
+  const colorClasses: Record<SectionTagColor, string> = {
     green: "bg-green-100 text-green-600",
     gold: "bg-yellow-100 text-yellow-600",
     blue: "bg-blue-100 text-blue-600",
@@ -19,9 +27,7 @@ const SectionTag = ({ text, color = "blue" }) => {
 
   return (
     <div
-      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 ${
-        colorClasses[color] || colorClasses.blue
-      }`}
+      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 ${colorClasses[color]}`}
     >
       {text}
     </div>
