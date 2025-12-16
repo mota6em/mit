@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { CgDanger } from "react-icons/cg";
 
 // Interface
 interface ApiEvent {
@@ -193,15 +194,17 @@ export default function EventClientPage({
             className="flex flex-col gap-8 sticky top-32"
           >
             <div className="space-y-4 border-b border-border pb-8">
-              <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-yellow-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
-                {dateFormatted}
-              </span>
-              {/* Display Note Badge if exists */}
-              {note && (
-                <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm">
-                  ⚠️ {note}
+              <div className="flex items-center justify-start gap-6">
+                <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-400 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
+                  {dateFormatted}
                 </span>
-              )}
+                {/* Display Note Badge if exists */}
+                {note && (
+                  <span className="px-3 py-1.5 rounded-full bg-yellow-100 animate-pulse text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-0">
+                    <CgDanger className="w-6 h-6 mr-1" /> {note}
+                  </span>
+                )}
+              </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold Carena-font leading-tight text-foreground">
                 {title}
               </h1>
