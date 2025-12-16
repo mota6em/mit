@@ -10,7 +10,6 @@ import {
   HiPlus,
   HiX,
 } from "react-icons/hi";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import AdminPasswordInput from "@/components/admin/events/AdminPasswordInput";
 
@@ -26,7 +25,6 @@ interface EventData {
 
 export default function AdminEvents() {
   const [adminPassword, setAdminPassword] = useState("");
-  const searchParams = useSearchParams();
 
   const [events, setEvents] = useState<EventData[]>([]);
   const [form, setForm] = useState<EventData>({
@@ -187,8 +185,8 @@ export default function AdminEvents() {
               Manage your community programs
             </p>
             <Link href="/">
-              <button className="mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg">
-                Go Back to Home
+              <button className="mt-2 px-4 cursor-pointer py-2 bg-blue-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg">
+                Go Back to MIT home page
               </button>
             </Link>
           </div>
