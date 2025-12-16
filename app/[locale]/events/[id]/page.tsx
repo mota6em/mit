@@ -1,163 +1,197 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import dbConnect from "@/lib/mongodb";
-import Event from "@/models/Event";
-import { isValidObjectId } from "mongoose";
-import Link from "next/link"; 
+"use client";
 
-// Simple dictionary for static UI text
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { motion } from "framer-motion"; // Added for smooth entry animation
+
+// Interface for the data we expect from API
+interface ApiEvent {
+  _id: string;
+  img: string;
+  title_en: string;
+  title_hu: string;
+  desc_en: string;
+  desc_hu: string;
+  date: string;
+}
+
+// Translations
 const dictionary = {
   en: {
     back: "Back to Home",
-    notFoundTitle: "Event Not Found",
-    notFoundDesc: "This event may have been removed or the link is incorrect.",
     dateLabel: "Date",
-    loading: "Loading...",
+    notFoundTitle: "Event Not Found",
+    notFoundDesc: "The event you are looking for does not exist or has been removed.",
+    loading: "Loading event details...",
+    share: "Share Event"
   },
   hu: {
     back: "Vissza a főoldalra",
-    notFoundTitle: "Esemény nem található",
-    notFoundDesc: "Ez az esemény törölve lett, vagy a link helytelen.",
     dateLabel: "Dátum",
-    loading: "Betöltés...",
-  },
+    notFoundTitle: "Esemény nem található",
+    notFoundDesc: "A keresett esemény nem létezik, vagy törölve lett.",
+    loading: "Esemény betöltése...",
+    share: "Megosztás"
+  }
 };
 
-// Helper to fetch single event from MongoDB
-async function getEvent(id: string) {
-  await dbConnect();
-  if (!isValidObjectId(id)) return null;
-  const event = await Event.findById(id).lean();
-  return event;
-}
+export default function EventPage() {
+  const params = useParams();
+  const id = params.id as string;
+  const rawLocale = params.locale as string;
+  const locale = rawLocale === "hu" ? "hu" : "en";
+  const dict = dictionary[locale];
 
-// Update Props to include 'locale'
-type Props = {
-  params: { id: string; locale: string };
-};
+  const [event, setEvent] = useState<ApiEvent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-// --- GENERATE METADATA (SEO) ---
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const event = await getEvent(params.id);
-  const locale = params.locale === "hu" ? "hu" : "en";
+  useEffect(() => {
+    if (!id) return;
 
-  if (!event) {
-    return {
-      title: dictionary[locale].notFoundTitle,
-    };
+    fetch(`/api/events?id=${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Event not found");
+        return res.json();
+      })
+      .then((data) => {
+        setEvent(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+        setLoading(false);
+      });
+  }, [id]);
+
+  // --- 1. Loading State ---
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#f9f9f9]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent"></div>
+          <p className="text-green-800 font-semibold Carena-font text-lg tracking-wide">{dict.loading}</p>
+        </div>
+      </div>
+    );
   }
 
-  // Dynamic SEO based on language
-  return {
-    title: locale === "hu" ? event.title_hu : event.title_en,
-    description: locale === "hu" ? event.desc_hu : event.desc_en,
-    openGraph: {
-      title: locale === "hu" ? event.title_hu : event.title_en,
-      description: locale === "hu" ? event.desc_hu : event.desc_en,
-      images: [event.img],
-    },
-  };
-}
-
-// --- THE PAGE UI ---
-export default async function EventPage({ params }: Props) {
-  const event = await getEvent(params.id);
-
-  const locale = params.locale === "hu" ? "hu" : "en";
-  const labels = dictionary[locale];
-
-  if (!event) {
+  // --- 2. Error State ---
+  if (error || !event) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-500 font-sans">
-        <h1 className="text-4xl font-bold mb-4">{labels.notFoundTitle}</h1>
-        <p className="mb-8 text-center px-4">{labels.notFoundDesc}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f9f9f9] text-center px-4">
+        <h1 className="text-4xl font-bold text-green-800 mb-4 Carena-font">{dict.notFoundTitle}</h1>
+        <p className="text-gray-500 mb-8 max-w-md">{dict.notFoundDesc}</p>
         <Link
           href={`/${locale}`}
-          className="px-6 py-2 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 transition"
+          className="px-8 py-3 bg-green-700 text-white rounded-full font-bold hover:bg-green-800 transition shadow-lg"
         >
-          {labels.back}
+          {dict.back}
         </Link>
       </div>
     );
   }
 
+  // --- 3. Success State ---
   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
-
+  
   const dateFormatted = new Date(event.date).toLocaleDateString(
-    locale === "hu" ? "hu-HU" : "en-US",
-    { year: "numeric", month: "long", day: "numeric" }
+    locale === 'hu' ? 'hu-HU' : 'en-US', 
+    { year: 'numeric', month: 'long', day: 'numeric' }
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
-      <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <div className="min-h-screen bg-[#f9f9f9] py-12 px-4 md:px-8 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl w-full mx-auto bg-white rounded-[2rem] shadow-xl overflow-hidden relative z-10 border border-gray-100"
+      >
+        
         {/* Image Section */}
-        <div className="relative h-64 md:h-96 w-full bg-gray-200">
+        <div className="relative w-full h-[300px] md:h-[450px] group">
           {event.img ? (
             <Image
               src={event.img}
               alt={title}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-400">
-              No Image
+            <div className="flex items-center justify-center h-full bg-gray-100 text-gray-400">
+              No Image Available
             </div>
           )}
+          
+          {/* Overlay Gradient for better text visibility if needed, or just style */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
 
-          {/* Back Button Overlay */}
-          <Link
+          {/* Floating Back Button */}
+          <Link 
             href={`/${locale}`}
-            className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-colors text-gray-700"
+            className="absolute top-6 left-6 bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg hover:bg-white text-green-800 transition-all hover:scale-110 z-20 group-hover:shadow-xl"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </Link>
+
+          {/* Date Badge on Image */}
+          <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-5 py-2 rounded-full shadow-lg flex items-center gap-2">
+             <span className="text-green-700 font-bold text-sm uppercase tracking-wider">{dateFormatted}</span>
+          </div>
         </div>
 
         {/* Content Section */}
-        <div className="p-6 md:p-10">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wide">
-              {labels.dateLabel}: {dateFormatted}
-            </span>
-          </div>
-
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+        <div className="p-8 md:p-12">
+          
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 Carena-font leading-tight">
             {title}
           </h1>
 
-          <div className="prose prose-blue max-w-none">
-            <p className="text-gray-700 bg-gray-50 p-6 rounded-2xl leading-relaxed text-lg shadow-sm border border-gray-100 whitespace-pre-wrap">
-              {description}
-            </p>
+          {/* Description */}
+          <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed whitespace-pre-wrap">
+             {/* We use a slight background for the text to make it pop like a letter/card */}
+             <div className="bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-100/50">
+               {description}
+             </div>
           </div>
 
-          <div className="mt-10 text-center border-t pt-8">
+          {/* Action Footer */}
+          <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            {/* Author / Organization Info (Static for now to match MIT style) */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
+                M
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-gray-900">MIT Organization</span>
+                <span className="text-xs text-gray-500">Official Event</span>
+              </div>
+            </div>
+
+            {/* Main Action Button */}
             <Link
-              href={`/${locale}`} 
-              className="inline-block px-8 py-3 bg-blue-600 text-white rounded-full font-bold hover:scale-105 transition-transform duration-200 shadow-lg hover:shadow-blue-500/30"
+              href={`/${locale}`}
+              className="inline-block px-8 py-3 bg-yellow-600 text-white rounded-full font-bold text-sm tracking-wide hover:bg-yellow-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
-              {labels.back}
+              {dict.back}
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

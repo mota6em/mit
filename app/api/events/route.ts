@@ -1,22 +1,46 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
-import Event from "@/models/Event"; // Import the model
+import Event from "@/models/Event";
+import { isValidObjectId } from "mongoose";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     await dbConnect();
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    // Fetch Single Event
+    if (id) {
+      if (!isValidObjectId(id)) {
+        return NextResponse.json(
+          { error: "Invalid ID format" },
+          { status: 400 }
+        );
+      }
+
+      const event = await Event.findById(id);
+
+      if (!event) {
+        return NextResponse.json({ error: "Event not found" }, { status: 404 });
+      }
+
+      return NextResponse.json(event);
+    }
+
+    // Fetch All Events (Default)
     const events = await Event.find({}).sort({ date: -1 });
     return NextResponse.json(events);
   } catch (error) {
+    console.error("Database Error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch events" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
-
 export async function POST(req: Request) {
-   const secret = req.headers.get("x-admin-secret");
+  const secret = req.headers.get("x-admin-secret");
   if (secret !== process.env.ADMIN_SECRET) {
     return NextResponse.json(
       { success: false, message: "Unauthorized" },
@@ -30,7 +54,7 @@ export async function POST(req: Request) {
 
     // DELETE Action
     if (body.action === "delete") {
-      await Event.findByIdAndDelete(body.id); // 'id' from frontend becomes '_id' in MongoDB
+      await Event.findByIdAndDelete(body.id); 
       return NextResponse.json({ success: true });
     }
 
@@ -38,7 +62,7 @@ export async function POST(req: Request) {
     if (body._id || body.id) {
       // Handle update
       const idToUpdate = body._id || body.id;
-       await Event.findByIdAndUpdate(idToUpdate, body);
+      await Event.findByIdAndUpdate(idToUpdate, body);
     } else {
       // Handle create
       await Event.create(body);
