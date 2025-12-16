@@ -16,7 +16,7 @@ interface ApiEvent {
   desc_hu: string;
   note_en?: string;
   note_hu?: string;
-  date?: string; 
+  date?: string;
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -86,9 +86,7 @@ export default function EventsSection({
     : filteredPrograms;
   const titleKey = type === "upcoming" ? "upcomingTitle" : "pastTitle";
   const linkHref =
-    type === "upcoming"
-      ? `/${locale}/events/upcoming`
-      : `/${locale}/events/past`;
+    type === "upcoming" ? `/${locale}/events` : `/${locale}/events`;
 
   const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
