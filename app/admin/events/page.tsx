@@ -14,6 +14,7 @@ import Link from "next/link";
 import AdminPasswordInput from "@/components/admin/events/AdminPasswordInput";
 
 interface EventData {
+  _id?: string;
   id?: string;
   img: string;
   title_en: string;
