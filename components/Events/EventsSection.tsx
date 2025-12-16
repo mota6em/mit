@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
+import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 
 interface ApiEvent {
   _id: string;
@@ -26,9 +27,9 @@ interface EventsSectionProps {
   type: "upcoming" | "past";
   limit?: number;
   showViewAll?: boolean;
+  filterMode?: "all" | "recurring_only" | "single_only";
 }
 
-// Translations map for days
 const dayMap: Record<string, { en: string; hu: string }> = {
   Monday: { en: "Mon", hu: "Hé" },
   Tuesday: { en: "Tue", hu: "Ke" },
@@ -43,6 +44,7 @@ export default function EventsSection({
   type,
   limit,
   showViewAll = true,
+  filterMode = "all",
 }: EventsSectionProps) {
   const t = useTranslations("latestPrograms");
   const params = useParams();
@@ -67,12 +69,13 @@ export default function EventsSection({
   }, []);
 
   const filteredPrograms = events.filter((p) => {
-    // Logic: Recurring events always appear in "Upcoming"
+    if (filterMode === "recurring_only" && !p.isRecurring) return false;
+    if (filterMode === "single_only" && p.isRecurring) return false;
+
     if (p.isRecurring) {
       return type === "upcoming";
     }
 
-    // Normal date logic for non-recurring
     if (!p.date) return false;
     const eventDate = new Date(p.date);
     const today = new Date();
@@ -84,19 +87,19 @@ export default function EventsSection({
   const displayedPrograms = limit
     ? filteredPrograms.slice(0, limit)
     : filteredPrograms;
+
   const titleKey = type === "upcoming" ? "upcomingTitle" : "pastTitle";
+
+  const isWeeklySection =
+    filterMode === "recurring_only" && type === "upcoming";
+  const titleText = isWeeklySection ? "Weekly Gatherings" : t(titleKey);
+
   const linkHref =
     type === "upcoming" ? `/${locale}/events` : `/${locale}/events`;
 
-  const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
   const firstWord = titleWords[0] || "";
   const secondWord = titleWords.slice(1).join(" ") || "";
-
-  if (loading)
-    return (
-      <div className="text-center py-20 text-gray-400">Loading events...</div>
-    );
 
   return (
     <section
@@ -123,64 +126,82 @@ export default function EventsSection({
         )}
       </motion.h2>
 
+      {/* Grid Container */}
       <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
-        {displayedPrograms.map((p, index) => {
-          const title = locale === "hu" ? p.title_hu : p.title_en;
-          const desc = locale === "hu" ? p.desc_hu : p.desc_en;
-          const note = locale === "hu" ? p.note_hu : p.note_en;
+        {/* --- LOADING STATE --- */}
+        {loading
+          ? Array.from({ length: limit || 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="min-w-[75vw] md:min-w-0 snap-start h-full"
+              >
+                <BlogCardSkeleton />
+              </div>
+            ))
+          : displayedPrograms.map((p, index) => {
+              const title = locale === "hu" ? p.title_hu : p.title_en;
+              const desc = locale === "hu" ? p.desc_hu : p.desc_en;
+              const note = locale === "hu" ? p.note_hu : p.note_en;
 
-          // --- DATE FORMATTING LOGIC ---
-          let displayDate = "";
-          if (p.isRecurring && p.recurringDays && p.recurringDays.length > 0) {
-            // Translating days
-            const translatedDays = p.recurringDays
-              .map((day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day)
-              .join(", ");
-            displayDate =
-              locale === "hu" ? `${translatedDays}` : `${translatedDays}`;
-          } else if (p.date) {
-            displayDate = new Date(p.date).toLocaleDateString(
-              locale === "hu" ? "hu-HU" : "en-US"
-            );
-          }
+              let displayDate = "";
+              if (
+                p.isRecurring &&
+                p.recurringDays &&
+                p.recurringDays.length > 0
+              ) {
+                const translatedDays = p.recurringDays
+                  .map(
+                    (day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
+                  )
+                  .join(", ");
+                displayDate = translatedDays;
+              } else if (p.date) {
+                displayDate = new Date(p.date).toLocaleDateString(
+                  locale === "hu" ? "hu-HU" : "en-US"
+                );
+              }
 
-          const eventId = p._id || p.id;
+              const eventId = p._id || p.id;
 
-          return (
-            <div
-              key={eventId}
-              className="min-w-[75vw] md:min-w-0 snap-start h-full"
-            >
-              <BlogCard
-                bgImg={p.img}
-                authorImg="/imgs/icon.jpg"
-                authorName={t("authorName")}
-                readTime={displayDate}
-                title={title}
-                desc={desc}
-                note={note}
-                eventUrl={`/${locale}/events/${eventId}`}
-                index={index}
-                isVerified={true}
-                isPastEvent={type === "past"}
-              />
-            </div>
-          );
-        })}
+              return (
+                <div
+                  key={eventId}
+                  className="min-w-[75vw] md:min-w-0 snap-start h-full"
+                >
+                  <BlogCard
+                    bgImg={p.img}
+                    authorImg="/imgs/icon.jpg"
+                    authorName={t("authorName")}
+                    readTime={displayDate}
+                    title={title}
+                    desc={desc}
+                    note={note}
+                    eventUrl={`/${locale}/events/${eventId}`}
+                    index={index}
+                    isVerified={true}
+                    isPastEvent={type === "past"}
+                  />
+                </div>
+              );
+            })}
       </div>
 
-      {limit && showViewAll && displayedPrograms.length > 0 && (
-        <div className="mt-1 mb-4">
-          <Link
-            href={linkHref}
-            className="text-yellow-800 rounded-full outline outline-yellow-800 px-3 py-1 font-semibold hover:bg-yellow-600 hover:text-white transition-colors"
-          >
-            {t("showAll")}
-          </Link>
-        </div>
-      )}
+      {!loading &&
+        limit &&
+        showViewAll &&
+        displayedPrograms.length > 0 &&
+        filterMode === "all" && (
+          <div className="mt-1 mb-4">
+            <Link
+              href={linkHref}
+              className="text-yellow-800 rounded-full outline outline-yellow-800 px-3 py-1 font-semibold hover:bg-yellow-600 hover:text-white transition-colors"
+            >
+              {t("showAll")}
+            </Link>
+          </div>
+        )}
 
-      {displayedPrograms.length === 0 && (
+      {!loading && displayedPrograms.length === 0 && (
         <p className="text-gray-500 text-center py-8">
           {type === "upcoming"
             ? "No upcoming events found."
