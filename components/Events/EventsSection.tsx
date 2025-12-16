@@ -83,7 +83,7 @@ export default function EventsSection({
         ))}
       </div>
 
-      {showViewAll && displayedPrograms.length > 0 && (
+      {limit && showViewAll && displayedPrograms.length > 0 && (
         <div className="mt-1 mb-4">
           <Link
             href={linkHref}
