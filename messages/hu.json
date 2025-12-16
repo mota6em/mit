@@ -247,7 +247,9 @@
       "subtitle": "Workshopok, piknikek és még sok más-ami összehoz minket.",
       "primaryBtn": "Következő Események",
       "secondaryBtn": "Korábbi Események",
-      "joinStats": "Csatlakozz a következő eseményen!"
+      "joinStats": "Csatlakozz a következő eseményen!",
+      "badgeJoin": "Tarts Velünk",
+      "badgeWeekly": "Heti Összejövetelek"
     }
   }
 }

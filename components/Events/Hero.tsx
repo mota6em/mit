@@ -105,18 +105,18 @@ const Hero = () => {
                   duration: 4,
                   ease: "easeInOut",
                 }}
-                className="absolute top-20 right-10 md:right-20 z-30 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white/50 max-w-[160px]"
+                className="absolute top-20 right-0 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
               >
                 <div className="flex items-start gap-3">
                   <div className="bg-red-100 text-red-600 p-2 rounded-lg">
-                    <HiLocationMarker className="text-xl" />
+                    <HiSparkles className="text-xl" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 font-bold uppercase mb-0.5">
-                      Next Up
+                      {t("hero.badgeJoin")}
                     </p>
                     <p className="text-sm font-bold text-gray-800 leading-tight">
-                      Ramadan Prep Workshop
+                      {t("hero.badgeWeekly")}
                     </p>
                   </div>
                 </div>
@@ -198,18 +198,18 @@ const Hero = () => {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="absolute top-20 right-10 md:right-20 z-30 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white/50 max-w-[160px]"
+              className="absolute top-20 right-10 md:right-20 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
             >
               <div className="flex items-start gap-3">
                 <div className="bg-red-100 text-red-600 p-2 rounded-lg">
-                  <HiLocationMarker className="text-xl" />
+                  <HiSparkles className="text-xl" />
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 font-bold uppercase mb-0.5">
-                    Next Up
+                    {t("hero.badgeJoin")}
                   </p>
                   <p className="text-sm font-bold text-gray-800 leading-tight">
-                    Ramadan Prep Workshop
+                    {t("hero.badgeWeekly")}
                   </p>
                 </div>
               </div>

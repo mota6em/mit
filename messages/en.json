@@ -247,7 +247,9 @@
       "subtitle": "Workshops, picnics, and more—bringing us together.",
       "primaryBtn": "Upcoming Events",
       "secondaryBtn": "Past Events",
-      "joinStats": "See you at our next event!"
+      "joinStats": "See you at our next event!",
+      "badgeJoin": "Join Us",
+      "badgeWeekly": "Weekly Gatherings"
     }
   }
 }
