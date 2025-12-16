@@ -33,7 +33,7 @@ export default function AdminPasswordInput({
           Admin Key
         </label>
         <input
-          type="text"
+          type="password"
           placeholder="Enter Secret..."
           value={adminPassword}
           onChange={(e) => setAdminPassword(e.target.value)}
