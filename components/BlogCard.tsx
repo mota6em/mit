@@ -103,10 +103,9 @@ export default function BlogCard({
       </div>
 
       {/* Content */}
-      <div className="px-3 pb-10 pt-2 mb-4 space-y-1 flex-grow">
-        <div className="text-sm">
-          <span className="font-semibold text-gray-900">{authorName}</span>{" "}
-          <span className="text-gray-700">{title}</span>
+      <div className="px-3 pb-3 pt-2 space-y-1 ">
+        <div className="text-md">
+          <span className="text-gray-700 font-bold">{title}</span>
         </div>
         <p className="text-sm text-gray-600">
           {displayDesc}
