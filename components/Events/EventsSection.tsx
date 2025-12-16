@@ -1,10 +1,21 @@
 "use client";
+import { useState, useEffect } from "react";
 import BlogCard from "../BlogCard";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { programs, Program } from "@/data/programs";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
+
+// Define the shape of data coming from your API
+interface ApiEvent {
+  id: string;
+  img: string;
+  title_en: string;
+  title_hu: string;
+  desc_en: string;
+  desc_hu: string;
+  date: string;
+}
 
 interface EventsSectionProps {
   type: "upcoming" | "past";
@@ -20,11 +31,37 @@ export default function EventsSection({
   const t = useTranslations("latestPrograms");
   const params = useParams();
   const locale = params.locale as string;
+  const [events, setEvents] = useState<ApiEvent[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Filter programs by type
-  const filteredPrograms = programs.filter((p) => p.status === type);
+  // Fetch data from your new API
+  useEffect(() => {
+    fetch("/api/events")
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch events", err);
+        setLoading(false);
+      });
+  }, []);
 
-  // Apply limit if specified
+  // Filter programs dynamically by date
+  const filteredPrograms = events.filter((p) => {
+    const eventDate = new Date(p.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  
+
+    if (type === "upcoming") {
+      return eventDate >= today;
+    } else {
+      return eventDate < today;
+    }
+  });
+
+  //  Apply limit if specified
   const displayedPrograms = limit
     ? filteredPrograms.slice(0, limit)
     : filteredPrograms;
@@ -36,11 +73,17 @@ export default function EventsSection({
       ? `/${locale}/events/upcoming`
       : `/${locale}/events/past`;
 
-  // Split title into words
+  // Split title for styling
   const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
   const firstWord = titleWords[0] || "";
   const secondWord = titleWords.slice(1).join(" ") || "";
+
+  if (loading) {
+    return (
+      <div className="text-center py-20 text-gray-400">Loading events...</div>
+    );
+  }
 
   return (
     <section
@@ -68,22 +111,29 @@ export default function EventsSection({
       </motion.h2>
 
       <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
-        {displayedPrograms.map((p, index) => (
-          <div key={p.id} className="min-w-[75vw] md:min-w-0 snap-start">
-            <BlogCard
-              bgImg={p.img}
-              authorImg="/imgs/icon.jpg"
-              authorName={t("authorName")}
-              readTime={p.date}
-              title={t(p.titleKey)}
-              desc={t(p.descKey)}
-              eventUrl={`/programs/${p.id}`}
-              index={index}
-              isVerified={true}
-              isPastEvent={type === "past"}
-            />
-          </div>
-        ))}
+        {displayedPrograms.map((p, index) => {
+          // Select correct language
+          const title = locale === "hu" ? p.title_hu : p.title_en;
+          const desc = locale === "hu" ? p.desc_hu : p.desc_en;
+
+          return (
+            <div key={p.id} className="min-w-[75vw] md:min-w-0 snap-start">
+              <BlogCard
+                bgImg={p.img}
+                authorImg="/imgs/icon.jpg"
+                authorName={t("authorName")}
+                readTime={new Date(p.date).toLocaleDateString(locale)} // Format date nicely
+                title={title}
+                desc={desc}
+                // Point to the dynamic shared page we created in Step 5
+                eventUrl={`/events/${p.id}`}
+                index={index}
+                isVerified={true}
+                isPastEvent={type === "past"}
+              />
+            </div>
+          );
+        })}
       </div>
 
       {limit && showViewAll && displayedPrograms.length > 0 && (
@@ -99,7 +149,9 @@ export default function EventsSection({
 
       {displayedPrograms.length === 0 && (
         <p className="text-gray-500 text-center py-8">
-          {type === "upcoming" ? "No upcoming events" : "No past events"}
+          {type === "upcoming"
+            ? "No upcoming events found."
+            : "No past events found."}
         </p>
       )}
     </section>
