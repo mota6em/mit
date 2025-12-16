@@ -239,5 +239,15 @@
         "Törekedjünk kiválóságra minden tettünkben."
       ]
     }
+  },
+  "events": {
+    "hero": {
+      "tag": "Találkozóink",
+      "title": "Megosztott Különleges Pillanatok",
+      "subtitle": "Workshopok, piknikek és még sok más-ami összehoz minket.",
+      "primaryBtn": "Következő Események",
+      "secondaryBtn": "Korábbi Események",
+      "joinStats": "Csatlakozz a következő eseményen!"
+    }
   }
 }
