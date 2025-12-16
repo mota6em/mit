@@ -11,6 +11,7 @@ import {
   HiPlus,
   HiX,
 } from "react-icons/hi";
+import { useSearchParams } from "next/navigation";
 
 interface EventData {
   id?: string;
@@ -24,6 +25,7 @@ interface EventData {
 
 export default function AdminEvents() {
   const [adminPassword, setAdminPassword] = useState("");
+  const searchParams = useSearchParams();
 
   const [events, setEvents] = useState<EventData[]>([]);
   const [form, setForm] = useState<EventData>({
@@ -44,6 +46,14 @@ export default function AdminEvents() {
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);
+
+  //auto-fill password from url
+  useEffect(() => {
+    const key = searchParams.get("key");
+    if (key) {
+      setAdminPassword(key);
+    }
+  }, [searchParams]);
 
   // --- NEW DROPZONE HANDLER ---
   const onDrop = useCallback(
@@ -69,7 +79,7 @@ export default function AdminEvents() {
         });
 
         if (res.status === 401) {
-          alert("Wrong Password!");
+          alert("Wrong Password!" + adminPassword);
           setUploadingImg(false);
           return;
         }
@@ -439,8 +449,8 @@ export default function AdminEvents() {
                   className={`flex-grow md:flex-grow-0 px-8 py-4 rounded-xl font-bold text-white shadow-md transform active:scale-95 transition-all
                     ${
                       isEditing
-                        ? "bg-amber-500 hover:bg-amber-600 shadow-amber-500/20" 
-                        : "bg-blue-600 hover:bg-blue-700 shadow-blue-500/20" 
+                        ? "bg-amber-500 hover:bg-amber-600 shadow-amber-500/20"
+                        : "bg-blue-600 hover:bg-blue-700 shadow-blue-500/20"
                     } ${
                     loading || uploadingImg
                       ? "opacity-70 cursor-wait"
