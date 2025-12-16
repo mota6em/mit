@@ -11,7 +11,7 @@ interface BlogCardProps {
   readTime: string;
   title: string;
   desc: string;
-  note?: string; 
+  note?: string;
   index?: number;
   isVerified?: boolean;
   eventUrl?: string;
@@ -25,7 +25,7 @@ export default function BlogCard({
   readTime,
   title,
   desc,
-  note,  
+  note,
   index = 0,
   eventUrl = "#",
   isPastEvent = false,
@@ -87,10 +87,10 @@ export default function BlogCard({
           />
         </motion.div>
 
-        {/* NEW: Note Badge displayed over image */}
+        {/* --- NOTE BADGE --- */}
         {note && (
           <div className="absolute bottom-2 left-2 bg-amber-100/90 backdrop-blur-sm border border-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10">
-            {note}
+            ⚠️ {note}
           </div>
         )}
       </div>

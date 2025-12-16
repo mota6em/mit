@@ -2,17 +2,20 @@ import { Metadata } from "next";
 import dbConnect from "@/lib/mongodb";
 import Event from "@/models/Event";
 import { isValidObjectId } from "mongoose";
-import EventClientPage from "@/components/Events/EventClientPage";
+import EventClientPage from "@/components/Events/EventClientPage"; // Ensure you create this file next
 
- async function getEvent(id: string) {
+// Helper to fetch data
+async function getEvent(id: string) {
   await dbConnect();
   if (!isValidObjectId(id)) return null;
   const event = await Event.findById(id).lean();
   if (!event) return null;
-   return {
+
+  // Convert MongoDB Objects to plain strings for Client Component
+  return {
     ...event,
     _id: event._id.toString(),
-    date: event.date.toISOString(),  
+    date: event.date.toISOString ? event.date.toISOString() : event.date,
   };
 }
 
@@ -25,9 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = params.locale === "hu" ? "hu" : "en";
 
   if (!event) {
-    return {
-      title: "Event Not Found",
-    };
+    return { title: "Event Not Found" };
   }
 
   const title = locale === "hu" ? event.title_hu : event.title_en;
@@ -39,21 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: title,
       description: description,
-      images: [event.img], 
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: title,
-      description: description,
       images: [event.img],
+      type: "article",
     },
   };
 }
 
-// --- MAIN SERVER COMPONENT ---
 export default async function EventPageServer({ params }: Props) {
   const event = await getEvent(params.id);
-
+  // Pass the event data to the client component
   return <EventClientPage initialEvent={event} />;
 }

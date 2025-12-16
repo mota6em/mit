@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { CgDanger } from "react-icons/cg";
+import { HiClock, HiRefresh } from "react-icons/hi";
 
-// Interface
 interface ApiEvent {
   _id: string;
   img: string;
@@ -18,6 +18,9 @@ interface ApiEvent {
   date: string;
   note_en?: string;
   note_hu?: string;
+  time?: string;
+  isRecurring?: boolean;
+  recurringDays?: string[];
 }
 
 const dictionary = {
@@ -31,6 +34,7 @@ const dictionary = {
     organizer: "Organizer",
     share: "Share Event",
     copied: "Link Copied!",
+    repeats: "Repeats on:",
   },
   hu: {
     back: "Vissza az eseményekhez",
@@ -41,10 +45,10 @@ const dictionary = {
     organizer: "Szervező",
     share: "Megosztás",
     copied: "Link Másolva!",
+    repeats: "Ismétlődik:",
   },
 };
 
-// Accept initialEvent passed from Server
 export default function EventClientPage({
   initialEvent,
 }: {
@@ -89,7 +93,7 @@ export default function EventClientPage({
     }
   };
 
-  // ---  Loading State ---
+  // --- Loading State ---
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -103,7 +107,7 @@ export default function EventClientPage({
     );
   }
 
-  // ---  Error/Not Found State ---
+  // --- Error State ---
   if (error || !event) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-center px-4">
@@ -123,10 +127,11 @@ export default function EventClientPage({
     );
   }
 
-  // ---  Success State (Your UI) ---
+  // --- Success State ---
   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
   const note = locale === "hu" ? event.note_hu : event.note_en;
+
   const dateFormatted = new Date(event.date).toLocaleDateString(
     locale === "hu" ? "hu-HU" : "en-US",
     { year: "numeric", month: "long", day: "numeric" }
@@ -179,6 +184,7 @@ export default function EventClientPage({
                 No Image
               </div>
             )}
+            {/* Mobile Date Badge */}
             <div className="absolute top-4 left-4 lg:hidden">
               <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
                 {dateFormatted}
@@ -194,20 +200,40 @@ export default function EventClientPage({
             className="flex flex-col gap-8 sticky top-32"
           >
             <div className="space-y-4 border-b border-border pb-8">
-              <div className="flex items-center justify-start gap-6">
-                <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-400 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
+              {/* Badges Row */}
+              <div className="flex flex-wrap items-center gap-3">
+                {/* Date */}
+                <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
                   {dateFormatted}
                 </span>
-                {/* Display Note Badge if exists */}
+
+                {/* Time */}
+                {event.time && (
+                  <span className="px-4 py-1.5 rounded-full bg-blue-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <HiClock className="text-lg" /> {event.time}
+                  </span>
+                )}
+
+                {/* Recurring */}
+                {event.isRecurring && event.recurringDays && (
+                  <span className="px-4 py-1.5 rounded-full bg-indigo-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <HiRefresh className="text-lg" />{" "}
+                    {event.recurringDays.map((d) => d.slice(0, 3)).join(", ")}
+                  </span>
+                )}
+
+                {/* Note */}
                 {note && (
-                  <span className="px-3 py-1.5 rounded-full bg-yellow-100 animate-pulse text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-0">
-                    <CgDanger className="w-6 h-6 mr-1" /> {note}
+                  <span className="px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <CgDanger className="w-5 h-5" /> {note}
                   </span>
                 )}
               </div>
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold Carena-font leading-tight text-foreground">
                 {title}
               </h1>
+
               <div className="flex items-center gap-3 pt-2">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
                   M

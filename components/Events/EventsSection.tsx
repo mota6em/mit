@@ -14,9 +14,12 @@ interface ApiEvent {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
-  note_en: string;
-  note_hu: string;
+  note_en?: string;
+  note_hu?: string;
   date: string;
+  time?: string;
+  isRecurring?: boolean;
+  recurringDays?: string[];
 }
 
 interface EventsSectionProps {
@@ -32,8 +35,7 @@ export default function EventsSection({
 }: EventsSectionProps) {
   const t = useTranslations("latestPrograms");
   const params = useParams();
-
-  const locale = (params.locale as string) || "en";
+  const locale = (params?.locale as string) || "en";
 
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,11 +44,8 @@ export default function EventsSection({
     fetch("/api/events")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data)) {
-          setEvents(data);
-        } else {
-          setEvents([]);
-        }
+        if (Array.isArray(data)) setEvents(data);
+        else setEvents([]);
         setLoading(false);
       })
       .catch((err) => {
@@ -60,38 +59,28 @@ export default function EventsSection({
     const eventDate = new Date(p.date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    if (type === "upcoming") {
-      return eventDate >= today;
-    } else {
-      return eventDate < today;
-    }
+    return type === "upcoming" ? eventDate >= today : eventDate < today;
   });
 
-  // Apply limit if specified
   const displayedPrograms = limit
     ? filteredPrograms.slice(0, limit)
     : filteredPrograms;
-
-  // Determine title and link based on type
   const titleKey = type === "upcoming" ? "upcomingTitle" : "pastTitle";
-
   const linkHref =
     type === "upcoming"
       ? `/${locale}/events/upcoming`
       : `/${locale}/events/past`;
 
-  // Split title for styling
+  // Title styling
   const titleText = t(titleKey);
   const titleWords = titleText.split(" ");
   const firstWord = titleWords[0] || "";
   const secondWord = titleWords.slice(1).join(" ") || "";
 
-  if (loading) {
+  if (loading)
     return (
       <div className="text-center py-20 text-gray-400">Loading events...</div>
     );
-  }
 
   return (
     <section
@@ -122,6 +111,7 @@ export default function EventsSection({
         {displayedPrograms.map((p, index) => {
           const title = locale === "hu" ? p.title_hu : p.title_en;
           const desc = locale === "hu" ? p.desc_hu : p.desc_en;
+          // --- LOCALIZED NOTE ---
           const note = locale === "hu" ? p.note_hu : p.note_en;
 
           const eventId = p._id || p.id;
@@ -135,10 +125,12 @@ export default function EventsSection({
                 bgImg={p.img}
                 authorImg="/imgs/icon.jpg"
                 authorName={t("authorName")}
-                readTime={new Date(p.date).toLocaleDateString(locale)}
+                readTime={new Date(p.date).toLocaleDateString(
+                  locale === "hu" ? "hu-HU" : "en-US"
+                )}
                 title={title}
                 desc={desc}
-                note={note}
+                note={note} 
                 eventUrl={`/${locale}/events/${eventId}`}
                 index={index}
                 isVerified={true}
