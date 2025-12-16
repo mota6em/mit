@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 
-// Define the shape of data coming from your API
 interface ApiEvent {
-  id: string;
+  _id: string;
+  id?: string;
   img: string;
   title_en: string;
   title_hu: string;
@@ -30,29 +30,34 @@ export default function EventsSection({
 }: EventsSectionProps) {
   const t = useTranslations("latestPrograms");
   const params = useParams();
-  const locale = params.locale as string;
+
+  const locale = (params.locale as string) || "en";
+
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch data from your new API
   useEffect(() => {
     fetch("/api/events")
       .then((res) => res.json())
       .then((data) => {
-        setEvents(data);
+        if (Array.isArray(data)) {
+          setEvents(data);
+        } else {
+          setEvents([]);
+        }
         setLoading(false);
       })
       .catch((err) => {
         console.error("Failed to fetch events", err);
+        setEvents([]);
         setLoading(false);
       });
   }, []);
 
-  // Filter programs dynamically by date
   const filteredPrograms = events.filter((p) => {
     const eventDate = new Date(p.date);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);  
+    today.setHours(0, 0, 0, 0);
 
     if (type === "upcoming") {
       return eventDate >= today;
@@ -61,13 +66,14 @@ export default function EventsSection({
     }
   });
 
-  //  Apply limit if specified
+  // Apply limit if specified
   const displayedPrograms = limit
     ? filteredPrograms.slice(0, limit)
     : filteredPrograms;
 
   // Determine title and link based on type
   const titleKey = type === "upcoming" ? "upcomingTitle" : "pastTitle";
+
   const linkHref =
     type === "upcoming"
       ? `/${locale}/events/upcoming`
@@ -112,21 +118,21 @@ export default function EventsSection({
 
       <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
         {displayedPrograms.map((p, index) => {
-          // Select correct language
           const title = locale === "hu" ? p.title_hu : p.title_en;
           const desc = locale === "hu" ? p.desc_hu : p.desc_en;
 
+          const eventId = p._id || p.id;
+
           return (
-            <div key={p.id} className="min-w-[75vw] md:min-w-0 snap-start">
+            <div key={eventId} className="min-w-[75vw] md:min-w-0 snap-start">
               <BlogCard
                 bgImg={p.img}
                 authorImg="/imgs/icon.jpg"
                 authorName={t("authorName")}
-                readTime={new Date(p.date).toLocaleDateString(locale)} // Format date nicely
+                readTime={new Date(p.date).toLocaleDateString(locale)}
                 title={title}
                 desc={desc}
-                // Point to the dynamic shared page we created in Step 5
-                eventUrl={`/events/${p.id}`}
+                eventUrl={`/${locale}/events/${eventId}`}
                 index={index}
                 isVerified={true}
                 isPastEvent={type === "past"}
