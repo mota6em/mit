@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { motion } from "framer-motion"; // Added for smooth entry animation
+import { motion, AnimatePresence } from "framer-motion";
 
 // Interface for the data we expect from API
 interface ApiEvent {
@@ -20,33 +20,39 @@ interface ApiEvent {
 // Translations
 const dictionary = {
   en: {
-    back: "Back to Home",
+    back: "Back to Events",
     dateLabel: "Date",
     notFoundTitle: "Event Not Found",
-    notFoundDesc: "The event you are looking for does not exist or has been removed.",
+    notFoundDesc:
+      "The event you are looking for does not exist or has been removed.",
     loading: "Loading event details...",
-    share: "Share Event"
+    organizer: "Organizer",
+    share: "Share Event",
+    copied: "Link Copied!",
   },
   hu: {
-    back: "Vissza a főoldalra",
+    back: "Vissza az eseményekhez",
     dateLabel: "Dátum",
     notFoundTitle: "Esemény nem található",
     notFoundDesc: "A keresett esemény nem létezik, vagy törölve lett.",
     loading: "Esemény betöltése...",
-    share: "Megosztás"
-  }
+    organizer: "Szervező",
+    share: "Megosztás",
+    copied: "Link Másolva!",
+  },
 };
 
 export default function EventPage() {
   const params = useParams();
-  const id = params.id as string;
-  const rawLocale = params.locale as string;
+  const id = params?.id as string;
+  const rawLocale = params?.locale as string;
   const locale = rawLocale === "hu" ? "hu" : "en";
   const dict = dictionary[locale];
 
   const [event, setEvent] = useState<ApiEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -67,27 +73,39 @@ export default function EventPage() {
       });
   }, [id]);
 
-  // --- 1. Loading State ---
-  if (loading) {
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f9f9f9]">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent"></div>
-          <p className="text-green-800 font-semibold Carena-font text-lg tracking-wide">{dict.loading}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+          <p className="text-primary font-semibold Carena-font text-lg tracking-wide">
+            {dict.loading}
+          </p>
         </div>
       </div>
     );
   }
 
-  // --- 2. Error State ---
-  if (error || !event) {
+   if (error || !event) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f9f9f9] text-center px-4">
-        <h1 className="text-4xl font-bold text-green-800 mb-4 Carena-font">{dict.notFoundTitle}</h1>
-        <p className="text-gray-500 mb-8 max-w-md">{dict.notFoundDesc}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-center px-4">
+        <h1 className="text-4xl font-bold text-primary mb-4 Carena-font">
+          {dict.notFoundTitle}
+        </h1>
+        <p className="text-muted-foreground mb-8 max-w-md">
+          {dict.notFoundDesc}
+        </p>
         <Link
-          href={`/${locale}`}
-          className="px-8 py-3 bg-green-700 text-white rounded-full font-bold hover:bg-green-800 transition shadow-lg"
+          href={`/${locale}/events`}
+          className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-bold hover:opacity-90 transition shadow-lg"
         >
           {dict.back}
         </Link>
@@ -95,103 +113,174 @@ export default function EventPage() {
     );
   }
 
-  // --- 3. Success State ---
-  const title = locale === "hu" ? event.title_hu : event.title_en;
+   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
-  
+
   const dateFormatted = new Date(event.date).toLocaleDateString(
-    locale === 'hu' ? 'hu-HU' : 'en-US', 
-    { year: 'numeric', month: 'long', day: 'numeric' }
+    locale === "hu" ? "hu-HU" : "en-US",
+    { year: "numeric", month: "long", day: "numeric" }
   );
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9] py-12 px-4 md:px-8 relative overflow-hidden">
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-100 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
-
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl w-full mx-auto bg-white rounded-[2rem] shadow-xl overflow-hidden relative z-10 border border-gray-100"
-      >
-        
-        {/* Image Section */}
-        <div className="relative w-full h-[300px] md:h-[450px] group">
-          {event.img ? (
-            <Image
-              src={event.img}
-              alt={title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              priority
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gray-100 text-gray-400">
-              No Image Available
-            </div>
-          )}
-          
-          {/* Overlay Gradient for better text visibility if needed, or just style */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
-
-          {/* Floating Back Button */}
-          <Link 
-            href={`/${locale}`}
-            className="absolute top-6 left-6 bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg hover:bg-white text-green-800 transition-all hover:scale-110 z-20 group-hover:shadow-xl"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-          </Link>
-
-          {/* Date Badge on Image */}
-          <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-5 py-2 rounded-full shadow-lg flex items-center gap-2">
-             <span className="text-green-700 font-bold text-sm uppercase tracking-wider">{dateFormatted}</span>
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className="p-8 md:p-12">
-          
-          {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 Carena-font leading-tight">
-            {title}
-          </h1>
-
-          {/* Description */}
-          <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed whitespace-pre-wrap">
-             {/* We use a slight background for the text to make it pop like a letter/card */}
-             <div className="bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-100/50">
-               {description}
-             </div>
-          </div>
-
-          {/* Action Footer */}
-          <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
-            
-            {/* Author / Organization Info (Static for now to match MIT style) */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
-                M
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-bold text-gray-900">MIT Organization</span>
-                <span className="text-xs text-gray-500">Official Event</span>
-              </div>
-            </div>
-
-            {/* Main Action Button */}
-            <Link
-              href={`/${locale}`}
-              className="inline-block px-8 py-3 bg-yellow-600 text-white rounded-full font-bold text-sm tracking-wide hover:bg-yellow-700 hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+    <div className="min-h-screen bg-background text-foreground pt-5 pb-20 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto">
+         <Link
+          href={`/${locale}/events`}
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
+        >
+          <span className="p-2 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-5 h-5"
             >
-              {dict.back}
-            </Link>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+          </span>
+          <span className="font-medium tracking-wide">{dict.back}</span>
+        </Link>
+
+        {/* --- Main Content Grid (Image Left, Text Right) --- */}
+        {/* Removed the md:flex wrapper that was causing layout issues */}
+        <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* LEFT: Image Section */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            // Removed md:me-20 which was causing the gap/misalignment on tablet screens
+            className="relative w-full aspect-[4/5] lg:aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-gray-100"
+          >
+            {event.img ? (
+              <Image
+                src={event.img}
+                alt={title}
+                fill
+                className="object-cover"
+                priority
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-muted-foreground">
+                No Image Available
+              </div>
+            )}
+
+            {/* Optional: Date Badge Overlay on Mobile only */}
+            <div className="absolute top-4 left-4 lg:hidden">
+              <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
+                {dateFormatted}
+              </span>
+            </div>
+          </motion.div>
+
+          {/* RIGHT: Text & Info Section */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-col gap-8 sticky top-32"
+          >
+            {/* Header Info */}
+            <div className="space-y-4 border-b border-border pb-8">
+              <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-yellow-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
+                {dateFormatted}
+              </span>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold Carena-font leading-tight text-foreground">
+                {title}
+              </h1>
+
+              <div className="flex items-center gap-3 pt-2">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                  M
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold">{dict.organizer}</span>
+                  <span className="text-xs text-muted-foreground">
+                    MIT Organization
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              {description}
+            </div>
+
+            {/* Actions */}
+            <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={handleShare}
+                className={`flex-1 px-8 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
+                  copied
+                    ? "bg-green-600 text-white hover:bg-green-700"
+                    : "bg-primary text-primary-foreground hover:opacity-90"
+                }`}
+              >
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.8, opacity: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4.5 12.75l6 6 9-13.5"
+                        />
+                      </svg>
+                      {dict.copied}
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="share"
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.8, opacity: 0 }}
+                      className="flex items-center gap-2"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+                        />
+                      </svg>
+                      {dict.share}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
