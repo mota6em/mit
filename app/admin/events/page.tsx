@@ -1,9 +1,8 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import Image from "next/image";
-import { useDropzone } from "react-dropzone"; // IMPORT react-dropzone
+import { useDropzone } from "react-dropzone";
 import {
-  HiLockClosed,
   HiPencil,
   HiTrash,
   HiCloudUpload,
@@ -12,6 +11,8 @@ import {
   HiX,
 } from "react-icons/hi";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import AdminPasswordInput from "@/components/admin/events/AdminPasswordInput";
 
 interface EventData {
   id?: string;
@@ -46,14 +47,6 @@ export default function AdminEvents() {
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);
-
-  //auto-fill password from url
-  useEffect(() => {
-    const key = searchParams.get("key");
-    if (key) {
-      setAdminPassword(key);
-    }
-  }, [searchParams]);
 
   // --- NEW DROPZONE HANDLER ---
   const onDrop = useCallback(
@@ -193,30 +186,23 @@ export default function AdminEvents() {
             <p className="text-gray-500 text-sm mt-1">
               Manage your community programs
             </p>
+            <Link href="/">
+              <button className="mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg">
+                Go Back to Home
+              </button>
+            </Link>
           </div>
 
-          <div className="flex items-center gap-3 bg-blue-50 px-4 py-3 rounded-xl border border-blue-100 w-full md:w-auto">
-            <HiLockClosed
-              className={`text-xl ${
-                adminPassword ? "text-green-500" : "text-gray-400"
-              }`}
+          <Suspense
+            fallback={
+              <div className="w-full md:w-auto h-12 bg-gray-200 rounded-xl animate-pulse" />
+            }
+          >
+            <AdminPasswordInput
+              adminPassword={adminPassword}
+              setAdminPassword={setAdminPassword}
             />
-            <div className="flex-grow">
-              <label className="block text-xs font-bold text-blue-800 uppercase tracking-wider mb-0.5">
-                Admin Key
-              </label>
-              <input
-                type="password"
-                placeholder="Enter Secret..."
-                value={adminPassword}
-                onChange={(e) => setAdminPassword(e.target.value)}
-                className="bg-transparent border-none p-0 text-gray-800 placeholder-gray-400 focus:ring-0 w-full text-sm font-medium outline-none"
-              />
-            </div>
-            {adminPassword && (
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            )}
-          </div>
+          </Suspense>
         </div>
 
         {/* --- MAIN FORM CARD --- */}
