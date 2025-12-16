@@ -1,29 +1,22 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import dbConnect from "@/lib/mongodb";
+import Event from "@/models/Event"; // Import the model
 
-const dataFilePath = path.join(process.cwd(), "data/events.json");
-
-// Helper to read data
-const getEvents = () => {
-  if (!fs.existsSync(dataFilePath)) return [];
-  const file = fs.readFileSync(dataFilePath, "utf8");
-  return JSON.parse(file);
-};
-
-// GET: Fetch all events
 export async function GET() {
-  const events = getEvents();
-  // Sort by date (newest first)
-  events.sort(
-    (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-  return NextResponse.json(events);
+  try {
+    await dbConnect();
+    const events = await Event.find({}).sort({ date: -1 });
+    return NextResponse.json(events);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch events" },
+      { status: 500 }
+    );
+  }
 }
 
-// POST: Add or Update an event
 export async function POST(req: Request) {
-  const secret = req.headers.get("x-admin-secret");
+   const secret = req.headers.get("x-admin-secret");
   if (secret !== process.env.ADMIN_SECRET) {
     return NextResponse.json(
       { success: false, message: "Unauthorized" },
@@ -31,24 +24,34 @@ export async function POST(req: Request) {
     );
   }
 
-  const body = await req.json();
-  const events = getEvents();
+  try {
+    await dbConnect();
+    const body = await req.json();
 
-  if (body.action === "delete") {
-    const newEvents = events.filter((e: any) => e.id !== body.id);
-    fs.writeFileSync(dataFilePath, JSON.stringify(newEvents, null, 2));
-    return NextResponse.json({ success: true, events: newEvents });
+    // DELETE Action
+    if (body.action === "delete") {
+      await Event.findByIdAndDelete(body.id); // 'id' from frontend becomes '_id' in MongoDB
+      return NextResponse.json({ success: true });
+    }
+
+    // CREATE or UPDATE Action
+    if (body._id || body.id) {
+      // Handle update
+      const idToUpdate = body._id || body.id;
+       await Event.findByIdAndUpdate(idToUpdate, body);
+    } else {
+      // Handle create
+      await Event.create(body);
+    }
+
+    // Return the updated list to refresh UI
+    const events = await Event.find({}).sort({ date: -1 });
+    return NextResponse.json({ success: true, events });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { success: false, message: "Database Error" },
+      { status: 500 }
+    );
   }
-
-  // Update existing or Add new
-  const existingIndex = events.findIndex((e: any) => e.id === body.id);
-
-  if (existingIndex > -1) {
-    events[existingIndex] = { ...events[existingIndex], ...body };
-  } else {
-    events.push({ ...body, id: Date.now().toString() });
-  }
-
-  fs.writeFileSync(dataFilePath, JSON.stringify(events, null, 2));
-  return NextResponse.json({ success: true, events });
 }
