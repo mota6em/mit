@@ -23,9 +23,7 @@ const SectionTag = ({
 
   return (
     <div
-      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 ${
-        colorClasses[color]
-      }`}
+      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 ${colorClasses[color]}`}
     >
       {text}
     </div>
@@ -159,13 +157,13 @@ export default function JoinMIT() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mx-10 md:mx-0">
               <a
                 href="#volunteer"
-                className="px-8 py-3  bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-colors shadow-lg shadow-green-200"
+                className="px-8 py-3 bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-all duration-300 shadow-lg shadow-green-200"
               >
                 {t("volunteer.button") || "Start Volunteering"}
               </a>
               <a
                 href="#socials"
-                className="px-8 py-3 bg-white text-gray-600 border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition-colors"
+                className="px-8 py-3 bg-white text-gray-600 border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition-transition-all duration-300"
               >
                 {t("connect") || "Connect With Us"}
               </a>
