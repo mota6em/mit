@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { CiClock2 } from "react-icons/ci";
 
 const DESCRIPTION_CHAR_LIMIT = 100;
 
@@ -66,9 +67,15 @@ export default function BlogCard({
             {authorName}
           </span>
         </div>
-        <span className="text-xs md:text-sm outline outline-blue-700 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
-          View
-        </span>
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Date */}
+          <p className="text-sm flex flex-row items-center justify-between gap-x-1 text-green-600 outline outline-green-300 px-2 py-1 rounded-full font-semibold">
+            <CiClock2 className="w-5 h-5" /> {readTime}
+          </p>
+          <span className="text-xs md:text-sm outline outline-blue-700 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
+            View
+          </span>
+        </div>
       </header>
 
       {/* Image Container */}
@@ -108,11 +115,6 @@ export default function BlogCard({
           )}
         </p>
       </div>
-
-      {/* Date */}
-      <p className="text-sm text-zinc-600 font-semibold absolute bottom-2 right-2">
-        {readTime}
-      </p>
     </motion.article>
   );
 }

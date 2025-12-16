@@ -16,7 +16,7 @@ interface ApiEvent {
   desc_hu: string;
   note_en?: string;
   note_hu?: string;
-  date?: string; // Optional
+  date?: string; 
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -157,7 +157,7 @@ export default function EventsSection({
                 bgImg={p.img}
                 authorImg="/imgs/icon.jpg"
                 authorName={t("authorName")}
-                readTime={displayDate} // Passing the dynamic date string
+                readTime={displayDate}
                 title={title}
                 desc={desc}
                 note={note}
