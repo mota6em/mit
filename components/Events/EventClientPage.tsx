@@ -281,7 +281,7 @@ export default function EventClientPage({
               {/* Share Button */}
               <button
                 onClick={handleShare}
-                className={`flex-1 px-4 py-2 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
+                className={`flex-1 px-4 py-4  cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
                   copied
                     ? "bg-green-600 text-white hover:bg-green-700"
                     : "bg-primary text-primary-foreground hover:opacity-90"
@@ -314,7 +314,7 @@ export default function EventClientPage({
               </button>
 
               <a
-                href="https://www.instagram.com/direct/t/108976070501805/"
+                href="https://ig.me/m/muszlimifjusag"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
