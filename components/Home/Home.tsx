@@ -5,7 +5,7 @@ import WhoWeAre from "./WhoWeAre";
 import { getImages } from "@/lib/get-images";
 
 const Home = () => {
-  const heroImages = getImages("/public/imgs/hero");
+  const heroImages = getImages("/public/imgs/home/hero");
   return (
     <div className="overflow-hidden md:mx-10">
       <Hero images={heroImages} />
