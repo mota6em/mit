@@ -28,7 +28,7 @@ export default function WhoWeAre() {
           className="
               flex flex-col-reverse lg:flex-row 
               items-center  
-              gap-5 md:gap-24
+              gap-15 md:gap-24
             "
         >
           {/* TEXT LEFT */}
