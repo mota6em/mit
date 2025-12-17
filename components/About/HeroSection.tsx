@@ -111,7 +111,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/hero/home/hero-bg-2.jpg"
+              src="/imgs/home/hero/hero-bg-2.jpg"
               alt="Youth Gathering"
               fill
               className={`object-cover transition-opacity duration-500 ${
