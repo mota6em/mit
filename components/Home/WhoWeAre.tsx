@@ -72,7 +72,7 @@ export default function WhoWeAre() {
               alt="MIT Visual"
               width={900}
               height={900}
-              className="w-full h-auto drop-shadow-xl"
+              className="w-full ms-3 md:ms-0 h-auto drop-shadow-xl"
             />
           </motion.div>
         </div>
