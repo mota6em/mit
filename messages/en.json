@@ -31,7 +31,8 @@
     "title": "Our Latest Programs",
     "upcomingTitle": "Upcoming Events",
     "pastTitle": "Past Events",
-    "showAll": "Show all Upcoming events",
+    "showAllUpcoming": "Show all upcoming events",
+    "showAllPast": "Show all past events",
     "authorName": "MIT",
     "newProgram": "New Program",
     "programs": {

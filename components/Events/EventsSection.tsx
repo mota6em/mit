@@ -196,7 +196,9 @@ export default function EventsSection({
               href={linkHref}
               className="text-yellow-800 rounded-full outline outline-yellow-800 px-3 py-1 font-semibold hover:bg-yellow-600 hover:text-white transition-colors"
             >
-              {t("showAll")}
+              {type === "upcoming"
+                ? t("showAllUpcoming")
+                : t("showAllPast")}
             </Link>
           </div>
         )}

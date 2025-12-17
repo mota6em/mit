@@ -31,7 +31,8 @@
     "title": "Legfrissebb Programjaink",
     "upcomingTitle": "Következő Események",
     "pastTitle": "Korábbi Események",
-    "showAll": "Összes következő Események megtekintése",
+    "showAllUpcoming": "Összes következő Események megtekintése",
+    "showAllPast": "Összes koróbbi Események megtekintése",
     "authorName": "MIT",
     "newProgram": "Új Program",
     "programs": {
