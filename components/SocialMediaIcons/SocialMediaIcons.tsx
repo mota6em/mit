@@ -43,13 +43,13 @@ export default function SocialMediaIcons() {
           return (
             <div key={i} className="relative">
               {showCopied && (
-                <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full whitespace-nowrap z-20">
+                <span className="absolute  -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full whitespace-nowrap z-20">
                   {t("copied")}
                 </span>
               )}
               <button
                 onClick={copyEmailToClipboard}
-                className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+                className="relative p-3 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
               >
                 <div
                   className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x`}
