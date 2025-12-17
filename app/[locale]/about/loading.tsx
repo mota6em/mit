@@ -30,7 +30,7 @@ export default function Loading() {
             className="relative w-14 h-14"
           >
             <Image
-              src="/imgs/hero/mit-logo-full.png"
+              src="/imgs/mit-logo-full-resized.png"
               alt="Loading..."
               fill
               className="object-contain"
