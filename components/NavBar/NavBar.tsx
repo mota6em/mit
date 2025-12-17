@@ -3,17 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { X } from "lucide-react";
 import LanguageSwitch from "./LanguageSwitch";
 import { CgMenuRight } from "react-icons/cg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -84,44 +80,78 @@ export default function NavBar() {
             })}
           </div>
         </nav>
-
-        {/* Mobile nav trigger */}
-        <div className="md:hidden flex items-center ">
+        {/* Mobile nav trigger  */}
+        <div className="md:hidden flex items-center gap-2">
           <LanguageSwitch />
-          <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-            <DropdownMenuTrigger asChild>
-              {isMenuOpen ? (
-                <X className="w-6! h-6!" />
-              ) : (
-                <CgMenuRight className="w-7! h-7!" />
-              )}
-            </DropdownMenuTrigger>
 
-            <DropdownMenuContent
-              align="end"
-              sideOffset={5}
-              className="bg-white/90 backdrop-blur-md p-4 min-w-[150px] flex flex-col gap-3"
-            >
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <DropdownMenuItem
-                    key={link.label}
-                    asChild
-                    className={`font-medium hover:bg-yellow-100 rounded-md ${
-                      isActive
-                        ? "outline outline-yellow-700 text-yellow-700"
-                        : "text-gray-800"
-                    }`}
-                  >
-                    <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
-                      {link.label}
-                    </Link>
-                  </DropdownMenuItem>
-                );
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+           <button
+            onClick={() => setIsMenuOpen(true)}
+            className="p-2 -mr-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <CgMenuRight className="w-7 h-7" />
+          </button>
+
+           <AnimatePresence>
+            {isMenuOpen && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
+                />
+
+                {/* Sliding Drawer Panel */}
+                <motion.div
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "100%" }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  className="fixed top-0 right-0 h-full w-[280px] bg-white shadow-2xl z-[51] flex flex-col p-6"
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-lg font-bold text-gray-900 Carena-font tracking-wide">
+                      Menu
+                    </span>
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                    >
+                      <X className="w-5 h-5 text-gray-600" />
+                    </button>
+                  </div>
+
+                  {/* Nav Links */}
+                  <div className="flex flex-col gap-2">
+                    {navLinks.map((link) => {
+                      const isActive = pathname === link.href;
+                      return (
+                        <Link
+                          key={link.label}
+                          href={link.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`px-4 py-3 rounded-xl text-lg font-medium transition-all duration-200 ${
+                            isActive
+                              ? "bg-yellow-50 text-yellow-800 border-l-4 border-yellow-600"
+                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-auto border-t pt-6">
+                    <p className="text-xs text-gray-400 text-center">
+                      © {new Date().getFullYear()} MIT
+                    </p>
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </header>
