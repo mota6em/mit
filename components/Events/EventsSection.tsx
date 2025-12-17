@@ -187,7 +187,7 @@ export default function EventsSection({
             })}
 
         {/* Mobile View All Card */}
-        {!loading && showViewAll && displayedPrograms.length > 0 && (
+        {!loading && limit && showViewAll && displayedPrograms.length > 0 && (
           <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
             <Link
               href={linkHref}
