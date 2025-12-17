@@ -2,12 +2,26 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
   const [img1Loaded, setImg1Loaded] = useState(false);
   const [img2Loaded, setImg2Loaded] = useState(false);
+
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const floatingAnimation: Variants = {
     initial: { y: 0 },
@@ -43,7 +57,7 @@ const HeroSection = () => {
           <motion.div
             variants={floatingAnimation}
             initial="initial"
-            animate="animate"
+            animate={isDesktop ? "animate" : "initial"}
             className="absolute top-0 left-0 w-64 h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6"
           >
             {/* Loading Skeleton */}
@@ -66,7 +80,7 @@ const HeroSection = () => {
           <motion.div
             variants={floatingAnimationDelayed}
             initial="initial"
-            animate="animate"
+            animate={isDesktop ? "animate" : "initial"}
             className="absolute bottom-33   md:bottom-25 right-0 md:right-2 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
           >
             {/* Loading Skeleton */}
@@ -85,11 +99,11 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          {/* Image 3  */}
+          {/* Image 3 (Mobile Only) */}
           <motion.div
             variants={floatingAnimationDelayed}
             initial="initial"
-            animate="animate"
+            animate={isDesktop ? "animate" : "initial"}
             className="absolute md:hidden bottom-0 md:bottom-10 left-5 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
           >
             {/* Loading Skeleton */}
