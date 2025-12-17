@@ -10,6 +10,7 @@ import { HiClock, HiRefresh, HiEye } from "react-icons/hi";
 import { FaInstagram } from "react-icons/fa";
 import { CiShare2 } from "react-icons/ci";
 import { MdOutlineDone } from "react-icons/md";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 interface ApiEvent {
   _id: string;
@@ -182,25 +183,12 @@ export default function EventClientPage({
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
           >
             <span className="p-2 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                />
-              </svg>
+              <IoIosArrowRoundBack className="w-6 h-6" />
             </span>
             <span className="font-medium tracking-wide">{dict.back}</span>
           </Link>
           <span className="px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-            <HiEye className="w-5 h-5" /> {views > 0 ? views : "..."}
+            <HiEye className="w-5 h-5" /> {views > 0 ? views : "-"}
           </span>
         </div>
 
