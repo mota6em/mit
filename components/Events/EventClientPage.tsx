@@ -249,7 +249,7 @@ export default function EventClientPage({
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold Carena-font leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl pt-2 font-bold Carena-font leading-tight text-foreground">
                 {title}
               </h1>
 
@@ -260,7 +260,7 @@ export default function EventClientPage({
                 <div className="flex flex-col">
                   <span className="text-sm font-bold">{dict.organizer}</span>
                   <span className="text-xs text-muted-foreground">
-                    MIT Organization
+                    MIT
                   </span>
                 </div>
               </div>
