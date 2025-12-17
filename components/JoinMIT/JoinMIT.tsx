@@ -127,7 +127,7 @@ export default function JoinMIT() {
               <div className="absolute top-0 left-4 md:left-15 w-64 h-80 rotate-[-6deg] z-10">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
-                    src="/imgs/hero/hero-bg-1.jpg"
+                    src="/imgs/home/hero/hero-bg-1.jpg"
                     alt="Youth"
                     fill
                     className="object-cover"
@@ -139,7 +139,7 @@ export default function JoinMIT() {
               <div className="absolute top-28 md:top-20 left-26 md:left-58 w-60 h-60 rotate-[12deg] z-20">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
-                    src="/imgs/hero/hero-bg-3.jpg"
+                    src="/imgs/home/hero/hero-bg-3.jpg"
                     alt="Community"
                     fill
                     className="object-cover"
@@ -180,7 +180,7 @@ export default function JoinMIT() {
             <div className="absolute top-10 left-2 md:left-10 w-70 h-84 rotate-[-6deg] z-10">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
-                  src="/imgs/hero/hero-bg-1.jpg"
+                  src="/imgs/home/hero/hero-bg-1.jpg"
                   alt="Youth"
                   fill
                   className="object-cover"
@@ -192,7 +192,7 @@ export default function JoinMIT() {
             <div className="absolute top-45 md:top-30 left-26 md:left-50 w-64 h-68 rotate-[12deg] z-20">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
-                  src="/imgs/hero/hero-bg-3.jpg"
+                  src="/imgs/home/hero/hero-bg-3.jpg"
                   alt="Community"
                   fill
                   className="object-cover"

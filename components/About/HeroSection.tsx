@@ -65,7 +65,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/hero/hero-bg-1.jpg"
+              src="/imgs/home/hero/hero-bg-1.jpg"
               alt="Community Event"
               fill
               className={`object-cover transition-opacity duration-500 ${
@@ -88,7 +88,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/hero/hero-bg-4.jpg"
+              src="/imgs/home/hero/hero-bg-4.jpg"
               alt="Youth Gathering"
               fill
               className={`object-cover transition-opacity duration-500 ${
@@ -111,7 +111,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/hero/hero-bg-2.jpg"
+              src="/imgs/hero/home/hero-bg-2.jpg"
               alt="Youth Gathering"
               fill
               className={`object-cover transition-opacity duration-500 ${
@@ -130,7 +130,7 @@ const HeroSection = () => {
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-white rounded-full shadow-xl flex items-center justify-center z-30 border border-gray-100"
           >
             <Image
-              src="/imgs/hero/mit-logo-full.png"
+              src="/imgs/mit-logo-full-resized.png"
               alt="MIT Logo"
               width={130}
               height={130}

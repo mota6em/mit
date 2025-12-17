@@ -14,7 +14,11 @@ export default function Footer() {
           {/* Logo and Name Section */}
           <div className="flex items-center gap-4">
             <div className="relative w-14 h-14">
-              <Image src="/imgs/hero/mit-logo-full.png" alt="MIT Logo" fill />
+              <Image
+                src="/imgs/mit-logo-full-resized.png"
+                alt="MIT Logo"
+                fill
+              />
             </div>
             <div className="flex flex-col">
               <div className="flex space-x-0.5">
@@ -28,7 +32,9 @@ export default function Footer() {
                   T
                 </span>
               </div>
-              <span className="text-xs text-yellow-600 font-medium">{t("subtitle")}</span>
+              <span className="text-xs text-yellow-600 font-medium">
+                {t("subtitle")}
+              </span>
             </div>
           </div>
           {/* Social Media Section */}

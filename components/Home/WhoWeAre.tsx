@@ -65,7 +65,7 @@ export default function WhoWeAre() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="w-full max-w-md"
+            className="w-full max-w-md mt-5 md:mt-0"
           >
             <Image
               src="/imgs/home/aboutmit/mit-main-log-no-bg.png"

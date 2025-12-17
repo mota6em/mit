@@ -77,7 +77,7 @@ const Hero = () => {
               <div className="absolute top-8 left-8 md:left-16 w-64 md:w-80 h-80 md:h-96 rotate-[-4deg] z-10 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
-                    src="/imgs/hero/hero-bg-1.jpg"
+                    src="/imgs/home/hero/hero-bg-1.jpg"
                     alt="Lecture Event"
                     fill
                     className="object-cover"
@@ -89,7 +89,7 @@ const Hero = () => {
               <div className="absolute bottom-12 right-8 md:right-16 w-48 md:w-60 h-48 md:h-60 rotate-[8deg] z-20 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
-                    src="/imgs/hero/hero-bg-2.jpg"
+                    src="/imgs/home/hero/hero-bg-2.jpg"
                     alt="Community Picnic"
                     fill
                     className="object-cover"
@@ -174,7 +174,7 @@ const Hero = () => {
             <div className="absolute top-8 left-8 md:left-16 w-64 md:w-80 h-80 md:h-96 rotate-[-4deg] z-10 ">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 <Image
-                  src="/imgs/hero/hero-bg-1.jpg"
+                  src="/imgs/home/hero/hero-bg-1.jpg"
                   alt="Lecture Event"
                   fill
                   className="object-cover"
@@ -186,7 +186,7 @@ const Hero = () => {
             <div className="absolute bottom-12 right-8 md:right-16 w-48 md:w-60 h-48 md:h-60 rotate-[8deg] z-20 ">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 <Image
-                  src="/imgs/hero/hero-bg-2.jpg"
+                  src="/imgs/home/hero/hero-bg-2.jpg"
                   alt="Community Picnic"
                   fill
                   className="object-cover"
