@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
+import { FaArrowRight } from "react-icons/fa"; // Assuming you have react-icons, or use an SVG
 
 interface ApiEvent {
   _id: string;
@@ -127,7 +128,7 @@ export default function EventsSection({
       </motion.h2>
 
       {/* Grid Container */}
-      <div className="flex overflow-x-auto overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4">
+      <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
         {/* --- LOADING STATE --- */}
         {loading
           ? Array.from({ length: limit || 3 }).map((_, i) => (
@@ -184,21 +185,37 @@ export default function EventsSection({
                 </div>
               );
             })}
+
+        {/* This card only appears on mobile inside the scroll list */}
+        {!loading && showViewAll && displayedPrograms.length > 0 && (
+          <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
+            <Link
+              href={linkHref}
+              className="group h-[300px] w-full flex flex-col items-center justify-center gap-4 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 hover:border-yellow-600 hover:bg-yellow-50 transition-all duration-300 px-4 text-center cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-yellow-800">
+                <FaArrowRight size={20} />
+              </div>
+              <span className="font-semibold text-gray-600 group-hover:text-yellow-800 transition-colors">
+                {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
+              </span>
+            </Link>
+          </div>
+        )}
       </div>
 
+      {/* DESKTOP BUTTON (Only visible on MD+) */}
       {!loading &&
         limit &&
         showViewAll &&
         displayedPrograms.length > 0 &&
         filterMode === "all" && (
-          <div className="mt-1 mb-4">
+          <div className="hidden md:block mt-1 mb-4">
             <Link
               href={linkHref}
               className="text-yellow-800 rounded-full outline outline-yellow-800 px-3 py-1 font-semibold hover:bg-yellow-600 hover:text-white transition-colors"
             >
-              {type === "upcoming"
-                ? t("showAllUpcoming")
-                : t("showAllPast")}
+              {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
             </Link>
           </div>
         )}
