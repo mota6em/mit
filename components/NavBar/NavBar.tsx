@@ -30,10 +30,10 @@ export default function NavBar() {
     <header className="bg-white sticky top-0 z-50 px-2 md:px-10">
       <div className="container flex justify-between items-center px-0 py-1 md:py-2">
         <Link href={`/${locale}`} className="flex items-center">
-          <div className="flex items-center space-x-4">
-            <div className="relative w-10 h-10 md:w-12 md:h-12">
+          <div className="flex items-center space-x-2">
+            <div className="relative items-center justify-center w-11 h-11 md:w-13 md:h-13">
               <Image
-                src="/imgs/nav-logo.jpg"
+                src="/imgs/mit-logo-new.png"
                 alt="MIT Logo"
                 fill
                 className="object-cover rounded-3xl shadow-xs"

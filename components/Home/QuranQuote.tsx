@@ -26,12 +26,10 @@ export default function QuranQuote() {
       <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
         <div className="relative w-16 h-16 md:w-20 md:h-20">
           <Image
-            src="/imgs/hero/mit-logo-full.png"
+            src="/imgs/mit-logo-full-resized.png"
             alt="MIT Logo"
             fill
             className="object-contain drop-shadow-lg"
-            placeholder="blur"
-            blurDataURL="/imgs/hero/mit-logo-resized.png"
           />
         </div>
         <p className="text-white/90 font-semibold text-sm md:text-base tracking-wide Carena-font">
