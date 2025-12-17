@@ -62,7 +62,7 @@ export default function Hero({ images }: HeroProps) {
         {/* middle image (fixed) */}
         <div className="relative flex-1 w-full">
           <Image
-            src="/imgs/hero/hero-sm-bg.jpg"
+            src="/imgs/home/aboutmit/hero-sm-bg.jpg"
             alt="middle-fixed"
             fill
             className="object-cover"

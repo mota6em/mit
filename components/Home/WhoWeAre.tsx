@@ -22,13 +22,13 @@ export default function WhoWeAre() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="relative flex flex-col gap-4 items-center justify-center w-full pb-10 pt-4 md:py-10 px-6 md:px-12 lg:px-20 font-serif"
+        className="relative flex flex-col gap-4 items-center justify-center w-full pb-10 pt-10 md:py-10 px-6 md:px-12 lg:px-20 font-serif"
       >
         <div
           className="
               flex flex-col-reverse lg:flex-row 
               items-center  
-              gap-0 lg:gap-24
+              gap-5 md:gap-24
             "
         >
           {/* TEXT LEFT */}
@@ -72,7 +72,7 @@ export default function WhoWeAre() {
               alt="MIT Visual"
               width={900}
               height={900}
-              className="w-full ms-3 md:ms-0 h-auto drop-shadow-xl"
+              className="w-full max-w-md md:w-full h-auto drop-shadow-xl"
             />
           </motion.div>
         </div>
