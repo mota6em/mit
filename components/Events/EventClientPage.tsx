@@ -176,7 +176,7 @@ export default function EventClientPage({
   return (
     <div className="min-h-screen bg-background text-foreground pt-5 pb-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-row items-center justify-between md:mb-6 md:px-10">
           <Link
             href={`/${locale}/events`}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
