@@ -191,12 +191,26 @@ export default function EventsSection({
           <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
             <Link
               href={linkHref}
-              className="group h-[300px] w-full flex flex-col items-center justify-center gap-4 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 hover:border-yellow-600 hover:bg-yellow-50 transition-all duration-300 px-4 text-center cursor-pointer"
+              className={`group h-[300px] w-full flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-all duration-300 px-4 text-center cursor-pointer ${
+                type === "upcoming"
+                  ? "bg-green-50 border-green-200 hover:border-green-500 hover:bg-green-100"
+                  : "bg-gray-50 border-gray-300 hover:border-gray-500 hover:bg-gray-100"
+              }`}
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-yellow-800">
+              <div
+                className={`w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform ${
+                  type === "upcoming" ? "text-green-600" : "text-gray-700"
+                }`}
+              >
                 <FaArrowRight size={20} />
               </div>
-              <span className="font-semibold text-gray-600 group-hover:text-yellow-800 transition-colors">
+              <span
+                className={`font-semibold transition-colors ${
+                  type === "upcoming"
+                    ? "text-green-700 group-hover:text-green-800"
+                    : "text-gray-600 group-hover:text-gray-900"
+                }`}
+              >
                 {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
               </span>
             </Link>
