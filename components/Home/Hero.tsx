@@ -5,16 +5,11 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import SocialMediaIcons from "../SocialMediaIcons/SocialMediaIcons";
 
-const images = [
-  "/imgs/hero/hero-bg-1.jpg",
-  "/imgs/hero/hero-bg-2.jpg",
-  "/imgs/hero/hero-bg-3.jpg",
-  "/imgs/hero/hero-bg-4.jpg",
-  "/imgs/hero/hero-bg-5.jpg",
-  "/imgs/hero/hero-bg-6.jpg",
-];
+interface HeroProps {
+  images: string[];
+}
 
-export default function Hero() {
+export default function Hero({ images }: HeroProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const t = useTranslations("hero");
 
@@ -23,9 +18,16 @@ export default function Hero() {
       setCurrentIndex((prev) => (prev + 3) % images.length);
     }, 4500);
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
-  const currentStack = images.slice(currentIndex, currentIndex + 3);
+  if (!images || images.length === 0) return null;
+
+  // Handle slicing for the stack logic safely
+  const currentStack = [
+    images[currentIndex % images.length],
+    images[(currentIndex + 1) % images.length],
+    images[(currentIndex + 2) % images.length],
+  ];
 
   return (
     <div className="relative w-full min-h-[90vh] max-h-[90vh] overflow-hidden">
@@ -33,14 +35,14 @@ export default function Hero() {
       <div className="hidden md:block h-full">
         {images.map((img, index) => (
           <Image
-            key={index}
+            key={img}
             src={img}
             alt={`background ${index}`}
             fill
             className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-out ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
-            priority
+            priority={index === 0}
           />
         ))}
       </div>
@@ -78,7 +80,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* CONTENT */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:px-6 space-y-1">
         <h1 className="text-4xl Carena-font font-serif md:text-6xl font-bold relative">
           <span className="text-[#f1c34c] drop-shadow-[0_0_4px_black]">
@@ -93,12 +94,11 @@ export default function Hero() {
         </h1>
 
         <div className="flex flex-col w-fit p-2 font-serif rounded-md items-center">
-          <p className="text-sm  md:text-xl w-fit max-w-2xl-0 p-0 text-white font-semibold drop-shadow-[black_0_0_2px]">
+          <p className="text-sm md:text-xl w-fit max-w-2xl-0 p-0 text-white font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle1")}
           </p>
         </div>
 
-        {/* SOCIAL ICONS */}
         <SocialMediaIcons />
       </div>
     </div>
