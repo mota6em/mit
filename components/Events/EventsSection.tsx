@@ -203,19 +203,25 @@ export default function EventsSection({
           </div>
         )}
       </div>
-
       {/* Desktop View All Button */}
       {!loading &&
         limit &&
         showViewAll &&
         displayedPrograms.length > 0 &&
         filterMode === "all" && (
-          <div className="hidden md:block mt-1 mb-4">
+          <div className="hidden md:block mt-2 mb-6">
             <Link
               href={linkHref}
-              className="text-yellow-800 rounded-full outline outline-yellow-800 px-3 py-1 font-semibold hover:bg-yellow-600 hover:text-white transition-colors"
+              className={`group inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
+                type === "upcoming"
+                  ? "bg-green-50 text-green-700 hover:bg-green-100"
+                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+              }`}
             >
-              {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
+              <span>
+                {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
+              </span>
+              <FaArrowRight className="text-sm transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         )}
