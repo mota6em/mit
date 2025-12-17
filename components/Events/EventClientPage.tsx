@@ -10,6 +10,7 @@ import { HiClock, HiRefresh } from "react-icons/hi";
 import { FaInstagram } from "react-icons/fa";
 import { CiShare2 } from "react-icons/ci";
 import { SiNike } from "react-icons/si";
+import { MdOutlineDone } from "react-icons/md";
 
 interface ApiEvent {
   _id: string;
@@ -176,7 +177,10 @@ export default function EventClientPage({
           <span className="font-medium tracking-wide">{dict.back}</span>
         </Link>
 
-        <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-4 lg:gap-20">
+          <h1 className="text-4xl md:hidden md:text-5xl pt-6 font-bold text-center Carena-font leading-tight text-foreground">
+            {title}
+          </h1>
           {/* IMAGE */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -197,41 +201,43 @@ export default function EventClientPage({
                 No Image
               </div>
             )}
-
-            {/* Mobile Date Badge - Show only if NOT recurring and date exists */}
-            {!event.isRecurring && dateFormatted && (
-              <div className="absolute top-4 left-4 lg:hidden">
-                <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
-                  {dateFormatted}
-                </span>
-              </div>
-            )}
           </motion.div>
-
           {/* TEXT */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-8 sticky top-32"
+            className="flex flex-col gap-8 sticky top-0 md:top-32"
           >
-            <div className="space-y-2 border-b border-border pb-4">
+            <div className="space-y-2 border-b border-border mt-2 md:mt-0 pb-4">
               {/* Badges Row */}
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {/* Note */}
+                {note && (
+                  <span className="px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <CgDanger className="w-5 h-5" /> {note}
+                  </span>
+                )}{" "}
                 {/* Date - Show only if NOT recurring */}
                 {!event.isRecurring && dateFormatted && (
                   <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
                     {dateFormatted}
                   </span>
                 )}
-
                 {/* Time */}
                 {event.time && (
                   <span className="px-4 py-1.5 rounded-full bg-blue-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
                     <HiClock className="text-lg" /> {event.time}
                   </span>
                 )}
-
+                {/* Mobile Date Badge - Show only if NOT recurring and date exists */}
+                {!event.isRecurring && dateFormatted && (
+                  <div className="lg:hidden">
+                    <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
+                      {dateFormatted}
+                    </span>
+                  </div>
+                )}
                 {/* Recurring */}
                 {event.isRecurring && event.recurringDays && (
                   <span className="px-4 py-1.5 rounded-full bg-indigo-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
@@ -245,20 +251,13 @@ export default function EventClientPage({
                       .join(", ")}
                   </span>
                 )}
-
-                {/* Note */}
-                {note && (
-                  <span className="px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <CgDanger className="w-5 h-5" /> {note}
-                  </span>
-                )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl pt-6 font-bold Carena-font leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl pt-6 font-bold hidden md:block Carena-font leading-tight text-foreground">
                 {title}
               </h1>
 
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex items-center gap-3 pt-4">
                 <Image
                   src={"/imgs/icon.jpg"}
                   alt={"organizer logo"}
@@ -278,13 +277,22 @@ export default function EventClientPage({
             </div>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              <a
+                href="https://ig.me/m/muszlimifjusag"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
+              >
+                <FaInstagram className="w-6 h-6" />
+                <span>{dict.dm}</span>
+              </a>{" "}
               {/* Share Button */}
               <button
                 onClick={handleShare}
                 className={`flex-1 px-4 py-4  cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
                   copied
                     ? "bg-green-600 text-white hover:bg-green-700"
-                    : "bg-primary text-primary-foreground hover:opacity-90"
+                    : "bg-blue-600 text-primary-foreground hover:opacity-90"
                 }`}
               >
                 <AnimatePresence mode="wait">
@@ -296,7 +304,7 @@ export default function EventClientPage({
                       exit={{ scale: 0.8, opacity: 0 }}
                       className="flex items-center gap-2"
                     >
-                      <SiNike className="w-6 h-6" /> {dict.copied}
+                      <MdOutlineDone className="w-6 h-6" /> {dict.copied}
                     </motion.span>
                   ) : (
                     <motion.span
@@ -312,16 +320,6 @@ export default function EventClientPage({
                   )}
                 </AnimatePresence>
               </button>
-
-              <a
-                href="https://ig.me/m/muszlimifjusag"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
-              >
-                <FaInstagram className="w-6 h-6" />
-                <span>{dict.dm}</span>
-              </a>
             </div>
           </motion.div>
         </div>
