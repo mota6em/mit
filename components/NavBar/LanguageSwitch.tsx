@@ -27,10 +27,9 @@ export default function LanguageSwitch() {
   ];
 
   const current = locales.find((l) => l.code === currentLocale) || locales[0];
-  const saveLangLocale = (code) => {
+  const saveLangLocale = (code: string) => {
     localStorage.setItem("lang", code);
     setOpen(false);
-    console.log("lang saved", localStorage.getItem("lang"));
   };
 
   return (
