@@ -32,10 +32,10 @@ export default function NavBar() {
 
   return (
     <header className="bg-white sticky top-0 z-50 px-2 md:px-10">
-      <div className="container flex justify-between items-center px-0 py-2">
+      <div className="container flex justify-between items-center px-0 py-1 md:py-2">
         <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-4">
-            <div className="relative w-12 h-12">
+            <div className="relative w-10 h-10 md:w-12 md:h-12">
               <Image
                 src="/imgs/nav-logo.jpg"
                 alt="MIT Logo"
@@ -45,13 +45,13 @@ export default function NavBar() {
             </div>
             <div className="flex flex-col">
               <div className="flex space-x-0.5">
-                <span className="text-2xl font-bold text-[#4d93fb] monstera-font tracking-widest">
+                <span className=" text-xl md:text-2xl font-bold text-[#4d93fb] monstera-font tracking-widest">
                   M
                 </span>
-                <span className="text-2xl font-bold text-[#11b505] monstera-font tracking-widest">
+                <span className=" text-xl md:text-2xl font-bold text-[#11b505] monstera-font tracking-widest">
                   I
                 </span>
-                <span className="text-2xl font-bold text-[#f1c34c] monstera-font tracking-widest">
+                <span className=" text-xl md:text-2xl font-bold text-[#f1c34c] monstera-font tracking-widest">
                   T
                 </span>
               </div>
@@ -86,14 +86,14 @@ export default function NavBar() {
         </nav>
 
         {/* Mobile nav trigger */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center ">
           <LanguageSwitch />
           <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <DropdownMenuTrigger asChild>
               {isMenuOpen ? (
                 <X className="w-6! h-6!" />
               ) : (
-                <CgMenuRight className="w-6! h-6!" />
+                <CgMenuRight className="w-7! h-7!" />
               )}
             </DropdownMenuTrigger>
 
