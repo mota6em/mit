@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
-import { FaArrowRight } from "react-icons/fa"; // Assuming you have react-icons, or use an SVG
+import { FaArrowRight } from "react-icons/fa";
 
 interface ApiEvent {
   _id: string;
@@ -54,6 +54,8 @@ export default function EventsSection({
   const [events, setEvents] = useState<ApiEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const sectionId = `${type}-events`;
+
   useEffect(() => {
     fetch("/api/events")
       .then((res) => res.json())
@@ -95,8 +97,7 @@ export default function EventsSection({
     filterMode === "recurring_only" && type === "upcoming";
   const titleText = isWeeklySection ? "Weekly Gatherings" : t(titleKey);
 
-  const linkHref =
-    type === "upcoming" ? `/${locale}/events` : `/${locale}/events`;
+  const linkHref = `/${locale}/events#${sectionId}`;
 
   const titleWords = titleText.split(" ");
   const firstWord = titleWords[0] || "";
@@ -104,8 +105,8 @@ export default function EventsSection({
 
   return (
     <section
-      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
-      id={`${type}-events`}
+      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6 scroll-mt-28"
+      id={sectionId}
     >
       <motion.h2
         className="text-4xl md:text-5xl font-bold Carena-font text-center tracking-wide"
@@ -129,7 +130,6 @@ export default function EventsSection({
 
       {/* Grid Container */}
       <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
-        {/* --- LOADING STATE --- */}
         {loading
           ? Array.from({ length: limit || 3 }).map((_, i) => (
               <div
@@ -186,7 +186,7 @@ export default function EventsSection({
               );
             })}
 
-        {/* This card only appears on mobile inside the scroll list */}
+        {/* Mobile View All Card */}
         {!loading && showViewAll && displayedPrograms.length > 0 && (
           <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
             <Link
@@ -204,7 +204,7 @@ export default function EventsSection({
         )}
       </div>
 
-      {/* DESKTOP BUTTON (Only visible on MD+) */}
+      {/* Desktop View All Button */}
       {!loading &&
         limit &&
         showViewAll &&
