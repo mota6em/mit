@@ -265,34 +265,64 @@ export default function JoinMIT() {
             const Icon = social.icon;
             const isEmail = social.name === "Email";
 
+            const isWhatsApp = social.name === "WhatsApp";
+
+            const cardStyles = isWhatsApp
+              ? "opacity-60 grayscale cursor-not-allowed bg-gray-50 border-gray-200"
+              : "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-gray-100";
+
+            const iconWrapperStyles = isWhatsApp
+              ? "bg-gray-200 text-gray-400"
+              : `${social.bg} group-hover:scale-110`;
+
             const content = (
-              <div className="h-full bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] md:shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group flex flex-col items-center justify-center">
+              <div
+                className={`h-full rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] md:shadow-[0_4px_20px_rgba(0,0,0,0.03)] border transition-all duration-300 group flex flex-col items-center justify-center ${cardStyles}`}
+              >
                 {/* Compact Icon Container */}
                 <div
-                  className={`w-10 h-10 md:w-16 md:h-16 mx-auto ${social.bg} rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform`}
+                  className={`w-10 h-10 md:w-16 md:h-16 mx-auto rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 transition-transform ${iconWrapperStyles}`}
                 >
-                  <Icon className={`text-lg md:text-3xl ${social.color}`} />
+                  <Icon
+                    className={`text-lg md:text-3xl ${
+                      isWhatsApp ? "text-gray-500" : social.color
+                    }`}
+                  />
                 </div>
 
                 {/* Compact Title */}
-                <h3 className="text-sm md:text-xl font-bold text-gray-800 mb-1 md:mb-2">
+                <h3
+                  className={`text-sm md:text-xl font-bold mb-1 md:mb-2 ${
+                    isWhatsApp ? "text-gray-400" : "text-gray-800"
+                  }`}
+                >
                   {social.name}
                 </h3>
 
-                {/* Compact Description (Line clamped to 2 lines) */}
+                {/* Compact Description */}
                 <p className="text-gray-500 text-[10px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
                   {t(`socialText.${social.name.toLowerCase()}`)}
                 </p>
 
                 {/* Action Text */}
                 <div
-                  className={`text-[10px] md:text-sm font-semibold ${social.color} opacity-80 group-hover:opacity-100 mt-auto`}
+                  className={`text-[10px] md:text-sm font-semibold mt-auto transition-opacity ${
+                    isWhatsApp
+                      ? "text-gray-400 uppercase tracking-widest text-[9px]"
+                      : `${social.color} opacity-80 group-hover:opacity-100`
+                  }`}
                 >
-                  {isEmail && emailCopied
-                    ? tNav("copied")
-                    : isEmail
-                    ? "Copy Email"
-                    : "Follow Us"}
+                  {isWhatsApp ? (
+                    <span className="bg-gray-200 px-2 py-1 rounded text-gray-500">
+                      Available Soon
+                    </span>
+                  ) : isEmail && emailCopied ? (
+                    tNav("copied")
+                  ) : isEmail ? (
+                    "Copy Email"
+                  ) : (
+                    "Follow Us"
+                  )}
                 </div>
               </div>
             );
@@ -304,9 +334,11 @@ export default function JoinMIT() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="h-full" // Ensure card takes full height of grid cell
+                className="h-full"
               >
-                {isEmail ? (
+                {isWhatsApp ? (
+                  <div className="h-full block">{content}</div>
+                ) : isEmail ? (
                   <button
                     onClick={handleEmailCopy}
                     className="w-full h-full block text-left"
