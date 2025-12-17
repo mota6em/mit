@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaCheck } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaCheck } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 
@@ -25,11 +25,6 @@ export default function SocialMediaIcons() {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
       gradient: "from-pink-500 via-red-500 to-yellow-500",
-    },
-    {
-      icon: FaWhatsapp,
-      href: "https://wa.me/123456789",
-      gradient: "from-green-400 via-lime-500 to-teal-500",
     },
     {
       icon: HiOutlineMail,
