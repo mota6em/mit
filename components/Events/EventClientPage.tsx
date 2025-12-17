@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { CgDanger } from "react-icons/cg";
-import { HiClock, HiRefresh } from "react-icons/hi";
+import { HiClock, HiRefresh, HiEye } from "react-icons/hi";
 import { FaInstagram } from "react-icons/fa";
 import { CiShare2 } from "react-icons/ci";
-import { SiNike } from "react-icons/si";
 import { MdOutlineDone } from "react-icons/md";
 
 interface ApiEvent {
@@ -50,6 +49,7 @@ const dictionary = {
     copied: "Link Copied!",
     repeats: "Repeats on:",
     dm: "DM on Instagram",
+    views: "Views",
   },
   hu: {
     back: "Vissza az eseményekhez",
@@ -62,6 +62,7 @@ const dictionary = {
     copied: "Link Másolva!",
     repeats: "Ismétlődik:",
     dm: "Üzenj Instagramon",
+    views: "Megtekintés",
   },
 };
 
@@ -79,6 +80,9 @@ export default function EventClientPage({
   const [loading, setLoading] = useState(!initialEvent);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const [views, setViews] = useState<number>(0);
+  const hasIncremented = useRef(false);
 
   useEffect(() => {
     if (initialEvent) return;
@@ -100,7 +104,25 @@ export default function EventClientPage({
         setLoading(false);
       });
   }, [params?.id, initialEvent]);
+  //Handle View Count --
+  useEffect(() => {
+    const id = (params?.id as string) || event?._id;
+    if (!id || hasIncremented.current) return;
 
+    hasIncremented.current = true;
+
+    // Call API to increment view
+    fetch("/api/views", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.views) setViews(data.views);
+      })
+      .catch((err) => console.error("Failed to increment views:", err));
+  }, [params?.id, event?._id]);
   const handleShare = () => {
     if (typeof window !== "undefined") {
       navigator.clipboard.writeText(window.location.href);
@@ -154,30 +176,35 @@ export default function EventClientPage({
   return (
     <div className="min-h-screen bg-background text-foreground pt-5 pb-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <Link
-          href={`/${locale}/events`}
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
-        >
-          <span className="p-2 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
-            </svg>
+        <div className="flex flex-row items-center justify-between">
+          <Link
+            href={`/${locale}/events`}
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+          >
+            <span className="p-2 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                />
+              </svg>
+            </span>
+            <span className="font-medium tracking-wide">{dict.back}</span>
+          </Link>
+          <span className="px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
+            <HiEye className="w-5 h-5" /> {views > 0 ? views : "..."}
           </span>
-          <span className="font-medium tracking-wide">{dict.back}</span>
-        </Link>
+        </div>
 
-        <div className="grid grid-cols-1 items-start lg:grid-cols-2 gap-4 lg:gap-20">
+        <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-20">
           <h1 className="text-4xl md:hidden md:text-5xl pt-6 font-bold text-center Carena-font leading-tight text-foreground">
             {title}
           </h1>
