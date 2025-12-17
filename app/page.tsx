@@ -9,7 +9,12 @@ export default function RootPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/en");
+      const savedLocale = localStorage.getItem("lang");
+      if (savedLocale) {
+        router.push(`/${savedLocale}`);
+      } else {
+        router.push("/en");
+      }
     }, 1500);
     return () => clearTimeout(timer);
   }, [router]);

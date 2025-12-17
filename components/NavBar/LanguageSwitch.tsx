@@ -27,6 +27,11 @@ export default function LanguageSwitch() {
   ];
 
   const current = locales.find((l) => l.code === currentLocale) || locales[0];
+  const saveLangLocale = (code) => {
+    localStorage.setItem("lang", code);
+    setOpen(false);
+    console.log("lang saved", localStorage.getItem("lang"));
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -57,7 +62,10 @@ export default function LanguageSwitch() {
             className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/40 focus:bg-white/40 transition"
             asChild
           >
-            <Link href={`/${locale.code}/${restOfPath}`}>
+            <Link
+              href={`/${locale.code}/${restOfPath}`}
+              onClick={() => saveLangLocale(locale.code)}
+            >
               <div className="relative w-5 h-5 flex-shrink-0">
                 <Image
                   src={locale.flag}
