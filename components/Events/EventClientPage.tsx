@@ -7,6 +7,9 @@ import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { CgDanger } from "react-icons/cg";
 import { HiClock, HiRefresh } from "react-icons/hi";
+import { FaInstagram } from "react-icons/fa";
+import { CiShare2 } from "react-icons/ci";
+import { SiNike } from "react-icons/si";
 
 interface ApiEvent {
   _id: string;
@@ -45,6 +48,7 @@ const dictionary = {
     share: "Share Event",
     copied: "Link Copied!",
     repeats: "Repeats on:",
+    dm: "DM on Instagram",
   },
   hu: {
     back: "Vissza az eseményekhez",
@@ -56,6 +60,7 @@ const dictionary = {
     share: "Megosztás",
     copied: "Link Másolva!",
     repeats: "Ismétlődik:",
+    dm: "Üzenj Instagramon",
   },
 };
 
@@ -210,7 +215,7 @@ export default function EventClientPage({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col gap-8 sticky top-32"
           >
-            <div className="space-y-4 border-b border-border pb-8">
+            <div className="space-y-2 border-b border-border pb-4">
               {/* Badges Row */}
               <div className="flex flex-wrap items-center gap-3">
                 {/* Date - Show only if NOT recurring */}
@@ -249,19 +254,21 @@ export default function EventClientPage({
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl pt-2 font-bold Carena-font leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl pt-6 font-bold Carena-font leading-tight text-foreground">
                 {title}
               </h1>
 
               <div className="flex items-center gap-3 pt-2">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                  M
-                </div>
+                <Image
+                  src={"/imgs/icon.jpg"}
+                  alt={"organizer logo"}
+                  width={42}
+                  height={42}
+                  className="rounded-full object-cover"
+                />
                 <div className="flex flex-col">
                   <span className="text-sm font-bold">{dict.organizer}</span>
-                  <span className="text-xs text-muted-foreground">
-                    MIT
-                  </span>
+                  <span className="text-xs text-muted-foreground">MIT</span>
                 </div>
               </div>
             </div>
@@ -271,9 +278,10 @@ export default function EventClientPage({
             </div>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              {/* Share Button */}
               <button
                 onClick={handleShare}
-                className={`flex-1 px-8 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
+                className={`flex-1 px-4 py-2 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
                   copied
                     ? "bg-green-600 text-white hover:bg-green-700"
                     : "bg-primary text-primary-foreground hover:opacity-90"
@@ -288,21 +296,7 @@ export default function EventClientPage({
                       exit={{ scale: 0.8, opacity: 0 }}
                       className="flex items-center gap-2"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2.5}
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12.75l6 6 9-13.5"
-                        />
-                      </svg>
-                      {dict.copied}
+                      <SiNike className="w-6 h-6" /> {dict.copied}
                     </motion.span>
                   ) : (
                     <motion.span
@@ -312,25 +306,22 @@ export default function EventClientPage({
                       exit={{ scale: 0.8, opacity: 0 }}
                       className="flex items-center gap-2"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
-                        />
-                      </svg>
+                      <CiShare2 className="w-6 h-6" />
                       {dict.share}
                     </motion.span>
                   )}
                 </AnimatePresence>
               </button>
+
+              <a
+                href="https://www.instagram.com/direct/t/108976070501805/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
+              >
+                <FaInstagram className="w-6 h-6" />
+                <span>{dict.dm}</span>
+              </a>
             </div>
           </motion.div>
         </div>
