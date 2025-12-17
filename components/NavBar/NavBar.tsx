@@ -81,17 +81,16 @@ export default function NavBar() {
           </div>
         </nav>
         {/* Mobile nav trigger  */}
-        <div className="md:hidden flex items-center gap-2">
+        <div className="md:hidden flex items-center">
           <LanguageSwitch />
-
-           <button
+          <button
             onClick={() => setIsMenuOpen(true)}
-            className="p-2 -mr-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 -ml-1 text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
           >
             <CgMenuRight className="w-7 h-7" />
           </button>
 
-           <AnimatePresence>
+          <AnimatePresence>
             {isMenuOpen && (
               <>
                 <motion.div
