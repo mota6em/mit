@@ -251,7 +251,7 @@ export default function JoinMIT() {
       {/* --- SOCIAL MEDIA SECTION --- */}
       <div
         id="socials"
-        className="max-w-7xl mx-auto px-4 py-14 md:py-10 bg-white/50 rounded-[2rem] md:rounded-[3rem] my-6 md:my-10"
+        className="max-w-7xl mx-auto px-4 py-14 md:py-10 bg-white/50 scroll-mt-10 rounded-[2rem] md:rounded-[3rem] my-6 md:my-10"
       >
         <div className="text-center mb-6 md:mb-10">
           <SectionTag text={t("socialTag") || "Stay Connected"} color="blue" />
