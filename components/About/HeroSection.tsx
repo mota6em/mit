@@ -49,7 +49,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20">
+    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20 md:py-10">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         {/* LEFT COLUMN: Creative Image Collage */}
         <div className="relative h-[500px] w-full ">
