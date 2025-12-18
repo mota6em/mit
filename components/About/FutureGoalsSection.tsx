@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckCircle2, Target, Rocket, ArrowRight } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
+import { HiArrowRight } from "react-icons/hi";
 
 const FutureGoalsSection = () => {
   const t = useTranslations("aboutMIT.futureGoals");
@@ -86,9 +87,9 @@ const FutureGoalsSection = () => {
           className="flex justify-center"
         >
           <Link href={`/${locale}/join-mit`}>
-            <button className="group relative cursor-pointer px-4 py-2 bg-[#11b505] text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl hover:bg-[#0ea004] transition-all duration-300 flex items-center gap-3">
+            <button className="inline-flex items-center gap-2 cursor-pointer animate-bounce group text-blue-600 font-bold hover:gap-4 transition-all">
               {t("button")}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
         </motion.div>
