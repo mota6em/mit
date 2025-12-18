@@ -61,7 +61,7 @@ const CoreServicesSection = () => {
               <motion.div
                 key={index}
                 variants={item}
-                className="bg-white p-2 md:p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
+                className="bg-white p-4 md:p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
                 style={{ borderTop: `6px solid ${color.main}` }}
               >
                 {/* Icon Container with Soft Background */}
