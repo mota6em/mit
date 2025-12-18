@@ -8,7 +8,7 @@ import { AuroraBackground } from "@/src/components/ui/aurora-background";
 const Home = () => {
   const heroImages = getImages("/public/imgs/home/hero");
   return (
-    <AuroraBackground className="overflow-hidden md:px-10">
+    <AuroraBackground className="block w-full overflow-hidden md:px-10">
       <Hero images={heroImages} />
       <WhoWeAre />
       <EventsSection type="upcoming" limit={3} />
