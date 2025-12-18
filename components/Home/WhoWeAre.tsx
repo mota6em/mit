@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { AuroraBackground } from "@/src/components/ui/aurora-background";
 
 export default function WhoWeAre() {
   const t = useTranslations("whoWeAre");
@@ -12,7 +11,7 @@ export default function WhoWeAre() {
   const locale = params.locale as string;
 
   return (
-    <AuroraBackground>
+    <div>
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -106,6 +105,6 @@ export default function WhoWeAre() {
           </Link>
         </motion.div>
       </motion.div>
-    </AuroraBackground>
+    </div>
   );
 }
