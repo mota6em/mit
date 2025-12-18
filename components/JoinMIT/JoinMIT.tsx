@@ -5,6 +5,7 @@ import { HiOutlineMail, HiSparkles, HiArrowRight } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { AuroraBackground } from "@/src/components/ui/aurora-background";
 
 type SectionTagColor = "green" | "gold" | "blue";
 
@@ -84,20 +85,20 @@ export default function JoinMIT() {
   if (!mounted) return null;
 
   return (
-    <div className="relative w-full min-h-screen bg-[#fafafa] overflow-hidden font-sans">
+    <AuroraBackground className="relative w-full min-h-screen  overflow-hidden font-sans">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
 
       {/* --- HERO SECTION --- */}
-      <div className="max-w-7xl md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
+      <div className="max-w-7xl md:w-full lg:max-w-7xl md:mt-32 lg:mt-0 md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center z-10 mt-10 md:mt-0"
+            className="text-center  z-10 mt-10 md:mt-0"
           >
             <SectionTag
               text={t("joinUsTag") || "Be Part of Us"}
@@ -124,10 +125,10 @@ export default function JoinMIT() {
               className="relative h-[400px] md:h-[500px] md:hidden"
             >
               {/* Image 1 - Tilted Left */}
-              <div className="absolute top-0 left-4 md:left-15 w-64 h-80 rotate-[-6deg] z-10">
+              <div className="absolute top-0 left-4 sm:left-14 w-64 h-80 rotate-[-6deg] z-10">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
-                    src="/imgs/home/hero/hero-bg-1.jpg"
+                    src="/imgs/mit-pecs.jpg"
                     alt="Youth"
                     fill
                     className="object-cover"
@@ -136,10 +137,10 @@ export default function JoinMIT() {
               </div>
 
               {/* Image 2 - Tilted Right */}
-              <div className="absolute top-28 md:top-20 left-26 md:left-58 w-60 h-60 rotate-[12deg] z-20">
+              <div className="absolute top-28 md:top-20 left-26 sm:left-58 w-60 h-60 rotate-[12deg] z-20">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
-                    src="/imgs/home/hero/hero-bg-3.jpg"
+                    src="/imgs/join/join-mit-2.jpg"
                     alt="Community"
                     fill
                     className="object-cover"
@@ -174,13 +175,13 @@ export default function JoinMIT() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[400px] md:h-[500px] hidden md:block"
+            className="relative h-[400px] md:h-[500px] hidden md:hidden lg:block"
           >
             {/* Image 1 - Tilted Left */}
-            <div className="absolute top-10 left-2 md:left-10 w-70 h-84 rotate-[-6deg] z-10">
+            <div className="absolute top-12 left-2 md:left-24 lg:left-10 w-80 h-90 lg:w-70 lg-84 rotate-[-10deg] z-10">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
-                  src="/imgs/home/hero/hero-bg-1.jpg"
+                  src="/imgs/mit-pecs.jpg"
                   alt="Youth"
                   fill
                   className="object-cover"
@@ -189,10 +190,10 @@ export default function JoinMIT() {
             </div>
 
             {/* Image 2 - Tilted Right */}
-            <div className="absolute top-45 md:top-30 left-26 md:left-50 w-64 h-68 rotate-[12deg] z-20">
+            <div className="absolute top-45 left-26 md:left-72 lg:left-50 w-72 h-72 lg:w-64 lg:h-68 rotate-[12deg] z-20">
               <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                 <Image
-                  src="/imgs/home/hero/hero-bg-3.jpg"
+                  src="/imgs/join/join-mit-2.jpg"
                   alt="Community"
                   fill
                   className="object-cover"
@@ -434,6 +435,6 @@ export default function JoinMIT() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </AuroraBackground>
   );
 }
