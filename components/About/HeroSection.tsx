@@ -65,7 +65,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/home/hero/hero-bg-1.jpg"
+              src="/imgs/one-year-mit.jpg"
               alt="Community Event"
               fill
               className={`object-cover transition-opacity duration-500 ${
@@ -81,37 +81,14 @@ const HeroSection = () => {
             variants={floatingAnimationDelayed}
             initial="initial"
             animate={isDesktop ? "animate" : "initial"}
-            className="absolute bottom-33   md:bottom-25 right-0 md:right-2 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
+            className="absolute bottom-0  md:bottom-25 -right-4 md:right-2 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
           >
             {/* Loading Skeleton */}
             {!img2Loaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
             )}
             <Image
-              src="/imgs/home/hero/hero-bg-4.jpg"
-              alt="Youth Gathering"
-              fill
-              className={`object-cover transition-opacity duration-500 ${
-                img2Loaded ? "opacity-100" : "opacity-0"
-              }`}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              onLoad={() => setImg2Loaded(true)}
-            />
-          </motion.div>
-
-          {/* Image 3 (Mobile Only) */}
-          <motion.div
-            variants={floatingAnimationDelayed}
-            initial="initial"
-            animate={isDesktop ? "animate" : "initial"}
-            className="absolute md:hidden bottom-0 md:bottom-10 left-5 w-60 h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-3"
-          >
-            {/* Loading Skeleton */}
-            {!img2Loaded && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
-            )}
-            <Image
-              src="/imgs/home/hero/hero-bg-2.jpg"
+              src="/imgs/femynso-mit.jpg"
               alt="Youth Gathering"
               fill
               className={`object-cover transition-opacity duration-500 ${
