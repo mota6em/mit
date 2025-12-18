@@ -28,10 +28,10 @@ export default function NavBar() {
 
   return (
     <header className="bg-white sticky top-0 z-50 px-2 md:px-10">
-      <div className="container flex justify-between items-center px-0 py-1 md:py-2">
+      <div className="container flex justify-between items-center px-0 py-1 md:py-0.5">
         <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-2">
-            <div className="relative items-center justify-center w-11 h-11 md:w-13 md:h-13">
+            <div className="relative items-center justify-center w-11 h-11 md:w-11 md:h-11">
               <Image
                 src="/imgs/mit-logo-new.png"
                 alt="MIT Logo"
@@ -41,17 +41,17 @@ export default function NavBar() {
             </div>
             <div className="flex flex-col">
               <div className="flex space-x-0.5">
-                <span className=" text-xl md:text-2xl font-bold text-[#4d93fb] monstera-font tracking-widest">
+                <span className=" text-xl md:text-xl font-bold text-[#4d93fb] monstera-font tracking-widest">
                   M
                 </span>
-                <span className=" text-xl md:text-2xl font-bold text-[#11b505] monstera-font tracking-widest">
+                <span className=" text-xl md:text-xl font-bold text-[#11b505] monstera-font tracking-widest">
                   I
                 </span>
-                <span className=" text-xl md:text-2xl font-bold text-[#f1c34c] monstera-font tracking-widest">
+                <span className=" text-xl md:text-xl font-bold text-[#f1c34c] monstera-font tracking-widest">
                   T
                 </span>
               </div>
-              <span className="text-xs font-medium text-yellow-600">
+              <span className="text-xs font-medium -mt-1 text-yellow-600">
                 {t("subtitle")}
               </span>
             </div>

@@ -43,6 +43,7 @@ export default function Hero({ images }: HeroProps) {
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
             priority={index === 0}
+            style={{ filter: "brightness(0.8)" }}
           />
         ))}
       </div>
