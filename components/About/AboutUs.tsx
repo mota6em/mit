@@ -4,7 +4,7 @@ import CoreServicesSection from "./CoreServicesSection";
 import CommunityRoleSection from "./CommunityRoleSection";
 import AchievementsSection from "./AchievementsSection";
 import FutureGoalsSection from "./FutureGoalsSection";
- 
+
 const AboutUs = () => {
   return (
     <div className="w-full">
@@ -13,7 +13,7 @@ const AboutUs = () => {
       <CoreServicesSection />
       <CommunityRoleSection />
       <AchievementsSection />
-      <FutureGoalsSection /> 
+      <FutureGoalsSection />
     </div>
   );
 };

@@ -9,7 +9,7 @@ const FutureGoalsSection = () => {
   const locale = useLocale();
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-24 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0 }}
@@ -86,7 +86,7 @@ const FutureGoalsSection = () => {
           className="flex justify-center"
         >
           <Link href={`/${locale}/join-mit`}>
-            <button className="group relative cursor-pointer px-4 py-2 bg-[#11b505] text-white rounded-full font-bold text-lg shadow-lg hover:shadow-xl hover:bg-[#0ea004] transition-all duration-300 flex items-center gap-3">
+            <button className="group relative cursor-pointer px-4 py-2 bg-[#11b505] text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl hover:bg-[#0ea004] transition-all duration-300 flex items-center gap-3">
               {t("button")}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>

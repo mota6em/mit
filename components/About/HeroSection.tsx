@@ -49,7 +49,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20 lg:py-10">
+    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20 lg:py-6">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         {/* LEFT COLUMN: Creative Image Collage */}
         <div className="relative h-[500px] w-full ">
@@ -58,7 +58,7 @@ const HeroSection = () => {
             variants={floatingAnimation}
             initial="initial"
             animate={isDesktop ? "animate" : "initial"}
-            className="absolute top-0 left-0 sm:left-12 md:left-24 lg:left-0 w-64 h-80 md:w-72 md:h-88 lg:w-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6"
+            className="absolute top-0 left-0 sm:left-12 md:left-24 lg:left-5 lg:top-4 w-64 h-80 md:w-72 md:h-88 lg:w-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6"
           >
             {/* Loading Skeleton */}
             {!img1Loaded && (
@@ -81,7 +81,7 @@ const HeroSection = () => {
             variants={floatingAnimationDelayed}
             initial="initial"
             animate={isDesktop ? "animate" : "initial"}
-            className="absolute bottom-0 mg:bottom-10 lg:bottom-0 -right-4 sm:right-10 md:right-20 lg:right-0 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-6"
+            className="absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-6"
           >
             {/* Loading Skeleton */}
             {!img2Loaded && (
@@ -104,14 +104,14 @@ const HeroSection = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-28  sm:w-36  sm:h-36 bg-white rounded-full shadow-xl flex items-center justify-center z-30 border border-green-500"
+            className="absolute top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 w-28 h-28  sm:w-36  sm:h-36 md:w-32 md:h-32 bg-white rounded-full shadow-xl flex items-center justify-center z-30 border border-green-500"
           >
             <Image
               src="/imgs/mit-logo-full-resized.png"
               alt="MIT Logo"
               width={130}
               height={130}
-              className="object-contain p-2"
+              className="object-contain p-2 md:p-4"
               priority
             />
           </motion.div>
@@ -127,7 +127,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-6 px-5 py-2 rounded-full bg-green-700/10 border border-green-700/30 text-green-700 font-semibold tracking-wider uppercase text-sm"
+            className="mb-4 px-5 py-2 rounded-full bg-green-700/10 border border-green-700/30 text-green-700 font-semibold tracking-wider uppercase text-sm"
           >
             {t("badge")}
           </motion.div>
@@ -137,7 +137,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-widest Ang-font text-yellow-600 mb-8 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-widest Ang-font text-yellow-600 mb-4 leading-tight"
           >
             {t("title")}
           </motion.h1>
@@ -156,7 +156,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="h-1 w-24 bg-gradient-to-r from-[#4d93fb] to-[#11b505] rounded-full"
+            className="h-1 w-24  rounded-full"
           />
         </div>
       </div>

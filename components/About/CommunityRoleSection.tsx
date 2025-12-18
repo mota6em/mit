@@ -9,7 +9,7 @@ const CommunityRoleSection = () => {
   const roleIcons = [Building2, Heart, LinkIcon, Sparkles];
 
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50">
+    <section className="py-24 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, scale: 0.9 }}
