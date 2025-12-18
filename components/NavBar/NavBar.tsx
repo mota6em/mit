@@ -27,7 +27,7 @@ export default function NavBar() {
   ];
 
   return (
-    <header className="backdrop-blur-md bg-white/80 sticky top-0 z-50 px-2 md:px-10">
+    <header className="md:backdrop-blur-md bg-white md:bg-white/80 sticky top-0 z-50 px-2 md:px-10">
       <div className="container flex justify-between items-center px-0 py-1 md:py-0.5">
         <Link href={`/${locale}`} className="flex items-center">
           <div className="flex items-center space-x-2">
