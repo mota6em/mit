@@ -52,7 +52,7 @@ const Hero = () => {
           >
             <SectionTag text={t("hero.tag") || "Community Life"} color="blue" />
 
-            <h1 className="text-5xl md:text6xl w-full font-bold Carena-font mb-0 md:mb-2 leading-tight">
+            <h1 className="text-5xl md:text6xl w-full font-bold md:mt-12 lg:mt-0 Carena-font mb-0 md:mb-2 leading-tight">
               <span className="text-[#4d93fb] drop-shadow-sm">
                 {t("hero.title").split(" ")[0] || "Sharing"}{" "}
               </span>
@@ -69,15 +69,13 @@ const Hero = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[400px] md:h-[550px] w-full md:hidden"
+              className="relative h-[400px] md:h-[550px] w-full lg:hidden"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border-2 border-dashed border-gray-200 rounded-full animate-[spin_60s_linear_infinite]" />
-
               {/* Image 1: Main Large (Tilted Left) */}
-              <div className="absolute top-8 left-8 md:left-16 w-64 md:w-80 h-80 md:h-96 rotate-[-4deg] z-10 ">
+              <div className="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-64 md:w-80 h-80 md:h-96 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
-                    src="/imgs/home/hero/hero-bg-1.jpg"
+                    src="/imgs/events/mehdi.jpg"
                     alt="Lecture Event"
                     fill
                     className="object-cover"
@@ -86,10 +84,10 @@ const Hero = () => {
               </div>
 
               {/* Image 2: Secondary Small (Tilted Right) */}
-              <div className="absolute bottom-12 right-8 md:right-16 w-48 md:w-60 h-48 md:h-60 rotate-[8deg] z-20 ">
+              <div className="absolute bottom-2 md:bottom-12 right-4 sm:right-28 md:right-24 w-48 md:w-60 h-48 md:h-60 rotate-[8deg] z-20 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
-                    src="/imgs/home/hero/hero-bg-2.jpg"
+                    src="/imgs/events/ai-cer.jpg"
                     alt="Community Picnic"
                     fill
                     className="object-cover"
@@ -105,10 +103,10 @@ const Hero = () => {
                   duration: 4,
                   ease: "easeInOut",
                 }}
-                className="absolute top-20 right-0 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+                className="absolute top-36 md:top-20 right-0 sm:right-10 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
               >
                 <div className="flex items-start gap-3">
-                  <div className="bg-red-100 text-red-600 p-2 rounded-lg">
+                  <div className="bg-red-100 hidden sm:block text-red-600 p-2 rounded-lg">
                     <HiSparkles className="text-xl" />
                   </div>
                   <div>
@@ -127,7 +125,7 @@ const Hero = () => {
                 <HiSparkles />
               </div>
             </motion.div>
-            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-6 mx-auto lg:mx-0">
+            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mt-4 md:mt-0 mb-6 mx-auto lg:mx-0">
               {t("hero.subtitle")}
             </p>
 
@@ -166,10 +164,8 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[400px] md:h-[550px] w-full hidden md:block"
+            className="relative h-[400px] md:h-[550px] w-full hidden lg:block"
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border-2 border-dashed border-gray-200 rounded-full animate-[spin_60s_linear_infinite]" />
-
             {/* Image 1: Main Large (Tilted Left) */}
             <div className="absolute top-8 left-8 md:left-16 w-64 md:w-80 h-80 md:h-96 rotate-[-4deg] z-10 ">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
@@ -198,7 +194,7 @@ const Hero = () => {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="absolute top-20 right-10 md:right-20 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+              className="absolute top-20 right-10 md:right-20 lg:right-10  lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
             >
               <div className="flex items-start gap-3">
                 <div className="bg-red-100 text-red-600 p-2 rounded-lg">
