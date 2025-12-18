@@ -45,30 +45,30 @@ export default function JoinMIT() {
     {
       icon: FaFacebookF,
       href: "https://www.facebook.com/muszlimifjusag/",
-      color: "text-blue-600",
+      color: "text-blue-800",
       bg: "bg-blue-50",
       name: "Facebook",
     },
     {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
-      color: "text-pink-600",
+      color: "text-pink-800",
       bg: "bg-pink-50",
       name: "Instagram",
     },
     {
-      icon: FaWhatsapp,
-      href: "https://wa.me/123456789",
-      color: "text-green-600",
-      bg: "bg-green-50",
-      name: "WhatsApp",
-    },
-    {
       icon: HiOutlineMail,
       href: "#",
-      color: "text-yellow-600",
+      color: "text-yellow-800",
       bg: "bg-yellow-50",
       name: "Email",
+    },
+    {
+      icon: FaWhatsapp,
+      href: "https://wa.me/123456789",
+      color: "text-green-800",
+      bg: "bg-green-50",
+      name: "WhatsApp",
     },
   ];
 
@@ -314,7 +314,7 @@ export default function JoinMIT() {
                   }`}
                 >
                   {isWhatsApp ? (
-                    <span className="bg-gray-200 px-2 py-1 rounded text-gray-500">
+                    <span className="bg-gray-200 px-2 py-1 animate-pulse rounded text-green-600">
                       Available Soon
                     </span>
                   ) : isEmail && emailCopied ? (
