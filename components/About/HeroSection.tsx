@@ -48,7 +48,7 @@ const HeroSection = () => {
 
           {/* Image 2 */}
           <div
-            className={`absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-8 ${floatDelayClass}`}
+            className={`absolute -bottom-8 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-8 ${floatDelayClass}`}
           >
             {!img2Loaded && (
               <div className="absolute inset-0 bg-gray-100 animate-pulse" />
@@ -67,10 +67,10 @@ const HeroSection = () => {
 
           {/* Centered Logo */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 1, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-green-500"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-green-500"
           >
             <Image
               src="/imgs/mit-logo-full-resized.png"
