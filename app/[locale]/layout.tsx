@@ -10,6 +10,7 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mit-hu.vercel.app"),
   title: {
     default: "MIT - Muszlim Ifjúság Társaság",
     template: "%s | MIT Hungary",
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
     title: "MIT - Empowering Muslim Youth in Hungary",
     description:
       "Join the movement. MIT connects Muslim students through faith, leadership, and service. Discover our events, internships, and community programs today.", // [cite: 9, 66]
-    url: "https://mit-budapest.vercel.app",
+    url: "https://mit-hu.vercel.app",
     siteName: "Muszlim Ifjúság Társaság (MIT)",
     locale: "en_US",
     type: "website",
