@@ -2,8 +2,13 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Event from "@/models/Event";
 import { isValidObjectId } from "mongoose";
+import { auth } from "@/auth";
 
 export async function GET(request: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   try {
     await dbConnect();
 
@@ -40,12 +45,9 @@ export async function GET(request: Request) {
   }
 }
 export async function POST(req: Request) {
-  const secret = req.headers.get("x-admin-secret");
-  if (secret !== process.env.ADMIN_SECRET) {
-    return NextResponse.json(
-      { success: false, message: "Unauthorized" },
-      { status: 401 }
-    );
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   try {
@@ -54,7 +56,7 @@ export async function POST(req: Request) {
 
     // DELETE Action
     if (body.action === "delete") {
-      await Event.findByIdAndDelete(body.id); 
+      await Event.findByIdAndDelete(body.id);
       return NextResponse.json({ success: true });
     }
 

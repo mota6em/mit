@@ -14,7 +14,6 @@ import {
   HiRefresh,
 } from "react-icons/hi";
 import Link from "next/link";
-import AdminPasswordInput from "@/components/admin/events/AdminPasswordInput";
 
 interface EventData {
   _id?: string;
@@ -235,16 +234,6 @@ export default function AdminEvents() {
               </button>
             </Link>
           </div>
-          <Suspense
-            fallback={
-              <div className="h-12 w-40 bg-gray-200 animate-pulse rounded-xl" />
-            }
-          >
-            <AdminPasswordInput
-              adminPassword={adminPassword}
-              setAdminPassword={setAdminPassword}
-            />
-          </Suspense>
         </div>
 
         {/* Form Card */}

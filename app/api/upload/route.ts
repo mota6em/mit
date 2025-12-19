@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import { auth } from "@/auth";
 
 //  Configure Cloudinary
 cloudinary.config({
@@ -9,12 +10,9 @@ cloudinary.config({
 });
 
 export async function POST(req: Request) {
-  const secret = req.headers.get("x-admin-secret");
-  if (secret !== process.env.ADMIN_SECRET) {
-    return NextResponse.json(
-      { success: false, message: "Unauthorized" },
-      { status: 401 }
-    );
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   try {
