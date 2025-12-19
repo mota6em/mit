@@ -11,6 +11,13 @@ import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { ApiEvent, dayMap } from "@/lib/types";
 import { getEvents } from "@/lib/eventService";
 
+interface EventsSectionProps {
+  type: "upcoming" | "past";
+  limit?: number;
+  showViewAll?: boolean;
+  filterMode?: "all" | "recurring_only" | "single_only";
+}
+
 export default function EventsSection({
   type,
   limit,
