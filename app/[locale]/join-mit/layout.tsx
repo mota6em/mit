@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       siteName: "MIT - Muszlim Ifjúság Társaság",
       images: [
         {
-          url: "/imgs/one-year-mit.jpg",
+          url: "/imgs/mit-pecs.jpg",
           width: 1200,
           height: 630,
           alt: "Join MIT Hungary Community",

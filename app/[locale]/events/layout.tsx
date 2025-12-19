@@ -40,6 +40,14 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       description: t.description,
       url: `https://mit-hu.vercel.app/${locale}`,
       siteName: "MIT - Muszlim Ifjúság Társaság",
+      images: [
+        {
+          url: "/imgs/one-year-mit-layout.jpg",
+          width: 1200,
+          height: 630,
+          alt: "MIT - Muszlim Ifjúság Társaság",
+        },
+      ],
       type: "website",
     },
     twitter: {
