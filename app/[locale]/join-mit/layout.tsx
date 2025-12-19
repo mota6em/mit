@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     messages = (await import(`../../../messages/en.json`)).default;
   }
 
-  const t = messages.join.metadata;
+  const t = messages.metadata.join;
 
   return {
     title: t.title,
