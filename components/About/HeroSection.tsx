@@ -48,7 +48,7 @@ const HeroSection = () => {
 
           {/* Image 2 */}
           <div
-            className={`absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-12 ${floatDelayClass}`}
+            className={`absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-8 ${floatDelayClass}`}
           >
             {!img2Loaded && (
               <div className="absolute inset-0 bg-gray-100 animate-pulse" />
@@ -119,10 +119,10 @@ const HeroSection = () => {
         @keyframes float {
           0%,
           100% {
-            transform: translateY(0px) rotate(-6deg);
+            transform: translateY(0px) ;
           }
           50% {
-            transform: translateY(-15px) rotate(-6deg);
+            transform: translateY(-15px) ;
           }
         }
       `}</style>
