@@ -5,11 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react"; // Use client-side signOut
 import { HiCalendar, HiViewGrid, HiMenu, HiX, HiLogout } from "react-icons/hi";
+import { HomeIcon } from "lucide-react";
 
 export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
- 
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -98,8 +99,15 @@ export default function AdminSidebar() {
           })}
         </nav>
 
-        {/* Sidebar Footer - Logout Button */}
+        {/* Sidebar Footer */}
         <div className="p-4 border-t border-gray-100 shrink-0">
+          <Link
+            href="/"
+            className="flex items-center gap-3 w-full px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition-all font-bold"
+          >
+            <HomeIcon className="text-xl" />
+            Home
+          </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
             className="flex items-center gap-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all font-bold"
