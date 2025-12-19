@@ -5,7 +5,6 @@ import { HiOutlineMail, HiSparkles, HiArrowRight } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { AuroraBackground } from "@/src/components/ui/aurora-background";
 
 type SectionTagColor = "green" | "gold" | "blue";
 
@@ -85,13 +84,13 @@ export default function JoinMIT() {
   if (!mounted) return null;
 
   return (
-    <AuroraBackground className="relative w-full min-h-screen  overflow-hidden font-sans">
+    <div className="relative w-full min-h-screen  overflow-hidden font-sans">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
 
       {/* --- HERO SECTION --- */}
-      <div className="max-w-7xl md:w-full lg:max-w-7xl md:mt-32 lg:mt-0 md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
+      <div className="max-w-7xl relative md:w-full lg:max-w-7xl md:mt-32 lg:mt-0 md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
@@ -205,7 +204,10 @@ export default function JoinMIT() {
               </div>
             </div>
           </motion.div>
-        </div>
+        </div>{" "}
+        <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+        <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
       </div>
 
       {/* --- VOLUNTEER SECTION ---   */}
@@ -435,6 +437,6 @@ export default function JoinMIT() {
           </div>
         </motion.div>
       </div>
-    </AuroraBackground>
+    </div>
   );
 }
