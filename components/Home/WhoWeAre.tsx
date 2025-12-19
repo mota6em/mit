@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -12,6 +13,7 @@ export default function WhoWeAre() {
 
   return (
     <div>
+      {/** * Main Container Animation */}
       <motion.div
         initial={{ opacity: 0.0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,14 +25,8 @@ export default function WhoWeAre() {
         }}
         className="relative flex flex-col gap-4 items-center justify-center w-full pb-10 pt-10 md:py-10 px-6 md:px-12 lg:px-20 font-serif"
       >
-        <div
-          className="
-              flex flex-col-reverse lg:flex-row 
-              items-center  
-              gap-15 md:gap-24
-            "
-        >
-          {/* TEXT LEFT */}
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-15 md:gap-24">
+          {/** * Content Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +38,7 @@ export default function WhoWeAre() {
               <span className="text-3xl md:font-semibold text-gray-700 md:text-[#4d93fb] font-semibold tracking-widest">
                 {t("title.who")}
               </span>
-              <span className="text-3xl  md:font-semibold text-gray-700 md:text-[#11b505] font-semibold tracking-widest">
+              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#11b505] font-semibold tracking-widest">
                 {t("title.are")}
               </span>
               <span className="text-3xl md:font-semibold text-gray-700 md:text-[#f1c34c] font-semibold tracking-widest">
@@ -57,7 +53,8 @@ export default function WhoWeAre() {
               {t("description.mission")}
             </p>
           </motion.div>
-          {/* IMAGE RIGHT */}
+
+          {/** * Visual Assets Section */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -71,7 +68,7 @@ export default function WhoWeAre() {
                 alt="MIT Visual"
                 width={900}
                 height={900}
-                className="w-full max-w-md md:w-full h-auto drop-shadow-xl relative z-10" // Added z-10 to keep image on top
+                className="w-full max-w-md md:w-full h-auto drop-shadow-xl relative z-10"
               />
 
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
@@ -81,7 +78,7 @@ export default function WhoWeAre() {
           </motion.div>
         </div>
 
-        {/* Learn More Button */}
+        {/** * Navigation Actions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

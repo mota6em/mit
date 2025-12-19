@@ -24,7 +24,6 @@ export default function Hero({ images }: HeroProps) {
 
   if (!images || images.length === 0) return null;
 
-  // Handle slicing for the stack logic safely
   const currentStack = [
     images[currentIndexMobile % images.length],
     images[(currentIndexMobile + 1) % images.length],
@@ -32,7 +31,7 @@ export default function Hero({ images }: HeroProps) {
 
   return (
     <div className="relative w-full min-h-[93.5vh] max-h-screen md:min-h-[87vh] md:max-h-[90vh] overflow-hidden">
-      {/* DESKTOP BG */}
+      {/** * Desktop Background Slider */}
       <div className="hidden lg:block h-full">
         {images.map((img, index) => (
           <Image
@@ -49,9 +48,8 @@ export default function Hero({ images }: HeroProps) {
         ))}
       </div>
 
-      {/* MOBILE STACK */}
+      {/** * Mobile Image Stack */}
       <div className="flex flex-col lg:hidden absolute inset-0 w-full h-full">
-        {/* top image */}
         <div className="relative flex-1 w-full transition-opacity duration-700 ease-out">
           <Image
             src={currentStack[0]}
@@ -61,7 +59,6 @@ export default function Hero({ images }: HeroProps) {
           />
         </div>
 
-        {/* middle image (fixed) */}
         <div className="relative flex-1 w-full">
           <Image
             src="/imgs/home/aboutmit/hero-sm-bg.jpg"
@@ -71,7 +68,6 @@ export default function Hero({ images }: HeroProps) {
           />
         </div>
 
-        {/* bottom image */}
         <div className="relative flex-1 w-full transition-opacity duration-700 ease-out">
           <Image
             src={currentStack[1]}
@@ -82,6 +78,7 @@ export default function Hero({ images }: HeroProps) {
         </div>
       </div>
 
+      {/** * Content Overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:mt-3 md:px-6 space-y-1">
         <h1 className="text-4xl Carena-font font-serif md:text-6xl font-bold relative">
           <span className="text-[#f1c34c] drop-shadow-[0_0_4px_black]">
