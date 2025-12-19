@@ -1,118 +1,83 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
   const [img1Loaded, setImg1Loaded] = useState(false);
   const [img2Loaded, setImg2Loaded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  const [isDesktop, setIsDesktop] = useState(false);
-
+  // Avoid hydration mismatch and only run heavy logic on client
   useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+    setIsClient(true);
   }, []);
 
-  const floatingAnimation: Variants = {
-    initial: { y: 0 },
-    animate: {
-      y: [0, -20, 0],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
-
-  const floatingAnimationDelayed: Variants = {
-    initial: { y: 0 },
-    animate: {
-      y: [0, 20, 0],
-      transition: {
-        duration: 7,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: 1,
-      },
-    },
-  };
+  // Use simple CSS transforms for floating - much lighter than Framer Motion logic for infinite loops
+  const floatClass =
+    "will-change-transform animate-[float_6s_ease-in-out_infinite]";
+  const floatDelayClass =
+    "will-change-transform animate-[float_7s_ease-in-out_1s_infinite]";
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-gradient-to-b from-blue-50/50 via-white to-white overflow-hidden px-6 md:px-12 lg:px-20 py-20 lg:py-6">
-      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
-        {/* LEFT COLUMN: Creative Image Collage */}
-        <div className="relative h-[500px] w-full ">
+    <section className="relative min-h-[80vh] flex items-center bg-gradient-to-b from-blue-50/30 to-white overflow-hidden px-6 py-12 md:px-12 lg:px-20 lg:py-6">
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        {/* LEFT COLUMN: Optimized Image Collage */}
+        <div className="relative h-[400px] md:h-[500px] w-full">
           {/* Image 1 */}
-          <motion.div
-            variants={floatingAnimation}
-            initial="initial"
-            animate={isDesktop ? "animate" : "initial"}
-            className="absolute top-0 left-0 sm:left-12 md:left-24 lg:left-5 lg:top-4 w-64 h-80 md:w-72 md:h-88 lg:w-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6"
+          <div
+            className={`absolute top-0 left-0 sm:left-12 md:left-24 lg:left-5 lg:top-4 w-64 h-80 md:w-72 md:h-88 lg:w-64 lg:h-80 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-10 transform -rotate-6 ${floatClass}`}
           >
-            {/* Loading Skeleton */}
             {!img1Loaded && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+              <div className="absolute inset-0 bg-gray-100 animate-pulse" />
             )}
             <Image
               src="/imgs/one-year-mit.jpg"
               alt="Community Event"
               fill
-              className={`object-cover transition-opacity duration-500 ${
+              className={`object-cover transition-opacity duration-300 ${
                 img1Loaded ? "opacity-100" : "opacity-0"
               }`}
-              sizes="(max-width: 768px) 100vw, 33vw"
+              sizes="(max-width: 768px) 50vw, 33vw"
               onLoad={() => setImg1Loaded(true)}
+              priority
             />
-          </motion.div>
+          </div>
 
-          {/* Image 2  */}
-          <motion.div
-            variants={floatingAnimationDelayed}
-            initial="initial"
-            animate={isDesktop ? "animate" : "initial"}
-            className="absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-6"
+          {/* Image 2 */}
+          <div
+            className={`absolute bottom-0 mg:bottom-10 lg:bottom-12 -right-4 sm:right-10 md:right-20 lg:right-4 w-60 h-72 md:w-70 md:h-82 lg:w-60 lg:h-72 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 transform rotate-8 md:rotate-12 ${floatDelayClass}`}
           >
-            {/* Loading Skeleton */}
             {!img2Loaded && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse z-20" />
+              <div className="absolute inset-0 bg-gray-100 animate-pulse" />
             )}
             <Image
               src="/imgs/femynso-mit.jpg"
               alt="Youth Gathering"
               fill
-              className={`object-cover transition-opacity duration-500 ${
+              className={`object-cover transition-opacity duration-300 ${
                 img2Loaded ? "opacity-100" : "opacity-0"
               }`}
-              sizes="(max-width: 768px) 100vw, 33vw"
+              sizes="(max-width: 768px) 50vw, 33vw"
               onLoad={() => setImg2Loaded(true)}
             />
-          </motion.div>
+          </div>
 
-          {/* Image 3 logo  */}
+          {/* Centered Logo */}
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, type: "spring" }}
-            className="absolute top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 w-28 h-28  sm:w-36  sm:h-36 md:w-32 md:h-32 bg-white rounded-full shadow-xl flex items-center justify-center z-30 border border-green-500"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-green-500"
           >
             <Image
               src="/imgs/mit-logo-full-resized.png"
               alt="MIT Logo"
-              width={130}
-              height={130}
-              className="object-contain p-2 md:p-4"
-              priority
+              width={100}
+              height={100}
+              className="object-contain p-2"
             />
           </motion.div>
 
@@ -122,44 +87,45 @@ const HeroSection = () => {
         </div>{" "}
         {/* Right COLUMN: Text Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 px-5 py-2 rounded-full bg-green-700/10 border border-green-700/30 text-green-700 font-semibold tracking-wider uppercase text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-4 px-4 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 font-semibold text-xs uppercase"
           >
             {t("badge")}
           </motion.div>
 
-          {/* Title */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-widest Ang-font text-yellow-600 mb-4 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold Ang-font text-yellow-600 mb-4 leading-tight"
           >
             {t("title")}
           </motion.h1>
 
-          {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed max-w-2xl mb-10"
+            transition={{ delay: 0.1 }}
+            className="text-base md:text-lg text-gray-500 max-w-xl mb-8"
           >
             {t("description")}
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="h-1 w-24  rounded-full"
-          />
         </div>
       </div>
+
+      {/* Tailwind Keyframes for smoother movement */}
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px) rotate(-6deg);
+          }
+          50% {
+            transform: translateY(-15px) rotate(-6deg);
+          }
+        }
+      `}</style>
     </section>
   );
 };
