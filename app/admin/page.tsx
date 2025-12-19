@@ -1,26 +1,11 @@
 // app/admin/page.tsx
 import Link from "next/link";
-import { HiCalendar, HiLogout } from "react-icons/hi";
-import { signOut } from "@/auth";
+import { HiCalendar } from "react-icons/hi";
 
 export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button className="flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-lg font-bold">
-              <HiLogout /> Logout
-            </button>
-          </form>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
             href="/admin/events"
