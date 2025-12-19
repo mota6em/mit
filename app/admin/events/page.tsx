@@ -217,25 +217,8 @@ export default function AdminEvents() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-5xl mx-auto gap-4 flex flex-col">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
-              Events Dashboard
-            </h1>
-            <p className="text-gray-500 text-sm mt-1">
-              Manage your community programs
-            </p>
-            <Link href="/">
-              <button className="mt-2 px-4 py-2 bg-blue-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg">
-                Go Back to MIT home page
-              </button>
-            </Link>
-          </div>
-        </div>
-
         {/* Form Card */}
         <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden border border-gray-100">
           <div
