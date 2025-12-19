@@ -2,26 +2,30 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await signIn("credentials", {
-      username,
-      password,
-      redirect: false,
-    });
+    setLoading(true);
+    setError("");
 
-    if (result?.error) {
+    try {
+      // By NOT setting redirect: false, NextAuth handles the
+      // full-page redirect to the callbackUrl (default: /admin)
+      await signIn("credentials", {
+        username,
+        password,
+        callbackUrl: "/admin",
+      });
+    } catch (err) {
       setError("Invalid credentials");
-    } else {
-      router.push("/admin");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,23 +37,30 @@ export default function AdminLogin() {
       >
         <h1 className="text-2xl font-bold mb-6 text-center">Admin Login</h1>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
         <input
+          required
           type="text"
           placeholder="Username"
-          className="w-full p-2 mb-4 border rounded"
+          value={username}
+          className="w-full p-2 mb-4 border rounded outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
+          required
           type="password"
           placeholder="Password"
-          className="w-full p-2 mb-6 border rounded"
+          value={password}
+          className="w-full p-2 mb-6 border rounded outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <button
+          disabled={loading}
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded font-bold"
+          className="w-full bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition-colors disabled:opacity-50"
         >
-          Login
+          {loading ? "Authenticating..." : "Login"}
         </button>
       </form>
     </div>
