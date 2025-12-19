@@ -241,7 +241,7 @@ export default function JoinMIT() {
                 {t("volunteer.description")}
               </p>
               <a
-                href="https://forms.gle/your-link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd6KJuRRaifHAoZTEBxKaawimJBzj_pAaU7zBnSgMuq_BQBvA/viewform"
                 target="_blank"
                 className="inline-flex items-center gap-2 text-[#11b505] font-bold hover:gap-4 transition-all"
               >
