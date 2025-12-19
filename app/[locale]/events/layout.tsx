@@ -35,10 +35,11 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       "Muslim youth activities in Hungary",
       "Muslim youth activities in Budapest",
     ],
+
     openGraph: {
       title: t.title,
       description: t.description,
-      url: `https://mit-hu.vercel.app/${locale}`,
+      url: `https://mit-hu.vercel.app/${locale}/events`,
       siteName: "MIT - Muszlim Ifjúság Társaság",
       images: [
         {
@@ -54,6 +55,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       card: "summary_large_image",
       title: t.title,
       description: t.description,
+      images: ["/imgs/one-year-mit-layout.jpg"],
     },
     icons: {
       icon: [{ url: "/imgs/icon.jpg" }],
@@ -61,7 +63,6 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     },
   };
 }
-
 export default function EventsLayout({
   children,
 }: {

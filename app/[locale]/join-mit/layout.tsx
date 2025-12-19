@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       card: "summary_large_image",
       title: t.title,
       description: t.description,
-      images: ["/imgs/one-year-mit.jpg"],
+      images: ["/imgs/mit-pecs.jpg"],
     },
     icons: {
       icon: [{ url: "/imgs/icon.jpg" }],
