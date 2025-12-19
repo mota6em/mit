@@ -42,7 +42,6 @@ const DAYS_OF_WEEK = [
 ];
 
 export default function AdminEvents() {
-  const [adminPassword, setAdminPassword] = useState("");
   const [events, setEvents] = useState<EventData[]>([]);
 
   const [form, setForm] = useState<EventData>({
@@ -69,44 +68,31 @@ export default function AdminEvents() {
       .then((data) => setEvents(data));
   }, []);
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      if (!acceptedFiles?.[0]) return;
-      if (!adminPassword) {
-        alert("Please enter admin password first");
-        return;
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    if (!acceptedFiles?.[0]) return;
+
+    setUploadingImg(true);
+    const file = acceptedFiles[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setForm((prev) => ({ ...prev, img: data.url }));
       }
-      setUploadingImg(true);
-      const file = acceptedFiles[0];
-      const formData = new FormData();
-      formData.append("file", file);
-
-      try {
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-          headers: { "x-admin-secret": adminPassword },
-        });
-
-        if (res.status === 401) {
-          alert("Wrong Password!");
-          setUploadingImg(false);
-          return;
-        }
-
-        const data = await res.json();
-        if (data.success) {
-          setForm((prev) => ({ ...prev, img: data.url }));
-        }
-      } catch (error) {
-        console.error("Upload failed", error);
-        alert("Image upload failed");
-      } finally {
-        setUploadingImg(false);
-      }
-    },
-    [adminPassword]
-  );
+    } catch (error) {
+      console.error("Upload failed", error);
+      alert("Image upload failed");
+    } finally {
+      setUploadingImg(false);
+    }
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -127,10 +113,6 @@ export default function AdminEvents() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminPassword) {
-      alert("Please enter admin password");
-      return;
-    }
 
     // --- NEW VALIDATION: Date is required ONLY if NOT recurring ---
     if (!form.isRecurring && !form.date) {
@@ -150,13 +132,11 @@ export default function AdminEvents() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-admin-secret": adminPassword,
       },
       body: JSON.stringify(dataToSend),
     });
 
     if (res.status === 401) {
-      alert("Wrong Password!");
       setLoading(false);
       return;
     }
@@ -174,8 +154,7 @@ export default function AdminEvents() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-admin-secret": adminPassword,
-      },
+       },
       body: JSON.stringify({ action: "delete", id }),
     });
 

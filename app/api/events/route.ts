@@ -5,10 +5,6 @@ import { isValidObjectId } from "mongoose";
 import { auth } from "@/auth";
 
 export async function GET(request: Request) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
   try {
     await dbConnect();
 

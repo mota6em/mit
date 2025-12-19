@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import redis from "@/lib/redis";
-import { auth } from "@/auth";
+ 
 
 export async function POST(req: NextRequest) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
   try {
     const body = await req.json();
     const { id } = body;
@@ -33,10 +29,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
