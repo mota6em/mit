@@ -1,10 +1,9 @@
 "use client";
-import { AuroraBackground } from "@/src/components/ui/aurora-background";
-import Image from "next/image";
+ import Image from "next/image";
 
 export default function QuranQuote() {
   return (
-    <AuroraBackground className="h-screen md:h-screen max-h-screen w-screen bg-gradient-to-b from-green-900 via-blue-900 to-zinc-900 flex flex-col items-center justify-center px-4 md:px-10 relative">
+    <div className="h-screen md:h-screen max-h-screen w-screen bg-gradient-to-b from-green-900 via-blue-900 to-zinc-900 flex flex-col items-center justify-center px-4 md:px-10 relative">
       <div className="relative text-center z-10 mt-14">
         {/* Ayah */}
         <p className="text-2xl md:text-5xl font-semibold font-serif text-white leading-relaxed tracking-wide">
@@ -36,6 +35,6 @@ export default function QuranQuote() {
           MIT
         </p>
       </div>
-    </AuroraBackground>
+    </div>
   );
 }
