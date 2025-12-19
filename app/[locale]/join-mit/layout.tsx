@@ -1,7 +1,6 @@
-import "../globals.css";
 import type { Metadata } from "next";
 
- export async function generateStaticParams() {
+export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "hu" }];
 }
 
@@ -10,9 +9,9 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
 
   let messages;
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
+    messages = (await import(`../../../messages/${locale}.json`)).default;
   } catch (e) {
-    messages = (await import(`../../messages/en.json`)).default;
+    messages = (await import(`../../../messages/en.json`)).default;
   }
 
   const t = messages.join.metadata;
@@ -33,7 +32,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: t.title,
       description: t.description,
-       url: `https://mit-hu.vercel.app/${locale}/join-mit`,
+      url: `https://mit-hu.vercel.app/${locale}/join-mit`,
       siteName: "MIT - Muszlim Ifjúság Társaság",
       images: [
         {
@@ -56,4 +55,12 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       apple: [{ url: "/imgs/icon.jpg" }],
     },
   };
+}
+
+export default function JoinMITLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
 }
