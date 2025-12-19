@@ -1,9 +1,5 @@
-import I18nProvider from "../i18n-provider";
-import { notFound } from "next/navigation";
 import "../globals.css";
 import type { Metadata } from "next";
-import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/NavBar/NavBar";
 
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "hu" }];
@@ -32,6 +28,13 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       "Muslim student community",
       "Budapest Islamic events",
       "Join us MIT",
+      "Muslim youth community",
+      "Events for Muslim students",
+      "Events in Hungary for Muslim students",
+      "Muslim youth events",
+      "Muslim youth activities",
+      "Muslim youth activities in Hungary",
+      "Muslim youth activities in Budapest",
     ],
     openGraph: {
       title: t.title,
@@ -50,27 +53,4 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       apple: [{ url: "/imgs/icon.jpg" }],
     },
   };
-}
-
-export default async function LocaleLayout({ children, params }: any) {
-  const { locale } = await params;
-
-  let messages;
-  try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch {
-    return notFound();
-  }
-
-  return (
-    <html lang={locale}>
-      <body className="flex flex-col min-h-screen">
-        <I18nProvider messages={messages} locale={locale}>
-          <NavBar />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </I18nProvider>
-      </body>
-    </html>
-  );
 }
