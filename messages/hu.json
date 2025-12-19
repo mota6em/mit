@@ -1,4 +1,10 @@
 {
+  "metadata": {
+    "events": {
+      "title": "MIT Események és Közösség - Csatlakozz hozzánk",
+      "description": "Csatlakozz a MIT-hez! Fedezd fel eseményeinket, lelki alkalmainkat és hallgatói programjainkat. Légy része Magyarország legnagyobb muszlim ifjúsági közösségének."
+    }
+  },
   "common": {
     "welcome": "Üdvözlünk"
   },
