@@ -43,7 +43,7 @@ const Hero = () => {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
 
       <div className=" mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-6 items-center">
+        <div className="grid relative lg:grid-cols-2 gap-12 lg:gap-6 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -158,7 +158,6 @@ const Hero = () => {
               <p>{t("hero.joinStats")}</p>
             </div>
           </motion.div>
-
           {/* Image section for only desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -215,7 +214,10 @@ const Hero = () => {
             <div className="absolute bottom-32 left-10 text-[#e8b030] text-4xl animate-pulse">
               <HiSparkles />
             </div>
-          </motion.div>
+          </motion.div>{" "}
+          <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+          <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
         </div>
       </div>
     </div>
