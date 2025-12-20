@@ -76,7 +76,7 @@ const Statistics = () => {
           <div className="w-16 h-1 bg-[#2D9B4A] mx-auto rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-start">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
