@@ -390,12 +390,13 @@ export default function JoinMIT() {
       </div>
 
       {/* --- NEWSLETTER SECTION ---   */}
-      <div className="max-w-7xl mx-auto px-4 pb-20">
+      <div className="max-w-7xl mx-auto px-4 pb-20 ">
         <motion.div
+          id="subscribe"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative bg-[#1a2332] rounded-[2.5rem] p-8 md:p-16 overflow-hidden text-center md:text-left"
+          className="relative bg-[#1a2332] scroll-mt-28 rounded-[2.5rem] p-8 md:p-16 overflow-hidden text-center md:text-left"
         >
           {/* Background Patterns for the dark card */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#e8b030]/10 rounded-full blur-3xl" />
