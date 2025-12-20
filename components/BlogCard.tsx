@@ -54,7 +54,7 @@ export default function BlogCard({
       }}
     >
       {/* Header */}
-      <header className="flex items-center justify-between p-2 md:p-3 border-b">
+      <header className="flex items-center justify-between p-2 border-b">
         <div className="flex items-center gap-2 md:gap-3">
           <Image
             src={authorImg}
@@ -69,12 +69,9 @@ export default function BlogCard({
         </div>
         <div className="flex items-center gap-2 md:gap-3">
           {/* Date */}
-          <p className="text-sm flex flex-row items-center justify-between gap-x-1 text-green-600 outline outline-green-300 px-2 py-1 rounded-full font-semibold">
+          <p className="text-sm flex flex-row items-center justify-between gap-x-1 text-gray-600 px-2 py-1 font-semibold">
             <CiClock2 className="w-5 h-5" /> {readTime}
           </p>
-          <span className="text-xs md:text-sm outline outline-blue-700 px-3 py-1 rounded-full font-semibold cursor-pointer text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
-            View
-          </span>
         </div>
       </header>
 
