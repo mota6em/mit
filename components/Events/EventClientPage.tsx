@@ -12,7 +12,6 @@ import { CiShare2 } from "react-icons/ci";
 import { MdOutlineDone } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { EventMap } from "./EventMap";
-import { register } from "module";
 
 interface ApiEvent {
   _id: string;
@@ -46,8 +45,7 @@ const dictionary = {
     back: "Back to Events",
     dateLabel: "Date",
     notFoundTitle: "Event Not Found",
-    notFoundDesc:
-      "The event you are looking for does not exist or has been removed.",
+    notFoundDesc: "The event you are looking for does not exist or has been removed.",
     loading: "Loading event details...",
     organizer: "Organizer",
     share: "Share Event",
@@ -111,14 +109,13 @@ export default function EventClientPage({
         setLoading(false);
       });
   }, [params?.id, initialEvent]);
-  //Handle View Count --
+
   useEffect(() => {
     const id = (params?.id as string) || event?._id;
     if (!id || hasIncremented.current) return;
 
     hasIncremented.current = true;
 
-    // Call API to increment view
     fetch("/api/views", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -130,6 +127,7 @@ export default function EventClientPage({
       })
       .catch((err) => console.error("Failed to increment views:", err));
   }, [params?.id, event?._id]);
+
   const handleShare = () => {
     if (typeof window !== "undefined") {
       navigator.clipboard.writeText(window.location.href);
@@ -142,8 +140,8 @@ export default function EventClientPage({
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
-          <p className="text-primary font-semibold Carena-font text-lg tracking-wide">
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
+          <p className="text-primary font-semibold Carena-font text-base tracking-wide">
             {dict.loading}
           </p>
         </div>
@@ -153,15 +151,15 @@ export default function EventClientPage({
   if (error || !event)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-center px-4">
-        <h1 className="text-4xl font-bold text-primary mb-4 Carena-font">
+        <h1 className="text-3xl font-bold text-primary mb-3 Carena-font">
           {dict.notFoundTitle}
         </h1>
-        <p className="text-muted-foreground mb-8 max-w-md">
+        <p className="text-muted-foreground mb-6 max-w-sm text-sm">
           {dict.notFoundDesc}
         </p>
         <Link
           href={`/${locale}/events`}
-          className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-bold hover:opacity-90 transition shadow-lg"
+          className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-bold hover:opacity-90 transition shadow-md text-sm"
         >
           {dict.back}
         </Link>
@@ -172,7 +170,6 @@ export default function EventClientPage({
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
   const note = locale === "hu" ? event.note_hu : event.note_en;
 
-  // Format Date only if it exists
   const dateFormatted = event.date
     ? new Date(event.date).toLocaleDateString(
         locale === "hu" ? "hu-HU" : "en-US",
@@ -181,148 +178,131 @@ export default function EventClientPage({
     : null;
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-5 pb-10 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-row items-center justify-between md:mb-6 md:px-10">
+    <div className="min-h-screen bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
+      {/* Container shrunk from max-w-7xl to max-w-5xl for a tighter look */}
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-row items-center justify-between md:mb-4 md:px-6">
           <Link
             href={`/${locale}/events`}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
           >
-            <span className="p-2 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
-              <IoIosArrowRoundBack className="w-6 h-6" />
+            <span className="p-1.5 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
+              <IoIosArrowRoundBack className="w-5 h-5" />
             </span>
-            <span className="font-medium tracking-wide">{dict.back}</span>
+            <span className="font-medium tracking-wide text-sm">{dict.back}</span>
           </Link>
-          <span className="px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-            <HiEye className="w-5 h-5" /> {views > 0 ? views : "-"}
+          <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+            <HiEye className="w-4 h-4" /> {views > 0 ? views : "-"}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-20">
-          <h1 className="text-4xl md:hidden md:text-5xl pt-6 font-bold text-center Carena-font leading-tight text-foreground">
+        {/* Gap reduced from 20 to 10 for lg screens */}
+        <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
+          <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight text-foreground">
             {title}
           </h1>
-          {/* IMAGE */}
+          
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative w-full aspect-[4/5] lg:aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-gray-100"
+            className="relative w-full aspect-[4/5] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-gray-100"
           >
             {event.img ? (
-              <Image
-                src={event.img}
-                alt={title}
-                fill
-                className="object-cover"
-                priority
-              />
+              <Image src={event.img} alt={title} fill className="object-cover" priority />
             ) : (
-              <div className="flex items-center justify-center h-full text-muted-foreground">
-                No Image
-              </div>
+              <div className="flex items-center justify-center h-full text-muted-foreground text-sm">No Image</div>
             )}
           </motion.div>
-          {/* TEXT */}
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-8 sticky top-0 md:top-32"
+            className="flex flex-col gap-5 sticky top-0 md:top-24"
           >
-            <div className="space-y-2 border-b border-border mt-2 md:mt-0 pb-4">
-              {/* Badges Row */}
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                {/* Note */}
+            <div className="space-y-1.5 border-b border-border pb-3">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
                 {note && (
-                  <span className="px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <CgDanger className="w-5 h-5" /> {note}
+                  <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <CgDanger className="w-4 h-4" /> {note}
                   </span>
                 )}
-                {/* Date - Show only if NOT recurring */}
                 {!event.isRecurring && dateFormatted && (
-                  <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
+                  <span className="hidden lg:inline-block px-3 py-1 rounded-full bg-green-500 text-white font-bold text-xs uppercase tracking-wider shadow-sm">
                     {dateFormatted}
                   </span>
                 )}
-                {/* Time */}
                 {event.time && (
-                  <span className="px-4 py-1.5 rounded-full bg-blue-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <HiClock className="text-lg" /> {event.time}
+                  <span className="px-3 py-1 rounded-full bg-blue-500 text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <HiClock className="text-sm" /> {event.time}
                   </span>
                 )}
-                {/* Mobile Date Badge - Show only if NOT recurring and date exists */}
                 {!event.isRecurring && dateFormatted && (
                   <div className="lg:hidden">
-                    <span className="px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-sm font-bold shadow-sm text-black">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold shadow-sm text-black">
                       {dateFormatted}
                     </span>
                   </div>
                 )}
-                {/* Recurring */}
                 {event.isRecurring && event.recurringDays && (
-                  <span className="px-4 py-1.5 rounded-full bg-indigo-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
-                    <HiRefresh className="text-lg" />
-                    {/* Localize days */}
-                    {event.recurringDays
-                      .map(
-                        (day) =>
-                          dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
-                      )
-                      .join(", ")}
+                  <span className="px-3 py-1 rounded-full bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+                    <HiRefresh className="text-sm" />
+                    {event.recurringDays.map((day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day).join(", ")}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl pt-6 font-bold hidden md:block Carena-font leading-tight text-foreground">
+              {/* Shrunk md:text-5xl to md:text-3xl */}
+              <h1 className="text-3xl md:text-3xl pt-2 font-bold hidden md:block Carena-font leading-tight text-foreground">
                 {title}
               </h1>
 
-              <div className="flex items-center gap-3 pt-4">
+              <div className="flex items-center gap-2 pt-3">
                 <Image
                   src={"/imgs/icon.jpg"}
                   alt={"organizer logo"}
-                  width={42}
-                  height={42}
+                  width={32}
+                  height={32}
                   className="rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold">{dict.organizer}</span>
-                  <span className="text-xs text-muted-foreground">MIT</span>
+                  <span className="text-xs font-bold">{dict.organizer}</span>
+                  <span className="text-[10px] text-muted-foreground leading-none">MIT</span>
                 </div>
               </div>
             </div>
 
-            <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
+            {/* Changed prose-lg to prose-base */}
+            <div className="prose prose-base dark:prose-invert max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
               {description}
             </div>
 
-            <div className="pt-4 flex flex-col gap-4">
+            <div className="pt-2 flex flex-col gap-3">
               {event.registrationUrl && (
                 <a
                   href={event.registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 px-0 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700 mb-1"
+                  className="px-0 py-3 cursor-pointer rounded-lg font-bold text-base transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700"
                 >
-                  <HiLink className="w-6 h-6" />
-                  <span>register now</span>
+                  <HiLink className="w-5 h-5" />
+                  <span>{dict.register}</span>
                 </a>
               )}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="https://ig.me/m/muszlimifjusag"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
+                  className="flex-1 px-0 py-3 rounded-lg font-semibold text-base transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
                 >
-                  <FaInstagram className="w-6 h-6" />
+                  <FaInstagram className="w-5 h-5" />
                   <span>{dict.dm}</span>
                 </a>
-                {/* Share Button */}
                 <button
                   onClick={handleShare}
-                  className={`flex-1 px-4 py-4  cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
+                  className={`flex-1 px-3 py-3 cursor-pointer rounded-lg font-bold text-base transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
                     copied
                       ? "bg-green-600 text-white hover:bg-green-700"
                       : "bg-blue-600 text-primary-foreground hover:opacity-90"
@@ -332,22 +312,22 @@ export default function EventClientPage({
                     {copied ? (
                       <motion.span
                         key="copied"
-                        initial={{ scale: 0.8, opacity: 0 }}
+                        initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
                         className="flex items-center gap-2"
                       >
-                        <MdOutlineDone className="w-6 h-6" /> {dict.copied}
+                        <MdOutlineDone className="w-5 h-5" /> {dict.copied}
                       </motion.span>
                     ) : (
                       <motion.span
                         key="share"
-                        initial={{ scale: 0.8, opacity: 0 }}
+                        initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
                         className="flex items-center gap-2"
                       >
-                        <CiShare2 className="w-6 h-6" />
+                        <CiShare2 className="w-5 h-5" />
                         {dict.share}
                       </motion.span>
                     )}
