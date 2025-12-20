@@ -1,69 +1,104 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { FaUsers, FaCalendarAlt, FaHashtag } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+
+const Counter = ({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  const count = useMotionValue(0);
+
+  const rounded = useSpring(count, { stiffness: 200, damping: 30 });
+
+  const display = useTransform(
+    rounded,
+    (latest) => Math.floor(latest).toLocaleString() + suffix
+  );
+
+  useEffect(() => {
+    if (isInView) {
+      count.set(value);
+    }
+  }, [isInView, count, value]);
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+};
 
 const Statistics = () => {
   const t = useTranslations("home.statistics");
 
   const stats = [
     {
-      icon: FaHashtag,
-      value: "1.5k+",
-      label: t("socialLabel"),
-      color: "text-blue-500",
-    },
-    {
       icon: FaUsers,
-      value: "9+",
+      target: 10,
+      suffix: "+",
       label: t("yearsLabel"),
-      color: "text-[#11b505]",
+      color: "text-[#2D9B4A]",
     },
     {
       icon: FaCalendarAlt,
-      value: "100+",
+      target: 100,
+      suffix: "+",
       label: t("eventsLabel"),
-      color: "text-[#e8b030]",
+      color: "text-[#F9BC15]",
+    },
+    {
+      icon: FaHashtag,
+      target: 1500,
+      suffix: "+",
+      label: t("socialLabel"),
+      color: "text-[#00ADEF]",
     },
   ];
 
   return (
     <section className="py-20 bg-white border-y border-gray-50">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Simple Heading */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold Carena-font text-gray-900 mb-4">
-            {t("titlePart1")}{" "}
-            <span className="text-[#11b505]">{t("titlePart2")}</span>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-bold Carena-font text-[#2D9B4A] mb-4">
+            {t("title")}
           </h2>
-          <div className="w-16 h-1 bg-[#e8b030] mx-auto rounded-full" />
+          <div className="w-16 h-1 bg-[#2D9B4A] mx-auto rounded-full" />
         </div>
 
-        {/* Minimalist Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className="flex flex-col items-center text-center px-4"
             >
-               <div className={`mb-4 p-3 rounded-full bg-gray-50 ${stat.color}`}>
-                <stat.icon className="text-2xl" aria-hidden="true" />
+              <div className={`mb-4 p-4 rounded-full bg-gray-50 ${stat.color}`}>
+                <stat.icon className="text-3xl" aria-hidden="true" />
               </div>
 
-               <span className="text-5xl md:text-6xl font-bold text-gray-900 mb-2">
-                {stat.value}
+              <span className="text-5xl md:text-6xl font-bold text-gray-800 mb-2">
+                <Counter value={stat.target} suffix={stat.suffix} />
               </span>
 
-               <span className="text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest">
+              <span className="text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest">
                 {stat.label}
               </span>
 
-               {index < stats.length - 1 && (
+              {index < stats.length - 1 && (
                 <div className="w-12 h-px bg-gray-100 mt-12 md:hidden" />
               )}
             </motion.div>

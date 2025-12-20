@@ -64,8 +64,7 @@ export default function EventsSection({
   const titleText = isWeeklySection
     ? "Weekly Gatherings"
     : t(type === "upcoming" ? "upcomingTitle" : "pastTitle");
-  const [firstWord, ...restWords] = titleText.split(" ");
-  const secondWord = restWords.join(" ");
+
   const linkHref = `/${locale}/events#${sectionId}`;
 
   return (
@@ -84,9 +83,8 @@ export default function EventsSection({
         <span
           className={type === "upcoming" ? "text-green-600" : "text-gray-500"}
         >
-          {firstWord}
+          {titleText}
         </span>
-        {secondWord && <span className="text-gray-900"> {secondWord}</span>}
       </motion.h2>
       {/** Responsive grid displaying event cards or skeletons */}
       <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
@@ -146,7 +144,7 @@ export default function EventsSection({
               href={linkHref}
               className={`group h-[300px] w-full flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-all duration-300 px-4 text-center cursor-pointer ${
                 type === "upcoming"
-                  ? "bg-green-50 border-green-200 hover:border-green-500 hover:bg-green-100"
+                  ? "border-green-200 hover:border-green-500"
                   : "bg-gray-50 border-gray-300 hover:border-gray-500 hover:bg-gray-100"
               }`}
             >
@@ -176,19 +174,29 @@ export default function EventsSection({
         showViewAll &&
         displayedPrograms.length > 0 &&
         filterMode === "all" && (
-          <div className="hidden md:block mt-2 mb-6">
+          <div className="hidden md:block mb-8">
             <Link
               href={linkHref}
-              className={`group inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${
-                type === "upcoming"
-                  ? "bg-green-50 text-green-700 hover:bg-green-100"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+              className={`group inline-flex items-center gap-2 text-md rounded-full font-medium font-serif transition-all duration-300 ${
+                type === "upcoming" ? " text-green-700" : "  text-gray-800"
               }`}
             >
               <span>
                 {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
               </span>
-              <FaArrowRight className="text-sm transition-transform duration-300 group-hover:translate-x-1" />
+              <svg
+                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
             </Link>
           </div>
         )}
