@@ -29,7 +29,7 @@ export function EventMap({ location }: EventMapProps) {
       </h3>
 
       {isEmbed ? (
-        <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-xl border border-border">
+        <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-sm border border-border">
           <iframe
             src={mapUrl}
             width="100%"

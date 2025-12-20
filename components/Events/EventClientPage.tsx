@@ -177,7 +177,7 @@ export default function EventClientPage({
     : null;
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-5 pb-20 px-4 md:px-8">
+    <div className="min-h-screen bg-background text-foreground pt-5 pb-10 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-row items-center justify-between md:mb-6 md:px-10">
           <Link
