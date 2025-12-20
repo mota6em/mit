@@ -14,6 +14,7 @@ export interface ApiEvent {
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
+  registrationUrl?: string;
 }
 
 export interface EventsSectionProps {

@@ -14,6 +14,7 @@ const eventSchema = new Schema(
     time: { type: String, required: false },
     isRecurring: { type: Boolean, default: false },
     recurringDays: { type: [String], required: false },
+    registrationUrl: { type: String, required: false },
   },
   { timestamps: true }
 );
