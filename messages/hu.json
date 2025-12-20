@@ -223,29 +223,7 @@
         "Segítettünk felépíteni egy sikeres, megerősített muszlim generációt."
       ]
     },
-    "futureGoals": {
-      "title": "ELŐRETEKINTÉS",
-      "shortTerm": {
-        "title": "Rövidtávú (Következő 3-6 Hónap)",
-        "goals": [
-          "Gázai/Szadaka kampány indítása.",
-          "Önkéntes beléptetés automatizálásának befejezése.",
-          "Havi eseménynaptár szervezése.",
-          "MIT Akadémia képzési alkalmak indítása.",
-          "Megszokni az új rendszert és az új vezetési stílust."
-        ]
-      },
-      "longTerm": {
-        "title": "Hosszútávú (Következő 1-2 Év)",
-        "goals": [
-          "Erős partnerségek kiépítése magyar intézményekkel.",
-          "Következetes professzionális branding kifejlesztése.",
-          "MIT elismertetése meghatározó fiataloknak szóló platformként Magyarországon.",
-          "Közösségi aktivizmus és képviseleti projektek indítása."
-        ]
-      },
-      "button": "Csatlakozz a MIT-hez Ma"
-    },
+
     "callToAction": {
       "title": "Cselekvésre Fel:",
       "subtitle": "Együtt Allah Ügyéért",
