@@ -34,3 +34,11 @@ export const dayMap: Record<string, { en: string; hu: string }> = {
   Saturday: { en: "Sat", hu: "Szo" },
   Sunday: { en: "Sun", hu: "Va" },
 };
+
+
+export interface NewsletterSubscriber {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt?: string;
+}
