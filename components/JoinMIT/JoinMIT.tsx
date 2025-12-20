@@ -33,6 +33,11 @@ const SectionTag = ({
 export default function JoinMIT() {
   const [mounted, setMounted] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "exists" | "error">(
+    "idle"
+  );
   const t = useTranslations("joinMIT");
   const tNav = useTranslations("nav");
 
@@ -80,7 +85,28 @@ export default function JoinMIT() {
       console.error("Failed to copy email:", err);
     }
   };
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setStatus("idle");
 
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.status === 201) setStatus("success");
+      else if (res.status === 409) setStatus("exists");
+      else setStatus("error");
+    } catch (err) {
+      setStatus("error");
+    } finally {
+      setSubmitting(false);
+      if (res.status === 201) setFormData({ name: "", email: "" });
+    }
+  };
   if (!mounted) return null;
 
   return (
@@ -411,27 +437,60 @@ export default function JoinMIT() {
             {/* Right: Form (Blocked/Coming Soon) */}
             <div className="relative">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 relative">
-                {/* Coming Soon Overlay */}
-                <div className="absolute inset-0 bg-[#1a2332]/80 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center rounded-3xl border border-white/10">
-                  <div className="bg-[#e8b030] text-[#1a2332] px-4 py-1 rounded-full text-sm font-bold mb-2">
-                    Coming Soon
-                  </div>
-                  <p className="text-white font-medium">
-                    Subscriptions opening shortly
-                  </p>
-                </div>
+                {status === "success" ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-10"
+                  >
+                    <HiSparkles className="text-[#e8b030] text-5xl mx-auto mb-4" />
+                    <h3 className="text-white text-xl font-bold">
+                      {t("successMessage")}
+                    </h3>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="space-y-4">
+                    <input
+                      required
+                      type="text"
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-[#e8b030] transition-colors"
+                    />
+                    <input
+                      required
+                      type="email"
+                      placeholder="Your email address"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-[#e8b030] transition-colors"
+                    />
 
-                {/* Dummy Form (Visual only) */}
-                <div className="space-y-4 opacity-30 pointer-events-none">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400"
-                  />
-                  <button className="w-full py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl">
-                    Subscribe
-                  </button>
-                </div>
+                    {status === "exists" && (
+                      <p className="text-[#e8b030] text-sm">
+                        {t("alreadySubscribed")}
+                      </p>
+                    )}
+                    {status === "error" && (
+                      <p className="text-red-400 text-sm">
+                        {t("errorMessage")}
+                      </p>
+                    )}
+
+                    <button
+                      disabled={submitting}
+                      type="submit"
+                      className="w-full py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
+                    >
+                      {submitting ? "Joining..." : "Subscribe"}
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
           </div>
