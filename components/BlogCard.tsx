@@ -70,7 +70,7 @@ export default function BlogCard({
         <div className="flex items-center gap-2 md:gap-3">
           {/* Date */}
           <p className="text-sm flex flex-row items-center justify-between gap-x-1 text-gray-600 px-2 py-1 font-semibold">
-            <CiClock2 className="w-5 h-5" /> {readTime}
+            {readTime}
           </p>
         </div>
       </header>
