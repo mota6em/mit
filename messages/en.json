@@ -6,7 +6,7 @@
     },
     "join": {
       "title": "Join Us | MIT Hungary",
-      "description": "Become an active member of the Muslim Youth Society. Volunteer, grow with us, and be part of an amazing community."
+      "description": "Become an active member of Muslim Youth Association of Hungary. Volunteer, grow with us, and be part of an amazing community."
     }
   },
   "common": {
@@ -23,8 +23,7 @@
   },
   "home": {
     "statistics": {
-      "titlePart1": "Our Growing",
-      "titlePart2": "Impact",
+      "title": "Our Growing Impact",
       "socialLabel": "Social Media Followers",
       "yearsLabel": "Years of Community",
       "eventsLabel": "Events Completed"
@@ -32,16 +31,12 @@
   },
   "hero": {
     "title": "Muslim Youth Association",
-    "subtitle1": "Events for Muslim Students & Community."
+    "subtitle1": "Events, workshops and community programs for Muslims in Hungary"
   },
   "whoWeAre": {
-    "title": {
-      "who": "Who",
-      "are": "Are",
-      "we": "We?"
-    },
+    "title": "Who We Are",
     "description": {
-      "intro": "The Youth Muslims of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary.",
+      "intro": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary.",
       "mission": "We provide a space for learning, collaboration, and personal growth. Rooted in Islamic principles of sincerity, community, and excellence (ihsan), we strive to build a generation that serves both the Ummah and society with integrity."
     },
     "learnMore": "Learn More About MIT"
@@ -165,9 +160,8 @@
   },
   "aboutMIT": {
     "hero": {
-      "badge": "About MIT",
       "title": "Who We Are",
-      "description": "The Youth Muslims of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of sincerity, community, and excellence (ihsan), MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose."
+      "description": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of sincerity, community, and excellence (ihsan), MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose."
     },
     "visionMission": {
       "title": "MIT VISION AND MISSION",

@@ -23,8 +23,7 @@
   },
   "home": {
     "statistics": {
-      "titlePart1": "Növekvő",
-      "titlePart2": "Hatásunk",
+      "title": "Növekvő Hatásunk",
       "socialLabel": "Közösségi média követők",
       "yearsLabel": "Év a közösségért",
       "eventsLabel": "Sikeres esemény"
@@ -32,14 +31,10 @@
   },
   "hero": {
     "title": "Muszlim Ifjúsági Társaság",
-    "subtitle1": "Programok muszlim diákoknak és a közösségnek."
+    "subtitle1": "Események, workshopok és közösségi programok muszlimoknak Magyarországon"
   },
   "whoWeAre": {
-    "title": {
-      "who": "Kik",
-      "are": "Vagyunk",
-      "we": "Mi?"
-    },
+    "title": "Kik Vagyunk",
     "description": {
       "intro": "A Magyarországi Ifjúsági Muszlimok (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát.",
       "mission": "Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez. Az iszlám alapelvei – az őszinteség, a közösség és a kiválóság (ihsan) – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel szolgálja mind az Ummát, mind a társadalmat."
@@ -166,7 +161,6 @@
   },
   "aboutMIT": {
     "hero": {
-      "badge": "A MIT-ről",
       "title": "Kik Vagyunk",
       "description": "A Magyarországi Ifjúsági Muszlimok (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát. Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám alapelvei – az őszinteség, a közösség és a kiválóság (ihsan) – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel és céltudatosan szolgálja mind az Ummát, mind a társadalmat."
     },
