@@ -21,9 +21,10 @@ export async function POST(req: Request) {
   const body = await req.json();
   const session = await auth();
 
-  // Allow public users to subscribe without a session
+  // Logic: Public users only send { name, email }. Admins send an 'action' or '_id'.
   const isPublicSubscription = !body.action && !body._id;
 
+  // Protect Admin actions only
   if (!isPublicSubscription && !session) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
@@ -31,39 +32,46 @@ export async function POST(req: Request) {
   try {
     await dbConnect();
 
-    //   DELETE Action (Admin only)
+    //  ADMIN DELETE
     if (body.action === "delete") {
       await Newsletter.findByIdAndDelete(body.id);
       return NextResponse.json({ success: true });
     }
 
-    // SUBSCRIBE / UPDATE Action
+    //  ADMIN UPDATE
     if (body._id) {
-      // Admin Updating existing
       await Newsletter.findByIdAndUpdate(body._id, {
         name: body.name,
         email: body.email,
       });
-    } else {
-      // Check if email exists for new subscribers (Public or Admin)
-      const existing = await Newsletter.findOne({ email: body.email });
-      if (existing && isPublicSubscription) {
+      const updatedList = await Newsletter.find({}).sort({ createdAt: -1 });
+      return NextResponse.json({ success: true, subscribers: updatedList });
+    }
+
+    // NEW SUBSCRIPTION (Public or Admin)
+    const existing = await Newsletter.findOne({ email: body.email });
+    if (existing) {
+      if (isPublicSubscription) {
         return NextResponse.json(
           { message: "Already subscribed" },
           { status: 409 }
         );
       }
-      await Newsletter.create({ name: body.name, email: body.email });
+      return NextResponse.json({ success: true });
     }
 
-    // Return status based on context
+    await Newsletter.create({ name: body.name, email: body.email });
+
+    // Response for Public User
     if (isPublicSubscription) {
       return NextResponse.json({ success: true }, { status: 201 });
     }
 
+    // Response for Admin (Return full list to update UI)
     const subscribers = await Newsletter.find({}).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, subscribers });
   } catch (error) {
-    return NextResponse.json({ message: "Database Error" }, { status: 500 });
+    console.error("Newsletter API Error:", error);
+    return NextResponse.json({ message: "Server Error" }, { status: 500 });
   }
 }

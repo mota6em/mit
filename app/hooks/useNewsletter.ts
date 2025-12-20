@@ -1,4 +1,3 @@
-// hooks/useNewsletter.ts
 import { useState, useEffect } from "react";
 import { NewsletterSubscriber } from "@/lib/types";
 
@@ -10,12 +9,17 @@ export function useNewsletter() {
 
   const refresh = async () => {
     setLoading(true);
-    const res = await fetch("/api/admin/newsletter");
-    if (res.ok) {
-      const data = await res.json();
-      setSubscribers(data);
+    try {
+      const res = await fetch("/api/newsletter");
+      if (res.ok) {
+        const data = await res.json();
+        setSubscribers(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch:", err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -24,7 +28,7 @@ export function useNewsletter() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/admin/newsletter", {
+    const res = await fetch("/api/newsletter", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -32,7 +36,7 @@ export function useNewsletter() {
 
     if (res.ok) {
       const data = await res.json();
-      setSubscribers(data.subscribers);
+      if (data.subscribers) setSubscribers(data.subscribers);
       resetForm();
     } else if (res.status === 401) {
       alert("Session expired. Please log in again.");
@@ -41,7 +45,7 @@ export function useNewsletter() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Remove subscriber?")) return;
-    const res = await fetch("/api/admin/newsletter", {
+    const res = await fetch("/api/newsletter", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "delete", id }),
@@ -64,5 +68,6 @@ export function useNewsletter() {
     handleSave,
     handleDelete,
     resetForm,
+    refresh,
   };
 }
