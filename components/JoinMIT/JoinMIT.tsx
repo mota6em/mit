@@ -91,10 +91,10 @@ export default function JoinMIT() {
     setStatus("idle");
 
     try {
-      const res = await fetch("/api/admin/newsletter", {
+      const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ name: formData.name, email: formData.email }),
       });
 
       if (res.status === 201) setStatus("success");
