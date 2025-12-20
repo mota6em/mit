@@ -303,7 +303,7 @@ export default function EventClientPage({
                   href={event.registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="lex-1 px-0 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700 mb-4"
+                  className="flex-1 px-0 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700 mb-1"
                 >
                   <HiLink className="w-6 h-6" />
                   <span>register now</span>
