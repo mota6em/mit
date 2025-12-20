@@ -93,12 +93,10 @@ export default function Hero({ images }: HeroProps) {
         </h1>
 
         <div className="flex flex-col w-fit p-2 font-serif rounded-md items-center">
-          <p className="text-sm md:text-xl w-fit max-w-2xl-0 p-0 text-white font-semibold drop-shadow-[black_0_0_2px]">
+          <p className="text-sm md:text-xl w-fit max-w-xs md:max-w-md text-white font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle1")}
           </p>
         </div>
-
-        <SocialMediaIcons />
       </div>
     </div>
   );
