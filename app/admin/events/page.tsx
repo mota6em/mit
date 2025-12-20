@@ -13,6 +13,7 @@ import {
   HiClock,
   HiRefresh,
   HiLocationMarker,
+  HiLink,
 } from "react-icons/hi";
 import Link from "next/link";
 
@@ -27,7 +28,8 @@ interface EventData {
   note_en?: string;
   note_hu?: string;
   location?: string;
-  date?: string;  
+  registrationUrl?: string;
+  date?: string;
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -501,8 +503,29 @@ export default function AdminEvents() {
                   placeholder="Paste Google Maps link or Embed URL"
                 />
                 <p className="text-[12px] text-gray-400 mt-1">
-                  Tip: For best results, use the &quot;Embed map&quot; URL from Google
-                  Maps sharing.
+                  Tip: For best results, use the &quot;Embed map&quot; URL from
+                  Google Maps sharing.
+                </p>
+              </div>
+
+              {/* Registration Link Section */}
+              <div className="pt-6 border-t border-gray-100 bg-gray-50 p-6 rounded-2xl">
+                <label className="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+                  <HiLink className="text-blue-500" /> Registration Form Link
+                  (Optional)
+                </label>
+                <input
+                  type="url"
+                  value={form.registrationUrl || ""}
+                  onChange={(e) =>
+                    setForm({ ...form, registrationUrl: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
+                  placeholder="https://forms.gle/..."
+                />
+                <p className="text-[12px] text-gray-400 mt-1">
+                  If provided, a &quot;Register Now&quot; button will appear on
+                  the event page.
                 </p>
               </div>
               {/* Submit Buttons */}
