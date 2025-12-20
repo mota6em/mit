@@ -11,6 +11,7 @@ import { FaInstagram } from "react-icons/fa";
 import { CiShare2 } from "react-icons/ci";
 import { MdOutlineDone } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { EventMap } from "./EventMap";
 
 interface ApiEvent {
   _id: string;
@@ -22,6 +23,7 @@ interface ApiEvent {
   date?: string;
   note_en?: string;
   note_hu?: string;
+  location?: string;
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -232,7 +234,7 @@ export default function EventClientPage({
                   <span className="px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-1">
                     <CgDanger className="w-5 h-5" /> {note}
                   </span>
-                )}{" "}
+                )}
                 {/* Date - Show only if NOT recurring */}
                 {!event.isRecurring && dateFormatted && (
                   <span className="hidden lg:inline-block px-4 py-1.5 rounded-full bg-green-500 text-white font-bold text-sm uppercase tracking-wider shadow-sm">
@@ -300,7 +302,7 @@ export default function EventClientPage({
               >
                 <FaInstagram className="w-6 h-6" />
                 <span>{dict.dm}</span>
-              </a>{" "}
+              </a>
               {/* Share Button */}
               <button
                 onClick={handleShare}
@@ -338,6 +340,7 @@ export default function EventClientPage({
             </div>
           </motion.div>
         </div>
+            <EventMap location={event?.location} />
       </div>
     </div>
   );
