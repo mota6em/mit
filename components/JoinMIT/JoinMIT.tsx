@@ -435,7 +435,7 @@ export default function JoinMIT() {
               </ul>
             </div>
 
-            {/* Right: Form (Blocked/Coming Soon) */}
+            {/* Right: Subscription Form */}
             <div className="relative">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 relative">
                 {status === "success" ? (
@@ -486,7 +486,7 @@ export default function JoinMIT() {
                     <button
                       disabled={submitting}
                       type="submit"
-                      className="w-full py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
+                      className="w-full cursor-pointer py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
                     >
                       {submitting ? "Joining..." : "Subscribe"}
                     </button>
