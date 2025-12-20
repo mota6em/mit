@@ -97,14 +97,15 @@ export default function JoinMIT() {
         body: JSON.stringify(formData),
       });
 
-      if (res.status === 201) setStatus("success");
-      else if (res.status === 409) setStatus("exists");
+      if (res.status === 201) {
+        setStatus("success");
+        setFormData({ name: "", email: "" });
+      } else if (res.status === 409) setStatus("exists");
       else setStatus("error");
     } catch (err) {
       setStatus("error");
     } finally {
       setSubmitting(false);
-      if (res.status === 201) setFormData({ name: "", email: "" });
     }
   };
   if (!mounted) return null;
