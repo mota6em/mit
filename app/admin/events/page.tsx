@@ -12,6 +12,7 @@ import {
   HiExclamation,
   HiClock,
   HiRefresh,
+  HiLocationMarker,
 } from "react-icons/hi";
 import Link from "next/link";
 
@@ -25,7 +26,8 @@ interface EventData {
   desc_hu: string;
   note_en?: string;
   note_hu?: string;
-  date?: string; // Optional now
+  location?: string;
+  date?: string;  
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -154,7 +156,7 @@ export default function AdminEvents() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-       },
+      },
       body: JSON.stringify({ action: "delete", id }),
     });
 
@@ -483,6 +485,26 @@ export default function AdminEvents() {
                 )}
               </div>
 
+              {/* Location Section */}
+              <div className=" pt-6 border-t border-gray-100 bg-gray-50 p-6 rounded-2xl">
+                <label className="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+                  <HiLocationMarker className="text-red-500" /> Map Location
+                  (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={form.location || ""}
+                  onChange={(e) =>
+                    setForm({ ...form, location: e.target.value })
+                  }
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
+                  placeholder="Paste Google Maps link or Embed URL"
+                />
+                <p className="text-[12px] text-gray-400 mt-1">
+                  Tip: For best results, use the &quot;Embed map&quot; URL from Google
+                  Maps sharing.
+                </p>
+              </div>
               {/* Submit Buttons */}
               <div className="flex items-center gap-4 pt-6 border-t border-gray-100">
                 <button
