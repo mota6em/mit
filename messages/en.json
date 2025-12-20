@@ -21,6 +21,15 @@
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Copied!"
   },
+  "home": {
+    "statistics": {
+      "titlePart1": "Our Growing",
+      "titlePart2": "Impact",
+      "socialLabel": "Social Media Followers",
+      "yearsLabel": "Years of Community",
+      "eventsLabel": "Events Completed"
+    }
+  },
   "hero": {
     "title": "Muslim Youth Association",
     "subtitle1": "Events for Muslim Students & Community."

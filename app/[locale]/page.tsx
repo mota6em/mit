@@ -1,5 +1,6 @@
 import EventsSection from "@/components/Events/EventsSection";
 import Hero from "@/components/Home/Hero";
+import Statistics from "@/components/Home/Statistics";
  import Testimonials from "@/components/Home/Testimonials";
 import WhoWeAre from "@/components/Home/WhoWeAre";
 import { getImages } from "@/lib/get-images";
@@ -14,7 +15,7 @@ const page = () => {
       <WhoWeAre />
       <EventsSection type="upcoming" limit={3} />
       <EventsSection type="past" limit={3} />
-      <Testimonials />
+      <Statistics />
     </div>
   );
 };

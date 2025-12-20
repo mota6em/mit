@@ -21,6 +21,15 @@
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Másolva!"
   },
+  "home": {
+    "statistics": {
+      "titlePart1": "Növekvő",
+      "titlePart2": "Hatásunk",
+      "socialLabel": "Közösségi média követők",
+      "yearsLabel": "Év a közösségért",
+      "eventsLabel": "Sikeres esemény"
+    }
+  },
   "hero": {
     "title": "Muszlim Ifjúsági Társaság",
     "subtitle1": "Programok muszlim diákoknak és a közösségnek."
