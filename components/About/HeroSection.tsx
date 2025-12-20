@@ -87,14 +87,6 @@ const HeroSection = () => {
         </div>{" "}
         {/* Right COLUMN: Text Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-4 px-4 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 font-semibold text-xs uppercase"
-          >
-            {t("badge")}
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,10 +111,10 @@ const HeroSection = () => {
         @keyframes float {
           0%,
           100% {
-            transform: translateY(0px) ;
+            transform: translateY(0px);
           }
           50% {
-            transform: translateY(-15px) ;
+            transform: translateY(-15px);
           }
         }
       `}</style>
