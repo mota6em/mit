@@ -39,9 +39,11 @@ const Hero = () => {
 
   return (
     <div className="relative w-full overflow-hidden bg-[#fafafa] pt-12 pb-16 md:pt-0 md:pb-24 font-sans md:px-5">
+      <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
+      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
+
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
-
       <div className=" mx-auto px-4 relative z-10">
         <div className="grid relative lg:grid-cols-2 gap-12 lg:gap-6 items-center">
           <motion.div
@@ -215,9 +217,6 @@ const Hero = () => {
               <HiSparkles />
             </div>
           </motion.div>{" "}
-          <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-          <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-          <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
         </div>
       </div>
     </div>
