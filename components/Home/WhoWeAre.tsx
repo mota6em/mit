@@ -23,7 +23,7 @@ export default function WhoWeAre() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="relative flex flex-col gap-4 items-center justify-center w-full pb-10 pt-10 md:py-10 px-6 md:px-12 lg:px-20 font-serif"
+        className="relative flex flex-col gap-4 items-center justify-center w-full pb-10 pt-10 md:py-10 md:mt-6 px-6 md:px-12 lg:px-20 font-serif"
       >
         <div className="flex flex-col-reverse lg:flex-row items-center gap-15 md:gap-24">
           {/** * Content Section */}
@@ -32,19 +32,12 @@ export default function WhoWeAre() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="max-w-xl text-center lg:text-left"
+            className="max-w-xl text-center lg:text-left flex flex-col gap-3"
           >
-            <div className="flex space-x-0.5 mb-4 align-center justify-center md:justify-start">
-              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#4d93fb] font-semibold tracking-widest">
-                {t("title.who")}
-              </span>
-              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#11b505] font-semibold tracking-widest">
-                {t("title.are")}
-              </span>
-              <span className="text-3xl md:font-semibold text-gray-700 md:text-[#f1c34c] font-semibold tracking-widest">
-                {t("title.we")}
-              </span>
-            </div>
+            <span className="text-3xl text-gray-700 md:text-[#2D9B4A]  font-semibold">
+              {t("title")}
+              {"?"}
+            </span>
 
             <p className="text-lg md:text-xl leading-relaxed text-gray-700 font-medium">
               {t("description.intro")}
@@ -88,7 +81,7 @@ export default function WhoWeAre() {
         >
           <Link
             href={`/${locale}/about`}
-            className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-colors group"
+            className="inline-flex items-center gap-2 text-[#2D9B4A] font-medium hover:text-gray-900 transition-colors group"
           >
             <span>{t("learnMore")}</span>
             <svg
