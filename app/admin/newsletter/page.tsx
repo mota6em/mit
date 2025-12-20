@@ -80,7 +80,7 @@ export default function AdminNewsletter() {
       </form>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border shadow-sm overflow-x-auto sm:overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-gray-50 text-xs font-bold text-gray-500 uppercase">
             <tr>
