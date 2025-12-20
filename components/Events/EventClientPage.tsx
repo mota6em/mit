@@ -6,12 +6,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { CgDanger } from "react-icons/cg";
-import { HiClock, HiRefresh, HiEye } from "react-icons/hi";
+import { HiClock, HiRefresh, HiEye, HiLink } from "react-icons/hi";
 import { FaInstagram } from "react-icons/fa";
 import { CiShare2 } from "react-icons/ci";
 import { MdOutlineDone } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { EventMap } from "./EventMap";
+import { register } from "module";
 
 interface ApiEvent {
   _id: string;
@@ -24,6 +25,7 @@ interface ApiEvent {
   note_en?: string;
   note_hu?: string;
   location?: string;
+  registrationUrl?: string;
   time?: string;
   isRecurring?: boolean;
   recurringDays?: string[];
@@ -53,6 +55,7 @@ const dictionary = {
     repeats: "Repeats on:",
     dm: "DM on Instagram",
     views: "Views",
+    register: "Register Now",
   },
   hu: {
     back: "Vissza az eseményekhez",
@@ -66,6 +69,7 @@ const dictionary = {
     repeats: "Ismétlődik:",
     dm: "Üzenj Instagramon",
     views: "Megtekintés",
+    register: "Regisztrálj most",
   },
 };
 
@@ -293,54 +297,67 @@ export default function EventClientPage({
               {description}
             </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row gap-4">
-              <a
-                href="https://ig.me/m/muszlimifjusag"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
-              >
-                <FaInstagram className="w-6 h-6" />
-                <span>{dict.dm}</span>
-              </a>
-              {/* Share Button */}
-              <button
-                onClick={handleShare}
-                className={`flex-1 px-4 py-4  cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
-                  copied
-                    ? "bg-green-600 text-white hover:bg-green-700"
-                    : "bg-blue-600 text-primary-foreground hover:opacity-90"
-                }`}
-              >
-                <AnimatePresence mode="wait">
-                  {copied ? (
-                    <motion.span
-                      key="copied"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.8, opacity: 0 }}
-                      className="flex items-center gap-2"
-                    >
-                      <MdOutlineDone className="w-6 h-6" /> {dict.copied}
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="share"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.8, opacity: 0 }}
-                      className="flex items-center gap-2"
-                    >
-                      <CiShare2 className="w-6 h-6" />
-                      {dict.share}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
+            <div className="pt-4 flex flex-col gap-4">
+              {event.registrationUrl && (
+                <a
+                  href={event.registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lex-1 px-0 py-4 cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700 mb-4"
+                >
+                  <HiLink className="w-6 h-6" />
+                  <span>register now</span>
+                </a>
+              )}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="https://ig.me/m/muszlimifjusag"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-0 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
+                >
+                  <FaInstagram className="w-6 h-6" />
+                  <span>{dict.dm}</span>
+                </a>
+                {/* Share Button */}
+                <button
+                  onClick={handleShare}
+                  className={`flex-1 px-4 py-4  cursor-pointer rounded-xl font-bold text-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${
+                    copied
+                      ? "bg-green-600 text-white hover:bg-green-700"
+                      : "bg-blue-600 text-primary-foreground hover:opacity-90"
+                  }`}
+                >
+                  <AnimatePresence mode="wait">
+                    {copied ? (
+                      <motion.span
+                        key="copied"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <MdOutlineDone className="w-6 h-6" /> {dict.copied}
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="share"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <CiShare2 className="w-6 h-6" />
+                        {dict.share}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>
-            <EventMap location={event?.location} />
+        <EventMap location={event?.location} />
       </div>
     </div>
   );
