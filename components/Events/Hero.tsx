@@ -74,10 +74,10 @@ const Hero = () => {
               className="relative h-[400px] md:h-[550px] w-full lg:hidden"
             >
               {/* Image 1: Main Large (Tilted Left) */}
-              <div className="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-64 md:w-80 h-80 md:h-96 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 ">
+              <div className="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-80 md:w-96 h-68 md:h-80 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
-                    src="/imgs/events/mehdi.jpg"
+                    src="/imgs/events/event-group.jpg"
                     alt="Lecture Event"
                     fill
                     className="object-cover"
@@ -86,7 +86,7 @@ const Hero = () => {
               </div>
 
               {/* Image 2: Secondary Small (Tilted Right) */}
-              <div className="absolute bottom-6 md:bottom-12 right-4 sm:right-28 md:right-24 w-48 md:w-60 h-32 md:h-60 rotate-[8deg] z-20 ">
+              <div className="absolute bottom-10 md:bottom-16 right-4 sm:right-28 md:right-24 w-48 md:w-72 h-32 md:h-56 rotate-[8deg] z-20 ">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                   <Image
                     src="/imgs/home/hero/picnic.jpg"
@@ -105,7 +105,7 @@ const Hero = () => {
                   duration: 4,
                   ease: "easeInOut",
                 }}
-                className="absolute top-40 sm:top-36 md:top-20 right-0 sm:right-10 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+                className="absolute top-10 sm:top-36 md:top-20 right-0 sm:right-10 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
               >
                 <div className="flex items-start gap-3">
                   <div className="bg-red-100 hidden sm:block text-red-600 p-2 rounded-lg">
@@ -127,7 +127,7 @@ const Hero = () => {
                 <HiSparkles />
               </div>
             </motion.div>
-            <p className="text-gray-600 text-lg md:text-xl leading-relaxed mt-1 sm:mt-4 md:mt-0 mb-6 mx-auto lg:mx-0">
+            <p className="text-gray-600 text-lg md:text-xl leading-relaxed -mt-4 sm:mt-4 md:mt-0 mb-6 mx-auto lg:mx-0">
               {t("hero.subtitle")}
             </p>
 
@@ -168,10 +168,10 @@ const Hero = () => {
             className="relative h-[400px] md:h-[550px] w-full hidden lg:block"
           >
             {/* Image 1: Main Large (Tilted Left) */}
-            <div className="absolute top-8 left-8 md:left-16 w-64 md:w-80 h-80 md:h-96 rotate-[-4deg] z-10 ">
+            <div className="absolute top-12 left-8 md:left-16 w-64 md:w-96 h-80 md:h-80 rotate-[-4deg] z-10 ">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 <Image
-                  src="/imgs/events/mehdi.jpg"
+                  src="/imgs/events/event-group.jpg"
                   alt="Lecture Event"
                   fill
                   className="object-cover"
@@ -180,7 +180,7 @@ const Hero = () => {
             </div>
 
             {/* Image 2: Secondary Small (Tilted Right) */}
-            <div className="absolute bottom-12 right-8 md:left-54   w-48 md:w-72 h-48 md:h-46   rotate-[8deg] z-20 ">
+            <div className="absolute bottom-16 right-8 md:left-54   w-48 md:w-72 h-48 md:h-46   rotate-[8deg] z-20 ">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
                 <Image
                   src="/imgs/home/hero/picnic.jpg"
