@@ -29,10 +29,13 @@ export function useNewsletter() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
-    const data = await res.json();
-    if (data.success) {
+
+    if (res.ok) {
+      const data = await res.json();
       setSubscribers(data.subscribers);
       resetForm();
+    } else if (res.status === 401) {
+      alert("Session expired. Please log in again.");
     }
   };
 
@@ -51,12 +54,6 @@ export function useNewsletter() {
     setIsEditing(false);
   };
 
-  const copyEmails = () => {
-    const emails = subscribers.map((s) => s.email).join(", ");
-    navigator.clipboard.writeText(emails);
-    alert("All emails copied to clipboard!");
-  };
-
   return {
     subscribers,
     form,
@@ -66,7 +63,6 @@ export function useNewsletter() {
     setIsEditing,
     handleSave,
     handleDelete,
-    copyEmails,
     resetForm,
   };
 }
