@@ -9,6 +9,7 @@ export interface ApiEvent {
   desc_hu: string;
   note_en?: string;
   note_hu?: string;
+  location?: string;
   date?: string;
   time?: string;
   isRecurring?: boolean;
