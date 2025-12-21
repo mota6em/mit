@@ -45,7 +45,8 @@ const dictionary = {
     back: "Back to Events",
     dateLabel: "Date",
     notFoundTitle: "Event Not Found",
-    notFoundDesc: "The event you are looking for does not exist or has been removed.",
+    notFoundDesc:
+      "The event you are looking for does not exist or has been removed.",
     loading: "Loading event details...",
     organizer: "Organizer",
     share: "Share Event",
@@ -189,7 +190,9 @@ export default function EventClientPage({
             <span className="p-1.5 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
               <IoIosArrowRoundBack className="w-5 h-5" />
             </span>
-            <span className="font-medium tracking-wide text-sm">{dict.back}</span>
+            <span className="font-medium tracking-wide text-sm">
+              {dict.back}
+            </span>
           </Link>
           <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
             <HiEye className="w-4 h-4" /> {views > 0 ? views : "-"}
@@ -201,7 +204,7 @@ export default function EventClientPage({
           <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight text-foreground">
             {title}
           </h1>
-          
+
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -209,9 +212,17 @@ export default function EventClientPage({
             className="relative w-full aspect-[4/5] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-gray-100"
           >
             {event.img ? (
-              <Image src={event.img} alt={title} fill className="object-cover" priority />
+              <Image
+                src={event.img}
+                alt={title}
+                fill
+                className="object-cover"
+                priority
+              />
             ) : (
-              <div className="flex items-center justify-center h-full text-muted-foreground text-sm">No Image</div>
+              <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+                No Image
+              </div>
             )}
           </motion.div>
 
@@ -248,7 +259,12 @@ export default function EventClientPage({
                 {event.isRecurring && event.recurringDays && (
                   <span className="px-3 py-1 rounded-full bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
                     <HiRefresh className="text-sm" />
-                    {event.recurringDays.map((day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day).join(", ")}
+                    {event.recurringDays
+                      .map(
+                        (day) =>
+                          dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
+                      )
+                      .join(", ")}
                   </span>
                 )}
               </div>
@@ -262,13 +278,17 @@ export default function EventClientPage({
                 <Image
                   src={"/imgs/icon.jpg"}
                   alt={"organizer logo"}
-                  width={32}
-                  height={32}
+                  width={40}
+                  height={40}
                   className="rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold">{dict.organizer}</span>
-                  <span className="text-[10px] text-muted-foreground leading-none">MIT</span>
+                  <span className="text-sm font-semibold">
+                    {dict.organizer}
+                  </span>
+                  <span className="text-[13px] text-muted-foreground leading-none">
+                    MIT
+                  </span>
                 </div>
               </div>
             </div>
