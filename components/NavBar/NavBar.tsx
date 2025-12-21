@@ -49,10 +49,10 @@ export default function NavBar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`Carena-font text-sm pt-1 tracking-wider rounded-4xl font-serif px-2 ${
+                  className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
                     isActive
-                      ? "outline outline-yellow-700 text-yellow-700"
-                      : "text-black hover:outline outline-yellow-700 hover:text-yellow-700"
+                      ? "text-yellow-700 font-medium"
+                      : "text-black hover:text-yellow-700"
                   }`}
                 >
                   {link.label}
@@ -92,7 +92,7 @@ export default function NavBar() {
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between mb-8">
-                    <span className="text-lg font-bold text-gray-900 Carena-font tracking-wide">
+                    <span className="text-lg font-bold text-gray-900">
                       Menu
                     </span>
                     <button

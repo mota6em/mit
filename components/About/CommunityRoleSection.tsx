@@ -15,9 +15,11 @@ const CommunityRoleSection = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-center mb-20 tracking-widest Ang-font text-yellow-600"
+          className="text-center mb-10 md:mb-15"
         >
-          {t("title")}
+          <h2 className="text-3xl md:text-4xl font-semibold poppins.className text-gray-600">
+            {t("title")}
+          </h2>
         </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -32,7 +34,7 @@ const CommunityRoleSection = () => {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-6 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <div className="p-4 bg-yellow-50 rounded-xl text-yellow-600 flex-shrink-0">
+                <div className="p-4 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0">
                   <Icon className="w-8 h-8" />
                 </div>
                 <div>

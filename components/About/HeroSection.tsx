@@ -8,14 +8,7 @@ const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
   const [img1Loaded, setImg1Loaded] = useState(false);
   const [img2Loaded, setImg2Loaded] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
-  // Avoid hydration mismatch and only run heavy logic on client
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Use simple CSS transforms for floating - much lighter than Framer Motion logic for infinite loops
   const floatClass =
     "will-change-transform animate-[float_6s_ease-in-out_infinite]";
   const floatDelayClass =
@@ -70,7 +63,7 @@ const HeroSection = () => {
             initial={{ scale: 1, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-green-500"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-gray-500"
           >
             <Image
               src="/imgs/mit-logo-full-resized.png"
@@ -81,25 +74,29 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-          <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-          <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+          <div className="absolute top-10 right-20 w-72 h-72 bg-gray-800/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-gray-800/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+          <div className="absolute top-40 left-40 w-72 h-72 bg-gray-800/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
         </div>{" "}
         {/* Right COLUMN: Text Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
           <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold Ang-font text-yellow-600 mb-4 leading-tight"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="poppins.className text-gray-600 mb-4 "
           >
-            {t("title")}
+            <h1
+              className={"text-3xl md:text-5xl poppins.className font-semibold"}
+            >
+              {t("title")}
+            </h1>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-base md:text-lg text-gray-500 max-w-xl mb-8"
+            className="text-base md:text-lg text-gray-800 max-w-xl mb-8"
           >
             {t("description")}
           </motion.p>
