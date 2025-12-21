@@ -5,58 +5,68 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
 import NavBar from "@/components/NavBar/NavBar";
 
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  let messages;
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default;
+  } catch (error) {
+    return { title: "MIT" };
+  }
+
+  const t = messages.metadata;
+
+  return {
+    title: t.root.title,
+    description: t.root.description,
+    keywords: t.root.keywords,
+    authors: [{ name: "MIT - Muszlim Ifjúság Társaság" }],
+
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: "/en",
+        hu: "/hu",
+      },
+    },
+
+    openGraph: {
+      title: t.root.title,
+      description: t.root.description,
+      type: "website",
+      locale: locale === "hu" ? "hu_HU" : "en_US",
+      siteName: "MIT - Muszlim Ifjúság Társaság",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: t.root.title,
+      description: t.root.description,
+    },
+
+    icons: {
+      icon: [{ url: "/imgs/icon.jpg" }],
+      apple: [{ url: "/imgs/icon.jpg" }],
+    },
+  };
+}
+
 export async function generateStaticParams() {
   return [{ locale: "en" }, { locale: "hu" }];
 }
 
-export const metadata: Metadata = {
-  title: "MIT - Muszlim Ifjúság Társaság",
-  description:
-    "MIT is a student-run community built to support Muslim students in Hungary, help them connect, grow, and feel at home. We organize events, gatherings, study sessions, charity activities, and spiritual programs in a positive, respectful, and welcoming environment.",
-  keywords: [
-    "Muszlim Ifjúság Társaság",
-    "MIT",
-    "Muslim Youth Association",
-    "Muslim Students Hungary",
-    "Islamic Community",
-    "Hungary",
-    "Student Community in Hungary",
-    "Muslim Community in Hungary",
-    "Muslim Students in Budapest",
-    "Islam in Hungary",
-    "Muslims in Hungary",
-    "MIT Budapest",
-    "Muslims in Budapest",
-    "Muslim Students in Budapest",
-    "Muslim Students in Hungary",
-    "Muslim Community in Hungary",
-    "Budapest Muslim Community",
-  ],
-  authors: [{ name: "MIT - Muszlim Ifjúság Társaság" }],
-  openGraph: {
-    title: "MIT - Muszlim Ifjúság Társaság",
-    description:
-      "MIT is a student-run community built to support Muslim students in Hungary, help them connect, grow, and feel at home. We organize events, gatherings, study sessions, charity activities, and spiritual programs.",
-    type: "website",
-    locale: "en_US",
-    siteName: "MIT - Muszlim Ifjúság Társaság",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "MIT - Muszlim Ifjúság Társaság",
-    description:
-      "MIT is a student-run community built to support Muslim students in Hungary, help them connect, grow, and feel at home.",
-  },
-  icons: {
-    icon: [
-      { url: "/imgs/icon.jpg" },
-      { url: "/imgs/icon.jpg", type: "image/jpeg" },
-    ],
-    apple: [{ url: "/imgs/icon.jpg" }],
-  },
-};
-
-export default async function LocaleLayout({ children, params }: any) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.root.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
 
   let messages;
@@ -65,6 +75,7 @@ export default async function LocaleLayout({ children, params }: any) {
   } catch {
     return notFound();
   }
+
   return (
     <html lang={locale}>
       <body className="flex flex-col min-h-screen">
