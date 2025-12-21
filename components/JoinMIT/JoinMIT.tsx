@@ -130,7 +130,7 @@ export default function JoinMIT() {
               color="green"
             />
 
-            <h1 className="text-5xl md:text6xl font-semibold mb-2">
+            <h1 className="text-4xl md:text5xl font-semibold mb-6 md:mb-2">
               <span className="text-[#e8b030] drop-shadow-sm">
                 {t("title").split(" ")[0] || "Join"}{" "}
               </span>
@@ -318,7 +318,7 @@ export default function JoinMIT() {
 
                 {/* Compact Title */}
                 <h3
-                  className={`text-sm md:text-xl font-semibold mb-1 md:mb-2 ${
+                  className={`text-md md:text-xl font-semibold mb-1 md:mb-2 ${
                     isWhatsApp ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
@@ -326,13 +326,13 @@ export default function JoinMIT() {
                 </h3>
 
                 {/* Compact Description */}
-                <p className="text-gray-500 text-[10px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
+                <p className="text-gray-500 text-[12px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
                   {t(`socialText.${social.name.toLowerCase()}`)}
                 </p>
 
                 {/* Action Text */}
                 <div
-                  className={`text-[10px] md:text-sm font-semibold mt-auto transition-opacity ${
+                  className={`text-[12px] md:text-sm font-semibold mt-auto transition-opacity ${
                     isWhatsApp
                       ? "text-gray-400 uppercase tracking-widest text-[9px]"
                       : `${social.color} opacity-80 group-hover:opacity-100`
