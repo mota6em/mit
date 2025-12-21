@@ -276,7 +276,7 @@ export default function EventClientPage({
 
               <div className="flex items-center gap-2 pt-3">
                 <Image
-                  src={"/imgs/icon.jpg"}
+                  src={"/imgs/icons/icon.jpg"}
                   alt={"organizer logo"}
                   width={40}
                   height={40}

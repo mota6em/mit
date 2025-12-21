@@ -45,7 +45,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
   const eventImages = event.img
     ? [event.img]
-    : ["/imgs/icon.jpg", ...previousImages];
+    : ["/imgs/icons/icon.jpg", ...previousImages];
 
   return {
     title: title,

@@ -54,7 +54,7 @@ const Hero = () => {
           >
             <SectionTag text={t("hero.tag") || "Community Life"} color="blue" />
 
-            <h1 className="text-5xl md:text6xl w-full font-semibold md:mt-12 lg:mt-0  mb-0 md:mb-2 leading-tight">
+            <h1 className="text-5xl md:text-6xl w-full font-semibold md:mt-12 lg:mt-0  mb-0 md:mb-2 leading-tight">
               <span className="text-[#4d93fb] drop-shadow-sm">
                 {t("hero.title").split(" ")[0] || "Sharing"}{" "}
               </span>
