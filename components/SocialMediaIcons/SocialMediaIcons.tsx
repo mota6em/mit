@@ -49,7 +49,7 @@ export default function SocialMediaIcons() {
               )}
               <button
                 onClick={copyEmailToClipboard}
-                className="relative p-3 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+                className="relative p-2 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
               >
                 <div
                   className={`absolute inset-0 rounded-full bg-bg-to-r ${s.bg} animate-bg-x`}
@@ -70,7 +70,7 @@ export default function SocialMediaIcons() {
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+            className="relative p-2 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
           >
             <div
               className={`absolute inset-0 rounded-full ${s.bg}`}
