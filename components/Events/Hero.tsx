@@ -27,7 +27,7 @@ const SectionTag = ({
 
   return (
     <div
-      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-6 ${colorClasses[color]}`}
+      className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 ${colorClasses[color]}`}
     >
       {text}
     </div>
@@ -38,12 +38,11 @@ const Hero = () => {
   const t = useTranslations("events");
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#fafafa] pt-12 pb-16 md:pt-0 md:pb-24 md:px-5">
+    <div className="relative w-full overflow-hidden bg-white pt-12 pb-16 md:pb-4 md:pt-0 md:px-5">
       <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
-      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
-
+      <div className="pointer-events-none absolute left-0 w-[400px] h-[400px] bg-blue-50/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
+      <div className="absolute bottom-50 left-0 w-[200px] h-[200px] bg-blue-50/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
       <div className=" mx-auto px-4 relative z-10">
         <div className="grid relative lg:grid-cols-2 gap-12 lg:gap-6 items-center">
           <motion.div
@@ -54,7 +53,7 @@ const Hero = () => {
           >
             <SectionTag text={t("hero.tag") || "Community Life"} color="blue" />
 
-            <h1 className="text-5xl md:text6xl w-full font-bold poppins.className md:mt-12 lg:mt-0  mb-0 md:mb-2 leading-tight">
+            <h1 className="text-5xl md:text6xl w-full font-semibold md:mt-12 lg:mt-0  mb-0 md:mb-2 leading-tight">
               <span className="text-[#4d93fb] drop-shadow-sm">
                 {t("hero.title").split(" ")[0] || "Sharing"}{" "}
               </span>
@@ -112,10 +111,10 @@ const Hero = () => {
                     <HiSparkles className="text-xl" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 font-bold uppercase mb-0.5">
+                    <p className="text-xs text-gray-500 font-semibold uppercase mb-0.5">
                       {t("hero.badgeJoin")}
                     </p>
-                    <p className="text-sm font-bold text-gray-800 leading-tight">
+                    <p className="text-sm font-semibold text-gray-800 leading-tight">
                       {t("hero.badgeWeekly")}
                     </p>
                   </div>
@@ -133,7 +132,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center ">
               <button
-                className="px-8 py-3.5 cursor-pointer bg-[#4d93fb] text-white rounded-full font-bold hover:bg-[#3b7ddb] transition-all shadow-[0_4px_15px_rgba(77,147,251,0.3)] hover:-translate-y-1 flex items-center justify-center gap-2"
+                className="px-8 py-3.5 cursor-pointer bg-[#4d93fb] text-white rounded-full font-semibold hover:bg-[#3b7ddb] transition-all shadow-[0_4px_15px_rgba(77,147,251,0.3)] hover:-translate-y-1 flex items-center justify-center gap-2"
                 onClick={() => {
                   const el = document.getElementById("upcoming-events");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -143,7 +142,7 @@ const Hero = () => {
                 {t("hero.primaryBtn")}
               </button>
               <button
-                className="px-8 py-3.5 cursor-pointer bg-white text-gray-600 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                className="px-8 py-3.5 cursor-pointer bg-white text-gray-600 border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                 onClick={() => {
                   const el = document.getElementById("past-events");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -202,10 +201,10 @@ const Hero = () => {
                   <HiSparkles className="text-xl" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-bold uppercase mb-0.5">
+                  <p className="text-xs text-gray-500 font-semibold uppercase mb-0.5">
                     {t("hero.badgeJoin")}
                   </p>
-                  <p className="text-sm font-bold text-gray-800 leading-tight">
+                  <p className="text-sm font-semibold text-gray-800 leading-tight">
                     {t("hero.badgeWeekly")}
                   </p>
                 </div>

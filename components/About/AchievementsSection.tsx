@@ -17,7 +17,7 @@ const AchievementsSection = () => {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            className="mb-4 p-3 bg-gray-100 rounded-full text-gray-600"
+            className="mb-4 p-3 bg-gray-100 rounded-full text-gray-900"
           >
             <Trophy className="w-8 h-8" />
           </motion.div>
@@ -25,7 +25,7 @@ const AchievementsSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center tracking-widest Ang-font text-gray-600"
+            className="text-3xl md:text-4xl font-semibold text-center tracking-widest Ang-font text-gray-900"
           >
             {t("title")}
           </motion.h2>
@@ -39,10 +39,10 @@ const AchievementsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
-              className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-gray-600 hover:shadow-md transition-all duration-300 group"
+              className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100"
             >
-              <CheckCircle2 className="w-6 h-6 text-gray-600 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
-              <p className="text-gray-700 font-medium leading-relaxed">
+              <CheckCircle2 className="w-6 h-6 text-gray-900 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
+              <p className="text-gray-900 font-medium leading-relaxed">
                 {t(`list.${index}`)}
               </p>
             </motion.div>

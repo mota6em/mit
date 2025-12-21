@@ -34,12 +34,12 @@ export default function WhoWeAre() {
             transition={{ duration: 0.6 }}
             className="max-w-xl text-center lg:text-left flex flex-col gap-3"
           >
-            <h2 className="text-4xl text-gray-700 font-semibold">
+            <h2 className="text-4xl text-gray-800 font-semibold">
               {t("title")}
               {"?"}
             </h2>
 
-            <p className="text-lg md:text-xl leading-relaxed text-gray-700 font-medium">
+            <p className="text-lg md:text-xl leading-relaxed text-gray-800 font-medium">
               {t("description.intro")}
               <br />
               <br />
@@ -81,7 +81,7 @@ export default function WhoWeAre() {
         >
           <Link
             href={`/${locale}/about`}
-            className="inline-flex items-center gap-2 text-gray-600 font-medium hover:text-gray-900 transition-colors group"
+            className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-colors group"
           >
             <span>{t("learnMore")}</span>
             <svg

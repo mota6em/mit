@@ -24,7 +24,7 @@ const SectionTag = ({
 
   return (
     <div
-      className={`inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase mb-4 ${colorClasses[color]}`}
+      className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-4 ${colorClasses[color]}`}
     >
       {text}
     </div>
@@ -110,7 +110,7 @@ export default function JoinMIT() {
   if (!mounted) return null;
 
   return (
-    <div className="relative w-full min-h-screen  overflow-hidden font-sans">
+    <div className="relative w-full min-h-screen  overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
       <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
@@ -130,7 +130,7 @@ export default function JoinMIT() {
               color="green"
             />
 
-            <h1 className="text-4xl md:text-6xl font-bold poppins.className mb-2">
+            <h1 className="text-5xl md:text6xl font-semibold mb-2">
               <span className="text-[#e8b030] drop-shadow-sm">
                 {t("title").split(" ")[0] || "Join"}{" "}
               </span>
@@ -231,8 +231,8 @@ export default function JoinMIT() {
             </div>
           </motion.div>
         </div>{" "}
-        <div className="absolute top-10 right-20 w-72 h-72 bg-[#4d93fb] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute bottom-10 left-10 w-72 h-72 bg-[#11b505] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute top-10 right-20 md:right-40 w-72 h-72 bg-[#11b505]/50 md:bg-[#4d93fb]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+        <div className="absolute bottom-20 left-40 w-72 h-72 bg-[#11b505]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
       </div>
 
@@ -254,19 +254,19 @@ export default function JoinMIT() {
           {/* Decorative Corner Icon */}
           <div className="absolute top-0 left-0 w-24 h-24 bg-green-800/10 rounded-br-[4rem] -z-0" />
 
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+          <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="flex-shrink-0 w-24 h-24 bg-green-50 rounded-full flex items-center justify-center">
               <FaHeart className="text-4xl text-green-500" />
             </div>
 
             <div className="flex-grow text-center md:text-left">
-              <p className="text-green-800 text-lg md:text-[1.3rem] mb-6">
+              <p className="text-green-800 text-lg md:text-[1.3rem] mb-8 md:mb-6">
                 {t("volunteer.description")}
               </p>
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSd6KJuRRaifHAoZTEBxKaawimJBzj_pAaU7zBnSgMuq_BQBvA/viewform"
                 target="_blank"
-                className="flex items-center justify-center  gap-2 text-green-700 animate-bounce font-semibold  outline outline-green-700 px-2 py-1 rounded-full  w-fit hover:gap-4 transition-all"
+                className="flex items-center justify-center w-full md:w-fit gap-2 text-green-700 animate-bounce font-semibold  outline outline-green-700 px-2 py-1 rounded-full  w-fit hover:gap-4 transition-all"
               >
                 {t("volunteer.button")} <HiArrowRight />
               </a>
@@ -281,7 +281,7 @@ export default function JoinMIT() {
       >
         <div className="text-center mb-6 md:mb-10">
           <SectionTag text={t("socialTag") || "Stay Connected"} color="gray" />
-          <h2 className="text-3xl md:text-5xl font-bold   text-gray-600">
+          <h2 className="text-3xl md:text-5xl font-semibold   text-gray-600">
             {t("connectWithUs")}
           </h2>
         </div>
@@ -318,7 +318,7 @@ export default function JoinMIT() {
 
                 {/* Compact Title */}
                 <h3
-                  className={`text-sm md:text-xl font-bold mb-1 md:mb-2 ${
+                  className={`text-sm md:text-xl font-semibold mb-1 md:mb-2 ${
                     isWhatsApp ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
@@ -394,23 +394,23 @@ export default function JoinMIT() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative bg-[#1a2332] scroll-mt-28 rounded-[2.5rem] p-8 md:p-16 overflow-hidden text-center md:text-left"
+          className="relative bg-[#1a2332] scroll-mt-28 rounded-[2.5rem] p-6 md:p-16 overflow-hidden text-center md:text-left"
         >
           {/* Background Patterns for the dark card */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#e8b030]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#4d93fb]/10 rounded-full blur-3xl" />
 
-          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-4 md:gap-12 items-center">
             {/* Left: Text */}
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10">
                 <HiOutlineMail className="text-[#e8b030]" />
-                <span className="text-white text-xs font-bold uppercase tracking-wider">
+                <span className="text-white text-xs font-semibold uppercase tracking-wider">
                   {t("newsletterTag") || "Newsletter"}
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-bold Carena-font text-white leading-tight">
+              <h2 className="text-3xl md:text-5xl font-semibold Carena-font text-white leading-tight">
                 {t("stayUpdated") || "Stay In The Loop"}
               </h2>
 
@@ -434,7 +434,7 @@ export default function JoinMIT() {
 
             {/* Right: Subscription Form */}
             <div className="relative">
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 relative">
+              <div className="md:bg-white/5 backdrop-blur-sm md:border md:border-white/10 rounded-3xl md:p-8 relative">
                 {status === "success" ? (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -442,7 +442,7 @@ export default function JoinMIT() {
                     className="text-center py-10"
                   >
                     <HiSparkles className="text-[#e8b030] text-5xl mx-auto mb-4" />
-                    <h3 className="text-white text-xl font-bold">
+                    <h3 className="text-white text-xl font-semibold">
                       {t("successMessage")}
                     </h3>
                   </motion.div>
@@ -483,7 +483,7 @@ export default function JoinMIT() {
                     <button
                       disabled={submitting}
                       type="submit"
-                      className="w-full cursor-pointer py-4 bg-[#e8b030] text-[#1a2332] font-bold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
+                      className="w-full cursor-pointer py-4 bg-[#e8b030] text-[#1a2332] font-semibold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
                     >
                       {submitting ? "Joining..." : "Subscribe"}
                     </button>

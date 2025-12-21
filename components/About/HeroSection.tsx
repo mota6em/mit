@@ -63,10 +63,10 @@ const HeroSection = () => {
             initial={{ scale: 1, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center z-30 border border-gray-500"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center z-30"
           >
             <Image
-              src="/imgs/mit-logo-full-resized.png"
+              src="/imgs/home/aboutmit/mit-main-log-no-bg.png"
               alt="MIT Logo"
               width={100}
               height={100}
@@ -83,7 +83,7 @@ const HeroSection = () => {
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="poppins.className text-gray-600 mb-4 "
+            className="poppins.className text-gray-800 mb-4 "
           >
             <h1
               className={"text-3xl md:text-5xl poppins.className font-semibold"}

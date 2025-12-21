@@ -2,6 +2,7 @@
 import { Building2, Heart, Link as LinkIcon, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+ import { RiUserCommunityFill } from "react-icons/ri";
 
 const CommunityRoleSection = () => {
   const t = useTranslations("aboutMIT.communityRole");
@@ -11,16 +12,24 @@ const CommunityRoleSection = () => {
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-10 md:mb-15"
-        >
-          <h2 className="text-3xl md:text-4xl font-semibold poppins.className text-gray-600">
+        <div className="flex flex-col items-center mb-16">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            className="mb-4 p-3 bg-gray-100 rounded-full text-gray-900"
+          >
+            <RiUserCommunityFill className="w-8 h-8" />
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-semibold text-center tracking-widest Ang-font text-gray-900"
+          >
             {t("title")}
-          </h2>
-        </motion.h2>
+          </motion.h2>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {[0, 1, 2, 3].map((index) => {
@@ -34,11 +43,11 @@ const CommunityRoleSection = () => {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-6 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <div className="p-4 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0">
+                <div className="p-4 bg-gray-50 rounded-xl text-gray-800 flex-shrink-0">
                   <Icon className="w-8 h-8" />
                 </div>
                 <div>
-                  <h4 className="text-lg md:text-xl font-medium text-gray-700 leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-medium text-gray-900 leading-relaxed">
                     {t(`roles.${index}`)}
                   </h4>
                 </div>

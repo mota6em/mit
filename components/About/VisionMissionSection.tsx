@@ -20,10 +20,10 @@ const VisionMissionSection = () => {
           viewport={{ once: true }}
           className="text-center mb-5 md:mb-14"
         >
-          <span className="text-gray-900/90 font-medium tracking-widest text-sm mb-3 block">
+          <span className="text-gray-700 font-medium tracking-widest text-sm mb-3 block">
             {t("coreFoundations")}
           </span>
-          <h2 className="font-semibold mb-4 text-3xl md:text-4xl poppins.className text-gray-600">
+          <h2 className="font-semibold mb-4 text-3xl md:text-4xl poppins.className text-gray-800">
             {t("title")}
           </h2>
         </motion.div>
@@ -94,17 +94,17 @@ const VisionMissionSection = () => {
               </svg>
             </div>
             <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6 text-gray-700">
+              <div className="flex items-center gap-2 mb-6 text-gray-800">
                 <Target className="w-8 h-8" />
                 <h3 className="text-3xl font-medium">{t("vision.title")}</h3>
               </div>
 
-              <p className="text-lg text-gray-900 leading-relaxed mb-8">
+              <p className="text-lg text-gray-800 leading-relaxed mb-8">
                 {t("vision.description")}
               </p>
 
-              <div className="flex items-center gap-2 text-gray-900 font-medium ">
-                <span className="w-8 h-[2px] bg-yellow-900"></span>
+              <div className="flex items-center gap-2 text-gray-600 font-medium ">
+                <span className="w-8 h-[2px] bg-gray-600"></span>
                 <span>{t("vision.tagline")}</span>
               </div>
             </div>
@@ -177,17 +177,17 @@ const VisionMissionSection = () => {
             </div>
 
             <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6  text-gray-700">
+              <div className="flex items-center gap-2 mb-6  text-gray-800">
                 <Rocket className="w-8 h-8" />
                 <h3 className="text-3xl font-medium">{t("mission.title")}</h3>
               </div>
 
-              <p className="text-lg text-gray-900 leading-relaxed mb-8">
+              <p className="text-lg text-gray-800 leading-relaxed mb-8">
                 {t("mission.description")}
               </p>
 
-              <div className="flex items-center gap-2 text-gray-900 font-medium">
-                <span className="w-8 h-[2px] bg-text bg-yellow-900"></span>
+              <div className="flex items-center gap-2 text-gray-600 font-medium">
+                <span className="w-8 h-[2px] bg-text bg-gray-600"></span>
                 <span>{t("mission.tagline")}</span>
               </div>
             </div>
