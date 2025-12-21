@@ -35,7 +35,7 @@ export default function LanguageSwitch() {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <div className="cursor-pointer flex items-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
+        <div className="cursor-pointer flex mt-1 items-center justify-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
           <div className="relative w-5 h-5 flex-shrink-0">
             <Image
               src={current.flag}
