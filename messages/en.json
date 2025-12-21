@@ -5,6 +5,9 @@
       "description": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization...",
       "keywords": [
         "Muslim Youth Association Hungary",
+        "Muslim youth organization Hungary",
+        "Muslim youth organization Budapest",
+        "MIT Budapest",
         "MIT Hungary",
         "Muslim students Budapest",
         "Islamic community Hungary",
@@ -12,8 +15,7 @@
         "Muslim youth empowerment",
         "Islamic lectures Hungary",
         "Muslim networking Budapest",
-        "Hungarian Muslims",
-        "MIT Budapest"
+        "Hungarian Muslims"
       ]
     },
     "events": {
@@ -24,9 +26,6 @@
       "title": "Join Us | MIT Hungary",
       "description": "Become an active member of Muslim Youth Association of Hungary. Volunteer, grow with us, and be part of an amazing community."
     }
-  },
-  "common": {
-    "welcome": "Welcome"
   },
   "nav": {
     "home": "HOME",
@@ -43,85 +42,59 @@
       "socialLabel": "Social Media Followers",
       "yearsLabel": "Years of Community",
       "eventsLabel": "Events Completed"
-    }
-  },
-  "hero": {
-    "title": "Muslim Youth Association",
-    "subtitle1": "Events, workshops and community programs for Muslims in Hungary"
-  },
-  "whoWeAre": {
-    "title": "Who We Are",
-    "description": {
-      "intro": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary.",
-      "mission": "We provide a space for learning, collaboration, and personal growth. Rooted in Islamic principles of sincerity, community, and excellence (ihsan), we strive to build a generation that serves both the Ummah and society with integrity."
     },
-    "learnMore": "Learn More About MIT"
-  },
-  "latestPrograms": {
-    "title": "Our Latest Programs",
-    "upcomingTitle": "Upcoming Events",
-    "pastTitle": "Past Events",
-    "showAllUpcoming": "Show all upcoming events",
-    "showAllPast": "Show all past events",
-    "authorName": "MIT",
-    "newProgram": "New Program",
-    "programs": {
-      "youthLeadership": {
-        "title": "Youth Leadership Workshop",
-        "desc": "Empowering young minds ✨ Learn leadership, teamwork, public speaking, and more."
+    "hero": {
+      "title": "Muslim Youth Association",
+      "subtitle1": "Events, workshops and community programs for Muslims in Hungary"
+    },
+    "whoWeAre": {
+      "title": "Who We Are",
+      "description": {
+        "intro": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary.",
+        "mission": "We provide a space for learning, collaboration, and personal growth. Rooted in Islamic principles of sincerity, community, and excellence (ihsan), we strive to build a generation that serves both the Ummah and society with integrity."
       },
-      "communityFootball": {
-        "title": "Community Football Day",
-        "desc": "Teamwork, vibes, good energy ⚽ Bring friends and join local mini-tournaments."
-      },
-      "winterCharity": {
-        "title": "Winter Charity Drive",
-        "desc": "Small acts, big impact ❄️ Collect donations for families in need."
-      },
-      "ramadanIftar": {
-        "title": "Ramadan Iftar Gathering",
-        "desc": "Breaking fast together 🌙 Join us for a blessed Iftar meal with the community."
-      },
-      "quranStudy": {
-        "title": "Quran Study Circle",
-        "desc": "Deepen your understanding 📖 Weekly Quran study sessions with scholars and peers."
-      },
-      "charityDrive": {
-        "title": "Autumn Charity Drive",
-        "desc": "Giving back to community 🍂 Collecting essentials for those in need."
+      "learnMore": "Learn More About MIT"
+    },
+    "latestPrograms": {
+      "title": "Our Latest Programs",
+      "upcomingTitle": "Upcoming Events",
+      "pastTitle": "Past Events",
+      "showAllUpcoming": "Show all upcoming events",
+      "showAllPast": "Show all past events",
+      "authorName": "MIT",
+      "newProgram": "New Program",
+      "programs": {
+        "youthLeadership": {
+          "title": "Youth Leadership Workshop",
+          "desc": "Empowering young minds ✨ Learn leadership, teamwork, public speaking, and more."
+        },
+        "communityFootball": {
+          "title": "Community Football Day",
+          "desc": "Teamwork, vibes, good energy ⚽ Bring friends and join local mini-tournaments."
+        },
+        "winterCharity": {
+          "title": "Winter Charity Drive",
+          "desc": "Small acts, big impact ❄️ Collect donations for families in need."
+        },
+        "ramadanIftar": {
+          "title": "Ramadan Iftar Gathering",
+          "desc": "Breaking fast together 🌙 Join us for a blessed Iftar meal with the community."
+        },
+        "quranStudy": {
+          "title": "Quran Study Circle",
+          "desc": "Deepen your understanding 📖 Weekly Quran study sessions with scholars and peers."
+        },
+        "charityDrive": {
+          "title": "Autumn Charity Drive",
+          "desc": "Giving back to community 🍂 Collecting essentials for those in need."
+        }
       }
     }
   },
   "testimonials": {
     "title": "What Our Community Says",
     "subtitle": "Hear from members who have experienced the warmth and growth of our community",
-    "reviews": [
-      {
-        "quote": "MIT has been a second home for me. The events are always meaningful, and I've made lifelong friends here. It's amazing to be part of such a supportive community.",
-        "name": "Ahmad Hassan",
-        "title": "University Student"
-      },
-      {
-        "quote": "The programs organized by MIT helped me connect with my faith while pursuing my studies. The environment is welcoming and the people are genuine.",
-        "name": "Fatima Rahman",
-        "title": "Medical Student"
-      },
-      {
-        "quote": "I was new to Hungary and felt lost until I found MIT. The community embraced me with open arms and helped me adjust to life here. Forever grateful!",
-        "name": "Omar Abdullah",
-        "title": "Engineering Student"
-      },
-      {
-        "quote": "The charity drives and community service events taught me the true meaning of giving back. MIT is doing incredible work in bringing people together.",
-        "name": "Aisha Khan",
-        "title": "Graduate Student"
-      },
-      {
-        "quote": "From football tournaments to study circles, MIT offers something for everyone. It's not just an organization, it's a family that supports your growth.",
-        "name": "Yusuf Ahmed",
-        "title": "Business Student"
-      }
-    ]
+    "reviews": []
   },
   "joinMIT": {
     "title": "Join MIT Family",

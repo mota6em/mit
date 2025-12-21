@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
 export default function WhoWeAre() {
-  const t = useTranslations("whoWeAre");
+  const t = useTranslations("home");
   const params = useParams();
   const locale = params.locale as string;
 
@@ -35,15 +35,15 @@ export default function WhoWeAre() {
             className="max-w-xl text-center lg:text-left flex flex-col gap-3"
           >
             <h2 className="text-4xl text-gray-800 font-semibold">
-              {t("title")}
+              {t("whoWeAre.title")}
               {"?"}
             </h2>
 
             <p className="text-lg md:text-xl leading-relaxed text-gray-800 font-medium">
-              {t("description.intro")}
+              {t("whoWeAre.description.intro")}
               <br />
               <br />
-              {t("description.mission")}
+              {t("whoWeAre.description.mission")}
             </p>
           </motion.div>
 
@@ -83,7 +83,7 @@ export default function WhoWeAre() {
             href={`/${locale}/about`}
             className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-colors group"
           >
-            <span>{t("learnMore")}</span>
+            <span>{t("whoWeAre.learnMore")}</span>
             <svg
               className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
               fill="none"

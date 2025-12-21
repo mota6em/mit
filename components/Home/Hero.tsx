@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import SocialMediaIcons from "../SocialMediaIcons/SocialMediaIcons";
 
 interface HeroProps {
   images: string[];
@@ -12,7 +11,7 @@ interface HeroProps {
 export default function Hero({ images }: HeroProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndexMobile, setCurrentIndexMobile] = useState(0);
-  const t = useTranslations("hero");
+  const t = useTranslations("home");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,19 +81,19 @@ export default function Hero({ images }: HeroProps) {
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:mt-3 md:px-6 space-y-1">
         <h1 className="text-4xl poppins.className md:text-6xl font-bold relative">
           <span className="text-[#f1c34c] drop-shadow-[0_0_4px_black]">
-            {t("title").split(" ")[0]}{" "}
+            {t("hero.title").split(" ")[0]}{" "}
           </span>
           <span className="text-[#11b505] drop-shadow-[0_0_4px_black]">
-            {t("title").split(" ")[1]}{" "}
+            {t("hero.title").split(" ")[1]}{" "}
           </span>
           <span className="text-[#4d93fb] drop-shadow-[0_0_4px_black]">
-            {t("title").split(" ")[2]}
+            {t("hero.title").split(" ")[2]}
           </span>
         </h1>
 
         <div className="flex flex-col w-fit p-2 rounded-md items-center">
           <p className="text-sm md:text-xl w-fit max-w-xs md:max-w-md text-white font-semibold drop-shadow-[black_0_0_2px]">
-            {t("subtitle1")}
+            {t("hero.subtitle1")}
           </p>
         </div>
       </div>

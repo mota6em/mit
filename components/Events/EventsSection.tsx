@@ -24,7 +24,7 @@ export default function EventsSection({
   showViewAll = true,
   filterMode = "all",
 }: EventsSectionProps) {
-  const t = useTranslations("latestPrograms");
+  const t = useTranslations("home");
   const params = useParams();
   const locale = (params?.locale as string) || "en";
   const [events, setEvents] = useState<ApiEvent[]>([]);
@@ -63,7 +63,11 @@ export default function EventsSection({
     filterMode === "recurring_only" && type === "upcoming";
   const titleText = isWeeklySection
     ? "Weekly Gatherings"
-    : t(type === "upcoming" ? "upcomingTitle" : "pastTitle");
+    : t(
+        type === "upcoming"
+          ? "latestPrograms.upcomingTitle"
+          : "latestPrograms.pastTitle"
+      );
 
   const linkHref = `/${locale}/events#${sectionId}`;
 
@@ -120,7 +124,7 @@ export default function EventsSection({
                   <BlogCard
                     bgImg={p.img}
                     authorImg="/imgs/icon.jpg"
-                    authorName={t("authorName")}
+                    authorName={t("latestPrograms.authorName")}
                     readTime={displayDate}
                     title={title}
                     desc={desc}
@@ -152,7 +156,9 @@ export default function EventsSection({
               <span
                 className={`font-semibold transition-colors text-gray-800 group-hover:text-gray-900`}
               >
-                {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
+                {type === "upcoming"
+                  ? t("latestPrograms.showAllUpcoming")
+                  : t("latestPrograms.showAllPast")}
               </span>
             </Link>
           </div>
@@ -170,7 +176,9 @@ export default function EventsSection({
               className={`group inline-flex items-center gap-2 text-md rounded-full font-semibold transition-all duration-300 text-gray-800 hover:text-gray-900 hover:scale-105`}
             >
               <span>
-                {type === "upcoming" ? t("showAllUpcoming") : t("showAllPast")}
+                {type === "upcoming"
+                  ? t("latestPrograms.showAllUpcoming")
+                  : t("latestPrograms.showAllPast")}
               </span>
               <svg
                 className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
