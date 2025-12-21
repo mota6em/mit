@@ -153,7 +153,7 @@ export default function JoinMIT() {
               <div className="absolute top-0 left-4 sm:left-14 w-64 h-80 rotate-[-6deg] z-10">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
                   <Image
-                    src="/imgs/mit-pecs.jpg"
+                    src="/imgs/join/mit-pecs.jpg"
                     alt="Youth"
                     fill
                     className="object-cover"

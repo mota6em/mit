@@ -27,7 +27,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-100 animate-pulse" />
             )}
             <Image
-              src="/imgs/one-year-mit.jpg"
+              src="/imgs/about/one-year-mit.jpg"
               alt="Community Event"
               fill
               className={`object-cover transition-opacity duration-300 ${
@@ -47,7 +47,7 @@ const HeroSection = () => {
               <div className="absolute inset-0 bg-gray-100 animate-pulse" />
             )}
             <Image
-              src="/imgs/femynso-mit.jpg"
+              src="/imgs/about/femynso-mit.jpg"
               alt="Youth Gathering"
               fill
               className={`object-cover transition-opacity duration-300 ${

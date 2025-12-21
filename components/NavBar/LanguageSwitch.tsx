@@ -22,8 +22,8 @@ export default function LanguageSwitch() {
   const restOfPath = segments.slice(1).join("/");
 
   const locales = [
-    { code: "en", label: "English", flag: "/imgs/uk.png" },
-    { code: "hu", label: "Magyar", flag: "/imgs/hun.png" },
+    { code: "en", label: "English", flag: "/imgs/icons/uk.png" },
+    { code: "hu", label: "Magyar", flag: "/imgs/icons/hun.png" },
   ];
 
   const current = locales.find((l) => l.code === currentLocale) || locales[0];

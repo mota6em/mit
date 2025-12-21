@@ -31,7 +31,7 @@ export default function NavBar() {
       <div className="container flex justify-between items-center px-0 py-1 md:py-0.5">
         <Link href={`/${locale}`} className="flex items-center p-0.5">
           <Image
-            src="/imgs/mit-nav-logo.png"
+            src="/imgs/icons/mit-nav-logo.png"
             alt="MIT Logo"
             width={120}
             height={40}

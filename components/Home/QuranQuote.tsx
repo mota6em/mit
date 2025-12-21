@@ -25,7 +25,7 @@ export default function QuranQuote() {
       <div className="w-full z-10 flex flex-col items-center gap-3 mt-20">
         <div className="relative w-16 h-16 md:w-20 md:h-20">
           <Image
-            src="/imgs/mit-logo-full-resized.png"
+            src="/imgs/icons/mit-logo-full-resized.png"
             alt="MIT Logo"
             fill
             className="object-contain drop-shadow-lg"

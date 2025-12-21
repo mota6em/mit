@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: t.title,
       description: t.description,
-      url: `https://mit-hu.vercel.app/${locale}/join-mit`,
+      url: `https://mit-hu.eu/${locale}/join-mit`,
       siteName: "MIT - Muszlim Ifjúság Társaság",
       images: [
         {
-          url: "/imgs/mit-pecs.jpg",
+          url: "/imgs/join/mit-pecs.jpg",
           width: 1200,
           height: 630,
           alt: "Join MIT Hungary Community",
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       card: "summary_large_image",
       title: t.title,
       description: t.description,
-      images: ["/imgs/mit-pecs.jpg"],
+      images: ["/imgs/join/mit-pecs.jpg"],
     },
     icons: {
       icon: [{ url: "/imgs/icon.jpg" }],

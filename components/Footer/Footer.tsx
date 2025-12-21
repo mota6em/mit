@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-2">
           <Image
-            src="/imgs/mit-nav-logo.png"
+            src="/imgs/icons/mit-nav-logo.png"
             alt="MIT Logo"
             width={120}
             height={40}
