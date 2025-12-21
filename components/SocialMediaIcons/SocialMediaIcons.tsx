@@ -19,17 +19,17 @@ export default function SocialMediaIcons() {
     {
       icon: FaFacebookF,
       href: "https://www.facebook.com/muszlimifjusag/",
-      gradient: "from-blue-500 via-indigo-500 to-purple-500",
+      bg: "bg-blue-600",
     },
     {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
-      gradient: "from-pink-500 via-red-500 to-yellow-500",
+      bg: "bg-pink-600",
     },
     {
       icon: HiOutlineMail,
       href: "mailto:muszlimifjusag@gmail.com",
-      gradient: "from-purple-400 via-pink-500 to-yellow-400",
+      bg: "bg-orange-600",
       isEmail: true,
     },
   ];
@@ -52,7 +52,7 @@ export default function SocialMediaIcons() {
                 className="relative p-3 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
               >
                 <div
-                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x`}
+                  className={`absolute inset-0 rounded-full bg-bg-to-r ${s.bg} animate-bg-x`}
                 ></div>
                 {showCopied ? (
                   <FaCheck size={20} className="relative z-10" />
@@ -73,7 +73,7 @@ export default function SocialMediaIcons() {
             className="relative p-3 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
           >
             <div
-              className={`absolute inset-0 rounded-full bg-gradient-to-r ${s.gradient} animate-gradient-x`}
+              className={`absolute inset-0 rounded-full ${s.bg}`}
             ></div>
             <Icon size={20} className="relative z-10" />
           </a>
