@@ -13,7 +13,7 @@ export default function NotFound() {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
         <div className="flex flex-col items-center gap-8">
           <Image
-            src="/imgs/hero/mit-logo-full.png"
+            src="/imgs/icons/mit-logo-full-resized.png"
             alt="MIT Logo"
             width={200}
             height={200}
