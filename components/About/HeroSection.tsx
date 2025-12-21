@@ -11,7 +11,8 @@ const HeroSection = () => {
     <section className="relative min-h-[80vh] flex items-center bg-gradient-to-b from-blue-50/30 to-white overflow-hidden px-6 py-12 md:px-12 lg:px-20 lg:py-6">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <HeroImageCollage
-          wrapperClassName=""
+          floatLeft
+          floatRight
           leftImage="/imgs/about/one-year-mit.jpg"
           rightImage="/imgs/about/femynso-mit.jpg"
           centerIcon="/imgs/home/aboutmit/mit-main-log-no-bg.png"

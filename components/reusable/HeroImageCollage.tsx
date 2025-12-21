@@ -9,21 +9,22 @@ interface HeroImageCollageProps {
   leftImage: string;
   rightImage: string;
   centerIcon?: string;
-
   wrapperClassName?: string;
-
   leftClassName?: string;
   rightClassName?: string;
+  floatLeft?: boolean;
+  floatRight?: boolean;
 }
 
 export default function HeroImageCollage({
   leftImage,
   rightImage,
   centerIcon,
-
   wrapperClassName,
   leftClassName,
   rightClassName,
+  floatLeft = false,
+  floatRight = false,
 }: HeroImageCollageProps) {
   const [leftLoaded, setLeftLoaded] = useState(false);
   const [rightLoaded, setRightLoaded] = useState(false);
@@ -35,10 +36,9 @@ export default function HeroImageCollage({
       {/* LEFT IMAGE */}
       <div
         className={cn(
-          // 🔹 defaults
-          "absolute top-0 left-4 md:left-20 lg:left-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-4 border-white shadow-2xl -rotate-6 z-10 animate-[float_6s_ease-in-out_infinite]",
-          // 🔹 overrides
-          leftClassName
+          "absolute top-0 left-4 md:left-20 lg:left-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-4 border-white shadow-2xl -rotate-6 z-10",
+          leftClassName,
+          floatLeft && "animate-[float_6s_ease-in-out_infinite]"
         )}
       >
         {!leftLoaded && (
@@ -58,10 +58,9 @@ export default function HeroImageCollage({
       {/* RIGHT IMAGE */}
       <div
         className={cn(
-          // 🔹 defaults
-          "absolute bottom-0 right-4 md:right-20 lg:right-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-4 border-white shadow-2xl rotate-8 z-20 animate-[float_7s_ease-in-out_1s_infinite]",
-          // 🔹 overrides
-          rightClassName
+          "absolute bottom-0 right-4 md:right-20 lg:right-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-4 border-white shadow-2xl rotate-8 z-20",
+          rightClassName,
+          floatRight && "animate-[float_7s_ease-in-out_1s_infinite]"
         )}
       >
         {!rightLoaded && (
@@ -100,7 +99,8 @@ export default function HeroImageCollage({
       {/* blobs */}
       <div className="absolute top-10 right-20 w-72 h-72 bg-gray-800/40 rounded-full blur-3xl opacity-20 animate-blob" />
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-gray-800/40 rounded-full blur-3xl opacity-20 animate-blob animation-delay-2000" />
-      {/* Tailwind Keyframes for smoother movement */}
+
+      {/* Tailwind Keyframes */}
       <style jsx global>{`
         @keyframes float {
           0%,
