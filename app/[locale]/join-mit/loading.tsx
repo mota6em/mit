@@ -18,7 +18,7 @@ export default function Loading() {
         {/* logo */}
         <div className="absolute w-14 h-14 opacity-90">
           <Image
-            src="/imgs/mit-logo-full-resized-lowest.jpg"
+            src="/imgs/icons/mit-logo-full-resized.jpg"
             alt="Loading..."
             fill
             className="object-contain rounded-full"
