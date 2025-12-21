@@ -15,7 +15,7 @@ export default function Hero({ images }: HeroProps) {
       {/** * Desktop Background Slider */}
       <div className="hidden lg:block h-full">
         <Image
-          src={"/imgs/home/hero/picnic2.jpg"}
+          src={"/imgs/home/hero/picnic.jpg"}
           alt="hero"
           fill
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-out`}
