@@ -96,7 +96,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-base md:text-lg text-gray-800 max-w-xl mb-8"
+            className="text-lg md:text-xl text-gray-800 max-w-xl mb-8"
           >
             {t("description")}
           </motion.p>
