@@ -46,7 +46,6 @@ export default function Hero({ images }: HeroProps) {
 
         <div className="relative flex-1 w-full transition-opacity duration-700 ease-out">
           <Image
-            s
             src={"/imgs/home/hero/picnic.jpg"}
             alt="bottom"
             fill
