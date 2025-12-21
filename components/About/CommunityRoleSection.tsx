@@ -2,7 +2,8 @@
 import { Building2, Heart, Link as LinkIcon, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
- import { RiUserCommunityFill } from "react-icons/ri";
+import { RiUserCommunityFill } from "react-icons/ri";
+import SectionHeader from "../reusable/SectionHeader";
 
 const CommunityRoleSection = () => {
   const t = useTranslations("aboutMIT.communityRole");
@@ -12,25 +13,11 @@ const CommunityRoleSection = () => {
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center mb-16">
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            className="mb-4 p-3 bg-gray-100 rounded-full text-gray-900"
-          >
-            <RiUserCommunityFill className="w-8 h-8" />
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-semibold text-center tracking-widest Ang-font text-gray-900"
-          >
-            {t("title")}
-          </motion.h2>
-        </div>
-
+        <SectionHeader
+          title={t("title")}
+          icon={<RiUserCommunityFill className="w-8 h-8" />}
+          className="mb-5 md:mb-14"
+        />
         <div className="grid md:grid-cols-2 gap-8">
           {[0, 1, 2, 3].map((index) => {
             const Icon = roleIcons[index];

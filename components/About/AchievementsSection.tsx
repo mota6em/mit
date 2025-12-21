@@ -2,35 +2,19 @@
 import { CheckCircle2, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import SectionHeader from "../reusable/SectionHeader";
 
 const AchievementsSection = () => {
   const t = useTranslations("aboutMIT.achievements");
 
   return (
     <section className="py-24 px-6 md:px-12 lg:px-20 bg-white relative overflow-hidden">
-      {/* Decorative Background Element */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 rounded-full blur-3xl -z-10 opacity-50" />
-
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center mb-16">
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            className="mb-4 p-3 bg-gray-100 rounded-full text-gray-900"
-          >
-            <Trophy className="w-8 h-8" />
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-semibold text-center tracking-widest Ang-font text-gray-900"
-          >
-            {t("title")}
-          </motion.h2>
-        </div>
-
+        <SectionHeader
+          title={t("title")}
+          icon={<Trophy className="w-8 h-8" />}
+          className="mb-5 md:mb-14"
+        />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
             <motion.div
