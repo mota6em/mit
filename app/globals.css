@@ -6,6 +6,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* All headings h1-h6 use Cairo */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cairo', sans-serif;
+}
+
+/* All other text uses Inter */
+body, p, span, div {
+  font-family: 'Inter', sans-serif;
+}
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -92,7 +92,7 @@ export default function Hero({ images }: HeroProps) {
           </span>
         </h1>
 
-        <div className="flex flex-col w-fit p-2 font-serif rounded-md items-center">
+        <div className="flex flex-col w-fit p-2 rounded-md items-center">
           <p className="text-sm md:text-xl w-fit max-w-xs md:max-w-md text-white font-semibold drop-shadow-[black_0_0_2px]">
             {t("subtitle1")}
           </p>

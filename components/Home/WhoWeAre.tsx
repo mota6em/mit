@@ -34,7 +34,7 @@ export default function WhoWeAre() {
             transition={{ duration: 0.6 }}
             className="max-w-xl text-center lg:text-left flex flex-col gap-3"
           >
-            <h2 className="text-4xl text-gray-700 md:text-[#2D9B4A] poppins.className font-semibold">
+            <h2 className="text-4xl text-gray-700 font-semibold">
               {t("title")}
               {"?"}
             </h2>
@@ -81,7 +81,7 @@ export default function WhoWeAre() {
         >
           <Link
             href={`/${locale}/about`}
-            className="inline-flex items-center gap-2 text-[#2D9B4A] font-medium hover:text-gray-900 transition-colors group"
+            className="inline-flex items-center gap-2 text-gray-600 font-medium hover:text-gray-900 transition-colors group"
           >
             <span>{t("learnMore")}</span>
             <svg

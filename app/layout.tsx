@@ -4,14 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { Cairo, Inter, Poppins } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -29,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body className={inter.className}>
+    <html className={`${inter.className} ${cairo.className}`}>
+      <body>
         {children}
         <Analytics />
       </body>
