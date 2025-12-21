@@ -38,7 +38,7 @@ const Hero = () => {
   const t = useTranslations("events");
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#fafafa] pt-12 pb-16 md:pt-0 md:pb-24 font-sans md:px-5">
+    <div className="relative w-full overflow-hidden bg-[#fafafa] pt-12 pb-16 md:pt-0 md:pb-24 md:px-5">
       <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
       <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
 
@@ -54,7 +54,7 @@ const Hero = () => {
           >
             <SectionTag text={t("hero.tag") || "Community Life"} color="blue" />
 
-            <h1 className="text-5xl md:text6xl w-full font-bold md:mt-12 lg:mt-0 Carena-font mb-0 md:mb-2 leading-tight">
+            <h1 className="text-5xl md:text6xl w-full font-bold poppins.className md:mt-12 lg:mt-0  mb-0 md:mb-2 leading-tight">
               <span className="text-[#4d93fb] drop-shadow-sm">
                 {t("hero.title").split(" ")[0] || "Sharing"}{" "}
               </span>
