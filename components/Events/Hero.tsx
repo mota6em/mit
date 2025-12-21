@@ -8,6 +8,7 @@ import {
   HiSparkles,
   HiLocationMarker,
 } from "react-icons/hi";
+import HeroImageCollage from "../reusable/HeroImageCollage";
 
 // Reusing the Pill Tag from your design system
 type SectionTagColor = "green" | "gold" | "blue";
@@ -65,38 +66,15 @@ const Hero = () => {
                 {t("hero.title").split(" ")[2] || "Moments"}
               </span>
             </h1>
-            {/* Image section for only mobile devices */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[400px] md:h-[550px] w-full lg:hidden"
-            >
-              {/* Image 1: Main Large (Tilted Left) */}
-              <div className="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-80 md:w-96 h-68 md:h-80 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 ">
-                <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                  <Image
-                    src="/imgs/events/event-group.jpg"
-                    alt="Lecture Event"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Image 2: Secondary Small (Tilted Right) */}
-              <div className="absolute bottom-10 md:bottom-16 right-4 sm:right-28 md:right-24 w-48 md:w-72 h-32 md:h-56 rotate-[8deg] z-20 ">
-                <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                  <Image
-                    src="/imgs/home/hero/picnic.jpg"
-                    alt="Community Picnic"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Floating Badge (Glassmorphism) */}
+            <div className="relative md:hidden">
+              {/* Image section for only mobile devices */}
+              <HeroImageCollage
+                wrapperClassName="md:hidden"
+                leftImage="/imgs/events/event-group.jpg"
+                rightImage="/imgs/home/hero/picnic.jpg"
+                leftClassName="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-80 md:w-96 h-68 md:h-80 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 "
+                rightClassName="absolute bottom-10 md:bottom-16 right-4 sm:right-28 md:right-24 w-48 md:w-72 h-32 md:h-56 rotate-[8deg] z-20 "
+              />{" "}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{
@@ -104,12 +82,9 @@ const Hero = () => {
                   duration: 4,
                   ease: "easeInOut",
                 }}
-                className="absolute top-10 sm:top-36 md:top-20 right-0 sm:right-10 md:right-20 z-30 bg-white/75 backdrop-blur-md p-2 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+                className="absolute top-12 right-0 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
               >
                 <div className="flex items-start gap-3">
-                  <div className="bg-red-100 hidden sm:block text-red-600 p-2 rounded-lg">
-                    <HiSparkles className="text-xl" />
-                  </div>
                   <div>
                     <p className="text-xs text-gray-500 font-semibold uppercase mb-0.5">
                       {t("hero.badgeJoin")}
@@ -120,12 +95,11 @@ const Hero = () => {
                   </div>
                 </div>
               </motion.div>
-
-              {/* Decorative Sparkle */}
-              <div className="absolute bottom-32 left-10 text-[#e8b030] text-4xl animate-pulse">
+              <div className="absolute bottom-12 left-2 z-20 text-[#e8b030] text-4xl animate-pulse">
                 <HiSparkles />
-              </div>
-            </motion.div>
+              </div>{" "}
+            </div>
+
             <p className="text-gray-600 text-lg md:text-xl leading-relaxed -mt-4 sm:mt-4 md:mt-0 mb-6 mx-auto lg:mx-0">
               {t("hero.subtitle")}
             </p>
@@ -159,37 +133,14 @@ const Hero = () => {
               <p>{t("hero.joinStats")}</p>
             </div>
           </motion.div>
-          {/* Image section for only desktop */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[400px] md:h-[550px] w-full hidden lg:block"
-          >
-            {/* Image 1: Main Large (Tilted Left) */}
-            <div className="absolute top-12 left-8 md:left-16 w-64 md:w-96 h-80 md:h-80 rotate-[-4deg] z-10 ">
-              <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                <Image
-                  src="/imgs/events/event-group.jpg"
-                  alt="Lecture Event"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Image 2: Secondary Small (Tilted Right) */}
-            <div className="absolute bottom-16 right-8 md:left-54   w-48 md:w-72 h-48 md:h-46   rotate-[8deg] z-20 ">
-              <div className="relative w-full h-full rounded-3xl overflow-hidden border-[6px] border-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                <Image
-                  src="/imgs/home/hero/picnic.jpg"
-                  alt="Community Picnic"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
+          <div className="relative hidden md:flex">
+            {/* Image section for only desktop */}
+            <HeroImageCollage
+              leftImage="/imgs/events/event-group.jpg"
+              rightImage="/imgs/home/hero/picnic.jpg"
+              leftClassName="absolute top-12 left-8 md:left-16 w-64 md:w-96 h-80 md:h-80 rotate-[-4deg] z-10"
+              rightClassName="absolute bottom-16 right-8 md:left-54   w-48 md:w-72 h-48 md:h-46   rotate-[8deg] z-20 "
+            />
             {/* Floating Badge (Glassmorphism) */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
@@ -212,10 +163,10 @@ const Hero = () => {
             </motion.div>
 
             {/* Decorative Sparkle */}
-            <div className="absolute bottom-32 left-10 text-[#e8b030] text-4xl animate-pulse">
+            <div className="absolute bottom-24 left-6 z-20 text-[#e8b030] text-4xl animate-pulse">
               <HiSparkles />
             </div>
-          </motion.div>{" "}
+          </div>
         </div>
       </div>
     </div>

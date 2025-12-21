@@ -5,6 +5,7 @@ import { HiOutlineMail, HiSparkles, HiArrowRight } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import HeroImageCollage from "../reusable/HeroImageCollage";
 
 type SectionTagColor = "green" | "gold" | "blue" | "gray";
 
@@ -143,40 +144,14 @@ export default function JoinMIT() {
             </h1>
 
             {/* Image Collage - mobile screens view */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[400px] md:h-[500px] md:hidden"
-            >
-              {/* Image 1 - Tilted Left */}
-              <div className="absolute top-0 left-4 sm:left-14 w-64 h-80 rotate-[-6deg] z-10">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
-                  <Image
-                    src="/imgs/join/mit-pecs.jpg"
-                    alt="Youth"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
+            <HeroImageCollage
+              wrapperClassName="md:hidden"
+              rightImage="/imgs/join/mit-pecs.jpg"
+              leftImage="/imgs/join/join-mit-2.jpg"
+              leftClassName="absolute top-32 md:top-20 left-26 sm:left-58 w-60 h-60 rotate-[12deg] z-20"
+              rightClassName="absolute top-0 left-4 sm:left-14 w-64 h-80 rotate-[-6deg] z-10"
+            />
 
-              {/* Image 2 - Tilted Right */}
-              <div className="absolute top-28 md:top-20 left-26 sm:left-58 w-60 h-60 rotate-[12deg] z-20">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
-                  <Image
-                    src="/imgs/join/join-mit-2.jpg"
-                    alt="Community"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                {/* Decorative Leaf Icon similar to screenshot */}
-                <div className="absolute -bottom-6 -right-6 bg-white p-3 rounded-full shadow-md z-30">
-                  <HiSparkles className="text-[#e8b030] text-2xl" />
-                </div>
-              </div>
-            </motion.div>
             <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-4 max-w-lg mx-auto lg:mx-0">
               {t("subtitle")}
             </p>
@@ -194,43 +169,16 @@ export default function JoinMIT() {
                 {t("connect") || "Connect With Us"}
               </a>
             </div>
-          </motion.div>{" "}
-          {/* Image Collage - big screens view */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-[400px] md:h-[500px] hidden md:hidden lg:block"
-          >
-            {/* Image 1 - Tilted Left */}
-            <div className="absolute top-12 left-2 md:left-24 lg:left-10 w-80 h-90 lg:w-70 lg-84 rotate-[-10deg] z-10">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
-                <Image
-                  src="/imgs/join/mit-pecs.jpg"
-                  alt="Youth"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Image 2 - Tilted Right */}
-            <div className="absolute top-45 left-26 md:left-72 lg:left-50 w-72 h-72 lg:w-64 lg:h-68 rotate-[12deg] z-20">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-xl">
-                <Image
-                  src="/imgs/join/join-mit-2.jpg"
-                  alt="Community"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              {/* Decorative Leaf Icon similar to screenshot */}
-              <div className="absolute -bottom-6 -right-6 bg-white p-3 rounded-full shadow-md z-30">
-                <HiSparkles className="text-[#e8b030] text-2xl" />
-              </div>
-            </div>
           </motion.div>
-        </div>{" "}
+          {/* Image Collage - big screens view */}
+          <HeroImageCollage
+            wrapperClassName="hidden md:flex"
+            leftImage="/imgs/join/mit-pecs.jpg"
+            rightImage="/imgs/join/join-mit-2.jpg"
+            leftClassName="absolute top-12 left-2 md:left-24 lg:left-10 w-80 h-90 lg:w-70 lg-84 rotate-[-10deg] z-10"
+            rightClassName="absolute top-45 left-26 md:left-72 lg:left-50 w-72 h-72 lg:w-64 lg:h-68 rotate-[12deg] z-20"
+          />
+        </div>
         <div className="absolute top-10 right-20 md:right-40 w-72 h-72 bg-[#11b505]/50 md:bg-[#4d93fb]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
         <div className="absolute bottom-20 left-40 w-72 h-72 bg-[#11b505]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
