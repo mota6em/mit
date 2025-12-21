@@ -74,17 +74,21 @@ export default function EventsSection({
     >
       {/** Animated section header component */}
       <motion.h2
-        className="text-4xl md:text-5xl font-bold Carena-font text-center tracking-wide"
+        className="text-3xl md:text-4xl text-center tracking-wide mb-4"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <span
-          className={type === "upcoming" ? "text-green-600" : "text-gray-500"}
+        <h2
+          className={
+            type === "upcoming"
+              ? "text-green-600 poppins.className font-semibold"
+              : "text-gray-500 poppins.className font-semibold"
+          }
         >
           {titleText}
-        </span>
+        </h2>
       </motion.h2>
       {/** Responsive grid displaying event cards or skeletons */}
       <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
@@ -177,7 +181,7 @@ export default function EventsSection({
           <div className="hidden md:block mb-8">
             <Link
               href={linkHref}
-              className={`group inline-flex items-center gap-2 text-md rounded-full font-medium font-serif transition-all duration-300 ${
+              className={`group inline-flex items-center gap-2 text-md rounded-full font-semibold transition-all duration-300 ${
                 type === "upcoming" ? " text-green-700" : "  text-gray-800"
               }`}
             >

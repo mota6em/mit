@@ -70,7 +70,7 @@ const Statistics = () => {
     <section className="py-20 bg-white border-y border-gray-50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold Carena-font text-[#2D9B4A] mb-4">
+          <h2 className="text-3xl md:text-4xl  poppins.className font-semibold text-[#2D9B4A] mb-4">
             {t("title")}
           </h2>
           <div className="w-16 h-1 bg-[#2D9B4A] mx-auto rounded-full" />
@@ -90,7 +90,7 @@ const Statistics = () => {
                 <stat.icon className="text-3xl" aria-hidden="true" />
               </div>
 
-              <span className="text-5xl md:text-6xl font-bold text-gray-800 mb-2">
+              <span className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
                 <Counter value={stat.target} suffix={stat.suffix} />
               </span>
 
