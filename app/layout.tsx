@@ -13,7 +13,7 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   title: "MIT - Muszlim Ifjúság Társaság",
   description:
-    "MIT is a student-run community built to support Muslim students in Hungary, help them connect, grow, and feel at home.",
+    "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of sincerity, community, and excellence (ihsan), MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose.",
 };
 
 export default function RootLayout({
