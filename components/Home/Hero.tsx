@@ -80,7 +80,7 @@ export default function Hero({ images }: HeroProps) {
 
       {/** * Content Overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 md:mt-3 md:px-6 space-y-1">
-        <h1 className="text-4xl Carena-font font-serif md:text-6xl font-bold relative">
+        <h1 className="text-4xl poppins.className md:text-6xl font-bold relative">
           <span className="text-[#f1c34c] drop-shadow-[0_0_4px_black]">
             {t("title").split(" ")[0]}{" "}
           </span>
