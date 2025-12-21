@@ -123,7 +123,7 @@ export default function EventsSection({
                 >
                   <BlogCard
                     bgImg={p.img}
-                    authorImg="/imgs/icon.jpg"
+                    authorImg="/imgs/icons/icon.jpg"
                     authorName={t("latestPrograms.authorName")}
                     readTime={displayDate}
                     title={title}
