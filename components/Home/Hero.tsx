@@ -3,11 +3,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-interface HeroProps {
-  images: string[];
-}
-
-export default function Hero({ images }: HeroProps) {
+export default function Hero() {
   const t = useTranslations("home");
 
   return (
