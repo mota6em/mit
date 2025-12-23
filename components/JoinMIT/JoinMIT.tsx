@@ -131,14 +131,14 @@ export default function JoinMIT() {
               color="green"
             />
 
-            <h1 className="text-5xl md:text-6xl font-semibold mb-6 md:mb-2">
-              <span className="text-[#e8b030] drop-shadow-sm">
+            <h1 className="text-4xl md:text-6xl font-semibold mb-6 md:mb-2">
+              <span className="text-[#4d93fb] drop-shadow-sm">
                 {t("title").split(" ")[0] || "Join"}{" "}
               </span>
               <span className="text-[#11b505] drop-shadow-sm">
                 {t("title").split(" ")[1] || "The"}
               </span>{" "}
-              <span className="text-[#4d93fb] drop-shadow-sm">
+              <span className="text-[#e8b030] drop-shadow-sm">
                 {t("title").split(" ")[2] || "Family"}
               </span>
             </h1>
