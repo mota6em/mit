@@ -10,7 +10,7 @@ import BlogCard from "../BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { ApiEvent, dayMap } from "@/lib/types";
 import { getEvents } from "@/lib/eventService";
-
+ 
 interface EventsSectionProps {
   type: "upcoming" | "past";
   limit?: number;
@@ -101,7 +101,7 @@ export default function EventsSection({
               const title = locale === "hu" ? p.title_hu : p.title_en;
               const desc = locale === "hu" ? p.desc_hu : p.desc_en;
               const note = locale === "hu" ? p.note_hu : p.note_en;
-              const eventId = p._id || p.id;
+              const eventId = p.slug || p._id || p.id;
 
               let displayDate = "";
               if (p.isRecurring && p.recurringDays?.length) {
