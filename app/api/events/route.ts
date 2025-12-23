@@ -55,11 +55,14 @@ export async function POST(req: Request) {
 
     // CREATE or UPDATE Action
     if (body._id) {
-      await Event.findByIdAndUpdate(body._id, body);
+      const event = await Event.findById(body._id);
+      if (event) {
+        Object.assign(event, body);
+        await event.save();
+      }
     } else {
       await Event.create(body);
     }
-
     // Return the updated list to refresh UI
     const events = await Event.find({}).sort({ date: -1 });
     return NextResponse.json({ success: true, events });
