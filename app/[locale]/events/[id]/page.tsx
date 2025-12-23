@@ -1,22 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next";
-import dbConnect from "@/lib/mongodb";
-import Event from "@/models/Event";
-import { isValidObjectId } from "mongoose";
 import EventClientPage from "@/components/Events/EventClientPage";
-
-async function getEvent(id: string) {
-  await dbConnect();
-  if (!isValidObjectId(id)) return null;
-  const event = await Event.findById(id).lean();
-  if (!event) return null;
-
-  // Convert MongoDB Objects to plain strings for Client Component
-  return {
-    ...event,
-    _id: event._id.toString(),
-    date: event.date.toISOString ? event.date.toISOString() : event.date,
-  };
-}
+import { getEvents } from "@/lib/eventService";
 
 type Props = {
   params: Promise<{ id: string; locale: string }>;
@@ -30,7 +14,7 @@ export async function generateMetadata(
   const { id, locale: rawLocale } = await params;
   const locale = rawLocale === "hu" ? "hu" : "en";
 
-  const event: any = await getEvent(id);
+  const event: any = await getEvents(id);
 
   if (!event) {
     return {
@@ -68,7 +52,7 @@ export async function generateMetadata(
 // --- MAIN SERVER COMPONENT ---
 export default async function EventPageServer({ params }: Props) {
   const { id } = await params;
-  const event = await getEvent(id);
+  const event = await getEvents(id);
 
   // Pass the event data to the client component
   return <EventClientPage initialEvent={event} />;
