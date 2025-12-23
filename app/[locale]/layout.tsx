@@ -50,8 +50,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
 
     icons: {
-      icon: [{ url: "/imgs/icon.jpg" }],
-      apple: [{ url: "/imgs/icon.jpg" }],
+      icon: [{ url: "/imgs/icons/icon.jpg" }],
+      apple: [{ url: "/imgs/icons/icon.jpg" }],
     },
   };
 }
