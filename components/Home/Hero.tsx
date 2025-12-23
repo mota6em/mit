@@ -7,7 +7,7 @@ export default function Hero() {
   const t = useTranslations("home");
 
   return (
-    <div className="relative w-full min-h-[93.5vh] max-h-screen md:min-h-[87vh] md:max-h-[90vh] overflow-hidden">
+    <div className="relative w-full min-h-[85vh] max-h-[85vh] md:min-h-[87vh] md:max-h-[90vh] overflow-hidden">
       {/** * Desktop Background Slider */}
       <div className="hidden lg:block h-full">
         <Image
