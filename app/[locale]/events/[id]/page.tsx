@@ -1,22 +1,8 @@
 import { Metadata, ResolvingMetadata } from "next";
-import dbConnect from "@/lib/mongodb";
-import Event from "@/models/Event";
-import { isValidObjectId } from "mongoose";
 import EventClientPage from "@/components/Events/EventClientPage";
+import { getEvent } from "@/lib/eventService";
 
-async function getEvent(id: string) {
-  await dbConnect();
-  if (!isValidObjectId(id)) return null;
-  const event = await Event.findById(id).lean();
-  if (!event) return null;
 
-  // Convert MongoDB Objects to plain strings for Client Component
-  return {
-    ...event,
-    _id: event._id.toString(),
-    date: event.date.toISOString ? event.date.toISOString() : event.date,
-  };
-}
 
 type Props = {
   params: Promise<{ id: string; locale: string }>;
