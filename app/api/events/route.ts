@@ -7,20 +7,19 @@ import { auth } from "@/auth";
 export async function GET(request: Request) {
   try {
     await dbConnect();
-
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
+    const identifier = searchParams.get("id"); // This could be _id or slug
 
-    // Fetch Single Event
-    if (id) {
-      if (!isValidObjectId(id)) {
-        return NextResponse.json(
-          { error: "Invalid ID format" },
-          { status: 400 }
-        );
+    if (identifier) {
+      // find by slug first, then fallback to _id if it's a valid ObjectId
+      let query = { slug: identifier };
+
+      const event = await Event.findOne(query);
+
+      if (!event && isValidObjectId(identifier)) {
+        const eventById = await Event.findById(identifier);
+        if (eventById) return NextResponse.json(eventById);
       }
-
-      const event = await Event.findById(id);
 
       if (!event) {
         return NextResponse.json({ error: "Event not found" }, { status: 404 });
@@ -29,17 +28,16 @@ export async function GET(request: Request) {
       return NextResponse.json(event);
     }
 
-    // Fetch All Events (Default)
     const events = await Event.find({}).sort({ date: -1 });
     return NextResponse.json(events);
   } catch (error) {
-    console.error("Database Error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
     );
   }
 }
+
 export async function POST(req: Request) {
   const session = await auth();
   if (!session) {
@@ -50,19 +48,15 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
 
-    // DELETE Action
     if (body.action === "delete") {
       await Event.findByIdAndDelete(body.id);
       return NextResponse.json({ success: true });
     }
 
     // CREATE or UPDATE Action
-    if (body._id || body.id) {
-      // Handle update
-      const idToUpdate = body._id || body.id;
-      await Event.findByIdAndUpdate(idToUpdate, body);
+    if (body._id) {
+      await Event.findByIdAndUpdate(body._id, body);
     } else {
-      // Handle create
       await Event.create(body);
     }
 
@@ -70,7 +64,6 @@ export async function POST(req: Request) {
     const events = await Event.find({}).sort({ date: -1 });
     return NextResponse.json({ success: true, events });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { success: false, message: "Database Error" },
       { status: 500 }

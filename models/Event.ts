@@ -2,6 +2,7 @@ import mongoose, { Schema, models } from "mongoose";
 
 const eventSchema = new Schema(
   {
+    slug: { type: String, unique: true },
     img: { type: String, required: false },
     title_en: { type: String, required: true },
     title_hu: { type: String, required: true },
@@ -19,6 +20,28 @@ const eventSchema = new Schema(
   { timestamps: true }
 );
 
-const Event = models.Event || mongoose.model("Event", eventSchema);
+// Middleware to generate unique slug before saving
+eventSchema.pre("save", async function (next) {
+  if (!this.isModified("title_en")) return next();
 
+  // Create base slug:
+  const baseSlug = this.title_en
+    .toLowerCase()
+    .replace(/[^\w ]+/g, "")
+    .replace(/ +/g, "-");
+
+  let slug = baseSlug;
+  let counter = 1;
+
+  // Check for uniqueness
+  while (await mongoose.models.Event.findOne({ slug })) {
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+
+  this.slug = slug;
+  next();
+});
+
+const Event = models.Event || mongoose.model("Event", eventSchema);
 export default Event;
