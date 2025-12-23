@@ -21,8 +21,8 @@ const eventSchema = new Schema(
 );
 
 // Middleware to generate unique slug before saving
-eventSchema.pre("save", async function (next) {
-  if (!this.isModified("title_en")) return next();
+eventSchema.pre("save", async function () {
+  if (!this.isModified("title_en")) return;
 
   // Create base slug:
   const baseSlug = this.title_en
@@ -40,7 +40,6 @@ eventSchema.pre("save", async function (next) {
   }
 
   this.slug = slug;
-  next();
 });
 
 const Event = models.Event || mongoose.model("Event", eventSchema);
