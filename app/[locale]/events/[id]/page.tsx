@@ -1,12 +1,28 @@
 import { Metadata, ResolvingMetadata } from "next";
+import dbConnect from "@/lib/mongodb";
+import Event from "@/models/Event";
+import { isValidObjectId } from "mongoose";
 import EventClientPage from "@/components/Events/EventClientPage";
-import { getEvents } from "@/lib/eventService";
+
+// Direct database helper for Server-Side use
+async function getEventServerSide(identifier: string) {
+  await dbConnect();
+
+  let event = await Event.findOne({ slug: identifier }).lean();
+
+  if (!event && isValidObjectId(identifier)) {
+    event = await Event.findById(identifier).lean();
+  }
+
+  if (!event) return null;
+
+  return JSON.parse(JSON.stringify(event));
+}
 
 type Props = {
   params: Promise<{ id: string; locale: string }>;
 };
 
-// --- GENERATE METADATA (SEO) ---
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -14,46 +30,26 @@ export async function generateMetadata(
   const { id, locale: rawLocale } = await params;
   const locale = rawLocale === "hu" ? "hu" : "en";
 
-  const event: any = await getEvents(id);
+  const event = await getEventServerSide(id);
 
   if (!event) {
-    return {
-      title: "Event Not Found",
-    };
+    return { title: "Event Not Found" };
   }
 
-  //  Prepare Metadata
   const title = locale === "hu" ? event.title_hu : event.title_en;
-  const description = locale === "hu" ? event.desc_hu : event.desc_en;
-
-  const previousImages = (await parent).openGraph?.images || [];
-  const eventImages = event.img
-    ? [event.img]
-    : ["/imgs/icons/icon.jpg", ...previousImages];
-
   return {
     title: title,
-    description: description,
+    description: locale === "hu" ? event.desc_hu : event.desc_en,
     openGraph: {
-      title: title,
-      description: description,
-      images: eventImages,
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: title,
-      description: description,
-      images: eventImages,
+      title,
+      images: event.img ? [event.img] : ["/imgs/icons/icon.jpg"],
     },
   };
 }
 
-// --- MAIN SERVER COMPONENT ---
 export default async function EventPageServer({ params }: Props) {
   const { id } = await params;
-  const event = await getEvents(id);
+  const event = await getEventServerSide(id);
 
-  // Pass the event data to the client component
   return <EventClientPage initialEvent={event} />;
 }
