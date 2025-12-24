@@ -40,17 +40,17 @@ export default function SocialMediaIcons() {
     },
 
     {
-      icon: FaWhatsapp,
-      href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
-      bg: "bg-green-600",
-    },
-
-    {
       icon: HiOutlineMail,
       href: "mailto:muszlimifjusag@gmail.com",
       bg: "bg-orange-600",
       isEmail: true,
     },
+    {
+      icon: FaWhatsapp,
+      href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
+      bg: "bg-green-600",
+    },
+
   ];
 
   return (
