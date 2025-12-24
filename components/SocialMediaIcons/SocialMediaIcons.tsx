@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaCheck, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaCheck,
+  FaYoutube,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 
@@ -32,6 +38,13 @@ export default function SocialMediaIcons() {
       href: "https://www.youtube.com/@muszlimifjusagitarsasag/",
       bg: "bg-red-600",
     },
+
+    {
+      icon: FaWhatsapp,
+      href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
+      bg: "bg-green-600",
+    },
+
     {
       icon: HiOutlineMail,
       href: "mailto:muszlimifjusag@gmail.com",
