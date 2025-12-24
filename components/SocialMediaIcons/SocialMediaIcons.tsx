@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaCheck } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaCheck, FaYoutube } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 
@@ -25,6 +25,12 @@ export default function SocialMediaIcons() {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
       bg: "bg-pink-600",
+    },
+
+    {
+      icon: FaYoutube,
+      href: "https://www.youtube.com/@muszlimifjusagitarsasag/",
+      bg: "bg-red-600",
     },
     {
       icon: HiOutlineMail,
@@ -72,9 +78,7 @@ export default function SocialMediaIcons() {
             rel="noopener noreferrer"
             className="relative p-2 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
           >
-            <div
-              className={`absolute inset-0 rounded-full ${s.bg}`}
-            ></div>
+            <div className={`absolute inset-0 rounded-full ${s.bg}`}></div>
             <Icon size={20} className="relative z-10" />
           </a>
         );
