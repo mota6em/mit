@@ -34,7 +34,9 @@
     "about mit": "RÓLUNK",
     "join mit": "CSATLAKOZZ",
     "subtitle": "Muszlim Ifjúsági Társaság",
-    "copied": "Email Másolva!"
+    "copied": "Email Másolva!",
+    "copyright": "Minden jog fenntartva.",
+    "developedBy": "Fejlesztette:"
   },
   "home": {
     "statistics": {
@@ -85,10 +87,12 @@
     "followTag": "Maradj Kapcsolatban",
     "socialDescription": "Kövess minket a közösségi médiában, hogy értesülj a legfrissebb eseményeinkről, programjainkról és közösségi tevékenységeinkről.",
     "followUs": "Kövess Minket",
+    "copyEmail": "Másolj az Email cimet",
+    "whatsapp-join": "Csatlakozz",
     "socialText": {
       "facebook": "Csatlakozz Facebook közösségünkhöz a napi frissítésekért",
       "instagram": "Kövesd utunkat fotókon és történeteken keresztül",
-      "whatsapp": "Csatlakozz WhatsApp csoportunkhoz az azonnali frissítésekért",
+      "whatsapp": "Csatlakozz a szakmai közösségünkhöz WhatsAppon",
       "email": "Lépj velünk kapcsolatba közvetlenül emailen"
     },
     "stayUpdated": "Maradj Naprakész",

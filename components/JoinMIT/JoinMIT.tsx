@@ -53,28 +53,32 @@ export default function JoinMIT() {
       href: "https://www.facebook.com/muszlimifjusag/",
       color: "text-blue-800",
       bg: "bg-blue-50",
-      name: "Facebook",
+      name: "MIT - Facebook",
+      id: "facebook",
     },
     {
       icon: FaInstagram,
       href: "https://www.instagram.com/muszlimifjusag/",
       color: "text-pink-800",
       bg: "bg-pink-50",
-      name: "Instagram",
+      name: "MIT - Instagram",
+      id: "instagram",
     },
     {
       icon: HiOutlineMail,
       href: "#",
       color: "text-yellow-800",
       bg: "bg-yellow-50",
-      name: "Email",
+      name: "MIT - Email",
+      id: "email",
     },
     {
       icon: FaWhatsapp,
-      href: "https://wa.me/123456789",
+      href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
       color: "text-green-800",
       bg: "bg-green-50",
-      name: "WhatsApp",
+      name: "MIT - Professional community ",
+      id: "whatsapp",
     },
   ];
 
@@ -237,17 +241,12 @@ export default function JoinMIT() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {socialLinks.map((social, index) => {
             const Icon = social.icon;
-            const isEmail = social.name === "Email";
+            const isEmail = social.id === "email";
+            const isWhatsApp = social.id === "whatsapp";
+            const cardStyles =
+              "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-gray-100";
 
-            const isWhatsApp = social.name === "WhatsApp";
-
-            const cardStyles = isWhatsApp
-              ? "opacity-60 grayscale cursor-not-allowed bg-gray-50 border-gray-200"
-              : "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-gray-100";
-
-            const iconWrapperStyles = isWhatsApp
-              ? "bg-gray-200 text-gray-400"
-              : `${social.bg} group-hover:scale-110`;
+            const iconWrapperStyles = `${social.bg} group-hover:scale-110`;
 
             const content = (
               <div
@@ -257,45 +256,33 @@ export default function JoinMIT() {
                 <div
                   className={`w-10 h-10 md:w-16 md:h-16 mx-auto rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 transition-transform ${iconWrapperStyles}`}
                 >
-                  <Icon
-                    className={`text-lg md:text-3xl ${
-                      isWhatsApp ? "text-gray-500" : social.color
-                    }`}
-                  />
+                  <Icon className={`text-lg md:text-3xl ${social.color}`} />
                 </div>
 
                 {/* Compact Title */}
                 <h3
-                  className={`text-md md:text-xl font-semibold mb-1 md:mb-2 ${
-                    isWhatsApp ? "text-gray-400" : "text-gray-800"
-                  }`}
+                  className={`text-md md:text-xl font-semibold mb-1 md:mb-2  text-gray-800 `}
                 >
                   {social.name}
                 </h3>
 
                 {/* Compact Description */}
                 <p className="text-gray-500 text-[12px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
-                  {t(`socialText.${social.name.toLowerCase()}`)}
+                  {t(`socialText.${social.id.toLowerCase()}`)}
                 </p>
 
                 {/* Action Text */}
                 <div
-                  className={`text-[12px] md:text-sm font-semibold mt-auto transition-opacity ${
-                    isWhatsApp
-                      ? "text-gray-400 uppercase tracking-widest text-[9px]"
-                      : `${social.color} opacity-80 group-hover:opacity-100`
-                  }`}
+                  className={`text-[12px] md:text-sm font-semibold mt-auto transition-opacity ${`${social.color} opacity-80 group-hover:opacity-100`}`}
                 >
                   {isWhatsApp ? (
-                    <span className="bg-gray-200 px-2 py-1 animate-pulse rounded text-green-600">
-                      Available Soon
-                    </span>
+                    <span>{t("whatsapp-join")}</span>
                   ) : isEmail && emailCopied ? (
                     tNav("copied")
                   ) : isEmail ? (
-                    "Copy Email"
+                    <span>{t("copyEmail")}</span>
                   ) : (
-                    "Follow Us"
+                    <span>{t("followUs")}</span>
                   )}
                 </div>
               </div>
@@ -310,9 +297,7 @@ export default function JoinMIT() {
                 viewport={{ once: true }}
                 className="h-full"
               >
-                {isWhatsApp ? (
-                  <div className="h-full block">{content}</div>
-                ) : isEmail ? (
+                {isEmail ? (
                   <button
                     onClick={handleEmailCopy}
                     className="w-full h-full block text-left"

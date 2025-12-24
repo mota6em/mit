@@ -34,7 +34,9 @@
     "about mit": "ABOUT MIT",
     "join mit": "JOIN MIT",
     "subtitle": "Muszlim Ifjúsági Társaság",
-    "copied": "Email Copied!"
+    "copied": "Email Copied!",
+    "copyright": "All rights reserved.",
+    "developedBy": "Developed by"
   },
   "home": {
     "statistics": {
@@ -112,10 +114,11 @@
     "followTag": "Stay Connected",
     "socialDescription": "Follow us on social media to stay updated with our latest events, programs, and community activities.",
     "followUs": "Follow Us",
+    "whatsapp-join": "Join Us",
     "socialText": {
       "facebook": "Join our Facebook community for daily updates and discussions",
       "instagram": "Follow our journey through photos and stories",
-      "whatsapp": "Join our WhatsApp group for instant updates",
+      "whatsapp": "Join our proffisional community on WhatsApp",
       "email": "Reach out to us directly via email"
     },
     "stayUpdated": "Stay In The Loop",
