@@ -5,16 +5,11 @@ import HeroImageCollage from "../reusable/HeroImageCollage";
 import { SectionTag } from "./SectionTag";
 import { HeroButtons } from "./HeroButtons";
 import { HeroBadges } from "./HeroBadges";
-import { HiSparkles } from "react-icons/hi";
 
 const Hero = () => {
   const t = useTranslations("events");
 
-  const titleParts = t("hero.title").split(" ") || [
-    "Sharing",
-    "Special",
-    "Moments",
-  ];
+  const titleParts = t("hero.title").split(" ");
 
   return (
     <div className="relative w-full overflow-hidden bg-white pt-12 pb-16 md:pb-4 md:pt-0 md:px-5">
