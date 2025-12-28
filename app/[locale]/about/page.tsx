@@ -1,5 +1,17 @@
-import AboutUs from "@/components/About/AboutUs";
+import AchievementsSection from "@/components/About/AchievementsSection";
+import CommunityRoleSection from "@/components/About/CommunityRoleSection";
+import CoreServicesSection from "@/components/About/CoreServicesSection";
+import HeroSection from "@/components/About/HeroSection";
+import VisionMissionSection from "@/components/About/VisionMissionSection";
 
 export default function AboutPage() {
-  return <AboutUs />;
+  return (
+    <div className="w-full">
+      <HeroSection />
+      <VisionMissionSection />
+      <CoreServicesSection />
+      <CommunityRoleSection />
+      <AchievementsSection />
+    </div>
+  );
 }
