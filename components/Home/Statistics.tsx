@@ -11,7 +11,7 @@ const Statistics = () => {
   return (
     <section className="py-24 bg-white border-y border-gray-100 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader title={t("title")} className="mb-20" underLine />
+        <SectionHeader title={t("title")} className="mb-14" underLine />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24">
           {STATS_CONFIG.map((stat) => (
