@@ -8,6 +8,7 @@ import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
 import { FaArrowRightLong } from "react-icons/fa6";
+import SectionHeader from "../reusable/SectionHeader";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -27,16 +28,10 @@ export default function EventsSection(props: EventsSectionProps) {
       id={sectionId}
       className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6 scroll-mt-28"
     >
-      {/** Animated Header */}
-      <motion.div
+      <SectionHeader
+        title={titleText}
         className="text-3xl md:text-4xl text-center tracking-wide mb-2 md:mb-4"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <h2 className="font-semibold text-gray-800">{titleText}</h2>
-      </motion.div>
+      />
 
       {/** Cards Grid */}
       <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
