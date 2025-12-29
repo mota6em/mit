@@ -4,6 +4,7 @@ import "../globals.css";
 import type { Metadata } from "next";
 import Footer from "@/components/Footer/Footer";
 import NavBar from "@/components/NavBar/NavBar";
+import { SWRProvider } from "@/components/providers/SWRProvider";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -80,9 +81,11 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className="flex flex-col min-h-screen">
         <I18nProvider messages={messages} locale={locale}>
-          <NavBar />
-          <div className="flex-1">{children}</div>
-          <Footer />
+          <SWRProvider>
+            <NavBar />
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </SWRProvider>
         </I18nProvider>
       </body>
     </html>

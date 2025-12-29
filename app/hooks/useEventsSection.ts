@@ -16,17 +16,10 @@ export function useEventsSection({
   const sectionId = `${type}-events`;
 
   // Data Fetching with Caching
-  const {
-    data: events = [],
-    isLoading,
-    error,
-  } = useSWR("events-data", () => getEvents(), {
-    revalidateOnFocus: false,
-    dedupingInterval: 180000, // 3 minutes
-  });
+  const { data: events = [], isLoading } = useSWR("events-data", () =>
+    getEvents()
+  );
 
-  if (error) console.error("Event fetch failed:", error);
-  
   // Filtering Logic (Memoized)
   const filteredPrograms = useMemo(() => {
     // Safety check: ensure events is an array
