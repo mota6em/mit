@@ -7,6 +7,7 @@ import BlogCard from "../BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -102,26 +103,14 @@ export default function EventsSection(props: EventsSectionProps) {
           <div className="hidden md:block mb-8">
             <Link
               href={linkHref}
-              className="group inline-flex items-center gap-2 text-md rounded-full font-semibold transition-all duration-300 text-gray-800 hover:text-gray-900 hover:scale-105"
+              className="group inline-flex items-center gap-2 text-md rounded-full font-medium transition-all duration-300 text-gray-700 hover:text-gray-900"
             >
               <span>
                 {type === "upcoming"
                   ? t("latestPrograms.showAllUpcoming")
                   : t("latestPrograms.showAllPast")}
               </span>
-              <svg
-                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+              <FaArrowRightLong className="group-hover:translate-x-1 transition-transform duration-100 ease-in-out" />
             </Link>
           </div>
         )}
