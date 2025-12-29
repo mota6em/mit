@@ -8,6 +8,7 @@ interface SectionHeaderProps {
   icon?: React.ReactNode;
   topText?: string;
   className?: string;
+  underLine?: boolean;
 }
 
 export default function SectionHeader({
@@ -15,11 +16,10 @@ export default function SectionHeader({
   icon,
   topText,
   className = "",
+  underLine = false,
 }: SectionHeaderProps) {
   return (
-    <div
-      className={`flex flex-col items-center text-center ${className}`}
-    >
+    <div className={`flex flex-col items-center text-center ${className}`}>
       {icon && (
         <motion.div
           initial={{ scale: 0 }}
@@ -50,6 +50,9 @@ export default function SectionHeader({
       >
         {title}
       </motion.h2>
+      {underLine && (
+        <div className="w-16 h-0.5 bg-gray-800 mx-auto rounded-full mb-4 mt-2" />
+      )}
     </div>
   );
 }

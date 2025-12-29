@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { FaUsers, FaCalendarAlt, FaHashtag } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import SectionHeader from "../reusable/SectionHeader";
 
 const Counter = ({
   value,
@@ -69,12 +70,7 @@ const Statistics = () => {
   return (
     <section className="py-20 bg-white border-y border-gray-50">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-8 md:mb-10">
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-2">
-            {t("title")}
-          </h2>
-          <div className="w-16 h-0.5 bg-gray-800 mx-auto rounded-full" />
-        </div>
+        <SectionHeader title={t("title")} className="mb-14" underLine/>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-start">
           {stats.map((stat, index) => (
