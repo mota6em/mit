@@ -47,7 +47,9 @@ export function useEventsSection({
       let displayDate = "";
       if (p.isRecurring && p.recurringDays?.length) {
         displayDate = p.recurringDays
-          .map((day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day)
+          .map(
+            (day: string) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
+          )
           .join(", ");
       } else if (p.date) {
         displayDate = new Date(p.date).toLocaleDateString(
