@@ -3,7 +3,7 @@
 import { useRef, memo } from "react";
 import { motion, useInView } from "framer-motion";
 import { useCounter } from "@/app/hooks/useCounter";
-import { STATS_CONFIG } from "@/constants/statistics";
+import { STATS_CONFIG } from "@/data/constants/statistics";
 
 interface StatItemProps {
   stat: (typeof STATS_CONFIG)[number];
