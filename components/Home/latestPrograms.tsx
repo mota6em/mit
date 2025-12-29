@@ -1,5 +1,5 @@
 "use client";
-import BlogCard from "../BlogCard";
+import BlogCard from "../Events/BlogCard";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
