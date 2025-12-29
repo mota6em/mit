@@ -42,3 +42,18 @@ export interface NewsletterSubscriber {
   email: string;
   createdAt?: string;
 }
+
+export interface EventsSectionProps {
+  type: "upcoming" | "past";
+  limit?: number;
+  showViewAll?: boolean;
+  filterMode?: "all" | "recurring_only" | "single_only";
+}
+
+export interface EventDisplayData extends ApiEvent {
+  displayDate: string;
+  displayTitle: string;
+  displayDesc: string;
+  displayNote: string;
+  eventId: string;
+}

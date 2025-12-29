@@ -1,92 +1,43 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { FaArrowRight } from "react-icons/fa";
 import BlogCard from "../BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
-import { ApiEvent, dayMap } from "@/lib/types";
-import { getEvents } from "@/lib/eventService";
- 
-interface EventsSectionProps {
-  type: "upcoming" | "past";
-  limit?: number;
-  showViewAll?: boolean;
-  filterMode?: "all" | "recurring_only" | "single_only";
-}
+import { EventsSectionProps } from "@/lib/types";
+import { useEventsSection } from "@/app/hooks/useEventsSection";
 
-export default function EventsSection({
-  type,
-  limit,
-  showViewAll = true,
-  filterMode = "all",
-}: EventsSectionProps) {
-  const t = useTranslations("home");
-  const params = useParams();
-  const locale = (params?.locale as string) || "en";
-  const [events, setEvents] = useState<ApiEvent[]>([]);
-  const [loading, setLoading] = useState(true);
-  const sectionId = `${type}-events`;
+export default function EventsSection(props: EventsSectionProps) {
+  const {
+    loading,
+    displayedPrograms,
+    titleText,
+    linkHref,
+    sectionId,
+    locale,
+    t,
+  } = useEventsSection(props);
 
-  /** Synchronization logic for external event data */
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await getEvents();
-      setEvents(data);
-      setLoading(false);
-    };
-    loadData();
-  }, []);
-
-  /** Logic for categorizing and filtering event lists */
-  const filteredPrograms = events.filter((p) => {
-    if (filterMode === "recurring_only" && !p.isRecurring) return false;
-    if (filterMode === "single_only" && p.isRecurring) return false;
-    if (p.isRecurring) return type === "upcoming";
-    if (!p.date) return false;
-
-    const eventDate = new Date(p.date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return type === "upcoming" ? eventDate >= today : eventDate < today;
-  });
-
-  /** Configuration for section titles and navigation links */
-  const displayedPrograms = limit
-    ? filteredPrograms.slice(0, limit)
-    : filteredPrograms;
-  const isWeeklySection =
-    filterMode === "recurring_only" && type === "upcoming";
-  const titleText = isWeeklySection
-    ? "Weekly Gatherings"
-    : t(
-        type === "upcoming"
-          ? "latestPrograms.upcomingTitle"
-          : "latestPrograms.pastTitle"
-      );
-
-  const linkHref = `/${locale}/events#${sectionId}`;
+  const { type, limit, showViewAll = true, filterMode = "all" } = props;
 
   return (
     <section
       id={sectionId}
       className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6 scroll-mt-28"
     >
-      {/** Animated section header component */}
-      <motion.h2
-        className="text-3xl md:text-4xl text-center tracking-wide  mb-2 md:mb-4"
+      {/** Animated Header */}
+      <motion.div
+        className="text-3xl md:text-4xl text-center tracking-wide mb-2 md:mb-4"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <h2 className="font-semibold text-gray-800">{titleText}</h2>
-      </motion.h2>
-      {/** Responsive grid displaying event cards or skeletons */}
+      </motion.div>
+
+      {/** Cards Grid */}
       <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
         {loading
           ? Array.from({ length: limit || 3 }).map((_, i) => (
@@ -97,47 +48,28 @@ export default function EventsSection({
                 <BlogCardSkeleton />
               </div>
             ))
-          : displayedPrograms.map((p, index) => {
-              const title = locale === "hu" ? p.title_hu : p.title_en;
-              const desc = locale === "hu" ? p.desc_hu : p.desc_en;
-              const note = locale === "hu" ? p.note_hu : p.note_en;
-              const eventId = p.slug || p._id || p.id;
+          : displayedPrograms.map((p, index) => (
+              <div
+                key={p.eventId}
+                className="min-w-[75vw] md:min-w-0 snap-start h-full"
+              >
+                <BlogCard
+                  bgImg={p.img}
+                  authorImg="/imgs/icons/icon.jpg"
+                  authorName={t("latestPrograms.authorName")}
+                  readTime={p.displayDate}
+                  title={p.displayTitle}
+                  desc={p.displayDesc}
+                  note={p.displayNote}
+                  eventUrl={`/${locale}/events/${p.eventId}`}
+                  index={index}
+                  isVerified={true}
+                  isPastEvent={type === "past"}
+                />
+              </div>
+            ))}
 
-              let displayDate = "";
-              if (p.isRecurring && p.recurringDays?.length) {
-                displayDate = p.recurringDays
-                  .map(
-                    (day) => dayMap[day]?.[locale === "hu" ? "hu" : "en"] || day
-                  )
-                  .join(", ");
-              } else if (p.date) {
-                displayDate = new Date(p.date).toLocaleDateString(
-                  locale === "hu" ? "hu-HU" : "en-US"
-                );
-              }
-
-              return (
-                <div
-                  key={eventId}
-                  className="min-w-[75vw] md:min-w-0 snap-start h-full"
-                >
-                  <BlogCard
-                    bgImg={p.img}
-                    authorImg="/imgs/icons/icon.jpg"
-                    authorName={t("latestPrograms.authorName")}
-                    readTime={displayDate}
-                    title={title}
-                    desc={desc}
-                    note={note}
-                    eventUrl={`/${locale}/events/${eventId}`}
-                    index={index}
-                    isVerified={true}
-                    isPastEvent={type === "past"}
-                  />
-                </div>
-              );
-            })}
-        {/** Mobile-specific navigation card for viewing all events */}
+        {/** Mobile "View All" Card */}
         {!loading && limit && showViewAll && displayedPrograms.length > 0 && (
           <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
             <Link
@@ -148,14 +80,10 @@ export default function EventsSection({
                   : "bg-gray-50 border-gray-300 hover:border-gray-500 hover:bg-gray-100"
               }`}
             >
-              <div
-                className={`w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-gray-800 group-hover:text-gray-900`}
-              >
+              <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-gray-800 group-hover:text-gray-900">
                 <FaArrowRight size={20} />
               </div>
-              <span
-                className={`font-semibold transition-colors text-gray-800 group-hover:text-gray-900`}
-              >
+              <span className="font-semibold transition-colors text-gray-800 group-hover:text-gray-900">
                 {type === "upcoming"
                   ? t("latestPrograms.showAllUpcoming")
                   : t("latestPrograms.showAllPast")}
@@ -164,7 +92,8 @@ export default function EventsSection({
           </div>
         )}
       </div>
-      {/** Desktop-specific navigation link for viewing all events */}
+
+      {/** Desktop "View All" Button */}
       {!loading &&
         limit &&
         showViewAll &&
@@ -173,7 +102,7 @@ export default function EventsSection({
           <div className="hidden md:block mb-8">
             <Link
               href={linkHref}
-              className={`group inline-flex items-center gap-2 text-md rounded-full font-semibold transition-all duration-300 text-gray-800 hover:text-gray-900 hover:scale-105`}
+              className="group inline-flex items-center gap-2 text-md rounded-full font-semibold transition-all duration-300 text-gray-800 hover:text-gray-900 hover:scale-105"
             >
               <span>
                 {type === "upcoming"
@@ -196,7 +125,8 @@ export default function EventsSection({
             </Link>
           </div>
         )}
-      {/** Fallback UI for empty event states */}
+
+      {/** Empty State */}
       {!loading && displayedPrograms.length === 0 && (
         <p className="text-gray-500 text-center py-8">
           {type === "upcoming"
