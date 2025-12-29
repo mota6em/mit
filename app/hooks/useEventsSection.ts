@@ -1,13 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import useSWR from "swr";
 import { getEvents } from "@/lib/eventService";
-import {
-  ApiEvent,
-  dayMap,
-  EventDisplayData,
-  EventsSectionProps,
-} from "@/lib/types";
+import { dayMap, EventDisplayData, EventsSectionProps } from "@/lib/types";
 
 export function useEventsSection({
   type,
@@ -19,32 +15,23 @@ export function useEventsSection({
   const locale = (params?.locale as string) || "en";
   const sectionId = `${type}-events`;
 
-  const [events, setEvents] = useState<ApiEvent[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Data Fetching with Caching
+  const {
+    data: events = [],
+    isLoading,
+    error,
+  } = useSWR("events-data", () => getEvents(), {
+    revalidateOnFocus: false,
+    dedupingInterval: 180000, // 3 minutes
+  });
 
-  // Data Fetching
-  useEffect(() => {
-    let mounted = true;
-    const loadData = async () => {
-      try {
-        const data = await getEvents();
-        if (mounted) {
-          setEvents(data);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Failed to load events", error);
-        if (mounted) setLoading(false);
-      }
-    };
-    loadData();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
+  if (error) console.error("Event fetch failed:", error);
+  
   // Filtering Logic (Memoized)
   const filteredPrograms = useMemo(() => {
+    // Safety check: ensure events is an array
+    if (!Array.isArray(events)) return [];
+
     return events.filter((p) => {
       if (filterMode === "recurring_only" && !p.isRecurring) return false;
       if (filterMode === "single_only" && p.isRecurring) return false;
@@ -59,12 +46,11 @@ export function useEventsSection({
     });
   }, [events, filterMode, type]);
 
-  //  Presentation Logic (Slicing & Formatting)
+  // Presentation Logic (Slicing & Formatting)
   const displayedPrograms: EventDisplayData[] = useMemo(() => {
     const sliced = limit ? filteredPrograms.slice(0, limit) : filteredPrograms;
 
     return sliced.map((p) => {
-      // Helper to format date
       let displayDate = "";
       if (p.isRecurring && p.recurringDays?.length) {
         displayDate = p.recurringDays
@@ -101,7 +87,7 @@ export function useEventsSection({
   const linkHref = `/${locale}/events#${sectionId}`;
 
   return {
-    loading,
+    loading: isLoading,
     displayedPrograms,
     titleText,
     linkHref,
