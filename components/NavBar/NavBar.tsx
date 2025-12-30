@@ -3,13 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
 import { X } from "lucide-react";
 import LanguageSwitch from "./LanguageSwitch";
 import { CgMenuRight } from "react-icons/cg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMemo } from "react";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,13 +19,15 @@ export default function NavBar() {
   // Extract locale from pathname
   const locale = pathname.split("/")[1] || "en";
 
-  const navLinks = [
-    { href: `/${locale}`, label: t("home") },
-    { href: `/${locale}/about`, label: t("about mit") },
-    { href: `/${locale}/events`, label: t("events") },
-    { href: `/${locale}/join-mit`, label: t("join mit") },
-  ];
-
+  const navLinks = useMemo(
+    () => [
+      { href: `/${locale}`, label: t("home") },
+      { href: `/${locale}/about`, label: t("about mit") },
+      { href: `/${locale}/events`, label: t("events") },
+      { href: `/${locale}/join-mit`, label: t("join mit") },
+    ],
+    [locale, t]
+  );
   return (
     <header className="md:backdrop-blur-md bg-white md:bg-white/80 sticky top-0 z-50 px-2 md:px-10">
       <div className="container flex justify-between items-center px-0 py-1 md:py-0.5">
