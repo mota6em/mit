@@ -3,8 +3,6 @@ import JoinMITNewsletterSection from "@/components/JoinMIT/JoinMITNewsletterSect
 import JoinMITSocialSection from "@/components/JoinMIT/JoinMITSocialSection";
 import JoinMITVolunteerSection from "@/components/JoinMIT/JoinMITVolunteerSection";
 
-export const dynamic = "force-dynamic";
-
 export default function JoinMitPage() {
   return (
     <div className="relative w-full min-h-screen  overflow-hidden">
