@@ -34,7 +34,7 @@ export default function EventsSection(props: EventsSectionProps) {
       />
 
       {/** Cards Grid */}
-      <div className="flex overflow-x-auto items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full snap-x snap-mandatory scrollbar-hide pb-4 px-2">
+      <div className="flex overflow-x-auto  items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full md:w-fit md:gap-10 snap-x snap-mandatory scrollbar-hide pb-4 px-2">
         {loading
           ? Array.from({ length: limit || 3 }).map((_, i) => (
               <div

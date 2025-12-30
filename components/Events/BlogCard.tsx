@@ -39,7 +39,7 @@ export default function BlogCard({
   return (
     <Link href={eventUrl}>
       <motion.article
-        className="w-full max-w-md bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative flex flex-col h-full"
+        className="w-full max-w-sm md:max-w-xs bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative flex flex-col h-full"
         initial={{ opacity: 0.5, y: 0 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -82,7 +82,7 @@ export default function BlogCard({
               src={bgImg}
               alt={title}
               fill
-              sizes="(max-width: 768px) 100vw, 448px"
+              sizes="(max-width: 768px) 100vw, 320px"
               className={`object-contain ${isPastEvent ? "!grayscale" : ""}`}
             />
           </motion.div>
