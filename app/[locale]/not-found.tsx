@@ -19,7 +19,7 @@ export default function NotFound() {
             height={200}
             priority
           />
-          <h1 className="text-4xl md:text-6xl font-bold text-center bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-4xl font-bold text-center bg-linear-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent">
             404 - Page Not Found
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 text-center max-w-md">
@@ -27,7 +27,7 @@ export default function NotFound() {
           </p>
           <Link
             href={`/${locale}`}
-            className="mt-6 px-8 py-3 bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg"
+            className="mt-6 px-8 py-3 bg-linear-to-r from-blue-500 via-green-500 to-yellow-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg"
           >
             Go Back to Home
           </Link>
