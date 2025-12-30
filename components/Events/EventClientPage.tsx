@@ -12,6 +12,7 @@ import { CiShare2 } from "react-icons/ci";
 import { MdOutlineDone } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { EventMap } from "./EventMap";
+import { useTranslations } from "next-intl";
 
 interface ApiEvent {
   _id: string;
@@ -40,53 +41,19 @@ const dayMap: Record<string, { en: string; hu: string }> = {
   Sunday: { en: "Sun", hu: "Va" },
 };
 
-const dictionary = {
-  en: {
-    back: "Back to Events",
-    dateLabel: "Date",
-    notFoundTitle: "Event Not Found",
-    notFoundDesc:
-      "The event you are looking for does not exist or has been removed.",
-    loading: "Loading event details...",
-    organizer: "Organizer",
-    share: "Share Event",
-    copied: "Link Copied!",
-    repeats: "Repeats on:",
-    dm: "DM on Instagram",
-    views: "Views",
-    register: "Register Now",
-  },
-  hu: {
-    back: "Vissza az eseményekhez",
-    dateLabel: "Dátum",
-    notFoundTitle: "Esemény nem található",
-    notFoundDesc: "A keresett esemény nem létezik, vagy törölve lett.",
-    loading: "Esemény betöltése...",
-    organizer: "Szervező",
-    share: "Megosztás",
-    copied: "Link Másolva!",
-    repeats: "Ismétlődik:",
-    dm: "Üzenj Instagramon",
-    views: "Megtekintés",
-    register: "Regisztrálj most",
-  },
-};
-
 export default function EventClientPage({
   initialEvent,
 }: {
   initialEvent: any;
 }) {
+  const t = useTranslations("events.eventDetails");
   const params = useParams();
-  const rawLocale = params?.locale as string;
-  const locale = rawLocale === "hu" ? "hu" : "en";
-  const dict = dictionary[locale];
+  const locale = (params?.locale as string) === "hu" ? "hu" : "en";
 
   const [event, setEvent] = useState<ApiEvent | null>(initialEvent);
   const [loading, setLoading] = useState(!initialEvent);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
-
   const [views, setViews] = useState<number>(0);
   const hasIncremented = useRef(false);
 
@@ -104,8 +71,7 @@ export default function EventClientPage({
         setEvent(data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError(true);
         setLoading(false);
       });
@@ -114,7 +80,6 @@ export default function EventClientPage({
   useEffect(() => {
     const id = (params?.id as string) || event?._id;
     if (!id || hasIncremented.current) return;
-
     hasIncremented.current = true;
 
     fetch("/api/views", {
@@ -143,7 +108,7 @@ export default function EventClientPage({
         <div className="flex flex-col items-center gap-4">
           <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
           <p className="text-primary font-semibold Carena-font text-base tracking-wide">
-            {dict.loading}
+            {t("loading")}
           </p>
         </div>
       </div>
@@ -153,16 +118,16 @@ export default function EventClientPage({
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-center px-4">
         <h1 className="text-3xl font-bold text-primary mb-3 Carena-font">
-          {dict.notFoundTitle}
+          {t("notFoundTitle")}
         </h1>
         <p className="text-muted-foreground mb-6 max-w-sm text-sm">
-          {dict.notFoundDesc}
+          {t("notFoundDesc")}
         </p>
         <Link
           href={`/${locale}/events`}
           className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-bold hover:opacity-90 transition shadow-md text-sm"
         >
-          {dict.back}
+          {t("back")}
         </Link>
       </div>
     );
@@ -170,17 +135,19 @@ export default function EventClientPage({
   const title = locale === "hu" ? event.title_hu : event.title_en;
   const description = locale === "hu" ? event.desc_hu : event.desc_en;
   const note = locale === "hu" ? event.note_hu : event.note_en;
-
   const dateFormatted = event.date
     ? new Date(event.date).toLocaleDateString(
         locale === "hu" ? "hu-HU" : "en-US",
-        { year: "numeric", month: "long", day: "numeric" }
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }
       )
     : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
-      {/* Container shrunk from max-w-7xl to max-w-5xl for a tighter look */}
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-row items-center justify-between md:mb-4 md:px-6">
           <Link
@@ -191,7 +158,7 @@ export default function EventClientPage({
               <IoIosArrowRoundBack className="w-5 h-5" />
             </span>
             <span className="font-medium tracking-wide text-sm">
-              {dict.back}
+              {t("back")}
             </span>
           </Link>
           <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
@@ -199,7 +166,6 @@ export default function EventClientPage({
           </span>
         </div>
 
-        {/* Gap reduced from 20 to 10 for lg screens */}
         <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
           <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight text-foreground">
             {title}
@@ -269,22 +235,21 @@ export default function EventClientPage({
                 )}
               </div>
 
-              {/* Shrunk md:text-5xl to md:text-3xl */}
               <h1 className="text-3xl md:text-3xl pt-2 font-bold hidden md:block Carena-font leading-tight text-foreground">
                 {title}
               </h1>
 
               <div className="flex items-center gap-2 pt-3">
                 <Image
-                  src={"/imgs/icons/icon.jpg"}
-                  alt={"organizer logo"}
+                  src="/imgs/icons/icon.jpg"
+                  alt="organizer logo"
                   width={40}
                   height={40}
                   className="rounded-full object-cover"
                 />
                 <div className="flex flex-col">
                   <span className="text-sm font-semibold">
-                    {dict.organizer}
+                    {t("organizer")}
                   </span>
                   <span className="text-[13px] text-muted-foreground leading-none">
                     MIT
@@ -293,7 +258,6 @@ export default function EventClientPage({
               </div>
             </div>
 
-            {/* Changed prose-lg to prose-base */}
             <div className="prose prose-base dark:prose-invert max-w-none text-muted-foreground leading-relaxed whitespace-pre-wrap">
               {description}
             </div>
@@ -307,7 +271,7 @@ export default function EventClientPage({
                   className="px-0 py-3 cursor-pointer rounded-lg font-bold text-base transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-green-600 text-white hover:bg-green-700"
                 >
                   <HiLink className="w-5 h-5" />
-                  <span>{dict.register}</span>
+                  <span>{t("register")}</span>
                 </a>
               )}
               <div className="flex flex-col sm:flex-row gap-3">
@@ -318,7 +282,7 @@ export default function EventClientPage({
                   className="flex-1 px-0 py-3 rounded-lg font-semibold text-base transition-all duration-300 shadow-md flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white hover:opacity-90"
                 >
                   <FaInstagram className="w-5 h-5" />
-                  <span>{dict.dm}</span>
+                  <span>{t("dm")}</span>
                 </a>
                 <button
                   onClick={handleShare}
@@ -337,7 +301,7 @@ export default function EventClientPage({
                         exit={{ scale: 0.9, opacity: 0 }}
                         className="flex items-center gap-2"
                       >
-                        <MdOutlineDone className="w-5 h-5" /> {dict.copied}
+                        <MdOutlineDone className="w-5 h-5" /> {t("copied")}
                       </motion.span>
                     ) : (
                       <motion.span
@@ -348,7 +312,7 @@ export default function EventClientPage({
                         className="flex items-center gap-2"
                       >
                         <CiShare2 className="w-5 h-5" />
-                        {dict.share}
+                        {t("share")}
                       </motion.span>
                     )}
                   </AnimatePresence>

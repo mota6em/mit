@@ -210,6 +210,20 @@
       "joinStats": "Csatlakozz a következő eseményen!",
       "badgeJoin": "Tarts Velünk",
       "badgeWeekly": "Heti Összejövetelek"
+    },
+    "eventDetails": {
+      "back": "Vissza az eseményekhez",
+      "dateLabel": "Dátum",
+      "notFoundTitle": "Esemény nem található",
+      "notFoundDesc": "A keresett esemény nem létezik, vagy törölve lett.",
+      "loading": "Esemény betöltése...",
+      "organizer": "Szervező",
+      "share": "Megosztás",
+      "copied": "Link Másolva!",
+      "repeats": "Ismétlődik:",
+      "dm": "Üzenj Instagramon",
+      "views": "Megtekintés",
+      "register": "Regisztrálj most"
     }
   }
 }
