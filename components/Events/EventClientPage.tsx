@@ -13,33 +13,11 @@ import { MdOutlineDone } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { EventMap } from "./EventMap";
 import { useTranslations } from "next-intl";
+import { ApiEvent, dayMap } from "@/lib/types";
 
-interface ApiEvent {
-  _id: string;
-  img: string;
-  title_en: string;
-  title_hu: string;
-  desc_en: string;
-  desc_hu: string;
-  date?: string;
-  note_en?: string;
-  note_hu?: string;
-  location?: string;
-  registrationUrl?: string;
-  time?: string;
-  isRecurring?: boolean;
-  recurringDays?: string[];
-}
+ 
 
-const dayMap: Record<string, { en: string; hu: string }> = {
-  Monday: { en: "Mon", hu: "Hé" },
-  Tuesday: { en: "Tue", hu: "Ke" },
-  Wednesday: { en: "Wed", hu: "Sze" },
-  Thursday: { en: "Thu", hu: "Csü" },
-  Friday: { en: "Fri", hu: "Pé" },
-  Saturday: { en: "Sat", hu: "Szo" },
-  Sunday: { en: "Sun", hu: "Va" },
-};
+
 
 export default function EventClientPage({
   initialEvent,
