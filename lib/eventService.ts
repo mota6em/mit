@@ -1,3 +1,7 @@
+import dbConnect from "@/lib/mongodb";
+import Event from "@/models/Event";
+import { isValidObjectId } from "mongoose";
+
 /** Logic for interacting with the events API */
 export async function getEvents(id?: string) {
   try {
@@ -16,4 +20,19 @@ export async function getEvents(id?: string) {
     console.error("Failed to fetch events:", err);
     return id ? null : [];
   }
+}
+
+// Direct database helper for Server-Side use
+export async function getEventServerSide(identifier: string) {
+  await dbConnect();
+
+  let event = await Event.findOne({ slug: identifier }).lean();
+
+  if (!event && isValidObjectId(identifier)) {
+    event = await Event.findById(identifier).lean();
+  }
+
+  if (!event) return null;
+
+  return JSON.parse(JSON.stringify(event));
 }
