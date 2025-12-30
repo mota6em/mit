@@ -23,10 +23,7 @@ type Props = {
   params: Promise<{ id: string; locale: string }>;
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale: rawLocale } = await params;
   const locale = rawLocale === "hu" ? "hu" : "en";
 
