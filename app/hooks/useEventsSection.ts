@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
-import { getEvents } from "@/lib/eventService";
+import { getEvents } from "@/lib/eventClient";
 import { dayMap, EventDisplayData, EventsSectionProps } from "@/lib/types";
 
 export function useEventsSection({
