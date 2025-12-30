@@ -33,54 +33,69 @@ export default function LanguageSwitch() {
   };
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <div className="cursor-pointer flex mt-1 items-center justify-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
-          <div className="relative w-5 h-5 flex-shrink-0">
-            <Image
-              src={current.flag}
-              alt={current.code}
-              fill
-              sizes="20px"
-              priority
-              unoptimized
-              className="rounded-sm object-cover"
-            />
+    <>
+      {/* Preload all flag images */}
+      {locales.map((locale) => (
+        <Image
+          key={`preload-${locale.code}`}
+          src={locale.flag}
+          alt=""
+          width={20}
+          height={20}
+          className="hidden"
+          priority
+          unoptimized
+        />
+      ))}
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <div className="cursor-pointer flex mt-1 items-center justify-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
+            <div className="relative w-5 h-5 flex-shrink-0">
+              <Image
+                src={current.flag}
+                alt={current.code}
+                fill
+                sizes="20px"
+                priority
+                unoptimized
+                className="rounded-sm object-cover"
+              />
+            </div>
+            {open ? <X size={14} /> : <ChevronDown size={14} />}
           </div>
-          {open ? <X size={14} /> : <ChevronDown size={14} />}
-        </div>
-      </DropdownMenuTrigger>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black shadow-lg"
-        align="end"
-      >
-        {locales.map((locale) => (
-          <DropdownMenuItem
-            key={locale.code}
-            className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/40 focus:bg-white/40 transition"
-            asChild
-          >
-            <Link
-              href={`/${locale.code}/${restOfPath}`}
-              onClick={() => saveLangLocale(locale.code)}
+        <DropdownMenuContent
+          className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black shadow-lg"
+          align="end"
+        >
+          {locales.map((locale) => (
+            <DropdownMenuItem
+              key={locale.code}
+              className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/40 focus:bg-white/40 transition"
+              asChild
             >
-              <div className="relative w-5 h-5 flex-shrink-0">
-                <Image
-                  src={locale.flag}
-                  alt={locale.code}
-                  fill
-                  sizes="20px"
-                  priority
-                  unoptimized
-                  className="rounded-sm object-cover"
-                />
-              </div>
-              {locale.label}
-            </Link>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+              <Link
+                href={`/${locale.code}/${restOfPath}`}
+                onClick={() => saveLangLocale(locale.code)}
+              >
+                <div className="relative w-5 h-5 flex-shrink-0">
+                  <Image
+                    src={locale.flag}
+                    alt={locale.code}
+                    fill
+                    sizes="20px"
+                    priority
+                    unoptimized
+                    className="rounded-sm object-cover"
+                  />
+                </div>
+                {locale.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
