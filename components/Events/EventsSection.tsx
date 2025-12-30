@@ -26,7 +26,7 @@ export default function EventsSection(props: EventsSectionProps) {
   return (
     <section
       id={sectionId}
-      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6 scroll-mt-28"
+      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
     >
       <SectionHeader
         title={titleText}
