@@ -27,7 +27,7 @@ const AchievementsSection = () => {
               transition={{ delay: index * 0.05 }}
               className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100"
             >
-              <CheckCircle2 className="w-6 h-6 text-gray-900 flex-shrink-0 mt-1" />
+              <CheckCircle2 className="w-6 h-6 text-gray-900 shrink-0 mt-1" />
               <p className="text-gray-900 font-medium leading-relaxed">
                 {t(`list.${index}`)}
               </p>

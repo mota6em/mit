@@ -8,7 +8,7 @@ const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
 
   return (
-    <section className="relative min-h-[80vh] flex items-center bg-gradient-to-b from-blue-50/30 to-white overflow-hidden px-6 py-12 md:px-12 lg:px-20 lg:py-6">
+    <section className="relative min-h-[80vh] flex items-center bg-linear-to-b from-blue-50/30 to-white overflow-hidden px-6 py-12 md:px-12 lg:px-20 lg:py-6">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <HeroImageCollage
           floatLeft
