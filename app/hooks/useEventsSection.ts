@@ -16,8 +16,14 @@ export function useEventsSection({
   const sectionId = `${type}-events`;
 
   // Data Fetching with Caching
-  const { data: events = [], isLoading } = useSWR("events-data", () =>
-    getEvents()
+  const { data: events = [], isLoading } = useSWR(
+    "events-data",
+    () => getEvents(),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      dedupingInterval: 300000, // 5 minutes
+    }
   );
 
   // Filtering Logic (Memoized)
