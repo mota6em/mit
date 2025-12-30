@@ -28,7 +28,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="absolute top-12 right-0 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+        className="absolute top-12 right-0 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
       >
         <div className="flex items-start gap-3">
           <div>
@@ -52,7 +52,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
     <motion.div
       animate={{ y: [0, -10, 0] }}
       transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-      className="absolute top-20 right-10 md:right-20 lg:right-10 lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-[800px]"
+      className="absolute top-20 right-10 md:right-20 lg:right-10 lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
     >
       <div className="flex items-start gap-3">
         <div className="bg-red-100 text-red-600 p-2 rounded-lg">
