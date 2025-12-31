@@ -34,15 +34,19 @@ export function useNewsletter() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isEditing) {
-      const res = await fetch(`/api/newsletter/${form._id}`, {
-        method: "PUT",
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          _id: form._id,
+          name: form.name,
+          email: form.email,
+        }),
       });
       if (res.ok) {
-        setSubscribers((prev) =>
-          prev.map((s) => (s._id === form._id ? form : s))
-        );
+        const data = await res.json();
+        if (data.subscribers) setSubscribers(data.subscribers);
+        resetForm();
       }
     } else {
       const res = await fetch("/api/newsletter", {
@@ -68,7 +72,10 @@ export function useNewsletter() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "delete", id }),
     });
-    if (res.ok) setSubscribers((prev) => prev.filter((s) => s._id !== id));
+    if (res.ok) {
+      const data = await res.json();
+      if (data.subscribers) setSubscribers(data.subscribers);
+    }
   };
 
   const resetForm = () => {

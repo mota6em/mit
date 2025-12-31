@@ -35,7 +35,8 @@ export async function POST(req: Request) {
     //  ADMIN DELETE
     if (body.action === "delete") {
       await Newsletter.findByIdAndDelete(body.id);
-      return NextResponse.json({ success: true });
+      const updatedList = await Newsletter.find({}).sort({ createdAt: -1 });
+      return NextResponse.json({ success: true, subscribers: updatedList });
     }
 
     //  ADMIN UPDATE
@@ -62,14 +63,13 @@ export async function POST(req: Request) {
 
     await Newsletter.create({ name: body.name, email: body.email });
 
-    // Response for Public User
-    if (isPublicSubscription) {
+    // Return full list if admin (session exists), else just success for public
+    if (session) {
+      const subscribers = await Newsletter.find({}).sort({ createdAt: -1 });
+      return NextResponse.json({ success: true, subscribers });
+    } else {
       return NextResponse.json({ success: true }, { status: 201 });
     }
-
-    // Response for Admin (Return full list to update UI)
-    const subscribers = await Newsletter.find({}).sort({ createdAt: -1 });
-    return NextResponse.json({ success: true, subscribers });
   } catch (error) {
     console.error("Newsletter API Error:", error);
     return NextResponse.json({ message: "Server Error" }, { status: 500 });
