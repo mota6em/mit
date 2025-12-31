@@ -1,6 +1,6 @@
 "use client";
 import { useImageUpload } from "../hooks/useEvents";
-import { ApiEvent } from "@/lib/types";
+import { EventData } from "@/lib/types";
 import FormHeader from "./admin/events/FormHeader";
 import ImageUploadSection from "./admin/events/ImageUploadSection";
 import ContentSection from "./admin/events/ContentSection";
@@ -8,10 +8,6 @@ import DateTimeSection from "./admin/events/DateTimeSection";
 import LocationSection from "./admin/events/LocationSection";
 import RegistrationSection from "./admin/events/RegistrationSection";
 import SubmitButtons from "./admin/events/SubmitButtons";
-
-interface EventData extends Omit<ApiEvent, "_id" | "slug"> {
-  _id?: string; // Make _id optional for form state
-}
 
 interface EventFormProps {
   form: EventData;
@@ -80,32 +76,32 @@ export default function EventForm({
           <ContentSection
             title_en={form.title_en}
             desc_en={form.desc_en}
-            note_en={form.note_en}
-            title_hu={form.title_hu}
-            desc_hu={form.desc_hu}
-            note_hu={form.note_hu}
+            note_en={form.note_en ?? ""}
+            title_hu={form.title_hu ?? ""}
+            desc_hu={form.desc_hu ?? ""}
+            note_hu={form.note_hu ?? ""}
             setForm={setForm}
           />
 
           <DateTimeSection
-            isRecurring={form.isRecurring}
-            date={form.date}
-            time={form.time}
-            recurringDays={form.recurringDays}
+            isRecurring={form.isRecurring ?? false}
+            date={form.date ?? ""}
+            time={form.time ?? ""}
+            recurringDays={form.recurringDays ?? []}
             setForm={setForm}
           />
 
-          <LocationSection location={form.location} setForm={setForm} />
+          <LocationSection location={form.location ?? ""} setForm={setForm} />
 
           <RegistrationSection
-            registrationUrl={form.registrationUrl}
+            registrationUrl={form.registrationUrl ?? ""}
             setForm={setForm}
           />
 
           <SubmitButtons
-            isEditing={isEditing}
+            isEditing={isEditing ?? false}
             loading={loading}
-            uploadingImg={uploadingImg}
+            uploadingImg={uploadingImg ?? false}
             onCancel={onCancel}
           />
         </form>

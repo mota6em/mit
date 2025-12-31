@@ -18,6 +18,10 @@ export interface ApiEvent {
   registrationUrl?: string;
 }
 
+export interface EventData extends Omit<ApiEvent, "_id" | "slug"> {
+  _id?: string; // Make _id optional for form state
+}
+
 export interface EventsSectionProps {
   type: "upcoming" | "past";
   limit?: number;

@@ -2,10 +2,11 @@ import { useCallback } from "react";
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import { HiCloudUpload } from "react-icons/hi";
+import { EventData } from "@/lib/types";
 
 interface ImageUploadSectionProps {
   img: string;
-  setForm: React.Dispatch<React.SetStateAction<any>>;
+  setForm: React.Dispatch<React.SetStateAction<EventData>>;
   uploadingImg: boolean;
   uploadImage: (file: File) => Promise<string | null>;
 }
@@ -21,7 +22,7 @@ export default function ImageUploadSection({
       if (!acceptedFiles?.[0]) return;
       const url = await uploadImage(acceptedFiles[0]);
       if (url) {
-        setForm((prev) => ({ ...prev, img: url }));
+        setForm((prev: EventData) => ({ ...prev, img: url }));
       }
     },
     [uploadImage, setForm]
@@ -35,7 +36,7 @@ export default function ImageUploadSection({
 
   return (
     <div>
-      <label className="block text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
+      <label className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-4">
         <HiCloudUpload className="text-lg text-blue-500" /> Event Cover Image
       </label>
       <div

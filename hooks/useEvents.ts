@@ -1,9 +1,5 @@
-import { ApiEvent } from "@/lib/types";
+import { EventData } from "@/lib/types";
 import { useState, useEffect, useCallback } from "react";
-
-interface EventData extends Omit<ApiEvent, "_id" | "slug"> {
-  _id?: string; // Make _id optional for form state
-}
 
 export function useEvents() {
   const [events, setEvents] = useState<EventData[]>([]);

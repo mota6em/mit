@@ -19,7 +19,7 @@ export default function BlogCardSkeleton() {
       <div className="relative w-full aspect-square bg-gray-200" />
 
       {/* Content Skeleton */}
-      <div className="px-3 pb-10 pt-4 mb-4 space-y-3 flex-grow">
+      <div className="px-3 pb-10 pt-4 mb-4 space-y-3 grow">
         {/* Title */}
         <div className="flex flex-col gap-2">
           <div className="h-4 w-1/3 bg-gray-200 rounded" />

@@ -1,12 +1,13 @@
 import { HiClock, HiRefresh } from "react-icons/hi";
 import { DAYS_OF_WEEK } from "@/data/constants/const";
+import { EventData } from "@/lib/types";
 
 interface DateTimeSectionProps {
   isRecurring: boolean;
-  date: string;
-  time: string;
+  date?: string;
+  time?: string;
   recurringDays: string[];
-  setForm: React.Dispatch<React.SetStateAction<any>>;
+  setForm: React.Dispatch<React.SetStateAction<EventData>>;
 }
 
 export default function DateTimeSection({
@@ -72,7 +73,7 @@ export default function DateTimeSection({
             <input
               type="date"
               required
-              value={date}
+              value={date || ""}
               onChange={(e) =>
                 setForm((prev) => ({ ...prev, date: e.target.value }))
               }
@@ -87,7 +88,7 @@ export default function DateTimeSection({
           </label>
           <input
             type="time"
-            value={time}
+            value={time || ""}
             onChange={(e) =>
               setForm((prev) => ({ ...prev, time: e.target.value }))
             }

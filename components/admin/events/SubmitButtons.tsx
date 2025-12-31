@@ -16,7 +16,7 @@ export default function SubmitButtons({
       <button
         disabled={loading || uploadingImg}
         type="submit"
-        className={`flex-grow md:flex-grow-0 px-8 py-4 rounded-xl font-bold text-white shadow-md transform active:scale-95 transition-all ${
+        className={`grow md:grow-0 px-8 py-4 rounded-xl font-bold text-white shadow-md transform active:scale-95 transition-all ${
           isEditing
             ? "bg-amber-500 hover:bg-amber-600"
             : "bg-blue-600 hover:bg-blue-700"

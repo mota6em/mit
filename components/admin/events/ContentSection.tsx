@@ -1,4 +1,5 @@
 import { HiExclamation } from "react-icons/hi";
+import { EventData } from "@/lib/types";
 
 interface ContentSectionProps {
   title_en: string;
@@ -7,7 +8,7 @@ interface ContentSectionProps {
   title_hu: string;
   desc_hu: string;
   note_hu: string;
-  setForm: React.Dispatch<React.SetStateAction<any>>;
+  setForm: React.Dispatch<React.SetStateAction<EventData>>;
 }
 
 export default function ContentSection({
@@ -51,7 +52,7 @@ export default function ContentSection({
           placeholder="Description..."
         />
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
+          <label className="flex items-center gap-1 text-sm font-semibold text-gray-700 mb-1">
             <HiExclamation className="text-amber-500" /> Note (Optional)
           </label>
           <input
@@ -95,7 +96,7 @@ export default function ContentSection({
           placeholder="Leírás..."
         />
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1 flex items-center gap-1">
+          <label className="flex items-center gap-1 text-sm font-semibold text-gray-700 mb-1">
             <HiExclamation className="text-amber-500" /> Megjegyzés (Opcionális)
           </label>
           <input
