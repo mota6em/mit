@@ -65,6 +65,7 @@ export function useEvents() {
       return false;
     }
     setEvents(events.filter((e) => (e._id || e.id) !== id));
+    window.location.reload();
     return true;
   };
   const handleEdit = (event: EventData) => {
