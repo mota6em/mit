@@ -11,8 +11,9 @@ export default function AdminNewsletter() {
     isEditing,
     setIsEditing,
     handleSave,
-    handleDelete, 
+    handleDelete,
     resetForm,
+    copyEmails,
   } = useNewsletter();
 
   return (
@@ -24,12 +25,12 @@ export default function AdminNewsletter() {
             Manage your {subscribers.length} subscribers
           </p>
         </div>
-        {/* <button
+        <button
           onClick={copyEmails}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-bold shadow-md"
         >
           <HiClipboardCopy /> Copy All Emails
-        </button> */}
+        </button>
       </header>
 
       {/* Form */}
