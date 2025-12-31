@@ -39,7 +39,7 @@ export default function EventsSection(props: EventsSectionProps) {
           ? Array.from({ length: limit || 3 }).map((_, i) => (
               <div
                 key={i}
-                className="min-w-[75vw] md:min-w-0 snap-start h-full"
+                className="min-w-[75vw] md:min-w-2xs snap-start h-full"
               >
                 <BlogCardSkeleton />
               </div>

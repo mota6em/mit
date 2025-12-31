@@ -2,7 +2,7 @@
 
 export default function BlogCardSkeleton() {
   return (
-    <div className="w-full max-w-md bg-white rounded-xl overflow-hidden   cursor-pointer   shadow-md relative flex flex-col h-full animate-pulse">
+    <div className="w-full max-w-lg bg-white rounded-xl overflow-hidden   cursor-pointer   shadow-md relative flex flex-col h-full animate-pulse">
       {/* Header Skeleton */}
       <div className="flex items-center justify-between p-2 md:p-3 border-b border-gray-100">
         <div className="flex items-center gap-2 md:gap-3">
@@ -26,10 +26,8 @@ export default function BlogCardSkeleton() {
           <div className="h-5 w-3/4 bg-gray-200 rounded" />
         </div>
 
-        {/* Description Lines */}
+        {/* Description Line  */}
         <div className="space-y-2 pt-2">
-          <div className="h-3 w-full bg-gray-200 rounded" />
-          <div className="h-3 w-5/6 bg-gray-200 rounded" />
           <div className="h-3 w-4/6 bg-gray-200 rounded" />
         </div>
       </div>
