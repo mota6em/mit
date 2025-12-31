@@ -17,6 +17,7 @@ interface BlogCardProps {
   isVerified?: boolean;
   eventUrl?: string;
   isPastEvent?: boolean;
+  event?: any; // Full event data for caching
 }
 
 export default function BlogCard({
@@ -30,14 +31,25 @@ export default function BlogCard({
   index = 0,
   eventUrl = "#",
   isPastEvent = false,
+  event,
 }: BlogCardProps) {
   const isLongText = desc.length > DESCRIPTION_CHAR_LIMIT;
   const displayDesc = isLongText
     ? `${desc.substring(0, DESCRIPTION_CHAR_LIMIT)}...`
     : desc;
 
+  const handleClick = () => {
+    if (event) {
+      const eventId = event.slug || event._id || event.id;
+      console.time(`cache-store-${eventId}`);
+      sessionStorage.setItem(`event-${eventId}`, JSON.stringify(event));
+      console.timeEnd(`cache-store-${eventId}`);
+      console.log(`Cached event data for ${eventId}`);
+    }
+  };
+
   return (
-    <Link href={eventUrl}>
+    <Link href={eventUrl} onClick={handleClick}>
       <motion.article
         className="w-full max-w-sm md:max-w-xs bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative flex flex-col h-full"
         initial={{ opacity: 0.5, y: 0 }}

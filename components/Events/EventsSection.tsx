@@ -61,6 +61,7 @@ export default function EventsSection(props: EventsSectionProps) {
                   index={index}
                   isVerified={true}
                   isPastEvent={type === "past"}
+                  event={p}
                 />
               </div>
             ))}
