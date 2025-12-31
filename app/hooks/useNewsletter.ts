@@ -8,7 +8,7 @@ interface Subscriber {
 
 export function useNewsletter() {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
-  const [form, setForm] = useState({ name: "", email: "" });
+  const [form, setForm] = useState({ name: "", email: "", _id: "" });
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -72,14 +72,14 @@ export function useNewsletter() {
   };
 
   const resetForm = () => {
-    setForm({ name: "", email: "" });
+    setForm({ name: "", email: "", _id: "" });
     setIsEditing(false);
   };
 
   const copyEmails = async () => {
     const emails = subscribers.map((s) => s.email).join(", ");
     await navigator.clipboard.writeText(emails);
-    alert("Emails copied to clipboard!"); // Optional feedback
+    alert("Emails copied to clipboard!");
   };
 
   return {
