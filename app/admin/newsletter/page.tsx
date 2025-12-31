@@ -27,7 +27,7 @@ export default function AdminNewsletter() {
         </div>
         <button
           onClick={copyEmails}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-bold shadow-md"
+          className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-bold shadow-md"
         >
           <HiClipboardCopy /> Copy All Emails
         </button>
@@ -64,7 +64,7 @@ export default function AdminNewsletter() {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="px-6 py-2 bg-gray-900 text-white rounded-lg font-bold"
+            className="px-6 py-2 cursor-pointer bg-gray-900 text-white rounded-lg font-bold"
           >
             {isEditing ? "Update" : "Add Subscriber"}
           </button>
@@ -108,13 +108,13 @@ export default function AdminNewsletter() {
                         setForm(s);
                         setIsEditing(true);
                       }}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                      className="p-2 cursor-pointer text-blue-600 hover:bg-blue-50 rounded-lg"
                     >
                       <HiPencil />
                     </button>
                     <button
                       onClick={() => handleDelete(s._id)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                      className="p-2 cursor-pointer text-red-600 hover:bg-red-50 rounded-lg"
                     >
                       <HiTrash />
                     </button>
