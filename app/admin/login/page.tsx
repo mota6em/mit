@@ -1,4 +1,3 @@
-// app/admin/login/page.tsx
 "use client";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -15,8 +14,6 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      // By NOT setting redirect: false, NextAuth handles the
-      // full-page redirect to the callbackUrl (default: /admin)
       await signIn("credentials", {
         username,
         password,
