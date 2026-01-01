@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react"; // Use client-side signOut
-import { HiCalendar, HiViewGrid, HiMenu, HiX, HiLogout, HiMail } from "react-icons/hi";
+import {
+  HiCalendar,
+  HiViewGrid,
+  HiMenu,
+  HiX,
+  HiLogout,
+  HiMail,
+  HiSparkles,
+} from "react-icons/hi";
 import { HomeIcon } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -25,7 +33,8 @@ export default function AdminSidebar() {
   const navLinks = [
     { href: "/admin", label: "Dashboard", icon: HiViewGrid },
     { href: "/admin/events", label: "Events", icon: HiCalendar },
-    { href: "/admin/newsletter", label: "Newsletter", icon: HiMail },  
+    { href: "/admin/highlights", label: "Highlights", icon: HiSparkles },
+    { href: "/admin/newsletter", label: "Newsletter", icon: HiMail },
   ];
 
   const toggleSidebar = () => setIsOpen(!isOpen);
