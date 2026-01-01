@@ -9,7 +9,7 @@ const page = () => {
     <div className="block w-full overflow-hidden md:px-10">
       <Hero />
       <WhoWeAre />
-      <HighlightsSection limit={1} />
+      <HighlightsSection limit={3} />
       <EventsSection type="upcoming" limit={3} />
       <EventsSection type="past" limit={3} />
       <Statistics />
