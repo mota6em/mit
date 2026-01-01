@@ -8,6 +8,7 @@ import HighlightCardSkeleton from "../skeletons/HighlightCardSkeleton";
 import { HighlightsSectionProps } from "@/lib/types";
 import { useHighlightsSection } from "@/app/hooks/useHighlightsSection";
 import SectionHeader from "../reusable/SectionHeader";
+import { useTranslations } from "next-intl";
 
 export default function HighlightsSection(props: HighlightsSectionProps) {
   const {
@@ -19,16 +20,20 @@ export default function HighlightsSection(props: HighlightsSectionProps) {
     locale,
   } = useHighlightsSection(props);
 
-  const { limit, showViewAll = true } = props;
+  const { limit, showViewAll = true, year, titleKey } = props;
+  const t = useTranslations("highlights");
+
+  // Use custom title if provided, otherwise use default
+  const sectionTitle = titleKey ? t(titleKey) : titleText;
 
   return (
     <section
       id={sectionId}
-      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
+      className="mt-14 px-4 md:px-10 flex flex-col items-center "
     >
       <SectionHeader
-        title={titleText}
-        className="text-3xl md:text-4xl text-center tracking-wide mb-2 md:mb-4"
+        title={sectionTitle}
+        className="text-3xl md:text-4xl text-center tracking-wide "
       />
 
       {/** Cards Grid */}
@@ -96,3 +101,4 @@ export default function HighlightsSection(props: HighlightsSectionProps) {
     </section>
   );
 }
+
