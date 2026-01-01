@@ -13,6 +13,7 @@ import { useMemo } from "react";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
   const t = useTranslations("nav");
   const pathname = usePathname();
 
@@ -48,6 +49,58 @@ export default function NavBar() {
           <div className="flex items-center space-x-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+
+              // Special handling for events dropdown
+              if (link.label === t("events")) {
+                return (
+                  <div
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => setIsEventsDropdownOpen(true)}
+                    onMouseLeave={() => setIsEventsDropdownOpen(false)}
+                  >
+                    <Link
+                      href={link.href}
+                      className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
+                        isActive
+                          ? "text-yellow-700 font-medium"
+                          : "text-black hover:text-yellow-700"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+
+                    {/* Events Dropdown */}
+                    <AnimatePresence>
+                      {isEventsDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                        >
+                          <Link
+                            href={`/${locale}/events#upcoming-events`}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
+                            onClick={() => setIsEventsDropdownOpen(false)}
+                          >
+                            {t("upcoming events")}
+                          </Link>
+                          <Link
+                            href={`/${locale}/events#past-events`}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
+                            onClick={() => setIsEventsDropdownOpen(false)}
+                          >
+                            {t("past events")}
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.label}
