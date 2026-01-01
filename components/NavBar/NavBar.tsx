@@ -22,8 +22,9 @@ export default function NavBar() {
   const navLinks = useMemo(
     () => [
       { href: `/${locale}`, label: t("home") },
-      { href: `/${locale}/about`, label: t("about mit") },
+      { href: `/${locale}/highlights`, label: t("highlights") },
       { href: `/${locale}/events`, label: t("events") },
+      { href: `/${locale}/about`, label: t("about mit") },
       { href: `/${locale}/join-mit`, label: t("join mit") },
     ],
     [locale, t]
