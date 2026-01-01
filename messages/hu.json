@@ -36,10 +36,19 @@
     "join mit": "CSATLAKOZZ",
     "upcoming events": "Közelgő Események",
     "past events": "Korábbi Események",
+    "highlights 2026": "2026 Kiemeltek",
+    "highlights 2025": "2025 Kiemeltek",
+    "highlights archive": "2024 és Korábbi (Archívum)",
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Másolva!",
     "copyright": "Minden jog fenntartva.",
     "developedBy": "Fejlesztette:"
+  },
+  "highlights": {
+    "highlights_2026_title": "2026 Kiemeltek",
+    "highlights_2025_title": "2025 Kiemeltek",
+    "highlights_archive_title": "Archívum (2024 és Korábbi)",
+    "archive_note": "Ez a tartalom a közösségi médiában van dokumentálva, mivel a weboldal 2025 végén indult."
   },
   "home": {
     "statistics": {

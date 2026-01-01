@@ -36,10 +36,19 @@
     "join mit": "JOIN MIT",
     "upcoming events": "Upcoming Events",
     "past events": "Past Events",
+    "highlights 2026": "2026 Highlights",
+    "highlights 2025": "2025 Highlights",
+    "highlights archive": "2024 & Before (Archive)",
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Copied!",
     "copyright": "All rights reserved.",
     "developedBy": "Developed by"
+  },
+  "highlights": {
+    "highlights_2026_title": "2026 Highlights",
+    "highlights_2025_title": "2025 Highlights",
+    "highlights_archive_title": "Archive (2024 & Before)",
+    "archive_note": "This content is documented in our social media as the website was launched in late 2025."
   },
   "home": {
     "statistics": {
