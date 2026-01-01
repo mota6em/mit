@@ -54,10 +54,36 @@ export interface EventsSectionProps {
   filterMode?: "all" | "recurring_only" | "single_only";
 }
 
-export interface EventDisplayData extends ApiEvent {
+export interface ApiHighlight {
+  slug?: string;
+  _id: string;
+  id?: string;
+  images: string[];
+  title_en: string;
+  title_hu: string;
+  desc_en: string;
+  desc_hu: string;
+  note_en?: string;
+  note_hu?: string;
+  year?: string;
+  category?: string;
+  status?: string;
+  date?: string;
+}
+
+export interface HighlightData extends Omit<ApiHighlight, "_id" | "slug"> {
+  _id?: string; // Make _id optional for form state
+}
+
+export interface HighlightsSectionProps {
+  limit?: number;
+  showViewAll?: boolean;
+}
+
+export interface HighlightDisplayData extends ApiHighlight {
   displayDate: string;
   displayTitle: string;
   displayDesc: string;
   displayNote: string;
-  eventId: string;
+  highlightId: string;
 }
