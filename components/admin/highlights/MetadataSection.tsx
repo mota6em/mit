@@ -3,16 +3,12 @@ import { HighlightData } from "@/lib/types";
 interface MetadataSectionProps {
   year: string;
   category: string;
-  status: string;
-  date: string;
   setForm: React.Dispatch<React.SetStateAction<HighlightData>>;
 }
 
 export default function MetadataSection({
   year,
   category,
-  status,
-  date,
   setForm,
 }: MetadataSectionProps) {
   return (
@@ -36,25 +32,6 @@ export default function MetadataSection({
           }
           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
           placeholder="Category (e.g. Achievement)"
-        />
-        <select
-          value={status}
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, status: e.target.value }))
-          }
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
-        >
-          <option value="active">Active</option>
-          <option value="archived">Archived</option>
-          <option value="draft">Draft</option>
-        </select>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) =>
-            setForm((prev) => ({ ...prev, date: e.target.value }))
-          }
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
         />
       </div>
     </div>

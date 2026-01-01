@@ -14,8 +14,6 @@ export function useHighlights() {
     note_hu: "",
     year: "",
     category: "",
-    status: "active",
-    date: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);

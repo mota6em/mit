@@ -74,8 +74,6 @@ export default function HighlightForm({
           <MetadataSection
             year={form.year ?? ""}
             category={form.category ?? ""}
-            status={form.status ?? "active"}
-            date={form.date ?? ""}
             setForm={setForm}
           />
 
