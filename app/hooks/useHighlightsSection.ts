@@ -4,10 +4,10 @@ import useSWR from "swr";
 import { getHighlights } from "@/lib/highlightClient";
 import { HighlightDisplayData, HighlightsSectionProps } from "@/lib/types";
 
-export function useHighlightsSection({ limit }: HighlightsSectionProps) {
+export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
-  const sectionId = "highlights-section";
+  const sectionId = year ? `${year}-highlights` : "highlights-section";
 
   // Data Fetching with Caching
   const { data: highlights = [], isLoading } = useSWR(
@@ -22,7 +22,24 @@ export function useHighlightsSection({ limit }: HighlightsSectionProps) {
 
   // Presentation Logic (Slicing & Formatting)
   const displayedHighlights: HighlightDisplayData[] = useMemo(() => {
-    const sliced = limit ? highlights.slice(0, limit) : highlights;
+    // Filter by year if specified
+    let filteredHighlights = highlights;
+    if (year) {
+      if (year === "archive") {
+        // Archive includes 2024 and earlier
+        filteredHighlights = highlights.filter((h) => {
+          const highlightYear = parseInt(h.year || "0");
+          return highlightYear <= 2024;
+        });
+      } else {
+        // Specific year filter
+        filteredHighlights = highlights.filter((h) => h.year === year);
+      }
+    }
+
+    const sliced = limit
+      ? filteredHighlights.slice(0, limit)
+      : filteredHighlights;
 
     return sliced.map((h) => {
       let displayDate = "";
@@ -47,7 +64,7 @@ export function useHighlightsSection({ limit }: HighlightsSectionProps) {
         displayDate,
       };
     });
-  }, [highlights, limit, locale]);
+  }, [highlights, limit, locale, year]);
 
   // Title & Links
   const titleText = "Highlights & Announcements";

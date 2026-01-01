@@ -78,6 +78,9 @@ export interface HighlightData extends Omit<ApiHighlight, "_id" | "slug"> {
 export interface HighlightsSectionProps {
   limit?: number;
   showViewAll?: boolean;
+  year?: string;
+  titleKey?: string;
+  sectionId?: string;
 }
 
 export interface HighlightDisplayData extends ApiHighlight {
