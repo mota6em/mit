@@ -17,8 +17,8 @@ export function useEventsSection({
 
   // Data Fetching with Caching
   const { data: events = [], isLoading } = useSWR(
-    "events-data",
-    () => getEvents(),
+    `events-${type}-${limit || "all"}`,
+    () => getEvents(undefined, { type, limit }),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

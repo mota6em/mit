@@ -1,7 +1,19 @@
 /** Logic for interacting with the events API on the client side */
-export async function getEvents(id?: string) {
+export async function getEvents(
+  id?: string,
+  params?: { type?: string; limit?: number; search?: string }
+) {
   try {
-    const url = id ? `/api/events?id=${id}` : "/api/events";
+    let url = id ? `/api/events?id=${id}` : "/api/events";
+    if (params) {
+      const query = new URLSearchParams();
+      if (params.type) query.set("type", params.type);
+      if (params.limit) query.set("limit", params.limit.toString());
+      if (params.search) query.set("search", params.search);
+      if (query.toString()) {
+        url += `?${query.toString()}`;
+      }
+    }
     const res = await fetch(url);
 
     if (!res.ok) throw new Error("Network response was not ok");

@@ -11,7 +11,7 @@ const eventSchema = new Schema(
     note_en: { type: String, required: false },
     note_hu: { type: String, required: false },
     location: { type: String, required: false },
-    date: { type: String, required: false },
+    date: { type: Date, required: false },
     time: { type: String, required: false },
     isRecurring: { type: Boolean, default: false },
     recurringDays: { type: [String], required: false },
@@ -19,6 +19,17 @@ const eventSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Indexes for performance
+eventSchema.index({ date: 1 }); // For sorting and filtering by date
+eventSchema.index({ isRecurring: 1 }); // For filtering recurring events
+eventSchema.index({
+  title_en: "text",
+  title_hu: "text",
+  desc_en: "text",
+  desc_hu: "text",
+  location: "text",
+}); // For text search
 
 // Middleware to generate unique slug before saving
 eventSchema.pre("save", async function () {
