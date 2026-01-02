@@ -7,8 +7,8 @@ import BlogCard from "./BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
-import { FaArrowRightLong } from "react-icons/fa6";
 import SectionHeader from "../reusable/SectionHeader";
+import ViewAllButton from "../reusable/ViewAllButton";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -96,19 +96,15 @@ export default function EventsSection(props: EventsSectionProps) {
         showViewAll &&
         displayedPrograms.length > 0 &&
         filterMode === "all" && (
-          <div className="hidden md:block mb-8">
-            <Link
-              href={linkHref}
-              className="group inline-flex items-center gap-2 text-md rounded-full font-medium transition-all duration-300 text-gray-700 hover:text-gray-900"
-            >
-              <span>
-                {type === "upcoming"
-                  ? t("latestPrograms.showAllUpcoming")
-                  : t("latestPrograms.showAllPast")}
-              </span>
-              <FaArrowRightLong className="group-hover:translate-x-1 transition-transform duration-100 ease-in-out" />
-            </Link>
-          </div>
+          <ViewAllButton
+            href={linkHref}
+            label={
+              type === "upcoming"
+                ? t("latestPrograms.showAllUpcoming")
+                : t("latestPrograms.showAllPast")
+            }
+            className="hidden md:block"
+          />
         )}
 
       {/** Empty State */}
