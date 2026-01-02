@@ -14,10 +14,10 @@ export async function GET(request: Request) {
       // find by slug first, then fallback to _id if it's a valid ObjectId
       let query = { slug: identifier };
 
-      const highlight = await Highlight.findOne(query);
+      const highlight = await Highlight.findOne(query).lean();
 
       if (!highlight && isValidObjectId(identifier)) {
-        const highlightById = await Highlight.findById(identifier);
+        const highlightById = await Highlight.findById(identifier).lean();
         if (highlightById) return NextResponse.json(highlightById);
       }
 
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
       return NextResponse.json(highlight);
     }
 
-    const highlights = await Highlight.find({}).sort({ createdAt: -1 });
+    const highlights = await Highlight.find({}).sort({ createdAt: -1 }).lean();
     return NextResponse.json(highlights);
   } catch (error) {
     return NextResponse.json(
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       await Highlight.create(body);
     }
     // Return the updated list to refresh UI
-    const highlights = await Highlight.find({}).sort({ createdAt: -1 });
+    const highlights = await Highlight.find({}).sort({ createdAt: -1 }).lean();
     return NextResponse.json({ success: true, highlights });
   } catch (error) {
     return NextResponse.json(

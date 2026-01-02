@@ -13,10 +13,21 @@ const highlightSchema = new Schema(
     year: { type: String, required: false },
     category: { type: String, required: false },
     status: { type: String, required: false, default: "active" },
-    date: { type: String, required: false },
+    date: { type: Date, required: false },
   },
   { timestamps: true }
 );
+
+// Indexes for performance
+highlightSchema.index({ date: 1 });
+highlightSchema.index({ status: 1 });
+highlightSchema.index({
+  title_en: "text",
+  title_hu: "text",
+  desc_en: "text",
+  desc_hu: "text",
+  category: "text",
+});
 
 // Middleware to generate unique slug before saving
 highlightSchema.pre("save", async function () {
