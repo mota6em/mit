@@ -8,7 +8,7 @@ import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
 import SectionHeader from "../reusable/SectionHeader";
-import ViewAllButton from "../reusable/ViewAllButton";
+import ViewMoreButton from "../reusable/ViewMoreButton";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -96,14 +96,14 @@ export default function EventsSection(props: EventsSectionProps) {
         showViewAll &&
         displayedPrograms.length > 0 &&
         filterMode === "all" && (
-          <ViewAllButton
+          <ViewMoreButton
             href={linkHref}
             label={
               type === "upcoming"
                 ? t("latestPrograms.showAllUpcoming")
                 : t("latestPrograms.showAllPast")
             }
-            className="hidden md:block"
+            variant="default"
           />
         )}
 

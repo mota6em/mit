@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { FaArrowRightLong } from "react-icons/fa6";
+import ViewMoreButton from "../reusable/ViewMoreButton";
 
 export default function WhoWeAre() {
   const t = useTranslations("home");
@@ -80,13 +80,11 @@ export default function WhoWeAre() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-8 md:mt-12"
         >
-          <Link
+          <ViewMoreButton
             href={`/${locale}/about`}
-            className="inline-flex items-center gap-2 text-gray-700 font-medium hover:text-gray-900 transition-all group"
-          >
-            <span>{t("whoWeAre.learnMore")}</span>
-            <FaArrowRightLong className="group-hover:translate-x-1 transition-transform duration-100 ease-in-out" />
-          </Link>
+            label={t("whoWeAre.learnMore")}
+            variant="inline"
+          />
         </motion.div>
       </motion.div>
     </div>

@@ -10,7 +10,7 @@ import { FeaturedAnnouncementSkeleton } from "../skeletons/FeaturedAnnouncementS
 import { HighlightsSectionProps } from "@/lib/types";
 import { useHighlightsSection } from "@/app/hooks/useHighlightsSection";
 import SectionHeader from "../reusable/SectionHeader";
-import ViewAllButton from "../reusable/ViewAllButton";
+import ViewMoreButton from "../reusable/ViewMoreButton";
 import { useTranslations } from "next-intl";
 
 export default function HighlightsSection(props: HighlightsSectionProps) {
@@ -67,7 +67,7 @@ export default function HighlightsSection(props: HighlightsSectionProps) {
           </motion.div>
         )}
         <div className="flex justify-center mt-8">
-          <ViewAllButton href={linkHref} label={t("viewAllHighlights")} />
+        <ViewMoreButton href={linkHref} label={t("viewAllHighlights")} variant="centered" />
         </div>
       </section>
     );
@@ -116,7 +116,7 @@ export default function HighlightsSection(props: HighlightsSectionProps) {
             ))}
       </div>{" "}
       <div className="flex justify-center mt-8">
-        <ViewAllButton href={linkHref} label={t("viewAllHighlights")} />
+      <ViewMoreButton href={linkHref} label={t("viewAllHighlights")} variant="centered" />
       </div>
     </section>
   );
