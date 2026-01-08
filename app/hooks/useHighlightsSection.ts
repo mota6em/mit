@@ -4,24 +4,38 @@ import useSWR from "swr";
 import { getHighlights } from "@/lib/highlightClient";
 import { HighlightDisplayData, HighlightsSectionProps } from "@/lib/types";
 
+/** Cache key for consistent SWR caching */
+const HIGHLIGHTS_CACHE_KEY = "highlights-data";
+
+/** SWR configuration for aggressive caching - prevents refetch on reload */
+const SWR_CONFIG = {
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  revalidateIfStale: false,
+  revalidateOnMount: true,
+  dedupingInterval: 1000 * 60 * 10, // 10 minutes deduplication
+  keepPreviousData: true,
+} as const;
+
 export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
   const sectionId = year ? `${year}-highlights` : "highlights-section";
 
-  // Data Fetching with Caching
-  const { data: highlights = [], isLoading } = useSWR(
-    "highlights-data",
+  // Fetch with aggressive caching to prevent unnecessary refetches
+  const { data, isLoading } = useSWR(
+    HIGHLIGHTS_CACHE_KEY,
     () => getHighlights(),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 300000, // 5 minutes
-    }
+    SWR_CONFIG
   );
+
+  // Ensure highlights is always an array (SWR can return null)
+  const highlights = data ?? [];
 
   // Presentation Logic (Slicing & Formatting)
   const displayedHighlights: HighlightDisplayData[] = useMemo(() => {
+    if (!Array.isArray(highlights)) return [];
+
     // Filter by year if specified
     let filteredHighlights = highlights;
     if (year) {
