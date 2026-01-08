@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Variants } from "framer-motion";
 
 /** Interfaces and Data Definitions */
 export interface ApiEvent {
@@ -22,6 +23,14 @@ export interface ApiEvent {
 
 export interface EventData extends Omit<ApiEvent, "_id" | "slug"> {
   _id?: string; // Make _id optional for form state
+}
+
+export interface EventDisplayData extends ApiEvent {
+  displayTitle: string;
+  displayDesc: string;
+  displayNote?: string;
+  displayDate: string;
+  eventId: string;
 }
 
 export interface EventsSectionProps {
@@ -114,19 +123,20 @@ export interface HighlightContentProps {
   title: string;
   description: string;
   ctaLabel: string;
-  variants?: MotionVariants;
+  variants?: Variants;
   children?: ReactNode;
 }
 
 export interface HighlightImageProps {
   images?: string[];
   title: string;
-  variants?: MotionVariants;
+  variants?: Variants;
 }
 
 /** ===== Animation Variants ===== */
 
 export interface MotionVariants {
+  [key: string]: Record<string, unknown> | undefined;
   hidden?: Record<string, unknown>;
   visible?: Record<string, unknown>;
 }

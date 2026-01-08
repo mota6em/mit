@@ -27,7 +27,7 @@ const fadeInUp = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] },
+    transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] as const },
   }),
 };
 
@@ -66,13 +66,7 @@ const NotFoundState = ({
   </div>
 );
 
-const BackButton = ({
-  href,
-  label,
-}: {
-  href: string;
-  label: string;
-}) => (
+const BackButton = ({ href, label }: { href: string; label: string }) => (
   <Link
     href={href}
     className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors group"
@@ -93,7 +87,9 @@ const GalleryNavButton = ({
 }) => (
   <button
     onClick={onClick}
-    className={`absolute ${direction === "left" ? "left-4" : "right-4"} top-1/2 -translate-y-1/2 z-10 
+    className={`absolute ${
+      direction === "left" ? "left-4" : "right-4"
+    } top-1/2 -translate-y-1/2 z-10 
       bg-white/90 hover:bg-white backdrop-blur-sm p-3 rounded-full shadow-lg 
       opacity-0 group-hover:opacity-100 transition-all duration-300 
       hover:scale-110 border border-gray-100`}
@@ -256,7 +252,8 @@ function useDragScroll(
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX - (galleryRef.current?.offsetLeft || 0);
-        const walk = (x - dragState.current.startX) * GALLERY_CONFIG.dragMultiplier;
+        const walk =
+          (x - dragState.current.startX) * GALLERY_CONFIG.dragMultiplier;
         if (galleryRef.current) {
           galleryRef.current.scrollLeft = dragState.current.scrollLeft - walk;
         }
@@ -357,7 +354,13 @@ export default function HighlightClientPage({
                 <div
                   ref={galleryRef}
                   className={`flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 items-center
-                    ${isDragging ? "cursor-grabbing" : isMobile ? "cursor-grab" : ""}`}
+                    ${
+                      isDragging
+                        ? "cursor-grabbing"
+                        : isMobile
+                        ? "cursor-grab"
+                        : ""
+                    }`}
                   {...handlers}
                 >
                   {content.images.map((img, index) => (
