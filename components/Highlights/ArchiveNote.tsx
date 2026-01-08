@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
 interface SocialLink {
@@ -8,7 +11,7 @@ interface SocialLink {
   hoverColor: string;
 }
 
-const socialLinks: SocialLink[] = [
+const SOCIAL_LINKS: SocialLink[] = [
   {
     name: "Facebook",
     url: "https://www.facebook.com/muszlimifjusag/",
@@ -33,20 +36,19 @@ const socialLinks: SocialLink[] = [
 ];
 
 export default function ArchiveNote() {
+  const t = useTranslations("highlights");
+
   return (
     <div className="px-4 md:px-10 text-center max-w-4xl mx-auto">
       <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200">
         <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
-          Website Launched in Late 2025
+          {t("archiveTitle")}
         </h3>
         <p className="text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-          Content from 2024 and earlier years is documented on our social media
-          platforms. The MIT website was officially launched at the end of 2025,
-          so all highlights and announcements from previous years can be found
-          on our social media channels.
+          {t("archiveDescription")}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          {socialLinks.map((link) => (
+          {SOCIAL_LINKS.map((link) => (
             <a
               key={link.name}
               href={link.url}

@@ -1,52 +1,262 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import {
-  IoIosArrowRoundBack,
-  IoIosArrowBack,
-  IoIosArrowForward,
-} from "react-icons/io";
+import { useTranslations } from "next-intl";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { HiArrowLeft } from "react-icons/hi2";
 
 import { ApiHighlight } from "@/lib/types";
 
-const LoadingUI = ({ message }: { message: string }) => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-      <p className="text-gray-600">{message}</p>
-    </div>
+/* ============================================
+   Constants & Animation Variants
+   ============================================ */
+
+const GALLERY_CONFIG = {
+  imageGap: 16,
+  defaultImageWidth: 320,
+  dragMultiplier: 2,
+  mobileBreakpoint: 768,
+} as const;
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] },
+  }),
+};
+
+/* ============================================
+   Sub-Components
+   ============================================ */
+
+const NotFoundState = ({
+  locale,
+  t,
+}: {
+  locale: string;
+  t: (key: string) => string;
+}) => (
+  <div className="min-h-[60vh] flex items-center justify-center px-4">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="text-center max-w-md"
+    >
+      <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center">
+        <span className="text-2xl">📭</span>
+      </div>
+      <h1 className="text-2xl font-semibold text-gray-900 mb-3">
+        {t("notFoundTitle")}
+      </h1>
+      <p className="text-gray-500 mb-8">{t("notFoundDesc")}</p>
+      <Link
+        href={`/${locale}/highlights`}
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+      >
+        <HiArrowLeft className="w-4 h-4" />
+        {t("backToHighlights")}
+      </Link>
+    </motion.div>
   </div>
 );
 
-const ErrorUI = ({
-  title,
-  desc,
-  backText,
-  locale,
+const BackButton = ({
+  href,
+  label,
 }: {
-  title: string;
-  desc: string;
-  backText: string;
-  locale: string;
+  href: string;
+  label: string;
 }) => (
-  <div className="min-h-screen flex items-center justify-center px-4">
-    <div className="text-center max-w-md">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">{title}</h1>
-      <p className="text-gray-600 mb-8">{desc}</p>
-      <Link
-        href={`/${locale}/highlights`}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors"
-      >
-        <IoIosArrowRoundBack className="w-5 h-5" />
-        {backText}
-      </Link>
-    </div>
+  <Link
+    href={href}
+    className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors group"
+  >
+    <span className="p-2 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors">
+      <HiArrowLeft className="w-4 h-4" />
+    </span>
+    <span className="text-sm font-medium">{label}</span>
+  </Link>
+);
+
+const GalleryNavButton = ({
+  direction,
+  onClick,
+}: {
+  direction: "left" | "right";
+  onClick: () => void;
+}) => (
+  <button
+    onClick={onClick}
+    className={`absolute ${direction === "left" ? "left-4" : "right-4"} top-1/2 -translate-y-1/2 z-10 
+      bg-white/90 hover:bg-white backdrop-blur-sm p-3 rounded-full shadow-lg 
+      opacity-0 group-hover:opacity-100 transition-all duration-300 
+      hover:scale-110 border border-gray-100`}
+    aria-label={`${direction === "left" ? "Previous" : "Next"} image`}
+  >
+    {direction === "left" ? (
+      <IoIosArrowBack className="w-5 h-5 text-gray-700" />
+    ) : (
+      <IoIosArrowForward className="w-5 h-5 text-gray-700" />
+    )}
+  </button>
+);
+
+const GalleryDots = ({
+  count,
+  activeIndex,
+  onDotClick,
+}: {
+  count: number;
+  activeIndex: number;
+  onDotClick: (index: number) => void;
+}) => (
+  <div className="flex justify-center gap-1.5 mt-6 md:hidden">
+    {Array.from({ length: count }).map((_, index) => (
+      <button
+        key={index}
+        onClick={() => onDotClick(index)}
+        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+          index === activeIndex
+            ? "bg-gray-800 w-4"
+            : "bg-gray-300 hover:bg-gray-400"
+        }`}
+        aria-label={`Go to image ${index + 1}`}
+      />
+    ))}
   </div>
 );
+
+const DateFooter = ({ date, locale }: { date: string; locale: string }) => {
+  const formattedDate = useMemo(() => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString(locale === "hu" ? "hu-HU" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }, [date, locale]);
+
+  return (
+    <motion.footer
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      custom={0.5}
+      className="mt-12 pt-8 border-t border-gray-100"
+    >
+      <div className="flex items-center justify-center gap-3 text-gray-400 text-sm">
+        <div className="w-8 h-px bg-gray-200" />
+        <time dateTime={date}>{formattedDate}</time>
+        <div className="w-8 h-px bg-gray-200" />
+      </div>
+    </motion.footer>
+  );
+};
+
+/* ============================================
+   Custom Hooks
+   ============================================ */
+
+function useGalleryScroll(imagesLength: number) {
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [visibleIndex, setVisibleIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () =>
+      setIsMobile(window.innerWidth < GALLERY_CONFIG.mobileBreakpoint);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const handleScroll = () => {
+      const imageWidth =
+        (gallery.children[0] as HTMLElement)?.clientWidth ||
+        GALLERY_CONFIG.defaultImageWidth;
+      const imageWithGap = imageWidth + GALLERY_CONFIG.imageGap;
+      const currentIndex = Math.round(gallery.scrollLeft / imageWithGap);
+      setVisibleIndex(Math.max(0, Math.min(currentIndex, imagesLength - 1)));
+    };
+
+    gallery.addEventListener("scroll", handleScroll, { passive: true });
+    return () => gallery.removeEventListener("scroll", handleScroll);
+  }, [imagesLength]);
+
+  const scrollToIndex = useCallback((index: number) => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const imageWidth =
+      (gallery.children[0] as HTMLElement)?.clientWidth ||
+      GALLERY_CONFIG.defaultImageWidth;
+    const imageWithGap = imageWidth + GALLERY_CONFIG.imageGap;
+
+    gallery.scrollTo({ left: index * imageWithGap, behavior: "smooth" });
+  }, []);
+
+  const scrollBy = useCallback(
+    (direction: "left" | "right") => {
+      const newIndex =
+        direction === "left"
+          ? Math.max(0, visibleIndex - 1)
+          : Math.min(imagesLength - 1, visibleIndex + 1);
+      scrollToIndex(newIndex);
+    },
+    [visibleIndex, imagesLength, scrollToIndex]
+  );
+
+  return { galleryRef, visibleIndex, isMobile, scrollBy, scrollToIndex };
+}
+
+function useDragScroll(
+  galleryRef: React.RefObject<HTMLDivElement | null>,
+  enabled: boolean
+) {
+  const [isDragging, setIsDragging] = useState(false);
+  const dragState = useRef({ startX: 0, scrollLeft: 0 });
+
+  const handlers = useMemo(() => {
+    if (!enabled) return {};
+
+    return {
+      onMouseDown: (e: React.MouseEvent) => {
+        setIsDragging(true);
+        dragState.current = {
+          startX: e.pageX - (galleryRef.current?.offsetLeft || 0),
+          scrollLeft: galleryRef.current?.scrollLeft || 0,
+        };
+      },
+      onMouseMove: (e: React.MouseEvent) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - (galleryRef.current?.offsetLeft || 0);
+        const walk = (x - dragState.current.startX) * GALLERY_CONFIG.dragMultiplier;
+        if (galleryRef.current) {
+          galleryRef.current.scrollLeft = dragState.current.scrollLeft - walk;
+        }
+      },
+      onMouseUp: () => setIsDragging(false),
+      onMouseLeave: () => setIsDragging(false),
+    };
+  }, [enabled, isDragging, galleryRef]);
+
+  return { isDragging, handlers };
+}
+
+/* ============================================
+   Main Component
+   ============================================ */
 
 export default function HighlightClientPage({
   initialHighlight,
@@ -54,432 +264,155 @@ export default function HighlightClientPage({
   initialHighlight: ApiHighlight | null;
 }) {
   const { locale: rawLocale } = useParams();
-  const locale = rawLocale === "hu" ? "hu" : "en";
+  const locale = (rawLocale as string) === "hu" ? "hu" : "en";
+  const t = useTranslations("highlights");
 
-  const [highlight] = useState(initialHighlight);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const highlight = initialHighlight;
 
-  // Check if we're on mobile/small screen
-  const [isMobile, setIsMobile] = useState(false);
-  const [visibleImageIndex, setVisibleImageIndex] = useState(0);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768); // md breakpoint
+  // Memoized content
+  const content = useMemo(() => {
+    if (!highlight) return null;
+    return {
+      title: locale === "hu" ? highlight.title_hu : highlight.title_en,
+      description: locale === "hu" ? highlight.desc_hu : highlight.desc_en,
+      date: highlight.date || highlight.year || "",
+      images: highlight.images || [],
+      hasMultipleImages: (highlight.images?.length || 0) > 1,
     };
+  }, [highlight, locale]);
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  // Gallery hooks
+  const { galleryRef, visibleIndex, isMobile, scrollBy, scrollToIndex } =
+    useGalleryScroll(content?.images.length || 0);
+  const { isDragging, handlers } = useDragScroll(galleryRef, isMobile);
 
-  // Update visible image index on scroll for blur effects
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!galleryRef.current) return;
-
-      const container = galleryRef.current;
-      const scrollLeft = container.scrollLeft;
-      const imageWidth = container.children[0]?.clientWidth || 320;
-      const gap = 16;
-      const imageWithGap = imageWidth + gap;
-
-      // Calculate which image is currently in view
-      const currentIndex = Math.round(scrollLeft / imageWithGap);
-      const clampedIndex = Math.max(
-        0,
-        Math.min(currentIndex, highlight?.images?.length - 1 || 0)
-      );
-      setVisibleImageIndex(clampedIndex);
-    };
-
-    const galleryElement = galleryRef.current;
-    if (galleryElement) {
-      galleryElement.addEventListener("scroll", handleScroll);
-      // Initial check
-      handleScroll();
-    }
-
-    return () => {
-      if (galleryElement) {
-        galleryElement.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, [highlight?.images?.length]);
-
-  // Initialize gallery to show first image
-  useEffect(() => {
-    if (
-      galleryRef.current &&
-      highlight?.images &&
-      highlight.images.length > 0
-    ) {
-      const container = galleryRef.current;
-      // Start with first image visible
-      container.scrollLeft = 0;
-    }
-  }, [highlight?.images]);
-
-  // Global mouse event handlers for drag scrolling - only on mobile
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - (galleryRef.current?.offsetLeft || 0);
-      const walk = (x - startX) * 2; // Scroll speed multiplier
-      if (galleryRef.current) {
-        galleryRef.current.scrollLeft = scrollLeft - walk;
-      }
-    };
-
-    const handleGlobalMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleGlobalMouseMove);
-      document.addEventListener("mouseup", handleGlobalMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleGlobalMouseMove);
-      document.removeEventListener("mouseup", handleGlobalMouseUp);
-    };
-  }, [isDragging, startX, scrollLeft, isMobile]);
-
-  // Mouse drag scrolling handlers - only on mobile
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!isMobile) return;
-    setIsDragging(true);
-    setStartX(e.pageX - (galleryRef.current?.offsetLeft || 0));
-    setScrollLeft(galleryRef.current?.scrollLeft || 0);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isMobile || !isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (galleryRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 2; // Scroll speed multiplier
-    if (galleryRef.current) {
-      galleryRef.current.scrollLeft = scrollLeft - walk;
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (!isMobile) return;
-    setIsDragging(false);
-  };
-
-  const handleMouseLeave = () => {
-    if (!isMobile) return;
-    setIsDragging(false);
-  };
-
-  // Arrow navigation functions - Center images in viewport
-  const scrollToImage = (direction: "left" | "right") => {
-    if (!galleryRef.current) return;
-
-    const container = galleryRef.current;
-    const containerWidth = container.clientWidth;
-    const imageWidth = container.children[0]?.clientWidth || 320;
-    const gap = 16;
-
-    // Calculate current centered image index
-    const currentScroll = container.scrollLeft;
-    const imageWithGap = imageWidth + gap;
-    const currentIndex = Math.round(currentScroll / imageWithGap);
-
-    // Calculate target index
-    const targetIndex =
-      direction === "left"
-        ? Math.max(0, currentIndex - 1)
-        : Math.min(highlight?.images?.length - 1 || 0, currentIndex + 1);
-
-    // Calculate scroll position to center the target image
-    const targetScroll = targetIndex * imageWithGap;
-
-    container.scrollTo({
-      left: targetScroll,
-      behavior: "smooth",
-    });
-  };
-
-  if (!highlight)
-    return (
-      <ErrorUI
-        title="Highlight Not Found"
-        desc="The highlight you're looking for doesn't exist."
-        backText="Back to Highlights"
-        locale={locale}
-      />
-    );
-
-  const isHu = locale === "hu";
-  const title = isHu ? highlight.title_hu : highlight.title_en;
-  const description = isHu ? highlight.desc_hu : highlight.desc_en;
-  const note = isHu ? highlight.note_hu : highlight.note_en;
+  if (!highlight || !content) {
+    return <NotFoundState locale={locale} t={t} />;
+  }
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-row items-center justify-between md:mb-4 md:px-6">
-          <Link
+    <article className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+        {/* Navigation */}
+        <nav className="mb-8">
+          <BackButton
             href={`/${locale}/highlights`}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+            label={t("backToHighlights")}
+          />
+        </nav>
+
+        {/* Title */}
+        <motion.header
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+          className="mb-8"
+        >
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
+            {content.title}
+          </h1>
+        </motion.header>
+
+        {/* Image Gallery */}
+        {content.images.length > 0 && (
+          <motion.section
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.1}
+            className="mb-10"
           >
-            <span className="p-1.5 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
-              <IoIosArrowRoundBack className="w-5 h-5" />
-            </span>
-            <span className="font-medium tracking-wide text-sm">
-              Back to Highlights
-            </span>
-          </Link>
-        </div>
-
-        {/* Conditional layout based on number of images */}
-        {highlight.images && highlight.images.length > 1 ? (
-          /* Multiple images: Title on top, Images in center, text below */
-          <div className="flex flex-col items-center space-y-8">
-            {/* Title - Above images */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="w-full max-w-4xl text-center"
-            >
-              <h1 className="text-3xl md:text-4xl font-bold Carena-font leading-tight mb-4">
-                {title}
-              </h1>
-            </motion.div>
-
-            {/* Images Gallery - Centered */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-full max-w-4xl"
-            >
+            {content.hasMultipleImages ? (
               <div className="relative group">
-                {/* Arrow buttons - show only when navigation is possible and more than 2 images */}
-                {visibleImageIndex > 0 && highlight.images.length > 2 && (
-                  <button
-                    onClick={() => scrollToImage("left")}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white backdrop-blur-sm text-gray-800 hover:text-gray-900 p-3 rounded-full shadow-lg hover:shadow-2xl opacity-80 group-hover:opacity-100 transition-all duration-300 ease-out transform group-hover:translate-x-0 group-hover:scale-110 -translate-x-2 border border-gray-200/50 cursor-pointer"
-                    aria-label="Previous image"
-                  >
-                    <IoIosArrowBack className="w-5 h-5" />
-                  </button>
+                {/* Navigation Arrows */}
+                {visibleIndex > 0 && content.images.length > 2 && (
+                  <GalleryNavButton
+                    direction="left"
+                    onClick={() => scrollBy("left")}
+                  />
                 )}
-                {visibleImageIndex < highlight.images.length - 1 &&
-                  highlight.images.length > 2 && (
-                    <button
-                      onClick={() => scrollToImage("right")}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/95 hover:bg-white backdrop-blur-sm text-gray-800 hover:text-gray-900 p-3 rounded-full shadow-lg hover:shadow-2xl opacity-80 group-hover:opacity-100 transition-all duration-300 ease-out transform group-hover:-translate-x-0 group-hover:scale-110 translate-x-2 border border-gray-200/50 cursor-pointer"
-                      aria-label="Next image"
-                    >
-                      <IoIosArrowForward className="w-5 h-5" />
-                    </button>
+                {visibleIndex < content.images.length - 1 &&
+                  content.images.length > 2 && (
+                    <GalleryNavButton
+                      direction="right"
+                      onClick={() => scrollBy("right")}
+                    />
                   )}
 
-                {/* Horizontal scrollable gallery - Centered focus */}
+                {/* Gallery Container */}
                 <div
                   ref={galleryRef}
-                  className={`flex overflow-x-auto overflow-y-hidden gap-4 pb-4 px-4 snap-x snap-mandatory scrollbar-hide transition-all duration-200 ${
-                    isDragging && isMobile
-                      ? "cursor-grabbing scale-[0.98]"
-                      : isMobile
-                      ? "cursor-grab"
-                      : ""
-                  }`}
-                  onMouseDown={isMobile ? handleMouseDown : undefined}
-                  onMouseMove={isMobile ? handleMouseMove : undefined}
-                  onMouseUp={isMobile ? handleMouseUp : undefined}
-                  onMouseLeave={isMobile ? handleMouseLeave : undefined}
-                  style={{
-                    scrollBehavior: "smooth",
-                    scrollPaddingLeft: "50%",
-                    scrollPaddingRight: "50%",
-                  }}
+                  className={`flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 items-center
+                    ${isDragging ? "cursor-grabbing" : isMobile ? "cursor-grab" : ""}`}
+                  {...handlers}
                 >
-                  {highlight.images.map((img, index) => (
+                  {content.images.map((img, index) => (
                     <div
                       key={index}
-                      className={`relative flex-shrink-0 w-80 h-auto max-h-96 md:w-96 md:max-h-[500px] rounded-2xl overflow-hidden shadow-lg snap-start bg-gray-100 group/image ${
-                        isMobile ? "cursor-grab" : ""
-                      }`}
+                      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50"
                       style={{
-                        filter:
-                          index === visibleImageIndex ||
-                          index === visibleImageIndex + 1
-                            ? "none"
-                            : "blur(1px) brightness(0.8)",
-                        transition: "filter 0.3s ease-out",
+                        opacity: Math.abs(index - visibleIndex) > 1 ? 0.5 : 1,
+                        transition: "opacity 0.3s ease",
                       }}
                     >
                       <Image
                         src={img}
-                        alt={`${title} - Image ${index + 1}`}
-                        width={320}
-                        height={240}
-                        className="object-contain w-full h-full transition-all duration-300 ease-out group-hover/image:brightness-105 group-hover/image:contrast-105 select-none"
-                        sizes="(max-width: 768px) 320px, 384px"
+                        alt={`${content.title} - ${index + 1}`}
+                        width={800}
+                        height={600}
+                        className="w-auto h-auto max-h-[70vh] object-contain"
+                        sizes="(max-width: 768px) 90vw, 600px"
                         draggable={false}
                       />
-                      {/* Subtle overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300" />
-
-                      {/* Image counter badge */}
-                      <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full font-medium border border-white/20 transition-all duration-300 group-hover/image:bg-black/80">
-                        {index + 1}/{highlight.images.length}
+                      {/* Image Counter */}
+                      <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full">
+                        {index + 1} / {content.images.length}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Enhanced scroll indicator - hidden on big screens */}
-                <div className="flex justify-center mt-4 space-x-2 md:hidden">
-                  {highlight.images.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`w-2 h-2 rounded-full transition-colors duration-200 cursor-pointer ${
-                        index === visibleImageIndex
-                          ? "bg-gray-600 scale-125"
-                          : "bg-gray-300 hover:bg-gray-400"
-                      }`}
-                      onClick={() => {
-                        if (galleryRef.current) {
-                          const container = galleryRef.current;
-                          const imageWidth =
-                            container.children[index]?.clientWidth || 320;
-                          const gap = 16;
-                          const imageWithGap = imageWidth + gap;
-
-                          // Scroll to the target image
-                          const targetScroll = index * imageWithGap;
-
-                          container.scrollTo({
-                            left: targetScroll,
-                            behavior: "smooth",
-                          });
-                        }
-                      }}
-                    />
-                  ))}
-                </div>
+                {/* Dots Indicator */}
+                <GalleryDots
+                  count={content.images.length}
+                  activeIndex={visibleIndex}
+                  onDotClick={scrollToIndex}
+                />
               </div>
-            </motion.div>
-
-            {/* Text Content - Below images */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="w-full max-w-3xl text-center"
-            >
-              {highlight.year && (
-                <div className="mb-4 flex justify-center">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-                    {highlight.year}
-                  </span>
-                </div>
-              )}
-
-              <div className="prose prose-lg max-w-none mb-6">
-                <p className="text-gray-700 leading-relaxed">{description}</p>
+            ) : (
+              /* Single Image - preserves original dimensions */
+              <div className="flex justify-center rounded-2xl overflow-hidden bg-gray-50">
+                <Image
+                  src={content.images[0]}
+                  alt={content.title}
+                  width={800}
+                  height={600}
+                  className="w-auto h-auto max-w-full max-h-[75vh] object-contain"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                  priority
+                />
               </div>
-
-              {note && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 max-w-2xl mx-auto">
-                  <p className="text-amber-800">{note}</p>
-                </div>
-              )}
-
-              {highlight.category && (
-                <div className="mb-4 flex justify-center">
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-                    {highlight.category}
-                  </span>
-                </div>
-              )}
-            </motion.div>
-          </div>
-        ) : (
-          /* Single image or no images: Original two-column layout */
-          <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="order-2 lg:order-1"
-            >
-              <h1 className="text-3xl md:text-4xl font-bold Carena-font leading-tight mb-6">
-                {title}
-              </h1>
-
-              {highlight.year && (
-                <div className="mb-4">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-                    {highlight.year}
-                  </span>
-                </div>
-              )}
-
-              <div className="prose prose-lg max-w-none mb-6">
-                <p className="text-gray-700 leading-relaxed">{description}</p>
-              </div>
-
-              {note && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                  <p className="text-amber-800">{note}</p>
-                </div>
-              )}
-
-              {highlight.category && (
-                <div className="mb-4">
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
-                    {highlight.category}
-                  </span>
-                </div>
-              )}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="order-1 lg:order-2"
-            >
-              {highlight.images && highlight.images.length === 1 ? (
-                <div className="relative group">
-                  <div className="relative flex-shrink-0 w-full h-auto max-h-96 md:max-h-[500px] rounded-2xl overflow-hidden shadow-lg bg-gray-100 group/image cursor-pointer">
-                    <Image
-                      src={highlight.images[0]}
-                      alt={`${title} - Image 1`}
-                      width={400}
-                      height={300}
-                      className="object-contain w-full h-full transition-all duration-300 ease-out group-hover/image:brightness-105 group-hover/image:contrast-105 select-none"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      draggable={false}
-                    />
-                    {/* Subtle overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              ) : (
-                <div className="aspect-square bg-gray-100 rounded-2xl flex items-center justify-center">
-                  <span className="text-gray-400">No images available</span>
-                </div>
-              )}
-            </motion.div>
-          </div>
+            )}
+          </motion.section>
         )}
+
+        {/* Description */}
+        <motion.section
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+          custom={0.2}
+        >
+          <div className="prose prose-lg prose-gray max-w-none">
+            <p className="text-gray-600 leading-relaxed text-lg">
+              {content.description}
+            </p>
+          </div>
+        </motion.section>
+
+        {/* Date Footer */}
+        {content.date && <DateFooter date={content.date} locale={locale} />}
       </div>
-    </div>
+    </article>
   );
 }
