@@ -1,12 +1,5 @@
 import Image from "next/image";
-import {
-  HiPencil,
-  HiTrash,
-  HiCalendar,
-  HiExclamation,
-  HiTag,
-  HiStatusOnline,
-} from "react-icons/hi";
+import { HiPencil, HiTrash, HiStatusOnline, HiPhotograph } from "react-icons/hi";
 import { useHighlights } from "@/app/hooks/useHighlights";
 import { ApiHighlight } from "@/lib/types";
 
@@ -38,17 +31,23 @@ export default function HighlightList({
           >
             <div className="flex gap-4 items-center">
               <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                {highlight.images && highlight.images.length > 0 && (
-                  <Image
-                    src={highlight.images[0]}
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                )}
-                {highlight.images && highlight.images.length > 1 && (
-                  <div className="absolute top-1 right-1 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {highlight.images.length}
+                {highlight.images && highlight.images.length > 0 ? (
+                  <>
+                    <Image
+                      src={highlight.images[0]}
+                      alt=""
+                      fill
+                      className="object-cover"
+                    />
+                    {highlight.images.length > 1 && (
+                      <div className="absolute bottom-1 right-1 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                        {highlight.images.length}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <HiPhotograph className="w-6 h-6 text-gray-300" />
                   </div>
                 )}
               </div>
@@ -56,17 +55,14 @@ export default function HighlightList({
                 <h3 className="font-bold text-gray-900">
                   {highlight.title_en}
                 </h3>
+                <p className="text-sm text-gray-500 line-clamp-1 max-w-md">
+                  {highlight.desc_en}
+                </p>
 
-                <div className="flex flex-wrap gap-2 mt-1">
-                  {highlight.year && (
-                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
-                      <HiCalendar /> {highlight.year}
-                    </span>
-                  )}
-
-                  {highlight.category && (
-                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
-                      <HiTag /> {highlight.category}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {highlight.images && highlight.images.length > 0 && (
+                    <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded flex items-center gap-1 border border-blue-100">
+                      <HiPhotograph className="text-xs" /> {highlight.images.length} image{highlight.images.length > 1 ? "s" : ""}
                     </span>
                   )}
 
@@ -76,29 +72,14 @@ export default function HighlightList({
                         highlight.status === "active"
                           ? "text-green-600 bg-green-50 border-green-100"
                           : highlight.status === "archived"
-                          ? "text-gray-600 bg-gray-50 border-gray-100"
-                          : "text-amber-600 bg-amber-50 border-amber-100"
+                            ? "text-gray-600 bg-gray-50 border-gray-100"
+                            : "text-amber-600 bg-amber-50 border-amber-100"
                       }`}
                     >
                       <HiStatusOnline /> {highlight.status}
                     </span>
                   )}
                 </div>
-
-                {(highlight.note_en || highlight.note_hu) && (
-                  <div className="flex gap-2 mt-1">
-                    {highlight.note_en && (
-                      <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 flex items-center gap-1">
-                        <HiExclamation /> EN: {highlight.note_en}
-                      </span>
-                    )}
-                    {highlight.note_hu && (
-                      <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100 flex items-center gap-1">
-                        <HiExclamation /> HU: {highlight.note_hu}
-                      </span>
-                    )}
-                  </div>
-                )}
               </div>
             </div>
             <div className="flex gap-2 self-end sm:self-center">

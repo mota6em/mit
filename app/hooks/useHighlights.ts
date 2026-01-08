@@ -1,21 +1,20 @@
 import { HighlightData } from "@/lib/types";
 import { useState, useEffect, useCallback } from "react";
 
+const INITIAL_FORM_STATE: HighlightData = {
+  images: [],
+  title_en: "",
+  title_hu: "",
+  desc_en: "",
+  desc_hu: "",
+  status: "active",
+  date: "",
+};
+
 export function useHighlights() {
   const [highlights, setHighlights] = useState<HighlightData[]>([]);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<HighlightData>({
-    images: [],
-    title_en: "",
-    title_hu: "",
-    desc_en: "",
-    desc_hu: "",
-    note_en: "",
-    note_hu: "",
-    year: "",
-    category: "",
-  });
-
+  const [form, setForm] = useState<HighlightData>(INITIAL_FORM_STATE);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -66,10 +65,6 @@ export function useHighlights() {
   const handleEdit = (highlight: HighlightData) => {
     setForm({
       ...highlight,
-      note_en: highlight.note_en || "",
-      note_hu: highlight.note_hu || "",
-      year: highlight.year || "",
-      category: highlight.category || "",
       status: highlight.status || "active",
       date: highlight.date || "",
       images: highlight.images || [],
@@ -79,19 +74,7 @@ export function useHighlights() {
   };
 
   const resetForm = () => {
-    setForm({
-      images: [],
-      title_en: "",
-      title_hu: "",
-      desc_en: "",
-      desc_hu: "",
-      note_en: "",
-      note_hu: "",
-      year: "",
-      category: "",
-      status: "active",
-      date: "",
-    });
+    setForm(INITIAL_FORM_STATE);
   };
 
   const handleCancel = () => {

@@ -4,7 +4,6 @@ import { HighlightData } from "@/lib/types";
 import FormHeader from "./admin/highlights/FormHeader";
 import ImageUploadSection from "./admin/highlights/ImageUploadSection";
 import ContentSection from "./admin/highlights/ContentSection";
-import MetadataSection from "./admin/highlights/MetadataSection";
 import SubmitButtons from "./admin/highlights/SubmitButtons";
 
 interface HighlightFormProps {
@@ -64,16 +63,8 @@ export default function HighlightForm({
           <ContentSection
             title_en={form.title_en}
             desc_en={form.desc_en}
-            note_en={form.note_en ?? ""}
             title_hu={form.title_hu ?? ""}
             desc_hu={form.desc_hu ?? ""}
-            note_hu={form.note_hu ?? ""}
-            setForm={setForm}
-          />
-
-          <MetadataSection
-            year={form.year ?? ""}
-            category={form.category ?? ""}
             setForm={setForm}
           />
 
