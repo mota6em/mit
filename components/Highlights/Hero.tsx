@@ -1,78 +1,95 @@
 "use client";
+import { announcements_backgroundImages } from "@/data/constants/const";
 import { motion } from "framer-motion";
-import HeroImageCollage from "../reusable/HeroImageCollage";
-import { SectionTag } from "./SectionTag";
-import { HeroButtons } from "./HeroButtons";
-import { HeroBadges } from "./HeroBadges";
+import Image from "next/image";
 
 const Hero = () => {
-  const titleParts = ["Highlights", "&", "Announcements"];
-
   return (
-    <div className="relative w-full overflow-hidden bg-white pt-12 pb-16 md:pb-4 md:pt-0 md:px-5">
-      {/* Background blobs */}
-      <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
-      <div className="pointer-events-none absolute left-0 w-[400px] h-[400px] bg-blue-50/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
+    <section className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}
+      />
 
-      <div className="mx-auto px-4 relative z-10">
-        <div className="grid relative lg:grid-cols-2 gap-12 lg:gap-6 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center md:-mt-10"
+      {/* Background images  */}
+      {announcements_backgroundImages.map((img, index) => (
+        <motion.div
+          key={index}
+          className="absolute rounded-2xl overflow-hidden shadow-md ring-1 ring-black/5 hidden lg:block"
+          style={{
+            top: img.top,
+            left: img.left,
+            width: img.size,
+            height: img.size * 0.75,
+            rotate: img.rotate,
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.85, y: 0 }}
+          transition={{
+            delay: 0.1 + index * 0.08,
+            duration: 0.6,
+            ease: [0.25, 0.1, 0.25, 1],
+          }}
+        >
+          <Image
+            src={img.src}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="120px"
+          />
+        </motion.div>
+      ))}
+
+      {/* Soft radial gradient overlay for focus */}
+      <div className="absolute inset-0 bg-gradient-radial from-white/90 via-white/60 to-transparent" />
+
+      {/* Center content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="flex flex-col items-center"
+        >
+          {/* Logo */}
+          <Image
+            src="/imgs/home/aboutmit/mit-main-log-no-bg.png"
+            alt="MIT Logo"
+            width={220}
+            height={160}
+            className="object-contain mb-6"
+            priority
+          />
+
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-800 tracking-tight text-center"
           >
-            <SectionTag text="Our Journey" color="blue" />
+            Highlights <span className="text-emerald-600">&</span> Announcements
+          </motion.h1>
 
-            <h1 className="text-4xl md:text-6xl w-full font-semibold md:mt-12 lg:mt-0 mb-0 md:mb-2 leading-tight">
-              <span className="text-[#4d93fb] drop-shadow-sm">
-                {titleParts[0]}{" "}
-              </span>
-              <span className="text-[#11b505] drop-shadow-sm">
-                {titleParts[1]}{" "}
-              </span>
-              <br className="hidden md:block" />
-              <span className="text-[#e7b43f] drop-shadow-sm">
-                {titleParts[2]}
-              </span>
-            </h1>
-            <div className="relative md:hidden">
-              {/* Image section for only mobile devices */}
-              <HeroImageCollage
-                wrapperClassName="md:hidden"
-                leftImage="/imgs/events/event-group.jpg"
-                rightImage="/imgs/home/hero/picnic.jpg"
-                leftClassName="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-80 md:w-96 h-68 md:h-80 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 "
-                rightClassName="absolute bottom-10 md:bottom-16 right-4 sm:right-28 md:right-24 w-48 md:w-72 h-32 md:h-56 rotate-[8deg] z-20 "
-              />
-            </div>
-
-            <p className="text-gray-600 text-lg md:text-xl mt-6 md:mt-8 max-w-2xl mx-auto leading-relaxed">
-              Celebrating our achievements, milestones, and the stories that
-              shape our community.
-            </p>
-
-            <HeroBadges />
-            <HeroButtons />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden md:block"
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.5 }}
+            className="mt-4 text-slate-500 text-base md:text-lg max-w-md text-center"
           >
-            <HeroImageCollage
-              wrapperClassName="hidden md:block"
-              leftImage="/imgs/events/event-group.jpg"
-              rightImage="/imgs/home/hero/picnic.jpg"
-              leftClassName="absolute top-6 md:top-8 left-0 sm:left-28 md:left-24 w-80 md:w-96 h-68 md:h-80 -rotate-4 sm:-rotate-8 md:rotate-[-4deg] z-10 "
-              rightClassName="absolute bottom-10 md:bottom-16 right-4 sm:right-28 md:right-24 w-48 md:w-72 h-32 md:h-56 rotate-[8deg] z-20 "
-            />
-          </motion.div>
-        </div>
+            Stay updated with our latest news and community moments
+          </motion.p>
+        </motion.div>
       </div>
-    </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent" />
+    </section>
   );
 };
 

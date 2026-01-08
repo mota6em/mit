@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 /** Interfaces and Data Definitions */
 export interface ApiEvent {
   slug?: string;
@@ -90,3 +92,82 @@ export interface HighlightDisplayData extends ApiHighlight {
   displayNote: string;
   highlightId: string;
 }
+
+/** ===== Highlight Component Props ===== */
+
+export interface FeaturedAnnouncementData {
+  slug?: string;
+  _id?: string;
+  id?: string;
+  highlightId: string;
+  displayDate: string;
+  displayTitle: string;
+  displayDesc: string;
+  images?: string[];
+}
+
+export interface FeaturedAnnouncementProps {
+  announcement: FeaturedAnnouncementData;
+  locale: string;
+}
+
+export interface HighlightBadgeProps {
+  type: "announcement" | "date";
+  text: string;
+}
+
+export interface HighlightContentProps {
+  title: string;
+  description: string;
+  ctaLabel: string;
+  variants?: MotionVariants;
+  children?: ReactNode;
+}
+
+export interface HighlightImageProps {
+  images?: string[];
+  title: string;
+  variants?: MotionVariants;
+}
+
+/** ===== Animation Variants ===== */
+
+export interface MotionVariants {
+  hidden?: Record<string, unknown>;
+  visible?: Record<string, unknown>;
+}
+
+export const HIGHLIGHT_ANIMATION_VARIANTS = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  },
+  image: {
+    hidden: { opacity: 0, scale: 1.1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  },
+} as const;
