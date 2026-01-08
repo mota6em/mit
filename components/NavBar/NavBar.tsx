@@ -14,8 +14,7 @@ import { useMemo } from "react";
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
-  const [isHighlightsDropdownOpen, setIsHighlightsDropdownOpen] =
-    useState(false);
+
   const t = useTranslations("nav");
   const pathname = usePathname();
 
@@ -106,12 +105,7 @@ export default function NavBar() {
               // Special handling for highlights dropdown
               if (link.label === t("highlights")) {
                 return (
-                  <div
-                    key={link.label}
-                    className="relative"
-                    onMouseEnter={() => setIsHighlightsDropdownOpen(true)}
-                    onMouseLeave={() => setIsHighlightsDropdownOpen(false)}
-                  >
+                  <div key={link.label} className="relative">
                     <Link
                       href={link.href}
                       className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
@@ -122,41 +116,6 @@ export default function NavBar() {
                     >
                       {link.label}
                     </Link>
-
-                    {/* Highlights Dropdown */}
-                    <AnimatePresence>
-                      {isHighlightsDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
-                        >
-                          <Link
-                            href={`/${locale}/highlights#2026`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
-                            onClick={() => setIsHighlightsDropdownOpen(false)}
-                          >
-                            {t("highlights 2026")}
-                          </Link>
-                          <Link
-                            href={`/${locale}/highlights#2025`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
-                            onClick={() => setIsHighlightsDropdownOpen(false)}
-                          >
-                            {t("highlights 2025")}
-                          </Link>
-                          <Link
-                            href={`/${locale}/highlights#archive`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
-                            onClick={() => setIsHighlightsDropdownOpen(false)}
-                          >
-                            {t("highlights archive")}
-                          </Link>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 );
               }
