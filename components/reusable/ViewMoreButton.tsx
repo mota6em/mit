@@ -35,10 +35,7 @@ export default function ViewMoreButton({
 
   return (
     <div className={`${variantClasses[variant]} ${className}`}>
-      <Link
-        {...linkProps}
-        className={linkClassName || baseClasses}
-      >
+      <Link {...linkProps} className={linkClassName || baseClasses}>
         <span>{label}</span>
         <FaArrowRightLong className="group-hover:translate-x-1 transition-transform duration-100 ease-in-out" />
       </Link>

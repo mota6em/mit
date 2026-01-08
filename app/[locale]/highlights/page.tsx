@@ -8,10 +8,7 @@ export default function HighlightsPage() {
   return (
     <div className="flex flex-col gap-8 mb-16">
       <Hero />
-
-      {/* All Highlights in Blog Style */}
       <HighlightsSection />
-
       {/* Archive Note */}
       <ArchiveNote />
     </div>
