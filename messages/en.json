@@ -49,7 +49,19 @@
     "highlights_2025_title": "2025 Highlights",
     "highlights_archive_title": "Archive (2024 & Before)",
     "archive_note": "This content is documented in our social media as the website was launched in late 2025.",
-    "viewAllHighlights": "View All Highlights"
+    "viewAllHighlights": "View All Highlights",
+    "latestAnnouncement": "Latest Announcement",
+    "readMore": "Read More",
+    "noAnnouncements": "No announcements yet",
+    "backToHighlights": "Back to Highlights",
+    "notFoundTitle": "Highlight Not Found",
+    "notFoundDesc": "The highlight you're looking for doesn't exist.",
+    "loading": "Loading...",
+    "stayUpdated": "Stay updated with our latest news and community moments",
+    "heroTitle": "Highlights & Announcements",
+    "noImages": "No images available",
+    "archiveTitle": "Website Launched in Late 2025",
+    "archiveDescription": "Content from 2024 and earlier years is documented on our social media platforms. The MIT website was officially launched at the end of 2025, so all highlights and announcements from previous years can be found on our social media channels."
   },
   "home": {
     "statistics": {

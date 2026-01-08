@@ -48,8 +48,20 @@
     "highlights_2026_title": "2026 Kiemeltek",
     "highlights_2025_title": "2025 Kiemeltek",
     "highlights_archive_title": "Archívum (2024 és Korábbi)",
-    "archive_note": "Ez a tartalom a közösségi médiában van dokumentálva, mivel a weboldal 2025 végén indult.",
-    "viewAllHighlights": "Összes Kiemelt Megtekintése"
+    "archive_note": "Ez a tartalom a közösségi médiánkban van dokumentálva, mivel a weboldal 2025 végén indult.",
+    "viewAllHighlights": "Összes Megtekintése",
+    "latestAnnouncement": "Legfrissebb Bejelentés",
+    "readMore": "Tovább Olvasom",
+    "noAnnouncements": "Még nincs bejelentés",
+    "backToHighlights": "Vissza a Kiemeltekhez",
+    "notFoundTitle": "Nem Található",
+    "notFoundDesc": "A keresett kiemelt tartalom nem létezik.",
+    "loading": "Betöltés...",
+    "stayUpdated": "Maradj naprakész a legfrissebb híreinkkel",
+    "heroTitle": "Kiemeltek & Bejelentések",
+    "noImages": "Nincs elérhető kép",
+    "archiveTitle": "A weboldal 2025 végén indult",
+    "archiveDescription": "A 2024-es és korábbi tartalmak a közösségi média felületeinken találhatóak. A MIT weboldala 2025 végén indult, így a korábbi kiemeltek és bejelentések a social media csatornáinkon elérhetőek."
   },
   "home": {
     "statistics": {
