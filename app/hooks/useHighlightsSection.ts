@@ -17,10 +17,10 @@ const SWR_CONFIG = {
   keepPreviousData: true,
 } as const;
 
-export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
+export function useHighlightsSection({ limit }: HighlightsSectionProps) {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
-  const sectionId = year ? `${year}-highlights` : "highlights-section";
+  const sectionId = "highlights-section";
 
   // Fetch with aggressive caching to prevent unnecessary refetches
   const { data, isLoading } = useSWR(
@@ -36,24 +36,7 @@ export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
   const displayedHighlights: HighlightDisplayData[] = useMemo(() => {
     if (!Array.isArray(highlights)) return [];
 
-    // Filter by year if specified
-    let filteredHighlights = highlights;
-    if (year) {
-      if (year === "archive") {
-        // Archive includes 2024 and earlier
-        filteredHighlights = highlights.filter((h) => {
-          const highlightYear = parseInt(h.year || "0");
-          return highlightYear <= 2024;
-        });
-      } else {
-        // Specific year filter
-        filteredHighlights = highlights.filter((h) => h.year === year);
-      }
-    }
-
-    const sliced = limit
-      ? filteredHighlights.slice(0, limit)
-      : filteredHighlights;
+    const sliced = limit ? highlights.slice(0, limit) : highlights;
 
     return sliced.map((h) => {
       let displayDate = "";
@@ -61,9 +44,7 @@ export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
         displayDate = new Date(h.date).toLocaleDateString(
           locale === "hu" ? "hu-HU" : "en-US"
         );
-      } else if (h.year) {
-        displayDate = h.year;
-      } else {
+      } else if (h.createdAt) {
         displayDate = new Date(h.createdAt).toLocaleDateString(
           locale === "hu" ? "hu-HU" : "en-US"
         );
@@ -73,12 +54,11 @@ export function useHighlightsSection({ limit, year }: HighlightsSectionProps) {
         ...h,
         displayTitle: locale === "hu" ? h.title_hu : h.title_en,
         displayDesc: locale === "hu" ? h.desc_hu : h.desc_en,
-        displayNote: locale === "hu" ? h.note_hu : h.note_en,
         highlightId: h.slug || h._id || h.id,
         displayDate,
       };
     });
-  }, [highlights, limit, locale, year]);
+  }, [highlights, limit, locale]);
 
   // Title & Links
   const titleText = "Highlights & Announcements";

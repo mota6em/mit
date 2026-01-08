@@ -181,12 +181,21 @@ function useGalleryScroll(imagesLength: number) {
     if (!gallery) return;
 
     const handleScroll = () => {
-      const imageWidth =
-        (gallery.children[0] as HTMLElement)?.clientWidth ||
-        GALLERY_CONFIG.defaultImageWidth;
-      const imageWithGap = imageWidth + GALLERY_CONFIG.imageGap;
-      const currentIndex = Math.round(gallery.scrollLeft / imageWithGap);
-      setVisibleIndex(Math.max(0, Math.min(currentIndex, imagesLength - 1)));
+      const galleryCenter = gallery.scrollLeft + gallery.clientWidth / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      Array.from(gallery.children).forEach((child, index) => {
+        const element = child as HTMLElement;
+        const elementCenter = element.offsetLeft + element.clientWidth / 2;
+        const distance = Math.abs(galleryCenter - elementCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setVisibleIndex(closestIndex);
     };
 
     gallery.addEventListener("scroll", handleScroll, { passive: true });
@@ -197,12 +206,18 @@ function useGalleryScroll(imagesLength: number) {
     const gallery = galleryRef.current;
     if (!gallery) return;
 
-    const imageWidth =
-      (gallery.children[0] as HTMLElement)?.clientWidth ||
-      GALLERY_CONFIG.defaultImageWidth;
-    const imageWithGap = imageWidth + GALLERY_CONFIG.imageGap;
+    const children = gallery.children;
+    if (!children[index]) return;
 
-    gallery.scrollTo({ left: index * imageWithGap, behavior: "smooth" });
+    const targetElement = children[index] as HTMLElement;
+    const galleryWidth = gallery.clientWidth;
+    const elementWidth = targetElement.clientWidth;
+    const elementLeft = targetElement.offsetLeft;
+
+    // Center the target image in the viewport
+    const scrollPosition = elementLeft - (galleryWidth - elementWidth) / 2;
+
+    gallery.scrollTo({ left: Math.max(0, scrollPosition), behavior: "smooth" });
   }, []);
 
   const scrollBy = useCallback(
@@ -275,7 +290,7 @@ export default function HighlightClientPage({
     return {
       title: locale === "hu" ? highlight.title_hu : highlight.title_en,
       description: locale === "hu" ? highlight.desc_hu : highlight.desc_en,
-      date: highlight.date || highlight.year || "",
+      date: highlight.date || "",
       images: highlight.images || [],
       hasMultipleImages: (highlight.images?.length || 0) > 1,
     };
@@ -325,19 +340,18 @@ export default function HighlightClientPage({
             {content.hasMultipleImages ? (
               <div className="relative group">
                 {/* Navigation Arrows */}
-                {visibleIndex > 0 && content.images.length > 2 && (
+                {visibleIndex > 0 && (
                   <GalleryNavButton
                     direction="left"
                     onClick={() => scrollBy("left")}
                   />
                 )}
-                {visibleIndex < content.images.length - 1 &&
-                  content.images.length > 2 && (
-                    <GalleryNavButton
-                      direction="right"
-                      onClick={() => scrollBy("right")}
-                    />
-                  )}
+                {visibleIndex < content.images.length - 1 && (
+                  <GalleryNavButton
+                    direction="right"
+                    onClick={() => scrollBy("right")}
+                  />
+                )}
 
                 {/* Gallery Container */}
                 <div
