@@ -10,6 +10,9 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { HiArrowLeft } from "react-icons/hi2";
 
 import { ApiHighlight } from "@/lib/types";
+import ImageLightbox, {
+  useImageLightbox,
+} from "@/components/reusable/ImageLightbox";
 
 /* ============================================
    Constants & Animation Variants
@@ -281,6 +284,10 @@ export default function HighlightClientPage({
 
   const highlight = initialHighlight;
 
+  // Lightbox state
+  const { isOpen, initialIndex, openLightbox, closeLightbox } =
+    useImageLightbox();
+
   // Memoized content
   const content = useMemo(() => {
     if (!highlight) return null;
@@ -304,6 +311,15 @@ export default function HighlightClientPage({
 
   return (
     <article className="min-h-screen bg-white">
+      {/* Image Lightbox */}
+      <ImageLightbox
+        images={content.images}
+        initialIndex={initialIndex}
+        isOpen={isOpen}
+        onClose={closeLightbox}
+        alt={content.title}
+      />
+
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
         {/* Navigation */}
         <nav className="mb-8">
@@ -366,21 +382,28 @@ export default function HighlightClientPage({
                   {content.images.map((img, index) => (
                     <div
                       key={index}
-                      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50"
+                      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in group/img"
                       style={{
                         opacity: Math.abs(index - visibleIndex) > 1 ? 0.5 : 1,
                         transition: "opacity 0.3s ease",
                       }}
+                      onClick={() => openLightbox(index)}
                     >
                       <Image
                         src={img}
                         alt={`${content.title} - ${index + 1}`}
                         width={800}
                         height={600}
-                        className="w-auto h-auto max-h-[70vh] object-contain"
+                        className="w-auto h-auto max-h-[70vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
                         sizes="(max-width: 768px) 90vw, 600px"
                         draggable={false}
                       />
+                      {/* Click to expand hint */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/10">
+                        <span className="px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-sm rounded-full">
+                          Click to expand
+                        </span>
+                      </div>
                       {/* Image Counter */}
                       <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full">
                         {index + 1} / {content.images.length}
@@ -398,16 +421,25 @@ export default function HighlightClientPage({
               </div>
             ) : (
               /* Single Image - preserves original dimensions */
-              <div className="flex justify-center rounded-2xl overflow-hidden bg-gray-50">
+              <div
+                className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in group/img relative"
+                onClick={() => openLightbox(0)}
+              >
                 <Image
                   src={content.images[0]}
                   alt={content.title}
                   width={800}
                   height={600}
-                  className="w-auto h-auto max-w-full max-h-[75vh] object-contain"
+                  className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
                   sizes="(max-width: 768px) 100vw, 800px"
                   priority
                 />
+                {/* Click to expand hint */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/10">
+                  <span className="px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-sm rounded-full">
+                    Click to expand
+                  </span>
+                </div>
               </div>
             )}
           </motion.section>
