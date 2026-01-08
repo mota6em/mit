@@ -65,10 +65,6 @@ export interface ApiHighlight {
   title_hu: string;
   desc_en: string;
   desc_hu: string;
-  note_en?: string;
-  note_hu?: string;
-  year?: string;
-  category?: string;
   status?: string;
   date?: string;
 }
@@ -80,7 +76,6 @@ export interface HighlightData extends Omit<ApiHighlight, "_id" | "slug"> {
 export interface HighlightsSectionProps {
   limit?: number;
   showViewAll?: boolean;
-  year?: string;
   titleKey?: string;
   sectionId?: string;
 }
@@ -89,7 +84,6 @@ export interface HighlightDisplayData extends ApiHighlight {
   displayDate: string;
   displayTitle: string;
   displayDesc: string;
-  displayNote: string;
   highlightId: string;
 }
 

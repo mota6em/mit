@@ -8,10 +8,6 @@ const highlightSchema = new Schema(
     title_hu: { type: String, required: true },
     desc_en: { type: String, required: true },
     desc_hu: { type: String, required: true },
-    note_en: { type: String, required: false },
-    note_hu: { type: String, required: false },
-    year: { type: String, required: false },
-    category: { type: String, required: false },
     status: { type: String, required: false, default: "active" },
     date: { type: Date, required: false },
   },
@@ -26,7 +22,6 @@ highlightSchema.index({
   title_hu: "text",
   desc_en: "text",
   desc_hu: "text",
-  category: "text",
 });
 
 // Middleware to generate unique slug before saving
