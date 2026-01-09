@@ -9,18 +9,14 @@ export async function GET(request: Request) {
     await dbConnect();
     const { searchParams } = new URL(request.url);
     const identifier = searchParams.get("id"); // This could be _id or slug
-    const type = searchParams.get("type"); // 'upcoming', 'past', 'all'
-    const limit = searchParams.get("limit");
-    const search = searchParams.get("search");
 
     if (identifier) {
       // find by slug first, then fallback to _id if it's a valid ObjectId
-      let query = { slug: identifier };
-
+      const query = { slug: identifier };
       const event = await Event.findOne(query).lean();
 
       if (!event && isValidObjectId(identifier)) {
-        const eventById = await Event.findById(identifier).lean();
+        const eventById = await Event.findById(identifier);
         if (eventById) return NextResponse.json(eventById);
       }
 
@@ -30,31 +26,7 @@ export async function GET(request: Request) {
 
       return NextResponse.json(event);
     }
-
-    // Build query for list
-    let query: any = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (type === "upcoming") {
-      query.$or = [{ isRecurring: true }, { date: { $gte: today } }];
-    } else if (type === "past") {
-      query.isRecurring = false;
-      query.date = { $lt: today };
-    }
-    // For 'all' or no type, no additional filter
-
-    if (search) {
-      query.$text = { $search: search };
-    }
-
-    let eventsQuery = Event.find(query).sort({ date: -1 }).lean();
-
-    if (limit) {
-      eventsQuery = eventsQuery.limit(parseInt(limit));
-    }
-
-    const events = await eventsQuery;
+    const events = await Event.find({}).sort({ date: -1 }).lean();
     return NextResponse.json(events);
   } catch (error) {
     return NextResponse.json(
