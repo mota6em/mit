@@ -6,7 +6,7 @@ import VisionMissionSection from "@/components/About/VisionMissionSection";
 
 export default function AboutPage() {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
       <HeroSection />
       <VisionMissionSection />
       <CoreServicesSection />
