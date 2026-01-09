@@ -15,15 +15,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!highlight) return { title: "Highlight Not Found | MIT" };
 
   const title = locale === "hu" ? highlight.title_hu : highlight.title_en;
+  const description = locale === "hu" ? highlight.desc_hu : highlight.desc_en;
+  const imageUrl =
+    highlight.images && highlight.images.length > 0
+      ? highlight.images[0]
+      : "/imgs/icons/icon.jpg";
+
   return {
     title: `${title} | MIT`,
-    description: locale === "hu" ? highlight.desc_hu : highlight.desc_en,
+    description,
     openGraph: {
-      title,
-      images:
-        highlight.images && highlight.images.length > 0
-          ? [highlight.images[0]]
-          : ["/imgs/icons/icon.jpg"],
+      title: `${title} | MIT`,
+      description,
+      type: "article",
+      locale: locale === "hu" ? "hu_HU" : "en_US",
+      siteName: "MIT - Muszlim Ifjúság Társaság",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | MIT`,
+      description,
+      images: [imageUrl],
     },
   };
 }
