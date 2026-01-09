@@ -15,6 +15,9 @@ import { EventMap } from "./EventMap";
 import { EventActions } from "./EventActions";
 import { dayMap, ApiEvent } from "@/lib/types";
 import { useEventData } from "@/app/hooks/useEventData";
+import ImageLightbox, {
+  useImageLightbox,
+} from "@/components/reusable/ImageLightbox";
 
 const Badge = ({
   icon: Icon,
@@ -43,6 +46,10 @@ export default function EventClientPage({
 
   const { event, loading, error, views } = useEventData(initialEvent);
   const [copied, setCopied] = useState(false);
+
+  // Lightbox state
+  const { isOpen, initialIndex, openLightbox, closeLightbox } =
+    useImageLightbox();
 
   if (loading) return <LoadingUI message={t("loading")} />;
   if (error || !event)
@@ -74,8 +81,20 @@ export default function EventClientPage({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Event images array (currently just one image, but supports multiple in future)
+  const eventImages = event.img ? [event.img] : [];
+
   return (
     <div className="min-h-screen bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
+      {/* Image Lightbox */}
+      <ImageLightbox
+        images={eventImages}
+        initialIndex={initialIndex}
+        isOpen={isOpen}
+        onClose={closeLightbox}
+        alt={title}
+      />
+
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex flex-row items-center justify-between md:mb-4 md:px-6">
@@ -105,16 +124,23 @@ export default function EventClientPage({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative w-full aspect-4/5 lg:aspect-3/4 rounded-2xl overflow-hidden shadow-xl bg-gray-100"
+            className="relative w-full aspect-4/5 lg:aspect-3/4 rounded-2xl overflow-hidden shadow-xl bg-gray-100 cursor-zoom-in group"
+            onClick={() => openLightbox(0)}
           >
             <Image
               src={event.img}
               alt={title}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
+            {/* Click to expand hint */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10">
+              <span className="px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white text-sm rounded-full">
+                Click to expand
+              </span>
+            </div>
           </motion.div>
 
           {/* Event Info */}

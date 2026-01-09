@@ -1,9 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
-import { HiArrowRight } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { SectionTag } from "../Events/SectionTag";
+import ViewMoreButton from "../reusable/ViewMoreButton";
 
 export default function JoinMITVolunteerSection() {
   const t = useTranslations("joinMIT");
@@ -35,13 +35,15 @@ export default function JoinMITVolunteerSection() {
             <p className="text-green-800 text-lg md:text-[1.3rem] mb-8 md:mb-6">
               {t("volunteer.description")}
             </p>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSd6KJuRRaifHAoZTEBxKaawimJBzj_pAaU7zBnSgMuq_BQBvA/viewform"
-              target="_blank"
-              className="flex items-center justify-center w-full md:w-fit gap-2 text-green-700 animate-bounce font-semibold  outline outline-green-700 px-2 py-1 rounded-full  w-fit hover:gap-4 transition-all"
-            >
-              {t("volunteer.button")} <HiArrowRight />
-            </a>
+            <div className="flex justify-center md:justify-start">
+              <ViewMoreButton
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd6KJuRRaifHAoZTEBxKaawimJBzj_pAaU7zBnSgMuq_BQBvA/viewform"
+                label={t("volunteer.button")}
+                variant="inline"
+                external={true}
+                linkClassName="flex items-center justify-center w-full md:w-fit gap-2 text-green-700 animate-bounce font-semibold  outline outline-green-700 px-3 py-1 rounded-full  w-fit hover:gap-4 transition-all hover:bg-green-700 hover:text-white"
+              />
+            </div>
           </div>
         </div>
       </motion.div>

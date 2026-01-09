@@ -31,12 +31,37 @@
     "home": "FŐOLDAL",
     "pages": "OLDALAK",
     "events": "ESEMÉNYEK",
+    "highlights": "KIEMELTEK",
     "about mit": "RÓLUNK",
     "join mit": "CSATLAKOZZ",
+    "upcoming events": "Közelgő Események",
+    "past events": "Korábbi Események",
+    "highlights 2026": "2026 Kiemeltek",
+    "highlights 2025": "2025 Kiemeltek",
+    "highlights archive": "2024 és Korábbi (Archívum)",
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Másolva!",
     "copyright": "Minden jog fenntartva.",
     "developedBy": "Fejlesztette:"
+  },
+  "highlights": {
+    "highlights_2026_title": "2026 Kiemeltek",
+    "highlights_2025_title": "2025 Kiemeltek",
+    "highlights_archive_title": "Archívum (2024 és Korábbi)",
+    "archive_note": "Ez a tartalom a közösségi médiánkban van dokumentálva, mivel a weboldal 2025 végén indult.",
+    "viewAllHighlights": "Összes Megtekintése",
+    "latestAnnouncement": "Legfrissebb Kiemelt / Bejelentés",
+    "readMore": "Tovább Olvasom",
+    "noAnnouncements": "Még nincs bejelentés",
+    "backToHighlights": "Vissza a Kiemeltekhez",
+    "notFoundTitle": "Nem Található",
+    "notFoundDesc": "A keresett kiemelt tartalom nem létezik.",
+    "loading": "Betöltés...",
+    "stayUpdated": "Maradj naprakész a legfrissebb híreinkkel",
+    "heroTitle": "Kiemeltek & Bejelentések",
+    "noImages": "Nincs elérhető kép",
+    "archiveTitle": "A weboldal 2025 végén indult",
+    "archiveDescription": "A 2024-es és korábbi tartalmak a közösségi média felületeinken találhatóak. A MIT weboldala 2025 végén indult, így a korábbi kiemeltek és bejelentések a social media csatornáinkon elérhetőek."
   },
   "home": {
     "statistics": {
@@ -64,11 +89,6 @@
       "showAllUpcoming": "Összes következő Események megtekintése",
       "showAllPast": "Összes koróbbi Események megtekintése",
       "authorName": "MIT"
-    },
-    "testimonials": {
-      "title": "Mit Mond Közösségünk",
-      "subtitle": "Hallgasd meg azokat a tagokat, akik megtapasztalták közösségünk melegségét és fejlődését",
-      "reviews": []
     }
   },
   "joinMIT": {

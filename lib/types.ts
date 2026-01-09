@@ -1,3 +1,6 @@
+import type { ReactNode } from "react";
+import type { Variants } from "framer-motion";
+
 /** Interfaces and Data Definitions */
 export interface ApiEvent {
   slug?: string;
@@ -20,6 +23,14 @@ export interface ApiEvent {
 
 export interface EventData extends Omit<ApiEvent, "_id" | "slug"> {
   _id?: string; // Make _id optional for form state
+}
+
+export interface EventDisplayData extends ApiEvent {
+  displayTitle: string;
+  displayDesc: string;
+  displayNote?: string;
+  displayDate: string;
+  eventId: string;
 }
 
 export interface EventsSectionProps {
@@ -54,10 +65,147 @@ export interface EventsSectionProps {
   filterMode?: "all" | "recurring_only" | "single_only";
 }
 
-export interface EventDisplayData extends ApiEvent {
+export interface ApiHighlight {
+  slug?: string;
+  _id: string;
+  id?: string;
+  images: string[];
+  title_en: string;
+  title_hu: string;
+  desc_en: string;
+  desc_hu: string;
+  status?: string;
+  date?: string;
+}
+
+export interface HighlightData extends Omit<ApiHighlight, "_id" | "slug"> {
+  _id?: string; // Make _id optional for form state
+}
+
+export interface HighlightsSectionProps {
+  limit?: number;
+  showViewAll?: boolean;
+  titleKey?: string;
+  sectionId?: string;
+}
+
+export interface HighlightDisplayData extends ApiHighlight {
   displayDate: string;
   displayTitle: string;
   displayDesc: string;
-  displayNote: string;
-  eventId: string;
+  highlightId: string;
 }
+
+/** ===== Highlight Detail Page Types ===== */
+
+export interface HighlightContentData {
+  title: string;
+  description: string;
+  date: string;
+  images: string[];
+}
+
+export interface BackButtonProps {
+  href: string;
+  label: string;
+}
+
+export interface DateFooterProps {
+  date: string;
+  locale: string;
+}
+
+export interface GallerySectionProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface HighlightDescriptionProps {
+  description: string;
+}
+
+export interface NotFoundStateProps {
+  locale: string;
+  t: (key: string) => string;
+}
+
+/** ===== Highlight Component Props ===== */
+
+export interface FeaturedAnnouncementData {
+  slug?: string;
+  _id?: string;
+  id?: string;
+  highlightId: string;
+  displayDate: string;
+  displayTitle: string;
+  displayDesc: string;
+  images?: string[];
+}
+
+export interface FeaturedAnnouncementProps {
+  announcement: FeaturedAnnouncementData;
+  locale: string;
+}
+
+export interface HighlightBadgeProps {
+  type: "announcement" | "date";
+  text: string;
+}
+
+export interface HighlightContentProps {
+  title: string;
+  description: string;
+  ctaLabel: string;
+  variants?: Variants;
+  children?: ReactNode;
+}
+
+export interface HighlightImageProps {
+  images?: string[];
+  title: string;
+  variants?: Variants;
+}
+
+/** ===== Animation Variants ===== */
+
+export interface MotionVariants {
+  [key: string]: Record<string, unknown> | undefined;
+  hidden?: Record<string, unknown>;
+  visible?: Record<string, unknown>;
+}
+
+export const HIGHLIGHT_ANIMATION_VARIANTS = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  },
+  image: {
+    hidden: { opacity: 0, scale: 1.1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  },
+} as const;
