@@ -1,5 +1,3 @@
-"use client";
-
 import HighlightsSection from "@/components/Highlights/HighlightsSection";
 import Hero from "@/components/Highlights/Hero";
 import ArchiveNote from "@/components/Highlights/ArchiveNote";
@@ -9,7 +7,6 @@ export default function HighlightsPage() {
     <div className="flex flex-col gap-8 mb-16">
       <Hero />
       <HighlightsSection />
-      {/* Archive Note */}
       <ArchiveNote />
     </div>
   );
