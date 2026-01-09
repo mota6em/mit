@@ -1,10 +1,9 @@
-import { AuroraBackground } from "@/src/components/ui/aurora-background";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <AuroraBackground className="min-h-screen">
+    <section className="min-h-screen">
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
         <div className="flex flex-col items-center gap-8">
           <Image
@@ -28,6 +27,6 @@ export default function NotFound() {
           </Link>
         </div>
       </div>
-    </AuroraBackground>
+    </section>
   );
 }
