@@ -36,7 +36,7 @@ export default function FeaturedAnnouncement({
         href={`/${locale}/highlights/${announcement.highlightId}`}
         onClick={cacheHighlight}
       >
-        <motion.div className="group relative overflow-hidden rounded-3xl bg-white border border-gray-200/60 transition-shadow duration-300 hover:shadow-xl">
+        <motion.div className="group relative overflow-hidden rounded-3xl bg-white border border-gray-200/60 transition-shadow duration-100 hover:shadow-xs">
           {/* Gradient overlay for depth */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 via-transparent to-transparent pointer-events-none z-10" />
 

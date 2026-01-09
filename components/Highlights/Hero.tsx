@@ -9,7 +9,7 @@ const Hero = () => {
   const t = useTranslations("highlights");
 
   return (
-    <section className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+    <section className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       {/* Subtle grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -22,7 +22,7 @@ const Hero = () => {
       {announcements_backgroundImages.map((img, index) => (
         <motion.div
           key={index}
-          className="absolute rounded-2xl overflow-hidden shadow-md ring-1 ring-black/5 hidden lg:block"
+          className="absolute rounded-2xl overflow-hidden shadow-md ring-1 ring-black/5 hidden lg:block mt-2"
           style={{
             top: img.top,
             left: img.left,
@@ -52,7 +52,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-radial from-white/90 via-white/60 to-transparent" />
 
       {/* Center content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4">
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 mt-14">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
