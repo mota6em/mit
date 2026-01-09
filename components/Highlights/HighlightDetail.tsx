@@ -114,18 +114,21 @@ export function HighlightDescription({
                 const restOfText = trimmedParagraph.slice(1);
 
                 return (
-                  <div key={index} className="relative flex items-start">
-                    <div className="flex-shrink-0 mr-3 mt-1">
-                      <span className="block text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-none tracking-tight">
-                        {firstLetter}
-                      </span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gray-800 leading-relaxed text-lg md:text-xl font-normal tracking-wide">
-                        {restOfText}
-                      </p>
-                    </div>
-                  </div>
+                  <p
+                    key={index}
+                    className="text-gray-800 leading-relaxed text-lg md:text-xl font-normal tracking-wide"
+                  >
+                    <span
+                      className="float-left text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-none tracking-tight mr-3 mt-1"
+                      style={{
+                        lineHeight: "0.8",
+                        paddingTop: "0.1em",
+                      }}
+                    >
+                      {firstLetter}
+                    </span>
+                    {restOfText}
+                  </p>
                 );
               }
 
