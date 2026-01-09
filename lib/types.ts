@@ -96,6 +96,40 @@ export interface HighlightDisplayData extends ApiHighlight {
   highlightId: string;
 }
 
+/** ===== Highlight Detail Page Types ===== */
+
+export interface HighlightContentData {
+  title: string;
+  description: string;
+  date: string;
+  images: string[];
+}
+
+export interface BackButtonProps {
+  href: string;
+  label: string;
+}
+
+export interface DateFooterProps {
+  date: string;
+  locale: string;
+}
+
+export interface GallerySectionProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface HighlightDescriptionProps {
+  description: string;
+}
+
+export interface NotFoundStateProps {
+  locale: string;
+  t: (key: string) => string;
+}
+
 /** ===== Highlight Component Props ===== */
 
 export interface FeaturedAnnouncementData {

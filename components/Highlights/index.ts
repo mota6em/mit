@@ -22,3 +22,19 @@ export { default as ArchiveNote } from "./ArchiveNote";
 export { SectionTag } from "./SectionTag";
 export { HeroBadges } from "./HeroBadges";
 export { HeroButtons } from "./HeroButtons";
+
+// Highlight Detail Components (consolidated)
+export {
+  BackButton,
+  DateFooter,
+  GallerySection,
+  HighlightDescription,
+  NotFoundState,
+} from "./HighlightDetail";
+
+// Re-export hook and types from centralized locations
+export { useHighlightContent } from "@/app/hooks/useHighlightContent";
+export type { HighlightContentData as HighlightContentType } from "@/lib/types";
+
+// Highlight Gallery (consolidated)
+export { HighlightGallery } from "./HighlightGallery";

@@ -56,3 +56,16 @@ const announcements_backgroundImages = [
 ];
 
 export { announcements_backgroundImages };
+
+
+
+
+// animations for highlights page 
+export const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay, ease: [0.25, 0.1, 0.25, 1] as const },
+  }),
+};
