@@ -167,6 +167,66 @@ export interface HighlightImageProps {
   variants?: Variants;
 }
 
+/** ===== Gallery Types ===== */
+
+export interface GalleryConfig {
+  dragMultiplier: number;
+  mobileBreakpoint: number;
+}
+
+export const GALLERY_CONFIG: GalleryConfig = {
+  dragMultiplier: 2,
+  mobileBreakpoint: 768,
+};
+
+export interface GalleryProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface GalleryImageProps {
+  src: string;
+  alt: string;
+  index: number;
+  totalCount: number;
+  visibleIndex: number;
+  onClick: () => void;
+}
+
+export interface SingleImageProps {
+  src: string;
+  alt: string;
+  onClick: () => void;
+}
+
+export interface NavButtonProps {
+  direction: "left" | "right";
+  onClick: () => void;
+}
+
+export interface DotsProps {
+  count: number;
+  activeIndex: number;
+  onDotClick: (index: number) => void;
+}
+
+export interface ImageCounterProps {
+  current: number;
+  total: number;
+}
+
+export interface StackedPreviewProps {
+  images: string[];
+}
+
+/** ===== Highlight List Types ===== */
+
+export interface HighlightListProps {
+  highlights: HighlightData[];
+  onEdit: (highlight: HighlightData) => void;
+}
+
 /** ===== Animation Variants ===== */
 
 export interface MotionVariants {

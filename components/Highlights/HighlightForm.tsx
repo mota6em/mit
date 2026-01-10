@@ -1,10 +1,10 @@
 "use client";
 import { useImageUpload } from "@/app/hooks/useHighlights";
 import { HighlightData } from "@/lib/types";
-import FormHeader from "./admin/highlights/FormHeader";
-import ImageUploadSection from "./admin/highlights/ImageUploadSection";
-import ContentSection from "./admin/highlights/ContentSection";
-import SubmitButtons from "./admin/highlights/SubmitButtons";
+import FormHeader from "../admin/highlights/FormHeader";
+import ImageUploadSection from "../admin/highlights/ImageUploadSection";
+import ContentSection from "../admin/highlights/ContentSection";
+import SubmitButtons from "../admin/highlights/SubmitButtons";
 
 interface HighlightFormProps {
   form: HighlightData;

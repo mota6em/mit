@@ -1,16 +1,12 @@
 import Image from "next/image";
-import { HiPencil, HiTrash, HiStatusOnline, HiPhotograph } from "react-icons/hi";
+import {
+  HiPencil,
+  HiTrash,
+  HiStatusOnline,
+  HiPhotograph,
+} from "react-icons/hi";
 import { useHighlights } from "@/app/hooks/useHighlights";
-import { ApiHighlight } from "@/lib/types";
-
-interface HighlightData extends Omit<ApiHighlight, "_id" | "slug"> {
-  _id?: string; // Make _id optional for form state
-}
-
-interface HighlightListProps {
-  highlights: HighlightData[];
-  onEdit: (highlight: HighlightData) => void;
-}
+import { HighlightData, HighlightListProps } from "@/lib/types";
 
 export default function HighlightList({
   highlights,
@@ -62,7 +58,9 @@ export default function HighlightList({
                 <div className="flex flex-wrap gap-2 mt-2">
                   {highlight.images && highlight.images.length > 0 && (
                     <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded flex items-center gap-1 border border-blue-100">
-                      <HiPhotograph className="text-xs" /> {highlight.images.length} image{highlight.images.length > 1 ? "s" : ""}
+                      <HiPhotograph className="text-xs" />{" "}
+                      {highlight.images.length} image
+                      {highlight.images.length > 1 ? "s" : ""}
                     </span>
                   )}
 
@@ -72,8 +70,8 @@ export default function HighlightList({
                         highlight.status === "active"
                           ? "text-green-600 bg-green-50 border-green-100"
                           : highlight.status === "archived"
-                            ? "text-gray-600 bg-gray-50 border-gray-100"
-                            : "text-amber-600 bg-amber-50 border-amber-100"
+                          ? "text-gray-600 bg-gray-50 border-gray-100"
+                          : "text-amber-600 bg-amber-50 border-amber-100"
                       }`}
                     >
                       <HiStatusOnline /> {highlight.status}

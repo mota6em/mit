@@ -14,13 +14,8 @@ import {
 } from "@/lib/types";
 import { HighlightGallery } from "./HighlightGallery";
 
-// Re-export hook from centralized location
 export { useHighlightContent } from "@/app/hooks/useHighlightContent";
 export type { HighlightContentData as HighlightContent } from "@/lib/types";
-
-// ============================================================================
-// Components
-// ============================================================================
 
 export function BackButton({ href, label }: BackButtonProps) {
   return (
