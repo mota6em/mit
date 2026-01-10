@@ -3,12 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { fadeInUp } from "@/data/constants/const";
 
 import ImageLightbox, {
   useImageLightbox,
 } from "@/components/reusable/ImageLightbox";
-import SectionHeader from "@/components/reusable/SectionHeader";
 import { EventMap } from "@/components/Events/EventMap";
 
 import { DetailPageHeader } from "./DetailPageHeader";
@@ -29,18 +27,6 @@ interface DetailPageClientProps {
   loading?: boolean;
 }
 
-/**
- * DetailPageClient - Unified client component for Event and Highlight detail pages
- *
- * Features:
- * - Single image: Uses event-style layout (side-by-side on desktop)
- * - Multiple images: Uses highlight-style gallery (horizontal scroll)
- * - Description: Always uses highlight-style with drop cap
- * - Views tracking: Shows view count if enabled
- * - Actions: Registration, DM, Share buttons for events
- * - Map: Optional map section for events
- * - Date footer: Optional date display at bottom
- */
 export default function DetailPageClient({
   data,
   config,
@@ -52,7 +38,6 @@ export default function DetailPageClient({
   const { isOpen, initialIndex, openLightbox, closeLightbox } =
     useImageLightbox();
 
-  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
@@ -64,7 +49,6 @@ export default function DetailPageClient({
     );
   }
 
-  // Not found state
   if (!data) {
     return (
       <DetailPageNotFound
@@ -83,69 +67,57 @@ export default function DetailPageClient({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isSingleImage = data.images.length <= 1;
+  return (
+    <div className="min-h-screen  overflow-x-hidden bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
+      <ImageLightbox
+        images={data.images}
+        initialIndex={initialIndex}
+        isOpen={isOpen}
+        onClose={closeLightbox}
+        alt={data.title}
+      />
 
-  // Render based on image count
-  // Single image: Event-style two-column layout
-  // Multiple images: Highlight-style centered layout with gallery
-  if (isSingleImage) {
-    return (
-      <div className="min-h-screen bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
-        <ImageLightbox
-          images={data.images}
-          initialIndex={initialIndex}
-          isOpen={isOpen}
-          onClose={closeLightbox}
-          alt={data.title}
-        />
+      <div className="max-w-5xl mx-auto">
+        <div className="md:mb-4 md:px-6">
+          <DetailPageHeader
+            backHref={config.backHref}
+            backLabel={config.backLabel}
+            views={views}
+            showViews={config.showViews}
+          />
+        </div>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="md:mb-4 md:px-6">
-            <DetailPageHeader
-              backHref={config.backHref}
-              backLabel={config.backLabel}
-              views={views}
-              showViews={config.showViews}
-            />
-          </div>
+        <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
+          <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight">
+            {data.title}
+          </h1>
 
-          <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
-            {/* Mobile title */}
-            <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight">
-              {data.title}
-            </h1>
+          <DetailPageGallery
+            images={data.images}
+            title={data.title}
+            onImageClick={openLightbox}
+          />
 
-            {/* Image */}
-            <DetailPageGallery
-              images={data.images}
-              title={data.title}
-              onImageClick={openLightbox}
-              variant="event"
-            />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-col gap-5 sticky top-0 md:top-24"
+          >
+            <div className="space-y-1.5 border-b border-border pb-3">
+              {badges.length > 0 && (
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                  {badges.map((badge, index) => (
+                    <DetailPageBadge key={index} {...badge} />
+                  ))}
+                </div>
+              )}
 
-            {/* Info column */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-col gap-5 sticky top-0 md:top-24"
-            >
-              <div className="space-y-1.5 border-b border-border pb-3">
-                {/* Badges */}
-                {badges.length > 0 && (
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                    {badges.map((badge, index) => (
-                      <DetailPageBadge key={index} {...badge} />
-                    ))}
-                  </div>
-                )}
+              <h1 className="text-3xl md:text-3xl pt-2 font-bold hidden md:block Carena-font leading-tight">
+                {data.title}
+              </h1>
 
-                {/* Desktop title */}
-                <h1 className="text-3xl md:text-3xl pt-2 font-bold hidden md:block Carena-font leading-tight">
-                  {data.title}
-                </h1>
-
-                {/* Organizer */}
+              {config.showOrganizer !== false && (
                 <div className="flex items-center gap-2 pt-3">
                   <Image
                     src="/imgs/icons/icon.jpg"
@@ -163,83 +135,38 @@ export default function DetailPageClient({
                     </span>
                   </div>
                 </div>
-              </div>
-
-              {/* Description */}
-              <DetailPageDescription description={data.description} />
-
-              {/* Actions */}
-              {config.showActions && (
-                <DetailPageActions
-                  registrationUrl={data.registrationUrl}
-                  onShare={handleShare}
-                  isCopied={copied}
-                  translations={{
-                    register: config.translations?.register,
-                    dm: config.translations?.dm,
-                    share: config.translations?.share,
-                    copied: config.translations?.copied,
-                  }}
-                />
               )}
-            </motion.div>
-          </div>
-
-          {/* Map section for events */}
-          {config.showMap && data.location && (
-            <div className="mt-8">
-              <EventMap location={data.location} />
             </div>
-          )}
+
+            <DetailPageDescription description={data.description} />
+
+            {config.showActions && (
+              <DetailPageActions
+                registrationUrl={data.registrationUrl}
+                onShare={handleShare}
+                isCopied={copied}
+                showDmButton={config.showDmButton}
+                translations={{
+                  register: config.translations?.register,
+                  dm: config.translations?.dm,
+                  share: config.translations?.share,
+                  copied: config.translations?.copied,
+                }}
+              />
+            )}
+
+            {config.showDateFooter && data.date && (
+              <DetailPageDateFooter date={data.date} locale={config.locale} />
+            )}
+          </motion.div>
         </div>
-      </div>
-    );
-  }
 
-  // Multiple images: Highlight-style centered layout
-  return (
-    <article className="min-h-screen bg-white overflow-x-hidden">
-      <ImageLightbox
-        images={data.images}
-        initialIndex={initialIndex}
-        isOpen={isOpen}
-        onClose={closeLightbox}
-        alt={data.title}
-      />
-
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-        <nav className="mb-8">
-          <DetailPageHeader
-            backHref={config.backHref}
-            backLabel={config.backLabel}
-            views={views}
-            showViews={config.showViews}
-          />
-        </nav>
-
-        <SectionHeader title={data.title} className="mb-6 md:mb-9" />
-
-        <motion.section
-          variants={fadeInUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.1}
-          className="mb-5"
-        >
-          <DetailPageGallery
-            images={data.images}
-            title={data.title}
-            onImageClick={openLightbox}
-            variant="highlight"
-          />
-        </motion.section>
-
-        <DetailPageDescription description={data.description} />
-
-        {config.showDateFooter && data.date && (
-          <DetailPageDateFooter date={data.date} locale={config.locale} />
+        {config.showMap && data.location && (
+          <div className="mt-8">
+            <EventMap location={data.location} />
+          </div>
         )}
       </div>
-    </article>
+    </div>
   );
 }

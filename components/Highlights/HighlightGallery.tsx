@@ -84,20 +84,22 @@ function GalleryImage({
 
   return (
     <div
-      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in group/img"
+      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in"
       style={{ opacity, transition: "opacity 0.3s ease" }}
       onClick={onClick}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        className="w-auto h-auto max-h-[70vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
-        sizes="(max-width: 768px) 90vw, 600px"
-        draggable={false}
-      />
-      <ExpandHint />
+      <div className="relative group/img">
+        <Image
+          src={src}
+          alt={alt}
+          width={800}
+          height={600}
+          className="w-auto h-auto max-h-[70vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
+          sizes="(max-width: 768px) 90vw, 600px"
+          draggable={false}
+        />
+        <ExpandHint />
+      </div>
       <ImageCounter current={index + 1} total={totalCount} />
     </div>
   );
@@ -106,19 +108,21 @@ function GalleryImage({
 function SingleImage({ src, alt, onClick }: SingleImageProps) {
   return (
     <div
-      className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in group/img relative"
+      className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in relative"
       onClick={onClick}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
-        sizes="(max-width: 768px) 100vw, 800px"
-        priority
-      />
-      <ExpandHint />
+      <div className="relative group/img">
+        <Image
+          src={src}
+          alt={alt}
+          width={800}
+          height={600}
+          className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
+          sizes="(max-width: 768px) 100vw, 800px"
+          priority
+        />
+        <ExpandHint />
+      </div>
     </div>
   );
 }

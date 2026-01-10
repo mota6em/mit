@@ -51,11 +51,15 @@ export default function HighlightClientPage({
     notFoundTitle: t("notFoundTitle"),
     notFoundDesc: t("notFoundDesc"),
     showViews: true,
-    showActions: false,
+    showActions: true,
     showMap: false,
     showDateFooter: true,
+    showOrganizer: false,
+    showDmButton: false,
     translations: {
       loading: t("loading") || "Loading...",
+      share: t("share"),
+      copied: t("copied"),
     },
   };
 

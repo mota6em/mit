@@ -121,6 +121,7 @@ export default function EventClientPage({
     showActions: true,
     showMap: true,
     showDateFooter: false,
+    showOrganizer: true,
     translations: {
       organizer: t("organizer"),
       register: t("register"),

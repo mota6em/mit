@@ -238,6 +238,8 @@ export interface DetailPageConfig {
   showActions?: boolean;
   showMap?: boolean;
   showDateFooter?: boolean;
+  showOrganizer?: boolean;
+  showDmButton?: boolean;
   translations?: {
     organizer?: string;
     register?: string;
@@ -277,6 +279,7 @@ export interface DetailPageActionsProps {
   registrationUrl?: string;
   onShare: () => void;
   isCopied: boolean;
+  showDmButton?: boolean;
   translations: {
     register?: string;
     dm?: string;

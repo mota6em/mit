@@ -8,6 +8,7 @@ export function DetailPageActions({
   registrationUrl,
   onShare,
   isCopied,
+  showDmButton = true,
   translations,
 }: DetailPageActionsProps) {
   return (
@@ -23,14 +24,16 @@ export function DetailPageActions({
         </a>
       )}
       <div className="flex flex-col sm:flex-row gap-3">
-        <a
-          href="https://ig.me/m/muszlimifjusag"
-          target="_blank"
-          className="flex-1 py-3 rounded-lg bg-linear-to-r from-purple-500 to-orange-500 text-white flex items-center justify-center gap-2"
-        >
-          <FaInstagram className="w-5 h-5" />
-          <span>{translations.dm || "Send Message"}</span>
-        </a>
+        {showDmButton && (
+          <a
+            href="https://ig.me/m/muszlimifjusag"
+            target="_blank"
+            className="flex-1 py-3 rounded-lg bg-linear-to-r from-purple-500 to-orange-500 text-white flex items-center justify-center gap-2"
+          >
+            <FaInstagram className="w-5 h-5" />
+            <span>{translations.dm || "Send Message"}</span>
+          </a>
+        )}
         <button
           onClick={onShare}
           className={`flex-1 py-3 rounded-lg font-bold text-white transition-all ${
