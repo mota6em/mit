@@ -1,3 +1,4 @@
+import type React from "react";
 import type { ReactNode } from "react";
 import type { Variants } from "framer-motion";
 
@@ -56,13 +57,6 @@ export interface NewsletterSubscriber {
   name: string;
   email: string;
   createdAt?: string;
-}
-
-export interface EventsSectionProps {
-  type: "upcoming" | "past";
-  limit?: number;
-  showViewAll?: boolean;
-  filterMode?: "all" | "recurring_only" | "single_only";
 }
 
 export interface ApiHighlight {
@@ -269,3 +263,89 @@ export const HIGHLIGHT_ANIMATION_VARIANTS = {
     },
   },
 } as const;
+
+/** ===== DetailPage Types ===== */
+
+export type DetailPageType = "event" | "highlight";
+
+export interface DetailPageData {
+  id: string;
+  title: string;
+  description: string;
+  images: string[];
+  date?: string;
+  time?: string;
+  note?: string;
+  isRecurring?: boolean;
+  recurringDays?: string[];
+  registrationUrl?: string;
+  location?: string;
+}
+
+export interface DetailPageConfig {
+  type: DetailPageType;
+  locale: string;
+  backHref: string;
+  backLabel: string;
+  notFoundTitle: string;
+  notFoundDesc: string;
+  showViews?: boolean;
+  showActions?: boolean;
+  showMap?: boolean;
+  showDateFooter?: boolean;
+  translations?: {
+    organizer?: string;
+    register?: string;
+    dm?: string;
+    share?: string;
+    copied?: string;
+    loading?: string;
+  };
+}
+
+export interface DetailPageHeaderProps {
+  backHref: string;
+  backLabel: string;
+  views?: number;
+  showViews?: boolean;
+}
+
+export interface DetailPageGalleryProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface DetailPageDescriptionProps {
+  description: string;
+}
+
+export interface DetailPageNotFoundProps {
+  locale: string;
+  title: string;
+  description: string;
+  backHref: string;
+  backLabel: string;
+}
+
+export interface DetailPageActionsProps {
+  registrationUrl?: string;
+  onShare: () => void;
+  isCopied: boolean;
+  translations: {
+    register?: string;
+    dm?: string;
+    share?: string;
+    copied?: string;
+  };
+}
+
+export interface BadgeData {
+  icon: React.ComponentType<{ className?: string }>;
+  text: string;
+  color: string;
+}
+
+export interface DetailPageBadgesProps {
+  badges: BadgeData[];
+}

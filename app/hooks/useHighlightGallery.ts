@@ -1,12 +1,20 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import { GALLERY_CONFIG } from "@/lib/types";
 
 export function useGalleryScroll(imagesLength: number) {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [visibleIndex, setVisibleIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const checkMobile = () =>
@@ -16,9 +24,29 @@ export function useGalleryScroll(imagesLength: number) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Initialize gallery to first image on mount - wait for images to be rendered
   useEffect(() => {
     const gallery = galleryRef.current;
-    if (!gallery) return;
+    if (!gallery || isInitialized) return;
+
+    // Use requestAnimationFrame to ensure DOM is ready
+    const initGallery = () => {
+      if (gallery.children.length > 0) {
+        gallery.scrollLeft = 0;
+        setVisibleIndex(0);
+        setIsInitialized(true);
+      } else {
+        // Retry if children not yet rendered
+        requestAnimationFrame(initGallery);
+      }
+    };
+
+    requestAnimationFrame(initGallery);
+  }, [imagesLength, isInitialized]);
+
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery || !isInitialized) return;
 
     const handleScroll = () => {
       const galleryCenter = gallery.scrollLeft + gallery.clientWidth / 2;
@@ -40,7 +68,7 @@ export function useGalleryScroll(imagesLength: number) {
 
     gallery.addEventListener("scroll", handleScroll, { passive: true });
     return () => gallery.removeEventListener("scroll", handleScroll);
-  }, [imagesLength]);
+  }, [imagesLength, isInitialized]);
 
   const scrollToIndex = useCallback((index: number) => {
     const gallery = galleryRef.current;
