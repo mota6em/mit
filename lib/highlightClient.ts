@@ -1,4 +1,4 @@
-/** Logic for interacting with the highlights API on the client side */
+/** Client-side highlight fetching */
 export async function getHighlights(id?: string) {
   try {
     const url = id ? `/api/highlights?id=${id}` : "/api/highlights";

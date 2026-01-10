@@ -2,7 +2,6 @@ import type React from "react";
 import type { ReactNode } from "react";
 import type { Variants } from "framer-motion";
 
-/** Interfaces and Data Definitions */
 export interface ApiEvent {
   slug?: string;
   _id: string;
@@ -41,7 +40,6 @@ export interface EventsSectionProps {
   filterMode?: "all" | "recurring_only" | "single_only";
 }
 
-/** Static Mapping for Localization */
 export const dayMap: Record<string, { en: string; hu: string }> = {
   Monday: { en: "Mon", hu: "Hé" },
   Tuesday: { en: "Tue", hu: "Ke" },
@@ -90,22 +88,13 @@ export interface HighlightDisplayData extends ApiHighlight {
   highlightId: string;
 }
 
-/** ===== Highlight Detail Page Types ===== */
-
 export interface DateFooterProps {
   date: string;
   locale: string;
 }
 
-/** ===== Highlight Component Props ===== */
-
-/**
- * Data passed to FeaturedAnnouncement component
- * Extends HighlightDisplayData to include all API fields for caching
- */
-export interface FeaturedAnnouncementData extends HighlightDisplayData {
-  // All fields inherited from HighlightDisplayData (which extends ApiHighlight)
-}
+/** Extends HighlightDisplayData for caching support */
+export interface FeaturedAnnouncementData extends HighlightDisplayData {}
 
 export interface FeaturedAnnouncementProps {
   announcement: FeaturedAnnouncementData;
@@ -130,8 +119,6 @@ export interface HighlightImageProps {
   title: string;
   variants?: Variants;
 }
-
-/** ===== Gallery Types ===== */
 
 export interface GalleryConfig {
   dragMultiplier: number;
@@ -184,14 +171,10 @@ export interface StackedPreviewProps {
   images: string[];
 }
 
-/** ===== Highlight List Types ===== */
-
 export interface HighlightListProps {
   highlights: HighlightData[];
   onEdit: (highlight: HighlightData) => void;
 }
-
-/** ===== Animation Variants ===== */
 
 export const HIGHLIGHT_ANIMATION_VARIANTS = {
   container: {
@@ -227,8 +210,6 @@ export const HIGHLIGHT_ANIMATION_VARIANTS = {
     },
   },
 } as const;
-
-/** ===== DetailPage Types ===== */
 
 export type DetailPageType = "event" | "highlight";
 

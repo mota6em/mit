@@ -1,4 +1,4 @@
-/** Logic for interacting with the events API on the client side */
+/** Client-side event fetching */
 export async function getEvents(
   id?: string,
   params?: { type?: string; limit?: number; search?: string }

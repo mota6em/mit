@@ -32,14 +32,14 @@ export async function POST(req: Request) {
   try {
     await dbConnect();
 
-    //  ADMIN DELETE
+    // Delete
     if (body.action === "delete") {
       await Newsletter.findByIdAndDelete(body.id);
       const updatedList = await Newsletter.find({}).sort({ createdAt: -1 });
       return NextResponse.json({ success: true, subscribers: updatedList });
     }
 
-    //  ADMIN UPDATE
+    // Update
     if (body._id) {
       await Newsletter.findByIdAndUpdate(body._id, {
         name: body.name,

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import EventClientPage from "@/components/Events/EventClientPage";
-import { getEventServerSide } from "@/lib/eventService";
+import { getEventServerSide, getEventMetadata } from "@/lib/eventService";
 
 type Props = {
   params: Promise<{ id: string; locale: string }>;
@@ -10,7 +10,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale: rawLocale } = await params;
   const locale = rawLocale === "hu" ? "hu" : "en";
 
-  const event = await getEventServerSide(id);
+  // Use optimized metadata query (fetches only needed fields)
+  const event = await getEventMetadata(id);
 
   if (!event) return { title: "Event Not Found | MIT" };
 

@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import HighlightClientPage from "@/components/Highlights/HighlightClientPage";
-import { getHighlightServerSide } from "@/lib/highlightService";
+import {
+  getHighlightServerSide,
+  getHighlightMetadata,
+} from "@/lib/highlightService";
 
 type Props = {
   params: Promise<{ id: string; locale: string }>;
@@ -10,7 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, locale: rawLocale } = await params;
   const locale = rawLocale === "hu" ? "hu" : "en";
 
-  const highlight = await getHighlightServerSide(id);
+  // Use optimized metadata query (fetches only needed fields)
+  const highlight = await getHighlightMetadata(id);
 
   if (!highlight) return { title: "Highlight Not Found | MIT" };
 
