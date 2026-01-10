@@ -2,27 +2,34 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
+import type { ApiHighlight } from "@/lib/types";
+
+/**
+ * Get cached highlight data from sessionStorage
+ * This is used when navigating from FeaturedAnnouncement which caches the data
+ */
+function getCachedHighlight(id: string): ApiHighlight | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = sessionStorage.getItem(`highlight-${id}`);
+    return cached ? JSON.parse(cached) : null;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Hook to handle highlight data fetching and view tracking
- * Similar to useEventData but for highlights
+ * Priority: initialHighlight (SSR) > cached data > fetch from API
  */
-export function useHighlightData(initialHighlight: any) {
+export function useHighlightData(initialHighlight: ApiHighlight | null) {
   const params = useParams();
-  const [highlight, setHighlight] = useState(() => {
+  const id = params?.id as string;
+
+  // Priority: initialHighlight (SSR) > cached data > null
+  const [highlight, setHighlight] = useState<ApiHighlight | null>(() => {
     if (initialHighlight) return initialHighlight;
-    // Check sessionStorage for cached highlight data
-    const id = params?.id as string;
-    if (id && typeof window !== "undefined") {
-      const cached = sessionStorage.getItem(`highlight-${id}`);
-      if (cached) {
-        try {
-          return JSON.parse(cached);
-        } catch (e) {
-          console.error("Failed to parse cached highlight data:", e);
-        }
-      }
-    }
+    if (id) return getCachedHighlight(id);
     return null;
   });
   const [loading, setLoading] = useState(!highlight);

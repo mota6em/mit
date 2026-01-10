@@ -99,15 +99,12 @@ export interface DateFooterProps {
 
 /** ===== Highlight Component Props ===== */
 
-export interface FeaturedAnnouncementData {
-  slug?: string;
-  _id?: string;
-  id?: string;
-  highlightId: string;
-  displayDate: string;
-  displayTitle: string;
-  displayDesc: string;
-  images?: string[];
+/**
+ * Data passed to FeaturedAnnouncement component
+ * Extends HighlightDisplayData to include all API fields for caching
+ */
+export interface FeaturedAnnouncementData extends HighlightDisplayData {
+  // All fields inherited from HighlightDisplayData (which extends ApiHighlight)
 }
 
 export interface FeaturedAnnouncementProps {
