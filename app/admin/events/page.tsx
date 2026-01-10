@@ -1,7 +1,7 @@
 "use client";
 import { useEvents } from "../../../hooks/useEvents";
-import EventForm from "../../../components/EventForm";
-import EventList from "../../../components/EventList";
+import EventForm from "../../../components/Events/EventForm";
+import EventList from "../../../components/Events/EventList";
 
 export default function AdminEvents() {
   const {

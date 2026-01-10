@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { EventDisplayData } from "@/lib/types";
 
 const DESCRIPTION_CHAR_LIMIT = 100;
 
@@ -14,10 +15,9 @@ interface BlogCardProps {
   desc: string;
   note?: string;
   index?: number;
-  isVerified?: boolean;
   eventUrl?: string;
   isPastEvent?: boolean;
-  event?: any; // Full event data for caching
+  event?: EventDisplayData;
 }
 
 export default function BlogCard({
@@ -38,13 +38,16 @@ export default function BlogCard({
     ? `${desc.substring(0, DESCRIPTION_CHAR_LIMIT)}...`
     : desc;
 
+  /**
+   * Cache event data to sessionStorage when card is clicked
+   * This allows the detail page to use cached data instead of refetching
+   */
   const handleClick = () => {
     if (event) {
       const eventId = event.slug || event._id || event.id;
-      console.time(`cache-store-${eventId}`);
-      sessionStorage.setItem(`event-${eventId}`, JSON.stringify(event));
-      console.timeEnd(`cache-store-${eventId}`);
-      console.log(`Cached event data for ${eventId}`);
+      if (eventId) {
+        sessionStorage.setItem(`event-${eventId}`, JSON.stringify(event));
+      }
     }
   };
 

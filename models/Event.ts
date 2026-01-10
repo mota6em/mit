@@ -20,22 +20,23 @@ const eventSchema = new Schema(
   { timestamps: true }
 );
 
-// Indexes for performance
-eventSchema.index({ date: 1 }); // For sorting and filtering by date
-eventSchema.index({ isRecurring: 1 }); // For filtering recurring events
+// Indexes
+eventSchema.index({ slug: 1 });
+eventSchema.index({ date: -1 });
+eventSchema.index({ isRecurring: 1, date: -1 });
+eventSchema.index({ createdAt: -1 });
 eventSchema.index({
   title_en: "text",
   title_hu: "text",
   desc_en: "text",
   desc_hu: "text",
   location: "text",
-}); // For text search
+});
 
-// Middleware to generate unique slug before saving
+// Auto-generate slug
 eventSchema.pre("save", async function () {
   if (!this.isModified("title_en")) return;
 
-  // Create base slug:
   const baseSlug = this.title_en
     .toLowerCase()
     .replace(/[^\w ]+/g, "")
@@ -44,7 +45,6 @@ eventSchema.pre("save", async function () {
   let slug = baseSlug;
   let counter = 1;
 
-  // Check for uniqueness
   while (await mongoose.models.Event.findOne({ slug })) {
     slug = `${baseSlug}-${counter}`;
     counter++;

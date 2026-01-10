@@ -1,13 +1,13 @@
 "use client";
-import { useImageUpload } from "../hooks/useEvents";
+import { useImageUpload } from "../../hooks/useEvents";
 import { EventData } from "@/lib/types";
-import FormHeader from "./admin/events/FormHeader";
-import ImageUploadSection from "./admin/events/ImageUploadSection";
-import ContentSection from "./admin/events/ContentSection";
-import DateTimeSection from "./admin/events/DateTimeSection";
-import LocationSection from "./admin/events/LocationSection";
-import RegistrationSection from "./admin/events/RegistrationSection";
-import SubmitButtons from "./admin/events/SubmitButtons";
+import FormHeader from "../admin/events/FormHeader";
+import ImageUploadSection from "../admin/events/ImageUploadSection";
+import ContentSection from "../admin/events/ContentSection";
+import DateTimeSection from "../admin/events/DateTimeSection";
+import LocationSection from "../admin/events/LocationSection";
+import RegistrationSection from "../admin/events/RegistrationSection";
+import SubmitButtons from "../admin/events/SubmitButtons";
 
 interface EventFormProps {
   form: EventData;

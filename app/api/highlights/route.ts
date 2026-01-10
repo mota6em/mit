@@ -4,21 +4,25 @@ import Highlight from "@/models/Highlight";
 import { isValidObjectId } from "mongoose";
 import { auth } from "@/auth";
 
+const LIST_PROJECTION = { __v: 0 } as const;
+
 export async function GET(request: Request) {
   try {
     await dbConnect();
     const { searchParams } = new URL(request.url);
-    const identifier = searchParams.get("id"); // This could be _id or slug
+    const identifier = searchParams.get("id");
 
     if (identifier) {
-      // find by slug first, then fallback to _id if it's a valid ObjectId
-      let query = { slug: identifier };
-
-      const highlight = await Highlight.findOne(query).lean();
+      let highlight = await Highlight.findOne({ slug: identifier })
+        .select(LIST_PROJECTION)
+        .lean()
+        .exec();
 
       if (!highlight && isValidObjectId(identifier)) {
-        const highlightById = await Highlight.findById(identifier).lean();
-        if (highlightById) return NextResponse.json(highlightById);
+        highlight = await Highlight.findById(identifier)
+          .select(LIST_PROJECTION)
+          .lean()
+          .exec();
       }
 
       if (!highlight) {
@@ -31,7 +35,12 @@ export async function GET(request: Request) {
       return NextResponse.json(highlight);
     }
 
-    const highlights = await Highlight.find({}).sort({ createdAt: -1 }).lean();
+    const highlights = await Highlight.find({})
+      .select(LIST_PROJECTION)
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+
     return NextResponse.json(highlights);
   } catch (error) {
     return NextResponse.json(

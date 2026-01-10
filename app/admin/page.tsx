@@ -1,4 +1,3 @@
-// app/admin/page.tsx
 import Link from "next/link";
 import { HiCalendar, HiMail, HiSparkles } from "react-icons/hi";
 

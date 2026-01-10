@@ -7,7 +7,7 @@ import {
   HiRefresh,
   HiExclamation,
 } from "react-icons/hi";
-import { useEvents } from "../hooks/useEvents";
+import { useEvents } from "../../hooks/useEvents";
 import { ApiEvent } from "@/lib/types";
 
 interface EventData extends Omit<ApiEvent, "_id" | "slug"> {

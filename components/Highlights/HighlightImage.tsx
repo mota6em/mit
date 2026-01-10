@@ -3,10 +3,13 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { HiSparkles, HiPhoto } from "react-icons/hi2";
-import { HighlightImageProps } from "@/lib/types";
+import {
+  HighlightImageProps,
+  StackedPreviewProps,
+  ImageCounterProps,
+} from "@/lib/types";
 
-/** Stacked image preview showing layered thumbnails */
-function StackedPreview({ images }: { images: string[] }) {
+function StackedPreview({ images }: StackedPreviewProps) {
   const previewImages = images.slice(0, 3);
   const remainingCount = images.length - 3;
 
@@ -49,8 +52,7 @@ function StackedPreview({ images }: { images: string[] }) {
   );
 }
 
-/** Image count badge */
-function ImageCountBadge({ count }: { count: number }) {
+function ImageCountBadge({ current }: Omit<ImageCounterProps, "total">) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -59,7 +61,9 @@ function ImageCountBadge({ count }: { count: number }) {
       className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg z-20"
     >
       <HiPhoto className="w-4 h-4 text-gray-700" />
-      <span className="text-sm font-semibold text-gray-800">{count} photos</span>
+      <span className="text-sm font-semibold text-gray-800">
+        {current} photos
+      </span>
     </motion.div>
   );
 }
@@ -87,11 +91,11 @@ export default function HighlightImage({
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             priority
           />
-          
+
           {/* Multi-image indicators */}
           {hasMultipleImages && (
             <>
-              <ImageCountBadge count={images.length} />
+              <ImageCountBadge current={images.length} />
               <StackedPreview images={images} />
             </>
           )}

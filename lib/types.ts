@@ -1,7 +1,7 @@
+import type React from "react";
 import type { ReactNode } from "react";
 import type { Variants } from "framer-motion";
 
-/** Interfaces and Data Definitions */
 export interface ApiEvent {
   slug?: string;
   _id: string;
@@ -40,7 +40,6 @@ export interface EventsSectionProps {
   filterMode?: "all" | "recurring_only" | "single_only";
 }
 
-/** Static Mapping for Localization */
 export const dayMap: Record<string, { en: string; hu: string }> = {
   Monday: { en: "Mon", hu: "Hé" },
   Tuesday: { en: "Tue", hu: "Ke" },
@@ -56,13 +55,6 @@ export interface NewsletterSubscriber {
   name: string;
   email: string;
   createdAt?: string;
-}
-
-export interface EventsSectionProps {
-  type: "upcoming" | "past";
-  limit?: number;
-  showViewAll?: boolean;
-  filterMode?: "all" | "recurring_only" | "single_only";
 }
 
 export interface ApiHighlight {
@@ -96,52 +88,13 @@ export interface HighlightDisplayData extends ApiHighlight {
   highlightId: string;
 }
 
-/** ===== Highlight Detail Page Types ===== */
-
-export interface HighlightContentData {
-  title: string;
-  description: string;
-  date: string;
-  images: string[];
-}
-
-export interface BackButtonProps {
-  href: string;
-  label: string;
-}
-
 export interface DateFooterProps {
   date: string;
   locale: string;
 }
 
-export interface GallerySectionProps {
-  images: string[];
-  title: string;
-  onImageClick: (index: number) => void;
-}
-
-export interface HighlightDescriptionProps {
-  description: string;
-}
-
-export interface NotFoundStateProps {
-  locale: string;
-  t: (key: string) => string;
-}
-
-/** ===== Highlight Component Props ===== */
-
-export interface FeaturedAnnouncementData {
-  slug?: string;
-  _id?: string;
-  id?: string;
-  highlightId: string;
-  displayDate: string;
-  displayTitle: string;
-  displayDesc: string;
-  images?: string[];
-}
+/** Extends HighlightDisplayData for caching support */
+export interface FeaturedAnnouncementData extends HighlightDisplayData {}
 
 export interface FeaturedAnnouncementProps {
   announcement: FeaturedAnnouncementData;
@@ -167,12 +120,60 @@ export interface HighlightImageProps {
   variants?: Variants;
 }
 
-/** ===== Animation Variants ===== */
+export interface GalleryConfig {
+  dragMultiplier: number;
+  mobileBreakpoint: number;
+}
 
-export interface MotionVariants {
-  [key: string]: Record<string, unknown> | undefined;
-  hidden?: Record<string, unknown>;
-  visible?: Record<string, unknown>;
+export const GALLERY_CONFIG: GalleryConfig = {
+  dragMultiplier: 2,
+  mobileBreakpoint: 768,
+};
+
+export interface GalleryProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface GalleryImageProps {
+  src: string;
+  alt: string;
+  index: number;
+  totalCount: number;
+  visibleIndex: number;
+  onClick: () => void;
+}
+
+export interface SingleImageProps {
+  src: string;
+  alt: string;
+  onClick: () => void;
+}
+
+export interface NavButtonProps {
+  direction: "left" | "right";
+  onClick: () => void;
+}
+
+export interface DotsProps {
+  count: number;
+  activeIndex: number;
+  onDotClick: (index: number) => void;
+}
+
+export interface ImageCounterProps {
+  current: number;
+  total: number;
+}
+
+export interface StackedPreviewProps {
+  images: string[];
+}
+
+export interface HighlightListProps {
+  highlights: HighlightData[];
+  onEdit: (highlight: HighlightData) => void;
 }
 
 export const HIGHLIGHT_ANIMATION_VARIANTS = {
@@ -209,3 +210,86 @@ export const HIGHLIGHT_ANIMATION_VARIANTS = {
     },
   },
 } as const;
+
+export type DetailPageType = "event" | "highlight";
+
+export interface DetailPageData {
+  id: string;
+  title: string;
+  description: string;
+  images: string[];
+  date?: string;
+  time?: string;
+  note?: string;
+  isRecurring?: boolean;
+  recurringDays?: string[];
+  registrationUrl?: string;
+  location?: string;
+}
+
+export interface DetailPageConfig {
+  type: DetailPageType;
+  locale: string;
+  backHref: string;
+  backLabel: string;
+  notFoundTitle: string;
+  notFoundDesc: string;
+  showViews?: boolean;
+  showActions?: boolean;
+  showMap?: boolean;
+  showDateFooter?: boolean;
+  showOrganizer?: boolean;
+  showDmButton?: boolean;
+  translations?: {
+    organizer?: string;
+    register?: string;
+    dm?: string;
+    share?: string;
+    copied?: string;
+    loading?: string;
+  };
+}
+
+export interface DetailPageHeaderProps {
+  backHref: string;
+  backLabel: string;
+  views?: number;
+  showViews?: boolean;
+}
+
+export interface DetailPageGalleryProps {
+  images: string[];
+  title: string;
+  onImageClick: (index: number) => void;
+}
+
+export interface DetailPageDescriptionProps {
+  description: string;
+}
+
+export interface DetailPageNotFoundProps {
+  locale: string;
+  title: string;
+  description: string;
+  backHref: string;
+  backLabel: string;
+}
+
+export interface DetailPageActionsProps {
+  registrationUrl?: string;
+  onShare: () => void;
+  isCopied: boolean;
+  showDmButton?: boolean;
+  translations: {
+    register?: string;
+    dm?: string;
+    share?: string;
+    copied?: string;
+  };
+}
+
+export interface BadgeData {
+  icon: React.ComponentType<{ className?: string }>;
+  text: string;
+  color: string;
+}

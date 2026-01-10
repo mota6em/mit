@@ -3,23 +3,33 @@
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { ApiHighlight } from "@/lib/types";
-import ImageLightbox, {
-  useImageLightbox,
-} from "@/components/reusable/ImageLightbox";
-import SectionHeader from "../reusable/SectionHeader";
-import { useHighlightContent } from "@/app/hooks/useHighlightContent";
-
-import {
-  NotFoundState,
-  BackButton,
-  DateFooter,
-  HighlightDescription,
-  GallerySection,
-} from "./HighlightDetail";
+import { DetailPageClient } from "@/components/reusable/DetailPage";
+import type {
+  DetailPageData,
+  DetailPageConfig,
+  ApiHighlight,
+} from "@/lib/types";
+import { useHighlightData } from "@/app/hooks/useHighlightData";
 
 interface HighlightClientPageProps {
   initialHighlight: ApiHighlight | null;
+}
+
+/**
+ * Transform API highlight data to DetailPageData format
+ */
+function transformHighlightToDetailData(
+  highlight: ApiHighlight,
+  locale: string
+): DetailPageData {
+  const isHu = locale === "hu";
+  return {
+    id: highlight._id,
+    title: isHu ? highlight.title_hu : highlight.title_en,
+    description: isHu ? highlight.desc_hu : highlight.desc_en,
+    images: highlight.images || [],
+    date: highlight.date,
+  };
 }
 
 export default function HighlightClientPage({
@@ -29,44 +39,41 @@ export default function HighlightClientPage({
   const locale = (rawLocale as string) === "hu" ? "hu" : "en";
   const t = useTranslations("highlights");
 
-  const { isOpen, initialIndex, openLightbox, closeLightbox } =
-    useImageLightbox();
-  const content = useHighlightContent(initialHighlight, locale);
+  const { highlight, loading, error, views } =
+    useHighlightData(initialHighlight);
 
-  if (!initialHighlight || !content) {
-    return <NotFoundState locale={locale} t={t} />;
-  }
+  // Build config
+  const config: DetailPageConfig = {
+    type: "highlight",
+    locale,
+    backHref: `/${locale}/highlights`,
+    backLabel: t("backToHighlights"),
+    notFoundTitle: t("notFoundTitle"),
+    notFoundDesc: t("notFoundDesc"),
+    showViews: true,
+    showActions: true,
+    showMap: false,
+    showDateFooter: true,
+    showOrganizer: false,
+    showDmButton: false,
+    translations: {
+      loading: t("loading") || "Loading...",
+      share: t("share"),
+      copied: t("copied"),
+    },
+  };
+
+  // Transform highlight data
+  const data = highlight
+    ? transformHighlightToDetailData(highlight, locale)
+    : null;
 
   return (
-    <article className="min-h-screen bg-white overflow-x-hidden">
-      <ImageLightbox
-        images={content.images}
-        initialIndex={initialIndex}
-        isOpen={isOpen}
-        onClose={closeLightbox}
-        alt={content.title}
-      />
-
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
-        <nav className="mb-8">
-          <BackButton
-            href={`/${locale}/highlights`}
-            label={t("backToHighlights")}
-          />
-        </nav>
-
-        <SectionHeader title={content.title} className="mb-6 md:mb-9" />
-
-        <GallerySection
-          images={content.images}
-          title={content.title}
-          onImageClick={openLightbox}
-        />
-
-        <HighlightDescription description={content.description} />
-
-        {content.date && <DateFooter date={content.date} locale={locale} />}
-      </div>
-    </article>
+    <DetailPageClient
+      data={error ? null : data}
+      config={config}
+      views={views}
+      loading={loading}
+    />
   );
 }

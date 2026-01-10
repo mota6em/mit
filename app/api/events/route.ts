@@ -4,20 +4,25 @@ import Event from "@/models/Event";
 import { isValidObjectId } from "mongoose";
 import { auth } from "@/auth";
 
+const LIST_PROJECTION = { __v: 0 } as const;
+
 export async function GET(request: Request) {
   try {
     await dbConnect();
     const { searchParams } = new URL(request.url);
-    const identifier = searchParams.get("id"); // This could be _id or slug
+    const identifier = searchParams.get("id");
 
     if (identifier) {
-      // find by slug first, then fallback to _id if it's a valid ObjectId
-      const query = { slug: identifier };
-      const event = await Event.findOne(query).lean();
+      let event = await Event.findOne({ slug: identifier })
+        .select(LIST_PROJECTION)
+        .lean()
+        .exec();
 
       if (!event && isValidObjectId(identifier)) {
-        const eventById = await Event.findById(identifier);
-        if (eventById) return NextResponse.json(eventById);
+        event = await Event.findById(identifier)
+          .select(LIST_PROJECTION)
+          .lean()
+          .exec();
       }
 
       if (!event) {
@@ -26,7 +31,13 @@ export async function GET(request: Request) {
 
       return NextResponse.json(event);
     }
-    const events = await Event.find({}).sort({ date: -1 }).lean();
+
+    const events = await Event.find({})
+      .select(LIST_PROJECTION)
+      .sort({ date: -1 })
+      .lean()
+      .exec();
+
     return NextResponse.json(events);
   } catch (error) {
     return NextResponse.json(

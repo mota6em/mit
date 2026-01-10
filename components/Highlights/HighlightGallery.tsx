@@ -1,32 +1,19 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
-// ============================================================================
-// Types & Constants
-// ============================================================================
-
-interface GalleryConfig {
-  dragMultiplier: number;
-  mobileBreakpoint: number;
-}
-
-const GALLERY_CONFIG: GalleryConfig = {
-  dragMultiplier: 2,
-  mobileBreakpoint: 768,
-};
-
-interface GalleryProps {
-  images: string[];
-  title: string;
-  onImageClick: (index: number) => void;
-}
-
-// ============================================================================
-// Internal Components
-// ============================================================================
+import {
+  GalleryProps,
+  GalleryImageProps,
+  SingleImageProps,
+  NavButtonProps,
+  DotsProps,
+  ImageCounterProps,
+} from "@/lib/types";
+import {
+  useGalleryScroll,
+  useDragScroll,
+} from "@/app/hooks/useHighlightGallery";
 
 function ExpandHint() {
   return (
@@ -38,7 +25,7 @@ function ExpandHint() {
   );
 }
 
-function ImageCounter({ current, total }: { current: number; total: number }) {
+function ImageCounter({ current, total }: ImageCounterProps) {
   return (
     <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full">
       {current} / {total}
@@ -46,13 +33,7 @@ function ImageCounter({ current, total }: { current: number; total: number }) {
   );
 }
 
-function NavButton({
-  direction,
-  onClick,
-}: {
-  direction: "left" | "right";
-  onClick: () => void;
-}) {
+function NavButton({ direction, onClick }: NavButtonProps) {
   const isLeft = direction === "left";
   const Icon = isLeft ? IoIosArrowBack : IoIosArrowForward;
 
@@ -72,15 +53,7 @@ function NavButton({
   );
 }
 
-function Dots({
-  count,
-  activeIndex,
-  onDotClick,
-}: {
-  count: number;
-  activeIndex: number;
-  onDotClick: (index: number) => void;
-}) {
+function Dots({ count, activeIndex, onDotClick }: DotsProps) {
   return (
     <div className="flex justify-center gap-1.5 mt-6 md:hidden">
       {Array.from({ length: count }).map((_, index) => (
@@ -106,178 +79,53 @@ function GalleryImage({
   totalCount,
   visibleIndex,
   onClick,
-}: {
-  src: string;
-  alt: string;
-  index: number;
-  totalCount: number;
-  visibleIndex: number;
-  onClick: () => void;
-}) {
+}: GalleryImageProps) {
   const opacity = Math.abs(index - visibleIndex) > 1 ? 0.5 : 1;
 
   return (
     <div
-      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in group/img"
+      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in"
       style={{ opacity, transition: "opacity 0.3s ease" }}
       onClick={onClick}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        className="w-auto h-auto max-h-[70vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
-        sizes="(max-width: 768px) 90vw, 600px"
-        draggable={false}
-      />
-      <ExpandHint />
+      <div className="relative group/img">
+        <Image
+          src={src}
+          alt={alt}
+          width={800}
+          height={600}
+          className="w-auto h-auto max-h-[70vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
+          sizes="(max-width: 768px) 90vw, 600px"
+          draggable={false}
+        />
+        <ExpandHint />
+      </div>
       <ImageCounter current={index + 1} total={totalCount} />
     </div>
   );
 }
 
-function SingleImage({
-  src,
-  alt,
-  onClick,
-}: {
-  src: string;
-  alt: string;
-  onClick: () => void;
-}) {
+function SingleImage({ src, alt, onClick }: SingleImageProps) {
   return (
     <div
-      className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in group/img relative"
+      className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in relative"
       onClick={onClick}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
-        sizes="(max-width: 768px) 100vw, 800px"
-        priority
-      />
-      <ExpandHint />
+      <div className="relative group/img">
+        <Image
+          src={src}
+          alt={alt}
+          width={800}
+          height={600}
+          className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
+          sizes="(max-width: 768px) 100vw, 800px"
+          priority
+        />
+        <ExpandHint />
+      </div>
     </div>
   );
 }
-
-// ============================================================================
-// Hooks
-// ============================================================================
-
-function useGalleryScroll(imagesLength: number) {
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const [visibleIndex, setVisibleIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () =>
-      setIsMobile(window.innerWidth < GALLERY_CONFIG.mobileBreakpoint);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const gallery = galleryRef.current;
-    if (!gallery) return;
-
-    const handleScroll = () => {
-      const galleryCenter = gallery.scrollLeft + gallery.clientWidth / 2;
-      let closestIndex = 0;
-      let closestDistance = Infinity;
-
-      Array.from(gallery.children).forEach((child, index) => {
-        const element = child as HTMLElement;
-        const elementCenter = element.offsetLeft + element.clientWidth / 2;
-        const distance = Math.abs(galleryCenter - elementCenter);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
-        }
-      });
-
-      setVisibleIndex(closestIndex);
-    };
-
-    gallery.addEventListener("scroll", handleScroll, { passive: true });
-    return () => gallery.removeEventListener("scroll", handleScroll);
-  }, [imagesLength]);
-
-  const scrollToIndex = useCallback((index: number) => {
-    const gallery = galleryRef.current;
-    if (!gallery) return;
-
-    const children = gallery.children;
-    if (!children[index]) return;
-
-    const targetElement = children[index] as HTMLElement;
-    const galleryWidth = gallery.clientWidth;
-    const elementWidth = targetElement.clientWidth;
-    const elementLeft = targetElement.offsetLeft;
-
-    const scrollPosition = elementLeft - (galleryWidth - elementWidth) / 2;
-
-    gallery.scrollTo({ left: Math.max(0, scrollPosition), behavior: "smooth" });
-  }, []);
-
-  const scrollBy = useCallback(
-    (direction: "left" | "right") => {
-      const newIndex =
-        direction === "left"
-          ? Math.max(0, visibleIndex - 1)
-          : Math.min(imagesLength - 1, visibleIndex + 1);
-      scrollToIndex(newIndex);
-    },
-    [visibleIndex, imagesLength, scrollToIndex]
-  );
-
-  return { galleryRef, visibleIndex, isMobile, scrollBy, scrollToIndex };
-}
-
-function useDragScroll(
-  galleryRef: React.RefObject<HTMLDivElement | null>,
-  enabled: boolean
-) {
-  const [isDragging, setIsDragging] = useState(false);
-  const dragState = useRef({ startX: 0, scrollLeft: 0 });
-
-  const handlers = useMemo(() => {
-    if (!enabled) return {};
-
-    return {
-      onMouseDown: (e: React.MouseEvent) => {
-        setIsDragging(true);
-        dragState.current = {
-          startX: e.pageX - (galleryRef.current?.offsetLeft || 0),
-          scrollLeft: galleryRef.current?.scrollLeft || 0,
-        };
-      },
-      onMouseMove: (e: React.MouseEvent) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - (galleryRef.current?.offsetLeft || 0);
-        const walk =
-          (x - dragState.current.startX) * GALLERY_CONFIG.dragMultiplier;
-        if (galleryRef.current) {
-          galleryRef.current.scrollLeft = dragState.current.scrollLeft - walk;
-        }
-      },
-      onMouseUp: () => setIsDragging(false),
-      onMouseLeave: () => setIsDragging(false),
-    };
-  }, [enabled, isDragging, galleryRef]);
-
-  return { isDragging, handlers };
-}
-
-// ============================================================================
-// Main Component
-// ============================================================================
 
 export function HighlightGallery({
   images,
@@ -288,9 +136,7 @@ export function HighlightGallery({
     useGalleryScroll(images.length);
   const { isDragging, handlers } = useDragScroll(galleryRef, isMobile);
 
-  const hasMultipleImages = images.length > 1;
-
-  if (!hasMultipleImages) {
+  if (images.length <= 1) {
     return (
       <SingleImage
         src={images[0]}

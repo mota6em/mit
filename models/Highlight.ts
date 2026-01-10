@@ -14,9 +14,11 @@ const highlightSchema = new Schema(
   { timestamps: true }
 );
 
-// Indexes for performance
-highlightSchema.index({ date: 1 });
-highlightSchema.index({ status: 1 });
+// Indexes
+highlightSchema.index({ slug: 1 });
+highlightSchema.index({ createdAt: -1 });
+highlightSchema.index({ date: -1 });
+highlightSchema.index({ status: 1, createdAt: -1 });
 highlightSchema.index({
   title_en: "text",
   title_hu: "text",
@@ -24,11 +26,10 @@ highlightSchema.index({
   desc_hu: "text",
 });
 
-// Middleware to generate unique slug before saving
+// Auto-generate slug
 highlightSchema.pre("save", async function () {
   if (!this.isModified("title_en")) return;
 
-  // Create base slug:
   const baseSlug = this.title_en
     .toLowerCase()
     .replace(/[^\w ]+/g, "")
@@ -37,7 +38,6 @@ highlightSchema.pre("save", async function () {
   let slug = baseSlug;
   let counter = 1;
 
-  // Check for uniqueness
   while (await mongoose.models.Highlight.findOne({ slug })) {
     slug = `${baseSlug}-${counter}`;
     counter++;

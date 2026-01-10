@@ -1,7 +1,7 @@
 "use client";
 import { useHighlights } from "@/app/hooks/useHighlights";
-import HighlightForm from "../../../components/HighlightForm";
-import HighlightList from "../../../components/HighlightList";
+import HighlightForm from "../../../components/Highlights/HighlightForm";
+import HighlightList from "../../../components/Highlights/HighlightList";
 
 export default function AdminHighlights() {
   const {

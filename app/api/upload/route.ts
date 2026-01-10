@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import { auth } from "@/auth";
 
-//  Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -16,7 +15,6 @@ export async function POST(req: Request) {
   }
 
   try {
-    //  Process the file
     const data = await req.formData();
     const file: File | null = data.get("file") as unknown as File;
 
