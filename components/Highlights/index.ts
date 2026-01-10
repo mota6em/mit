@@ -7,14 +7,6 @@ export { default as HighlightClientPage } from "./HighlightClientPage";
 export { default as Hero } from "./Hero";
 export { default as ArchiveNote } from "./ArchiveNote";
 
-export {
-  BackButton,
-  DateFooter,
-  GallerySection,
-  HighlightDescription,
-  NotFoundState,
-} from "./HighlightDetail";
-
 export { HighlightGallery } from "./HighlightGallery";
 export { useHighlightContent } from "@/app/hooks/useHighlightContent";
 export {
