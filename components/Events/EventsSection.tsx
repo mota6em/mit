@@ -59,7 +59,6 @@ export default function EventsSection(props: EventsSectionProps) {
                   note={p.displayNote}
                   eventUrl={`/${locale}/events/${p.eventId}`}
                   index={index}
-                  isVerified={true}
                   isPastEvent={type === "past"}
                   event={p}
                 />

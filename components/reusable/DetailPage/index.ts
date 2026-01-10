@@ -6,7 +6,7 @@ export { DetailPageDescription } from "./DetailPageDescription";
 export { DetailPageNotFound } from "./DetailPageNotFound";
 export { DetailPageActions } from "./DetailPageActions";
 export { DetailPageDateFooter } from "./DetailPageDateFooter";
-export { DetailPageBadge, DetailPageBadges } from "./DetailPageBadges";
+export { DetailPageBadge } from "./DetailPageBadges";
 export type {
   DetailPageData,
   DetailPageConfig,

@@ -92,36 +92,9 @@ export interface HighlightDisplayData extends ApiHighlight {
 
 /** ===== Highlight Detail Page Types ===== */
 
-export interface HighlightContentData {
-  title: string;
-  description: string;
-  date: string;
-  images: string[];
-}
-
-export interface BackButtonProps {
-  href: string;
-  label: string;
-}
-
 export interface DateFooterProps {
   date: string;
   locale: string;
-}
-
-export interface GallerySectionProps {
-  images: string[];
-  title: string;
-  onImageClick: (index: number) => void;
-}
-
-export interface HighlightDescriptionProps {
-  description: string;
-}
-
-export interface NotFoundStateProps {
-  locale: string;
-  t: (key: string) => string;
 }
 
 /** ===== Highlight Component Props ===== */
@@ -222,12 +195,6 @@ export interface HighlightListProps {
 }
 
 /** ===== Animation Variants ===== */
-
-export interface MotionVariants {
-  [key: string]: Record<string, unknown> | undefined;
-  hidden?: Record<string, unknown>;
-  visible?: Record<string, unknown>;
-}
 
 export const HIGHLIGHT_ANIMATION_VARIANTS = {
   container: {
@@ -344,8 +311,4 @@ export interface BadgeData {
   icon: React.ComponentType<{ className?: string }>;
   text: string;
   color: string;
-}
-
-export interface DetailPageBadgesProps {
-  badges: BadgeData[];
 }

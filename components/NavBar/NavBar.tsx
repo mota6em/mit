@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { X } from "lucide-react";
 import LanguageSwitch from "./LanguageSwitch";
 import { CgMenuRight } from "react-icons/cg";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useMemo } from "react";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

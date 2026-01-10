@@ -224,7 +224,7 @@ export default function DetailPageClient({
           initial="hidden"
           animate="visible"
           custom={0.1}
-          className="mb-10"
+          className="mb-5"
         >
           <DetailPageGallery
             images={data.images}

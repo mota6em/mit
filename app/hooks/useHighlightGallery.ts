@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-  useLayoutEffect,
-} from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { GALLERY_CONFIG } from "@/lib/types";
 
 export function useGalleryScroll(imagesLength: number) {

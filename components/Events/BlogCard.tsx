@@ -14,7 +14,6 @@ interface BlogCardProps {
   desc: string;
   note?: string;
   index?: number;
-  isVerified?: boolean;
   eventUrl?: string;
   isPastEvent?: boolean;
   event?: any; // Full event data for caching
