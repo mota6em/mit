@@ -54,7 +54,7 @@ export default function SocialMediaIcons() {
   ];
 
   return (
-    <div className="flex gap-5 mt-2">
+    <div className="flex gap-2.5">
       {socialLinks.map((s, i) => {
         const Icon = s.icon;
 
@@ -62,17 +62,15 @@ export default function SocialMediaIcons() {
           return (
             <div key={i} className="relative">
               {showCopied && (
-                <span className="absolute  -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full whitespace-nowrap z-20">
+                <span className="absolute -top-11 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-ink-900 px-3 py-1.5 text-xs font-medium text-white shadow-lg">
                   {t("copied")}
                 </span>
               )}
               <button
                 onClick={copyEmailToClipboard}
-                className="relative p-2 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+                className="relative grid h-10 w-10 cursor-pointer place-items-center overflow-hidden rounded-full text-white shadow-[0_6px_16px_-6px_rgba(16,20,15,0.5)] transition-all duration-300 hover:-translate-y-1 hover:scale-105"
               >
-                <div
-                  className={`absolute inset-0 rounded-full bg-bg-to-r ${s.bg} animate-bg-x`}
-                ></div>
+                <div className={`absolute inset-0 rounded-full ${s.bg}`} />
                 {showCopied ? (
                   <FaCheck size={20} className="relative z-10" />
                 ) : (
@@ -89,10 +87,10 @@ export default function SocialMediaIcons() {
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative p-2 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+            className="relative grid h-10 w-10 place-items-center overflow-hidden rounded-full text-white shadow-[0_6px_16px_-6px_rgba(16,20,15,0.5)] transition-all duration-300 hover:-translate-y-1 hover:scale-105"
           >
-            <div className={`absolute inset-0 rounded-full ${s.bg}`}></div>
-            <Icon size={20} className="relative z-10" />
+            <div className={`absolute inset-0 rounded-full ${s.bg}`} />
+            <Icon size={18} className="relative z-10" />
           </a>
         );
       })}

@@ -49,7 +49,7 @@ export default function LanguageSwitch() {
       ))}
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer flex mt-1 items-center justify-center gap-1 px-2 font-serif hover:text-yellow-900 transition-colors">
+          <div className="flex cursor-pointer items-center justify-center gap-1.5 rounded-full border border-ink-200 bg-white px-2.5 py-1.5 text-ink-600 transition-all duration-300 hover:border-ink-300 hover:text-ink-900">
             <div className="relative w-5 h-5 flex-shrink-0">
               <Image
                 src={current.flag}
@@ -66,13 +66,13 @@ export default function LanguageSwitch() {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="min-w-[120px] backdrop-blur-3xl bg-white/50 border-white/20 text-black shadow-lg"
+          className="min-w-[150px] rounded-2xl border-ink-200 bg-white p-1.5 text-ink-800 shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)]"
           align="end"
         >
           {locales.map((locale) => (
             <DropdownMenuItem
               key={locale.code}
-              className="cursor-pointer flex items-center gap-2 font-medium hover:bg-white/40 focus:bg-white/40 transition"
+              className="flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-ink-50 focus:bg-ink-50"
               asChild
             >
               <Link
