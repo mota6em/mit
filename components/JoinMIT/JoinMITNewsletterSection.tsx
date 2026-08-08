@@ -27,7 +27,7 @@ export default function JoinMITNewsletterSection() {
       if (res.status === 201) setStatus("success");
       else if (res.status === 409) setStatus("exists");
       else setStatus("error");
-    } catch (err) {
+    } catch {
       setStatus("error");
     } finally {
       setSubmitting(false);
@@ -57,7 +57,7 @@ export default function JoinMITNewsletterSection() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-5xl font-semibold Carena-font text-white leading-tight">
+            <h2 className="display text-3xl text-white md:text-5xl">
               {t("stayUpdated") || "Stay In The Loop"}
             </h2>
 
@@ -70,11 +70,11 @@ export default function JoinMITNewsletterSection() {
             <ul className="space-y-3 text-sm text-ink-300 hidden md:block">
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand-gold-dark" />
-                <span>Weekly community updates</span>
+                <span>{t("benefit1")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand-gold-dark" />
-                <span>Exclusive event registrations</span>
+                <span>{t("benefit2")}</span>
               </li>
             </ul>
           </div>
@@ -98,22 +98,22 @@ export default function JoinMITNewsletterSection() {
                   <input
                     required
                     type="text"
-                    placeholder="Your Name"
+                    placeholder={t("namePlaceholder")}
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-brand-gold-dark transition-colors"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white outline-none transition-colors placeholder:text-ink-400 focus:border-brand-gold"
                   />
                   <input
                     required
                     type="email"
-                    placeholder="Your email address"
+                    placeholder={t("emailPlaceholder")}
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-brand-gold-dark transition-colors"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white outline-none transition-colors placeholder:text-ink-400 focus:border-brand-gold"
                   />
 
                   {status === "exists" && (
@@ -130,7 +130,7 @@ export default function JoinMITNewsletterSection() {
                     type="submit"
                     className="w-full cursor-pointer py-4 bg-brand-gold-dark text-ink-900 font-semibold rounded-xl hover:bg-brand-gold transition-all disabled:opacity-50"
                   >
-                    {submitting ? "Joining..." : "Subscribe"}
+                    {submitting ? t("subscribing") : t("subscribe")}
                   </button>
                 </form>
               )}

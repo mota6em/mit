@@ -92,6 +92,7 @@ export default function NavBar() {
                 <Link
                   href={link.href}
                   data-active={isActive}
+                  aria-current={isActive ? "page" : undefined}
                   className={`link-underline relative rounded-full px-3 py-2 text-[0.9rem] font-medium tracking-wide transition-colors duration-300 ${
                     isActive
                       ? "text-ink-900"
@@ -239,6 +240,7 @@ export default function NavBar() {
                           >
                             <Link
                               href={link.href}
+                              aria-current={isActive ? "page" : undefined}
                               onClick={() => setIsMenuOpen(false)}
                               className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg font-medium transition-all duration-300 ${
                                 isActive

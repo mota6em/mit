@@ -82,8 +82,16 @@ export default async function LocaleLayout({
       <body className="flex flex-col min-h-screen">
         <I18nProvider messages={messages} locale={locale}>
           <SWRProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink-900 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+            >
+              Skip to content
+            </a>
             <NavBar />
-            <div className="flex-1">{children}</div>
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
             <Footer />
           </SWRProvider>
         </I18nProvider>
