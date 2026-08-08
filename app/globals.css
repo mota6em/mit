@@ -26,6 +26,28 @@ div {
 }
 
 @theme inline {
+  /* ── MIT brand system ────────────────────────────────────────── */
+  --color-brand-green: #2d9b4a;
+  --color-brand-green-dark: #1e6f34;
+  --color-brand-green-soft: #eaf6ed;
+  --color-brand-gold: #f9bc15;
+  --color-brand-gold-dark: #d99b00;
+  --color-brand-gold-soft: #fdf4de;
+  --color-brand-sky: #00adef;
+  --color-brand-sky-soft: #e6f7fe;
+
+  /* Ink scale — warm-neutral, reads richer than pure gray */
+  --color-ink-900: #10140f;
+  --color-ink-800: #1c221b;
+  --color-ink-700: #33392f;
+  --color-ink-600: #545a4f;
+  --color-ink-500: #7b8175;
+  --color-ink-400: #a7ab9f;
+  --color-ink-300: #d0d3c9;
+  --color-ink-200: #e6e8e0;
+  --color-ink-100: #f2f3ee;
+  --color-ink-50: #f9faf6;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -205,4 +227,259 @@ div {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MIT DESIGN SYSTEM — surfaces, motion, typography primitives
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --shadow-soft: 0 1px 2px rgba(16, 20, 15, 0.04),
+    0 4px 12px rgba(16, 20, 15, 0.05);
+  --shadow-lift: 0 2px 4px rgba(16, 20, 15, 0.05),
+    0 12px 28px -6px rgba(16, 20, 15, 0.12);
+  --shadow-float: 0 4px 8px rgba(16, 20, 15, 0.06),
+    0 24px 48px -12px rgba(16, 20, 15, 0.18);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body {
+  background-color: #f9faf6;
+  color: #1c221b;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #f9bc15;
+  color: #10140f;
+}
+
+/* Focus ring — visible, on-brand, keyboard only */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid #2d9b4a;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Typography primitives ───────────────────────────────────────── */
+.display {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.lede {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #545a4f;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .lede {
+    font-size: 1.15rem;
+  }
+}
+
+.text-gradient-brand {
+  background: linear-gradient(100deg, #f9bc15 0%, #ffd964 45%, #2d9b4a 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Surfaces ────────────────────────────────────────────────────── */
+.surface {
+  background: #fff;
+  border: 1px solid #e6e8e0;
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-lift {
+  transition: transform 0.45s var(--ease-out-expo),
+    box-shadow 0.45s var(--ease-out-expo), border-color 0.45s ease;
+  will-change: transform;
+}
+
+.surface-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-float);
+  border-color: #d0d3c9;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+}
+
+/* Hairline separator that fades at both ends */
+.rule-fade {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d0d3c9 20%,
+    #d0d3c9 80%,
+    transparent
+  );
+}
+
+/* Subtle paper grain — keeps large flat areas from feeling dead */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Geometric pattern nodding to Islamic tilework — for section backdrops */
+.pattern-geo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%232d9b4a' stroke-width='1'%3E%3Cpath d='M30 0l30 30-30 30L0 30z'/%3E%3Cpath d='M30 15l15 15-15 15-15-15z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────── */
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -32px) scale(1.1);
+  }
+  66% {
+    transform: translate(-18px, 18px) scale(0.94);
+  }
+}
+
+.animate-blob {
+  animation: blob 14s var(--ease-out-expo) infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Slow cinematic zoom for hero imagery */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.12) translate(-1.5%, -1%);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 26s ease-out forwards;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-45%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(140%);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2.2s var(--ease-out-expo) infinite;
+}
+
+/* Sheen sweep for primary buttons */
+@keyframes sheen {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(280%) skewX(-18deg);
+  }
+}
+
+.btn-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transform: translateX(-140%) skewX(-18deg);
+}
+
+.btn-sheen:hover::after {
+  animation: sheen 0.85s var(--ease-out-expo);
+}
+
+/* Animated underline for nav / inline links */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f9bc15, #2d9b4a);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.link-underline:hover::after,
+.link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

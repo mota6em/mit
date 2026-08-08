@@ -6,21 +6,21 @@ export const STATS_CONFIG = [
     target: 10,
     suffix: "+",
     key: "years",
-    color: "text-[#2D9B4A]",
+    color: "text-brand-green",
   },
   {
     icon: FaCalendarAlt,
     target: 100,
     suffix: "+",
     key: "events",
-    color: "text-[#F9BC15]",
+    color: "text-brand-gold",
   },
   {
     icon: FaHashtag,
     target: 1500,
     suffix: "+",
     key: "social",
-    color: "text-[#00ADEF]",
+    color: "text-brand-sky",
   },
 ] as const;
 
