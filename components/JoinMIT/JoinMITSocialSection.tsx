@@ -63,7 +63,7 @@ export default function JoinMITSocialSection() {
     >
       <div className="text-center mb-6 md:mb-10">
         <SectionTag text={t("socialTag") || "Stay Connected"} color="gray" />
-        <h2 className="text-3xl md:text-5xl font-semibold   text-ink-600">
+        <h2 className="display text-[2rem] text-ink-900 sm:text-4xl md:text-[2.6rem]">
           {t("connectWithUs")}
         </h2>
       </div>

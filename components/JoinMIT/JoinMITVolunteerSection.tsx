@@ -12,7 +12,7 @@ export default function JoinMITVolunteerSection() {
     <div id="volunteer" className="max-w-6xl mx-auto px-4 py-25 pb-0">
       <div className="text-center mb-8">
         <SectionTag text={t("impactTag") || "Make an Impact"} color="green" />
-        <h2 className="text-4xl md:text-5xl font-semibold  text-brand-green mb-4">
+        <h2 className="display mb-4 text-[2rem] text-ink-900 sm:text-4xl md:text-[2.6rem]">
           {t("volunteer.title")}
         </h2>
       </div>
@@ -24,15 +24,15 @@ export default function JoinMITVolunteerSection() {
         className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-ink-100 relative overflow-hidden"
       >
         {/* Decorative Corner Icon */}
-        <div className="absolute top-0 left-0 w-24 h-24 bg-green-800/10 rounded-br-[4rem] -z-0" />
+        <div className="absolute left-0 top-0 -z-0 h-24 w-24 rounded-br-[4rem] bg-brand-green/10" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8">
-          <div className="flex-shrink-0 w-24 h-24 bg-green-50 rounded-full flex items-center justify-center">
-            <FaHeart className="text-4xl text-green-500" />
+          <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full bg-brand-green-soft text-brand-green">
+            <FaHeart className="text-3xl" />
           </div>
 
           <div className="flex-grow text-center md:text-left">
-            <p className="text-green-800 text-lg md:text-[1.3rem] mb-8 md:mb-6">
+            <p className="lede mb-8 md:mb-7">
               {t("volunteer.description")}
             </p>
             <div className="flex justify-center md:justify-start">
@@ -41,7 +41,7 @@ export default function JoinMITVolunteerSection() {
                 label={t("volunteer.button")}
                 variant="inline"
                 external={true}
-                linkClassName="flex items-center justify-center w-full md:w-fit gap-2 text-green-700 animate-bounce font-semibold  outline outline-green-700 px-3 py-1 rounded-full  w-fit hover:gap-4 transition-all hover:bg-green-700 hover:text-white"
+                linkClassName="btn-sheen group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-green px-7 py-3.5 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(45,155,74,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-green-dark md:w-fit"
               />
             </div>
           </div>

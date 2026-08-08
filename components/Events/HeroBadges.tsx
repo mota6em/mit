@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 type BadgeType = "stats" | "mobileFloating" | "desktopFloating";
 
 interface HeroBadgesProps {
-  t: any;
+  t: (key: string) => string;
   type?: BadgeType;
 }
 
@@ -14,9 +14,9 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
     // Bottom stats badge (current)
     return (
       <div className="mt-4 flex items-center justify-center gap-0 text-sm text-ink-500 font-medium">
-        <div className="w-6 h-6 flex items-center justify-center text-yellow-600 text-3xl animate-pulse">
-          <HiSparkles />
-        </div>
+        <span className="grid h-6 w-6 place-items-center text-brand-gold-dark">
+          <HiSparkles className="text-xl" />
+        </span>
         <p>{t("hero.joinStats")}</p>
       </div>
     );
@@ -40,9 +40,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
             </p>
           </div>
         </div>
-        <div className="absolute bottom-8 left-2 z-20 text-brand-gold-dark text-2xl animate-pulse">
-          <HiSparkles />
-        </div>
+
       </motion.div>
     );
   }
@@ -55,7 +53,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
       className="absolute top-20 right-10 md:right-20 lg:right-10 lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
     >
       <div className="flex items-start gap-3">
-        <div className="bg-red-100 text-red-600 p-2 rounded-lg">
+        <div className="rounded-lg bg-brand-gold-soft p-2 text-brand-gold-dark">
           <HiSparkles className="text-xl" />
         </div>
         <div>
@@ -67,9 +65,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
           </p>
         </div>
       </div>
-      <div className="absolute lg:hidden xl:flex -bottom-62 right-126 z-20 text-brand-gold-dark text-4xl animate-pulse">
-        <HiSparkles />
-      </div>
+
     </motion.div>
   );
 };

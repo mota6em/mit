@@ -7,8 +7,8 @@ export default function JoinMitPage() {
   return (
     <div className="relative w-full min-h-screen  overflow-hidden">
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute top-[40%] left-0 w-[400px] h-[400px] bg-yellow-100/40 rounded-full blur-3xl -translate-x-1/3" />
+      <div className="pointer-events-none absolute right-0 top-0 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/3 rounded-full bg-brand-sky/[0.07] blur-3xl" />
+      <div className="pointer-events-none absolute left-0 top-[40%] h-[400px] w-[400px] -translate-x-1/3 rounded-full bg-brand-gold/[0.08] blur-3xl" />
 
       <JoinMITHeroSection />
       <JoinMITVolunteerSection />

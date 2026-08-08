@@ -2,7 +2,7 @@
 import { HiCalendar, HiArrowRight } from "react-icons/hi";
 
 interface HeroButtonsProps {
-  t: any; // translation function
+  t: (key: string) => string; // translation function
 }
 
 export const HeroButtons = ({ t }: HeroButtonsProps) => (
