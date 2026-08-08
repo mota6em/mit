@@ -90,7 +90,13 @@
       "pastTitle": "Korábbi Események",
       "showAllUpcoming": "Összes következő Események megtekintése",
       "showAllPast": "Összes koróbbi Események megtekintése",
-      "authorName": "MIT"
+      "authorName": "MIT",
+      "emptyUpcoming": "Jelenleg nincsenek közelgő események — nézz vissza hamarosan.",
+      "emptyPast": "Még nincsenek megjeleníthető korábbi események.",
+      "search": "Események keresése",
+      "searchEmpty": "Nincs a keresésnek megfelelő esemény.",
+      "clearSearch": "Keresés törlése",
+      "resultCount": "esemény"
     }
   },
   "joinMIT": {
@@ -109,7 +115,7 @@
     "followTag": "Maradj Kapcsolatban",
     "socialDescription": "Kövess minket a közösségi médiában, hogy értesülj a legfrissebb eseményeinkről, programjainkról és közösségi tevékenységeinkről.",
     "followUs": "Kövess Minket",
-    "copyEmail": "Másolj az Email cimet",
+    "copyEmail": "Email Másolása",
     "whatsapp-join": "Csatlakozz",
     "socialText": {
       "facebook": "Csatlakozz Facebook közösségünkhöz a napi frissítésekért",
@@ -123,7 +129,7 @@
     "successMessage": "Köszönjük, hogy csatlakoztál hozzánk!",
     "alreadySubscribed": "Már feliratkoztál korábban!",
     "errorMessage": "Valami hiba történt. Kérlek próbáld újra.",
-    "emailPlaceholder": "Add meg az email címed",
+    "emailPlaceholder": "E-mail címed",
     "subscribe": "Feliratkozás Most",
     "subscribing": "Feliratkozás...",
     "subscribed": "Feliratkozva!",
@@ -134,7 +140,6 @@
     "tag3": "Közösség",
     "finalMessage": "Együtt értelmes élményeket és tartós kapcsolatokat teremtünk, amelyek erősítik hitünket és közösségünket.",
     "scrollTop": "Görgess fel és fedezz fel többet",
-    "copyEmail": "Email Másolása",
     "volunteer": {
       "title": "Légy Önkéntes",
       "description": "Csatlakozz szenvedélyes önkénteseink csapatához és segíts nekünk értelmes eseményeket szervezni, közösségi kapcsolatokat építeni, és tartós hatást gyakorolni a magyarországi muszlim diákokra.",
@@ -145,7 +150,10 @@
         "network": "Kapcsolatépítés",
         "leadership": "Vezetői Lehetőségek"
       }
-    }
+    },
+    "namePlaceholder": "Neved",
+    "benefit1": "Heti közösségi hírek",
+    "benefit2": "Exkluzív eseményregisztrációk"
   },
   "aboutMIT": {
     "hero": {
@@ -211,7 +219,6 @@
         "Segítettünk felépíteni egy sikeres, megerősített muszlim generációt."
       ]
     },
-
     "callToAction": {
       "title": "Cselekvésre Fel:",
       "subtitle": "Együtt Allah Ügyéért",
@@ -247,5 +254,11 @@
       "views": "Megtekintés",
       "register": "Regisztrálj most"
     }
+  },
+  "notFound": {
+    "title": "Az oldal nem található",
+    "description": "A keresett oldal nem létezik, vagy áthelyezték.",
+    "cta": "Vissza a főoldalra",
+    "code": "404"
   }
 }

@@ -117,7 +117,13 @@
           "title": "Autumn Charity Drive",
           "desc": "Giving back to community 🍂 Collecting essentials for those in need."
         }
-      }
+      },
+      "emptyUpcoming": "No upcoming events right now — check back soon.",
+      "emptyPast": "No past events to show yet.",
+      "search": "Search events",
+      "searchEmpty": "No events match your search.",
+      "clearSearch": "Clear search",
+      "resultCount": "events"
     }
   },
   "joinMIT": {
@@ -170,7 +176,11 @@
         "network": "Build Your Network",
         "leadership": "Leadership Opportunities"
       }
-    }
+    },
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your email address",
+    "benefit1": "Weekly community updates",
+    "benefit2": "Exclusive event registrations"
   },
   "aboutMIT": {
     "hero": {
@@ -236,7 +246,6 @@
         "Helped build a successful, empowered Muslim generation."
       ]
     },
-
     "callToAction": {
       "title": "Call to Action:",
       "subtitle": "Together for Allah's Cause",
@@ -272,5 +281,11 @@
       "views": "Views",
       "register": "Register Now"
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "cta": "Back to home",
+    "code": "404"
   }
 }
