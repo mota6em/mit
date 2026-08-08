@@ -6,12 +6,24 @@ import WhoWeAre from "@/components/Home/WhoWeAre";
 
 const page = () => {
   return (
-    <div className="block w-full overflow-hidden md:px-10">
+    <div className="block w-full overflow-hidden">
       <Hero />
       <WhoWeAre />
-      <HighlightsSection limit={1} />
-      <EventsSection type="upcoming" limit={3} />
-      <EventsSection type="past" limit={3} />
+
+      {/* Tinted band sets the announcement + events run apart from the
+          white intro and stats sections above and below it. */}
+      <div className="border-y border-ink-200 bg-ink-50">
+        <HighlightsSection limit={1} />
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="rule-fade" />
+        </div>
+        <EventsSection type="upcoming" limit={3} />
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="rule-fade" />
+        </div>
+        <EventsSection type="past" limit={3} />
+      </div>
+
       <Statistics />
     </div>
   );

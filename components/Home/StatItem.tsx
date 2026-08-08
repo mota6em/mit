@@ -8,9 +8,10 @@ import { STATS_CONFIG } from "@/data/constants/statistics";
 interface StatItemProps {
   stat: (typeof STATS_CONFIG)[number];
   label: string;
+  index?: number;
 }
 
-export const StatItem = memo(({ stat, label }: StatItemProps) => {
+export const StatItem = memo(({ stat, label, index = 0 }: StatItemProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
@@ -20,26 +21,23 @@ export const StatItem = memo(({ stat, label }: StatItemProps) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="flex flex-col items-center text-center px-4 group"
+      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative flex flex-col items-center px-4 text-center"
     >
       <div
-        className={`mb-6 p-5 rounded-2xl bg-gray-50 transition-all duration-300 
-                      group-hover:bg-white group-hover:shadow-xl group-hover:-translate-y-1 
-                      ${stat.color}`}
+        className={`mb-6 grid h-16 w-16 place-items-center rounded-2xl border border-ink-200 bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1.5 group-hover:shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)] ${stat.color}`}
       >
-        <stat.icon className="text-3xl" aria-hidden="true" />
+        <stat.icon className="text-2xl" aria-hidden="true" />
       </div>
 
-      <motion.span className="text-4xl md:text-5xl text-gray-900 tabular-nums tracking-tight mb-2">
+      <motion.span className="display text-5xl tabular-nums text-ink-900 md:text-6xl">
         {display}
       </motion.span>
 
-      <p className="text-xs md:text-sm font-semibold text-gray-400 uppercase tracking-[0.2em]">
-        {label}
-      </p>
+      <p className="eyebrow mt-3 text-ink-400">{label}</p>
     </motion.div>
   );
 });
