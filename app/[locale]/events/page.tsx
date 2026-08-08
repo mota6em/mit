@@ -3,10 +3,15 @@ import Hero from "@/components/Events/Hero";
 
 export default function EventsHero() {
   return (
-    <div className="flex flex-col gap-8 mb-16">
+    <div className="flex flex-col">
       <Hero />
-      <EventsSection type="upcoming" />
-      <EventsSection type="past" />
+      <div className="border-t border-ink-200 bg-ink-50">
+        <EventsSection type="upcoming" searchable />
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="rule-fade" />
+        </div>
+        <EventsSection type="past" searchable />
+      </div>
     </div>
   );
 }

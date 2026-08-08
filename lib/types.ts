@@ -38,6 +38,8 @@ export interface EventsSectionProps {
   limit?: number;
   showViewAll?: boolean;
   filterMode?: "all" | "recurring_only" | "single_only";
+  /** Enables client-side search over the section's events. */
+  searchable?: boolean;
 }
 
 export const dayMap: Record<string, { en: string; hu: string }> = {
