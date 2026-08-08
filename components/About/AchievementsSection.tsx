@@ -25,10 +25,10 @@ const AchievementsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
-              className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+              className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-sm border border-ink-100"
             >
-              <CheckCircle2 className="w-6 h-6 text-gray-900 shrink-0 mt-1" />
-              <p className="text-gray-900 font-medium leading-relaxed">
+              <CheckCircle2 className="w-6 h-6 text-ink-900 shrink-0 mt-1" />
+              <p className="text-ink-900 font-medium leading-relaxed">
                 {t(`list.${index}`)}
               </p>
             </motion.div>

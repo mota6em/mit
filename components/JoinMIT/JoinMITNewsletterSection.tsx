@@ -41,17 +41,17 @@ export default function JoinMITNewsletterSection() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative bg-[#1a2332] rounded-[2.5rem] p-6 md:p-16 overflow-hidden text-center md:text-left"
+        className="relative bg-ink-900 rounded-[2.5rem] p-6 md:p-16 overflow-hidden text-center md:text-left"
       >
         {/* Background Patterns for the dark card */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#e8b030]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#4d93fb]/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold-dark/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-sky/10 rounded-full blur-3xl" />
 
         <div className="relative z-10 grid lg:grid-cols-2 gap-4 md:gap-12 items-center">
           {/* Left: Text */}
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10">
-              <HiOutlineMail className="text-[#e8b030]" />
+              <HiOutlineMail className="text-brand-gold-dark" />
               <span className="text-white text-xs font-semibold uppercase tracking-wider">
                 {t("newsletterTag") || "Newsletter"}
               </span>
@@ -61,19 +61,19 @@ export default function JoinMITNewsletterSection() {
               {t("stayUpdated") || "Stay In The Loop"}
             </h2>
 
-            <p className="text-gray-300 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
+            <p className="text-ink-300 text-lg leading-relaxed max-w-md mx-auto lg:mx-0">
               {t("subscriptionDescription") ||
                 "Join our community newsletter to receive updates on events, workshops, and volunteer opportunities."}
             </p>
 
             {/* Feature List  */}
-            <ul className="space-y-3 text-sm text-gray-300 hidden md:block">
+            <ul className="space-y-3 text-sm text-ink-300 hidden md:block">
               <li className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#e8b030]" />
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-gold-dark" />
                 <span>Weekly community updates</span>
               </li>
               <li className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#e8b030]" />
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-gold-dark" />
                 <span>Exclusive event registrations</span>
               </li>
             </ul>
@@ -88,7 +88,7 @@ export default function JoinMITNewsletterSection() {
                   animate={{ opacity: 1 }}
                   className="text-center py-10"
                 >
-                  <HiSparkles className="text-[#e8b030] text-5xl mx-auto mb-4" />
+                  <HiSparkles className="text-brand-gold-dark text-5xl mx-auto mb-4" />
                   <h3 className="text-white text-xl font-semibold">
                     {t("successMessage")}
                   </h3>
@@ -103,7 +103,7 @@ export default function JoinMITNewsletterSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-[#e8b030] transition-colors"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-brand-gold-dark transition-colors"
                   />
                   <input
                     required
@@ -113,11 +113,11 @@ export default function JoinMITNewsletterSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-[#e8b030] transition-colors"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-5 py-4 text-white placeholder-gray-400 outline-none focus:border-brand-gold-dark transition-colors"
                   />
 
                   {status === "exists" && (
-                    <p className="text-[#e8b030] text-sm">
+                    <p className="text-brand-gold-dark text-sm">
                       {t("alreadySubscribed")}
                     </p>
                   )}
@@ -128,7 +128,7 @@ export default function JoinMITNewsletterSection() {
                   <button
                     disabled={submitting}
                     type="submit"
-                    className="w-full cursor-pointer py-4 bg-[#e8b030] text-[#1a2332] font-semibold rounded-xl hover:bg-[#f1c34c] transition-all disabled:opacity-50"
+                    className="w-full cursor-pointer py-4 bg-brand-gold-dark text-ink-900 font-semibold rounded-xl hover:bg-brand-gold transition-all disabled:opacity-50"
                   >
                     {submitting ? "Joining..." : "Subscribe"}
                   </button>

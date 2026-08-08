@@ -8,7 +8,7 @@ const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
 
   return (
-    <section className="relative min-h-[80vh] flex items-center bg-linear-to-b from-blue-50/30 to-white overflow-hidden px-6 py-12 md:px-12 lg:px-20 lg:py-6">
+    <section className="relative flex min-h-[80vh] items-center overflow-hidden bg-gradient-to-b from-brand-green-soft/40 via-ink-50 to-white px-6 py-12 md:px-12 lg:px-20 lg:py-6">
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <HeroImageCollage
           floatLeft
@@ -22,12 +22,17 @@ const HeroSection = () => {
 
         {/* Right COLUMN: Text Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <SectionHeader title={t("title")} className="mb-4 md:mb-2" />
+          <SectionHeader
+            title={t("title")}
+            align="start"
+            underLine
+            className="mb-6 items-center text-center lg:items-start lg:text-left"
+          />
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-800 max-w-xl mb-8"
+            className="lede mb-8 max-w-xl"
           >
             {t("description")}
           </motion.p>

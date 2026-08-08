@@ -63,7 +63,7 @@ export default function JoinMITSocialSection() {
     >
       <div className="text-center mb-6 md:mb-10">
         <SectionTag text={t("socialTag") || "Stay Connected"} color="gray" />
-        <h2 className="text-3xl md:text-5xl font-semibold   text-gray-600">
+        <h2 className="text-3xl md:text-5xl font-semibold   text-ink-600">
           {t("connectWithUs")}
         </h2>
       </div>
@@ -74,7 +74,7 @@ export default function JoinMITSocialSection() {
           const isEmail = social.id === "email";
           const isWhatsApp = social.id === "whatsapp";
           const cardStyles =
-            "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-gray-100";
+            "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-ink-100";
 
           const iconWrapperStyles = `${social.bg} group-hover:scale-110`;
 
@@ -91,13 +91,13 @@ export default function JoinMITSocialSection() {
 
               {/* Compact Title */}
               <h3
-                className={`text-md md:text-xl font-semibold mb-1 md:mb-2  text-gray-800 `}
+                className={`text-md md:text-xl font-semibold mb-1 md:mb-2  text-ink-800 `}
               >
                 {social.name}
               </h3>
 
               {/* Compact Description */}
-              <p className="text-gray-500 text-[12px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
+              <p className="text-ink-500 text-[12px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
                 {t(`socialText.${social.id.toLowerCase()}`)}
               </p>
 

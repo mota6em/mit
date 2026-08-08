@@ -30,11 +30,11 @@ const CommunityRoleSection = () => {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-6 bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <div className="p-4 bg-gray-50 rounded-xl text-gray-800 shrink-0">
+                <div className="p-4 bg-ink-50 rounded-xl text-ink-800 shrink-0">
                   <Icon className="w-8 h-8" />
                 </div>
                 <div>
-                  <h4 className="text-lg md:text-xl font-medium text-gray-900 leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-medium text-ink-900 leading-relaxed">
                     {t(`roles.${index}`)}
                   </h4>
                 </div>

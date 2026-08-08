@@ -7,7 +7,7 @@ export default function Loading() {
     <div className="fixed inset-0 z-10 flex flex-col items-center justify-center bg-white">
       <div className="relative flex items-center justify-center">
         {/* soft glow */}
-        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-tr from-[#4d93fb]/20 via-[#11b505]/20 to-[#f1c34c]/20 blur-xl" />
+        <div className="absolute w-24 h-24 rounded-full bg-gradient-to-tr from-brand-sky/20 via-brand-green/20 to-brand-gold/20 blur-xl" />
 
         {/* spinner */}
         <div
@@ -29,12 +29,12 @@ export default function Loading() {
 
       {/* text + progress */}
       <div className="mt-4 flex flex-col items-center">
-        <span className="text-[10px] font-bold tracking-[0.35em] text-gray-400 uppercase Carena-font">
+        <span className="text-[10px] font-bold tracking-[0.35em] text-ink-400 uppercase Carena-font">
           MIT
         </span>
 
-        <div className="w-16 h-[2px] bg-gray-100 mt-2 overflow-hidden rounded-full">
-          <div className="h-full bg-gradient-to-r from-[#4d93fb] via-[#11b505] to-[#f1c34c] animate-pulse" />
+        <div className="w-16 h-[2px] bg-ink-100 mt-2 overflow-hidden rounded-full">
+          <div className="h-full bg-gradient-to-r from-brand-sky via-brand-green to-brand-gold animate-pulse" />
         </div>
       </div>
     </div>

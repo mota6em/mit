@@ -43,7 +43,7 @@ const CoreServicesSection = () => {
               <motion.div
                 key={index}
                 variants={item}
-                className="bg-white border-t-slate-600! p-4 md:p-8 rounded-4xl shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
+                className="bg-white border-t-slate-600! p-4 md:p-8 rounded-4xl shadow-xl border border-ink-100 relative overflow-hidden flex flex-col items-center text-center h-full"
                 style={{ borderTop: `6px solid` }}
               >
                 <div
@@ -51,13 +51,13 @@ const CoreServicesSection = () => {
                 >
                   <Icon className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">
+                <h3 className="text-xl font-semibold mb-4 text-ink-900">
                   {t(`services.${index}.title`)}
                 </h3>
-                <p className="text-gray-900 leading-relaxed mb-2 text-sm md:text-base">
+                <p className="text-ink-900 leading-relaxed mb-2 text-sm md:text-base">
                   {t(`services.${index}.description`)}
                 </p>
-                <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full opacity-5 pointer-events-none bg-gray-600" />
+                <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full opacity-5 pointer-events-none bg-ink-600" />
               </motion.div>
             );
           })}

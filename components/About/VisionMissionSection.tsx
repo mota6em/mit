@@ -25,15 +25,15 @@ const VisionMissionSection = () => {
             className="group relative bg-slate-50 rounded-[2.5rem] p-10 md:p-14 overflow-hidden border border-slate-100 hover:border-blue-200 transition-colors duration-500"
           >
             <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6 text-gray-800">
+              <div className="flex items-center gap-2 mb-6 text-ink-800">
                 <Target className="w-8 h-8" />
                 <h3 className="text-3xl font-medium">{t("vision.title")}</h3>
               </div>
-              <p className="text-lg text-gray-800 leading-relaxed mb-8">
+              <p className="text-lg text-ink-800 leading-relaxed mb-8">
                 {t("vision.description")}
               </p>
-              <div className="flex items-center gap-2 text-gray-600 font-medium ">
-                <span className="w-8 h-[2px] bg-gray-600"></span>
+              <div className="flex items-center gap-2 text-ink-600 font-medium ">
+                <span className="w-8 h-[2px] bg-ink-600"></span>
                 <span>{t("vision.tagline")}</span>
               </div>
             </div>
@@ -48,17 +48,17 @@ const VisionMissionSection = () => {
             className="group relative bg-slate-50 rounded-[2.5rem] p-10 md:p-14 overflow-hidden border border-slate-100 hover:border-yellow-200 transition-colors duration-500"
           >
             <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6  text-gray-800">
+              <div className="flex items-center gap-2 mb-6  text-ink-800">
                 <Rocket className="w-8 h-8" />
                 <h3 className="text-3xl font-medium">{t("mission.title")}</h3>
               </div>
 
-              <p className="text-lg text-gray-800 leading-relaxed mb-8">
+              <p className="text-lg text-ink-800 leading-relaxed mb-8">
                 {t("mission.description")}
               </p>
 
-              <div className="flex items-center gap-2 text-gray-600 font-medium">
-                <span className="w-8 h-[2px] bg-text bg-gray-600"></span>
+              <div className="flex items-center gap-2 text-ink-600 font-medium">
+                <span className="w-8 h-[2px] bg-text bg-ink-600"></span>
                 <span>{t("mission.tagline")}</span>
               </div>
             </div>

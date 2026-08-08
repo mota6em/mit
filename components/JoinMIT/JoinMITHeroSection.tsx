@@ -19,14 +19,14 @@ export default function JoinMITHeroSection() {
         >
           <SectionTag text={t("joinUsTag") || "Be Part of Us"} color="green" />
 
-          <h1 className="text-4xl md:text-6xl font-semibold mb-6 md:mb-2">
-            <span className="text-[#4d93fb] drop-shadow-sm">
+          <h1 className="display mb-6 text-4xl md:mb-2 md:text-6xl">
+            <span className="text-brand-sky drop-shadow-sm">
               {t("title").split(" ")[0] || "Join"}{" "}
             </span>
-            <span className="text-[#11b505] drop-shadow-sm">
+            <span className="text-brand-green drop-shadow-sm">
               {t("title").split(" ")[1] || "The"}
             </span>{" "}
-            <span className="text-[#e8b030] drop-shadow-sm">
+            <span className="text-brand-gold-dark drop-shadow-sm">
               {t("title").split(" ")[2] || "Family"}
             </span>
           </h1>
@@ -40,19 +40,19 @@ export default function JoinMITHeroSection() {
             rightClassName="absolute top-0 left-4 sm:left-14 w-64 h-80 rotate-[-6deg] z-10"
           />
 
-          <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-4 max-w-lg mx-auto lg:mx-0">
+          <p className="lede mx-auto mb-6 max-w-lg lg:mx-0">
             {t("subtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mx-10 md:mx-0">
             <a
               href="#volunteer"
-              className="px-8 py-3 bg-[#11b505] text-white rounded-full font-semibold hover:bg-[#0f9e04] transition-all duration-300 shadow-lg shadow-green-200"
+              className="btn-sheen relative overflow-hidden rounded-full bg-brand-green px-8 py-3.5 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(45,155,74,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-green-dark"
             >
               {t("volunteer.button") || "Start Volunteering"}
             </a>
             <a
               href="#socials"
-              className="px-8 py-3 bg-white text-gray-600 border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition-transition-all duration-300"
+              className="rounded-full border border-ink-300 bg-white px-8 py-3.5 font-semibold text-ink-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900 hover:text-ink-900"
             >
               {t("connect") || "Connect With Us"}
             </a>
@@ -67,9 +67,9 @@ export default function JoinMITHeroSection() {
           rightClassName="absolute top-45 left-26 md:left-72 lg:left-50 w-72 h-72 lg:w-64 lg:h-68 rotate-[12deg] z-20"
         />
       </div>
-      <div className="absolute top-10 right-20 md:right-40 w-72 h-72 bg-[#11b505]/50 md:bg-[#4d93fb]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-      <div className="absolute bottom-20 left-40 w-72 h-72 bg-[#11b505]/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-      <div className="absolute top-40 left-40 w-72 h-72 bg-[#f1c34c] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+      <div className="absolute top-10 right-20 md:right-40 w-72 h-72 bg-brand-green/50 md:bg-brand-sky/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+      <div className="absolute bottom-20 left-40 w-72 h-72 bg-brand-green/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+      <div className="absolute top-40 left-40 w-72 h-72 bg-brand-gold rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
     </div>
   );
 }

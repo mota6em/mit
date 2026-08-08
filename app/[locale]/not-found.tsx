@@ -21,7 +21,7 @@ export default function NotFound() {
           <h1 className="text-2xl md:text-4xl font-bold text-center bg-linear-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent">
             404 - Page Not Found
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 text-center max-w-md">
+          <p className="text-xl md:text-2xl text-ink-700 dark:text-ink-300 text-center max-w-md">
             The page you are looking for does not exist
           </p>
           <Link

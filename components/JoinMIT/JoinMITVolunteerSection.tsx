@@ -12,7 +12,7 @@ export default function JoinMITVolunteerSection() {
     <div id="volunteer" className="max-w-6xl mx-auto px-4 py-25 pb-0">
       <div className="text-center mb-8">
         <SectionTag text={t("impactTag") || "Make an Impact"} color="green" />
-        <h2 className="text-4xl md:text-5xl font-semibold  text-[#11b505] mb-4">
+        <h2 className="text-4xl md:text-5xl font-semibold  text-brand-green mb-4">
           {t("volunteer.title")}
         </h2>
       </div>
@@ -21,7 +21,7 @@ export default function JoinMITVolunteerSection() {
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
-        className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 relative overflow-hidden"
+        className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-ink-100 relative overflow-hidden"
       >
         {/* Decorative Corner Icon */}
         <div className="absolute top-0 left-0 w-24 h-24 bg-green-800/10 rounded-br-[4rem] -z-0" />
