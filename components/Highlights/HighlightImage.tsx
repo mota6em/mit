@@ -60,8 +60,8 @@ function ImageCountBadge({ current }: Omit<ImageCounterProps, "total">) {
       transition={{ delay: 0.2, duration: 0.3 }}
       className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg z-20"
     >
-      <HiPhoto className="w-4 h-4 text-gray-700" />
-      <span className="text-sm font-semibold text-gray-800">
+      <HiPhoto className="w-4 h-4 text-ink-700" />
+      <span className="text-sm font-semibold text-ink-800">
         {current} photos
       </span>
     </motion.div>
@@ -101,8 +101,8 @@ export default function HighlightImage({
           )}
         </>
       ) : (
-        <div className="absolute inset-0 bg-linear-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-          <HiSparkles className="w-16 h-16 text-gray-400" />
+        <div className="absolute inset-0 bg-linear-to-br from-ink-200 to-ink-300 flex items-center justify-center">
+          <HiSparkles className="w-16 h-16 text-ink-400" />
         </div>
       )}
 

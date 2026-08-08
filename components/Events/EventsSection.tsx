@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import BlogCard from "./BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
@@ -26,20 +25,20 @@ export default function EventsSection(props: EventsSectionProps) {
   return (
     <section
       id={sectionId}
-      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
+      className="mx-auto flex w-full max-w-6xl flex-col items-center gap-y-10 px-4 py-16 md:px-8 md:py-20"
     >
       <SectionHeader
         title={titleText}
-        className="text-3xl md:text-4xl text-center tracking-wide mb-2 md:mb-4"
+        underLine
       />
 
       {/** Cards Grid */}
-      <div className="flex overflow-x-auto  items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full md:w-fit md:gap-10 snap-x snap-mandatory scrollbar-hide pb-4 px-2">
+      <div className="scrollbar-hide flex w-full snap-x snap-mandatory items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-4 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
         {loading
           ? Array.from({ length: limit || 3 }).map((_, i) => (
               <div
                 key={i}
-                className="min-w-[75vw] md:min-w-2xs snap-start h-full"
+                className="w-[78vw] shrink-0 snap-start md:w-auto md:shrink"
               >
                 <BlogCardSkeleton />
               </div>
@@ -47,7 +46,7 @@ export default function EventsSection(props: EventsSectionProps) {
           : displayedPrograms.map((p, index) => (
               <div
                 key={p.eventId}
-                className="min-w-[75vw] md:min-w-0 snap-start h-full"
+                className="w-[78vw] shrink-0 snap-start md:w-auto md:shrink"
               >
                 <BlogCard
                   bgImg={p.img}
@@ -67,19 +66,19 @@ export default function EventsSection(props: EventsSectionProps) {
 
         {/** Mobile "View All" Card */}
         {!loading && limit && showViewAll && displayedPrograms.length > 0 && (
-          <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
+          <div className="flex w-[46vw] shrink-0 snap-start items-center justify-center md:hidden">
             <Link
               href={linkHref}
-              className={`group h-[300px] w-full flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-all duration-300 px-4 text-center cursor-pointer ${
+              className={`group flex h-full min-h-[280px] w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed px-4 text-center transition-all duration-500 ${
                 type === "upcoming"
-                  ? "border-gray-300 hover:bg-green-50"
-                  : "bg-gray-50 border-gray-300 hover:border-gray-500 hover:bg-gray-100"
+                  ? "border-brand-green/40 hover:border-brand-green hover:bg-brand-green-soft"
+                  : "border-ink-300 bg-ink-50 hover:border-ink-500 hover:bg-ink-100"
               }`}
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-gray-800 group-hover:text-gray-900">
+              <div className="grid h-12 w-12 place-items-center rounded-full bg-white text-ink-800 shadow-md transition-transform duration-500 group-hover:scale-110">
                 <FaArrowRight size={20} />
               </div>
-              <span className="font-semibold transition-colors text-gray-800 group-hover:text-gray-900">
+              <span className="text-sm font-semibold text-ink-700 transition-colors group-hover:text-ink-900">
                 {type === "upcoming"
                   ? t("latestPrograms.showAllUpcoming")
                   : t("latestPrograms.showAllPast")}
@@ -108,7 +107,7 @@ export default function EventsSection(props: EventsSectionProps) {
 
       {/** Empty State */}
       {!loading && displayedPrograms.length === 0 && (
-        <p className="text-gray-500 text-center py-8">
+        <p className="rounded-2xl border border-dashed border-ink-300 px-8 py-10 text-center text-ink-500">
           {type === "upcoming"
             ? "No upcoming events found."
             : "No past events found."}

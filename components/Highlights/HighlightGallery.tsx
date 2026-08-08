@@ -45,7 +45,7 @@ function NavButton({ direction, onClick }: NavButtonProps) {
       } top-1/2 -translate-y-1/2 z-10 
         bg-slate-700/60 hover:bg-slate-800/80 cursor-pointer backdrop-blur-sm p-3 rounded-full shadow-lg 
         opacity-0 group-hover:opacity-100 transition-all duration-300 
-        hover:scale-110 border border-gray-100`}
+        hover:scale-110 border border-ink-100`}
       aria-label={`${isLeft ? "Previous" : "Next"} image`}
     >
       <Icon className="w-5 h-5 text-white" />
@@ -62,8 +62,8 @@ function Dots({ count, activeIndex, onDotClick }: DotsProps) {
           onClick={() => onDotClick(index)}
           className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
             index === activeIndex
-              ? "bg-gray-800 w-4"
-              : "bg-gray-300 hover:bg-gray-400"
+              ? "bg-ink-800 w-4"
+              : "bg-ink-300 hover:bg-ink-400"
           }`}
           aria-label={`Go to image ${index + 1}`}
         />
@@ -84,7 +84,7 @@ function GalleryImage({
 
   return (
     <div
-      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-gray-50 cursor-zoom-in"
+      className="relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden snap-center bg-ink-50 cursor-zoom-in"
       style={{ opacity, transition: "opacity 0.3s ease" }}
       onClick={onClick}
     >
@@ -108,7 +108,7 @@ function GalleryImage({
 function SingleImage({ src, alt, onClick }: SingleImageProps) {
   return (
     <div
-      className="flex justify-center rounded-2xl overflow-hidden bg-gray-50 cursor-zoom-in relative"
+      className="flex justify-center rounded-2xl overflow-hidden bg-ink-50 cursor-zoom-in relative"
       onClick={onClick}
     >
       <div className="relative group/img">

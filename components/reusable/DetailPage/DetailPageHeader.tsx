@@ -23,7 +23,7 @@ export function DetailPageHeader({
         <span className="font-medium tracking-wide text-sm">{backLabel}</span>
       </Link>
       {showViews && (
-        <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+        <span className="px-2.5 py-1 rounded-full bg-ink-100 text-ink-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
           <HiEye className="w-4 h-4" /> {views && views > 0 ? views : "-"}
         </span>
       )}

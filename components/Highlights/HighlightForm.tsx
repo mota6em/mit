@@ -39,7 +39,7 @@ export default function HighlightForm({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-xl shadow-ink-200/50 overflow-hidden border border-ink-100">
       <div
         className={`p-1 h-2 w-full ${
           isEditing ? "bg-amber-400" : "bg-blue-500"

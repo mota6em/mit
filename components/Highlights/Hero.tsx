@@ -9,7 +9,7 @@ const Hero = () => {
   const t = useTranslations("highlights");
 
   return (
-    <section className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+    <section className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden bg-gradient-to-b from-brand-green-soft/50 via-ink-50 to-white">
       {/* Subtle grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -72,10 +72,10 @@ const Hero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-800 tracking-tight text-center"
+            className="display text-center text-3xl text-ink-900 md:text-4xl lg:text-5xl"
           >
             {t("heroTitle").split("&")[0]}
-            <span className="text-emerald-600">&</span>
+            <span className="text-brand-gold">&</span>
             {t("heroTitle").split("&")[1]}
           </motion.h1>
 
@@ -83,7 +83,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="mt-4 text-slate-500 text-base md:text-lg max-w-md text-center"
+            className="lede mt-5 max-w-md text-center"
           >
             {t("stayUpdated")}
           </motion.p>

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import type { EventDisplayData } from "@/lib/types";
 
 const DESCRIPTION_CHAR_LIMIT = 100;
@@ -52,75 +53,85 @@ export default function BlogCard({
   };
 
   return (
-    <Link href={eventUrl} onClick={handleClick}>
+    <Link href={eventUrl} onClick={handleClick} className="block h-full">
       <motion.article
-        className="w-full max-w-sm md:max-w-xs bg-white rounded-xl overflow-hidden shadow-md cursor-pointer relative flex flex-col h-full"
-        initial={{ opacity: 0.5, y: 0 }}
+        className="surface surface-lift group relative flex h-full w-full flex-col overflow-hidden rounded-3xl"
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-80px" }}
         transition={{
-          duration: 0.5,
-          delay: index * 0.1,
-          ease: "easeOut",
+          duration: 0.7,
+          delay: index * 0.09,
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
-        {/* Header */}
-        <header className="flex items-center justify-between p-2 border-b">
-          <div className="flex items-center gap-2 md:gap-3">
-            <Image
-              src={authorImg}
-              alt={authorName}
-              width={32}
-              height={32}
-              className="rounded-full object-cover"
-            />
-            <span className="text-sm font-semibold text-gray-900">
-              {authorName}
+        {/* Image Container */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-ink-100">
+          <Image
+            src={bgImg}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 85vw, 360px"
+            className={`object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06] ${
+              isPastEvent ? "grayscale group-hover:grayscale-0" : ""
+            }`}
+          />
+
+          {/* Bottom scrim so the floating chips stay legible on any photo */}
+          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink-900/70 to-transparent" />
+
+          {/* Status pill */}
+          <div className="absolute left-3 top-3 z-10">
+            <span
+              className={`eyebrow inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 backdrop-blur-md ${
+                isPastEvent
+                  ? "bg-ink-900/55 text-white/85"
+                  : "bg-brand-green/90 text-white"
+              }`}
+            >
+              {!isPastEvent && (
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              )}
+              {readTime}
             </span>
           </div>
-          <div className="flex items-center gap-2 md:gap-3">
-            {/* Date */}
-            <p className="text-sm flex flex-row items-center justify-between gap-x-1 text-gray-600 px-2 py-1 font-semibold">
-              {readTime}
-            </p>
-          </div>
-        </header>
-
-        {/* Image Container */}
-        <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
-          <motion.div
-            className="relative w-full h-full"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            <Image
-              src={bgImg}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, 320px"
-              className={`object-contain ${isPastEvent ? "!grayscale" : ""}`}
-            />
-          </motion.div>
 
           {/* --- NOTE BADGE --- */}
           {note && (
-            <div className="absolute bottom-2 left-2 bg-amber-100/90 backdrop-blur-sm border border-amber-200 text-amber-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10">
+            <div className="absolute bottom-3 left-3 z-10 rounded-full border border-brand-gold/40 bg-brand-gold-soft/95 px-3 py-1.5 text-xs font-bold text-brand-gold-dark shadow-sm backdrop-blur-sm">
               ⚠️ {note}
             </div>
           )}
+
+          {/* Hover affordance */}
+          <div className="absolute bottom-3 right-3 z-10 grid h-10 w-10 translate-y-2 place-items-center rounded-full bg-white text-ink-900 opacity-0 shadow-lg transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100">
+            <ArrowUpRight className="h-4.5 w-4.5" />
+          </div>
         </div>
 
         {/* Content */}
-        <div className="px-3 pb-3 pt-2 space-y-1 ">
-          <div className="text-md">
-            <span className="text-gray-700 font-bold">{title}</span>
-          </div>
-          <p className="text-sm text-gray-600">
+        <div className="flex flex-1 flex-col gap-2.5 p-5">
+          <h3 className="display text-lg leading-snug text-ink-900 transition-colors duration-300 group-hover:text-brand-green-dark">
+            {title}
+          </h3>
+
+          <p className="line-clamp-3 text-sm leading-relaxed text-ink-600">
             {displayDesc}
-            {isLongText && (
-              <span className="text-gray-600 font-bold ml-1">show more...</span>
-            )}
           </p>
+
+          {/* Author footer */}
+          <div className="mt-auto flex items-center gap-2.5 pt-4">
+            <Image
+              src={authorImg}
+              alt={authorName}
+              width={26}
+              height={26}
+              className="rounded-full object-cover ring-2 ring-ink-100"
+            />
+            <span className="text-xs font-semibold tracking-wide text-ink-500">
+              {authorName}
+            </span>
+          </div>
         </div>
       </motion.article>
     </Link>

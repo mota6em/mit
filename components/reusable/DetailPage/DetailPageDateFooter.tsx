@@ -21,12 +21,12 @@ export function DetailPageDateFooter({ date, locale }: DateFooterProps) {
       initial="hidden"
       animate="visible"
       custom={0.5}
-      className="mt-12 pt-8 border-t border-gray-100"
+      className="mt-12 pt-8 border-t border-ink-100"
     >
-      <div className="flex items-center justify-center gap-3 text-gray-400 text-sm">
-        <div className="w-8 h-px bg-gray-200" />
+      <div className="flex items-center justify-center gap-3 text-ink-400 text-sm">
+        <div className="w-8 h-px bg-ink-200" />
         <time dateTime={date}>{formattedDate}</time>
-        <div className="w-8 h-px bg-gray-200" />
+        <div className="w-8 h-px bg-ink-200" />
       </div>
     </motion.footer>
   );

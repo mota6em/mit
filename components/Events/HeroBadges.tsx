@@ -13,7 +13,7 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
   if (type === "stats") {
     // Bottom stats badge (current)
     return (
-      <div className="mt-4 flex items-center justify-center gap-0 text-sm text-gray-500 font-medium">
+      <div className="mt-4 flex items-center justify-center gap-0 text-sm text-ink-500 font-medium">
         <div className="w-6 h-6 flex items-center justify-center text-yellow-600 text-3xl animate-pulse">
           <HiSparkles />
         </div>
@@ -32,15 +32,15 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
       >
         <div className="flex items-start gap-3">
           <div>
-            <p className="text-xs text-gray-500 font-semibold uppercase mb-0.5">
+            <p className="text-xs text-ink-500 font-semibold uppercase mb-0.5">
               {t("hero.badgeJoin")}
             </p>
-            <p className="text-sm font-semibold text-gray-800 leading-tight">
+            <p className="text-sm font-semibold text-ink-800 leading-tight">
               {t("hero.badgeWeekly")}
             </p>
           </div>
         </div>
-        <div className="absolute bottom-8 left-2 z-20 text-[#e8b030] text-2xl animate-pulse">
+        <div className="absolute bottom-8 left-2 z-20 text-brand-gold-dark text-2xl animate-pulse">
           <HiSparkles />
         </div>
       </motion.div>
@@ -59,15 +59,15 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
           <HiSparkles className="text-xl" />
         </div>
         <div>
-          <p className="text-xs text-gray-500 font-semibold uppercase mb-0.5">
+          <p className="text-xs text-ink-500 font-semibold uppercase mb-0.5">
             {t("hero.badgeJoin")}
           </p>
-          <p className="text-sm font-semibold text-gray-800 leading-tight">
+          <p className="text-sm font-semibold text-ink-800 leading-tight">
             {t("hero.badgeWeekly")}
           </p>
         </div>
       </div>
-      <div className="absolute lg:hidden xl:flex -bottom-62 right-126 z-20 text-[#e8b030] text-4xl animate-pulse">
+      <div className="absolute lg:hidden xl:flex -bottom-62 right-126 z-20 text-brand-gold-dark text-4xl animate-pulse">
         <HiSparkles />
       </div>
     </motion.div>

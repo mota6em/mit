@@ -2,38 +2,27 @@
 
 export default function BlogCardSkeleton() {
   return (
-    <div className="w-full max-w-lg bg-white rounded-xl overflow-hidden   cursor-pointer   shadow-md relative flex flex-col h-full animate-pulse">
-      {/* Header Skeleton */}
-      <div className="flex items-center justify-between p-2 md:p-3 border-b border-gray-100">
-        <div className="flex items-center gap-2 md:gap-3">
-          {/* Avatar */}
-          <div className="w-8 h-8 rounded-full bg-gray-200" />
-          {/* Author Name */}
-          <div className="h-4 w-24 bg-gray-200 rounded" />
-        </div>
-        {/* View Button */}
-        <div className="h-7 w-20 bg-gray-200 rounded-full" />
+    <div className="surface flex h-full w-full animate-pulse flex-col overflow-hidden rounded-3xl">
+      {/* Image */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-ink-100">
+        <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+        <div className="absolute left-3 top-3 h-6 w-24 rounded-full bg-ink-200" />
       </div>
 
-      {/* Image Skeleton */}
-      <div className="relative w-full aspect-square bg-gray-200" />
-
-      {/* Content Skeleton */}
-      <div className="px-3 pb-10 pt-4 mb-4 space-y-3 grow">
-        {/* Title */}
-        <div className="flex flex-col gap-2">
-          <div className="h-4 w-1/3 bg-gray-200 rounded" />
-          <div className="h-5 w-3/4 bg-gray-200 rounded" />
+      {/* Content */}
+      <div className="flex flex-1 flex-col gap-3 p-5">
+        <div className="h-5 w-4/5 rounded bg-ink-200" />
+        <div className="space-y-2">
+          <div className="h-3 w-full rounded bg-ink-100" />
+          <div className="h-3 w-11/12 rounded bg-ink-100" />
+          <div className="h-3 w-2/3 rounded bg-ink-100" />
         </div>
 
-        {/* Description Line  */}
-        <div className="space-y-2 pt-2">
-          <div className="h-3 w-4/6 bg-gray-200 rounded" />
+        <div className="mt-auto flex items-center gap-2.5 pt-4">
+          <div className="h-[26px] w-[26px] rounded-full bg-ink-200" />
+          <div className="h-3 w-24 rounded bg-ink-100" />
         </div>
       </div>
-
-      {/* Date Skeleton (Bottom Right) */}
-      <div className="absolute bottom-2 right-2 h-3 w-24 bg-gray-200 rounded" />
     </div>
   );
 }

@@ -36,13 +36,13 @@ export default function HeroImageCollage({
       {/* LEFT IMAGE */}
       <div
         className={cn(
-          "absolute top-0 left-4 md:left-20 lg:left-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-4 border-white shadow-2xl -rotate-6 z-10",
+          "absolute top-0 left-4 md:left-20 lg:left-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] -rotate-6 z-10",
           leftClassName,
           floatLeft && "animate-[float_6s_ease-in-out_infinite]"
         )}
       >
         {!leftLoaded && (
-          <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+          <div className="absolute inset-0 bg-ink-100 animate-pulse" />
         )}
         <Image
           src={leftImage}
@@ -58,13 +58,13 @@ export default function HeroImageCollage({
       {/* RIGHT IMAGE */}
       <div
         className={cn(
-          "absolute bottom-0 right-4 md:right-20 lg:right-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-4 border-white shadow-2xl rotate-8 z-20",
+          "absolute bottom-0 right-4 md:right-20 lg:right-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] rotate-8 z-20",
           rightClassName,
           floatRight && "animate-[float_7s_ease-in-out_1s_infinite]"
         )}
       >
         {!rightLoaded && (
-          <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+          <div className="absolute inset-0 bg-ink-100 animate-pulse" />
         )}
         <Image
           src={rightImage}
@@ -96,22 +96,9 @@ export default function HeroImageCollage({
         </motion.div>
       )}
 
-      {/* blobs */}
-      <div className="absolute top-10 right-20 w-72 h-72 bg-gray-800/40 rounded-full blur-3xl opacity-20 animate-blob" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-gray-800/40 rounded-full blur-3xl opacity-20 animate-blob animation-delay-2000" />
-
-      {/* Tailwind Keyframes */}
-      <style jsx global>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-15px);
-          }
-        }
-      `}</style>
+      {/* Ambient brand blobs (keyframes live in globals.css) */}
+      <div className="animate-blob absolute right-20 top-10 h-72 w-72 rounded-full bg-brand-gold/50 opacity-25 blur-3xl" />
+      <div className="animate-blob animation-delay-2000 absolute bottom-10 left-10 h-72 w-72 rounded-full bg-brand-green/50 opacity-20 blur-3xl" />
     </div>
   );
 }

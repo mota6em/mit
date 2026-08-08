@@ -14,7 +14,7 @@ export function DetailPageDescription({
       animate="visible"
       custom={0.2}
     >
-      <p className="text-gray-700 text-base md:text-lg whitespace-pre-wrap leading-normal">
+      <p className="text-ink-700 text-base md:text-lg whitespace-pre-wrap leading-normal">
         {description}
       </p>
     </motion.section>

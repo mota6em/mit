@@ -14,8 +14,8 @@ const Hero = () => {
   return (
     <div className="relative w-full overflow-hidden bg-white pt-12 pb-16 md:pb-4 md:pt-0 md:px-5">
       {/* Background blobs */}
-      <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-green-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
-      <div className="pointer-events-none absolute left-0 w-[400px] h-[400px] bg-blue-50/40 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
+      <div className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] bg-brand-green/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
+      <div className="pointer-events-none absolute left-0 w-[400px] h-[400px] bg-brand-sky/10 rounded-full blur-3xl translate-y-1/3 translate-x-1/3" />
 
       <div className="mx-auto px-4 relative z-10">
         <div className="grid relative lg:grid-cols-2 gap-12 lg:gap-6 items-center">
@@ -27,17 +27,11 @@ const Hero = () => {
           >
             <SectionTag text={t("hero.tag") || "Community Life"} color="blue" />
 
-            <h1 className="text-4xl md:text-6xl w-full font-semibold md:mt-12 lg:mt-0 mb-0 md:mb-2 leading-tight">
-              <span className="text-[#4d93fb] drop-shadow-sm">
-                {titleParts[0]}{" "}
-              </span>
-              <span className="text-[#11b505] drop-shadow-sm">
-                {titleParts[1]}{" "}
-              </span>
+            <h1 className="display mb-0 w-full text-4xl md:mb-2 md:mt-12 md:text-6xl lg:mt-0">
+              <span className="text-brand-sky">{titleParts[0]} </span>
+              <span className="text-brand-green">{titleParts[1]} </span>
               <br className="hidden md:block" />
-              <span className="text-[#e7b43f] drop-shadow-sm">
-                {titleParts[2]}
-              </span>
+              <span className="text-brand-gold-dark">{titleParts[2]}</span>
             </h1>
             <div className="relative md:hidden">
               {/* Image section for only mobile devices */}
@@ -51,7 +45,7 @@ const Hero = () => {
               <HeroBadges t={t} type="mobileFloating" />
             </div>
 
-            <p className="text-gray-600 text-lg md:text-xl leading-relaxed -mt-4 sm:mt-4 md:mt-0 mb-6 mx-auto lg:mx-0">
+            <p className="lede -mt-4 mb-7 mx-auto sm:mt-4 md:mt-0 lg:mx-0">
               {t("hero.subtitle")}
             </p>
 

@@ -11,7 +11,7 @@ export default function HighlightBadge({ type, text }: HighlightBadgeProps) {
       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
         isAnnouncement
           ? "bg-purple-100 text-purple-700"
-          : "bg-gray-100 text-gray-600"
+          : "bg-ink-100 text-ink-600"
       }`}
     >
       {isAnnouncement ? (

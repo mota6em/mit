@@ -40,11 +40,11 @@ export default function ArchiveNote() {
 
   return (
     <div className="px-4 md:px-10 text-center max-w-4xl mx-auto">
-      <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200">
-        <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
+      <div className="bg-ink-50 rounded-2xl p-6 md:p-8 border border-ink-200">
+        <h3 className="text-lg md:text-xl font-semibold text-ink-800 mb-4">
           {t("archiveTitle")}
         </h3>
-        <p className="text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+        <p className="text-ink-600 text-sm md:text-base mb-6 leading-relaxed">
           {t("archiveDescription")}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
