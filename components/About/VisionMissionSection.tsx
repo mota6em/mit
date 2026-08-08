@@ -3,69 +3,84 @@ import { Target, Rocket } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import SectionHeader from "../reusable/SectionHeader";
+import Section from "../reusable/Section";
+
+const CARDS = [
+  {
+    key: "vision",
+    icon: Target,
+    accent: "text-brand-sky",
+    tile: "bg-brand-sky-soft",
+    glow: "bg-brand-sky/10",
+    hover: "hover:border-brand-sky/40",
+  },
+  {
+    key: "mission",
+    icon: Rocket,
+    accent: "text-brand-gold-dark",
+    tile: "bg-brand-gold-soft",
+    glow: "bg-brand-gold/10",
+    hover: "hover:border-brand-gold/50",
+  },
+] as const;
 
 const VisionMissionSection = () => {
   const t = useTranslations("aboutMIT.visionMission");
 
   return (
-    <section className="py-10 pt-15 px-6 md:px-12 lg:px-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader
-          title={t("title")}
-          topText={t("coreFoundations")}
-          className="mb-5 md:mb-14"
-        />
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* --- VISION CARD (The Pulse) --- */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="group relative bg-slate-50 rounded-[2.5rem] p-10 md:p-14 overflow-hidden border border-slate-100 hover:border-blue-200 transition-colors duration-500"
-          >
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6 text-ink-800">
-                <Target className="w-8 h-8" />
-                <h3 className="text-3xl font-medium">{t("vision.title")}</h3>
-              </div>
-              <p className="text-lg text-ink-800 leading-relaxed mb-8">
-                {t("vision.description")}
-              </p>
-              <div className="flex items-center gap-2 text-ink-600 font-medium ">
-                <span className="w-8 h-[2px] bg-ink-600"></span>
-                <span>{t("vision.tagline")}</span>
-              </div>
-            </div>
-          </motion.div>
+    <Section tone="plain" width="wide">
+      <SectionHeader
+        title={t("title")}
+        topText={t("coreFoundations")}
+        className="mb-14"
+        underLine
+      />
 
-          {/* --- MISSION CARD (The Trajectory) --- */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="group relative bg-slate-50 rounded-[2.5rem] p-10 md:p-14 overflow-hidden border border-slate-100 hover:border-yellow-200 transition-colors duration-500"
-          >
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-6  text-ink-800">
-                <Rocket className="w-8 h-8" />
-                <h3 className="text-3xl font-medium">{t("mission.title")}</h3>
-              </div>
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+        {CARDS.map((card, i) => {
+          const Icon = card.icon;
+          return (
+            <motion.article
+              key={card.key}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className={`surface group relative flex flex-col overflow-hidden rounded-[2rem] p-9 transition-colors duration-500 md:p-12 ${card.hover}`}
+            >
+              {/* Ambient accent that warms the card corner */}
+              <div
+                className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl ${card.glow}`}
+              />
 
-              <p className="text-lg text-ink-800 leading-relaxed mb-8">
-                {t("mission.description")}
-              </p>
+              <div className="relative z-10 flex flex-col">
+                <div
+                  className={`mb-7 grid h-14 w-14 place-items-center rounded-2xl ${card.tile} ${card.accent}`}
+                >
+                  <Icon className="h-7 w-7" />
+                </div>
 
-              <div className="flex items-center gap-2 text-ink-600 font-medium">
-                <span className="w-8 h-[2px] bg-text bg-ink-600"></span>
-                <span>{t("mission.tagline")}</span>
+                <h3 className="display mb-4 text-2xl text-ink-900 md:text-3xl">
+                  {t(`${card.key}.title`)}
+                </h3>
+
+                <p className="lede mb-8 text-ink-700">
+                  {t(`${card.key}.description`)}
+                </p>
+
+                {/* Tagline reads as a pull-quote, not another paragraph */}
+                <div className="mt-auto flex items-center gap-3 border-t border-ink-200 pt-6">
+                  <span className={`h-8 w-1 rounded-full ${card.tile}`} />
+                  <span className="text-sm font-semibold tracking-wide text-ink-600">
+                    {t(`${card.key}.tagline`)}
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.article>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 };
 
