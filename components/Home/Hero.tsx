@@ -12,11 +12,12 @@ import { EyebrowRule } from "@/components/reusable/Ornament";
 import Reveal, { prefersReducedMotion } from "@/components/reusable/Reveal";
 
 const STAGE = [
+  "/imgs/home/hero/picnic.jpg",
   "/imgs/home/hero/picnic2.jpg",
-  "/imgs/home/hero/5.jpg",
+  "/imgs/home/hero/4.jpg",
+  "/imgs/home/hero/9.jpg",
   "/imgs/home/hero/hero-bg-3.jpg",
   "/imgs/home/hero/workshop.jpg",
-  "/imgs/home/hero/picnic.jpg",
 ];
 
 const SLIDE_MS = 6400;

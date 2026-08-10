@@ -23,8 +23,7 @@ const Hero = () => {
       title={title}
       accentFrom={words - 1}
       lede={t("stayUpdated")}
-      image={{ src: "/imgs/about/one-year-mit.jpg" }}
-      inset={{ src: "/imgs/events/ai-cer.jpg" }}
+      image={{ src: "/imgs/events/one-year-mit-layout.jpg" }}
       actions={
         <Link href={`/${locale}/events`} className="btn btn-ink btn-sheen">
           <Megaphone className="h-4 w-4" />

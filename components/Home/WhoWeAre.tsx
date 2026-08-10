@@ -78,7 +78,7 @@ export default function WhoWeAre() {
 
             <div className="media-zoom group relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-ink-100 shadow-[0_4px_8px_rgba(18,22,15,0.06),0_28px_56px_-14px_rgba(18,22,15,0.2)]">
               <Image
-                src="/imgs/home/hero/3.jpg"
+                src="/imgs/events/one-year-mit-layout.jpg"
                 alt=""
                 fill
                 quality={76}
@@ -87,18 +87,7 @@ export default function WhoWeAre() {
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/50 via-transparent to-transparent" />
             </div>
-
-            <div className="absolute -bottom-7 -start-5 grid h-24 w-24 place-items-center rounded-full border border-ink-200 bg-paper p-3 shadow-[0_18px_36px_-14px_rgba(18,22,15,0.35)] lg:-start-9 lg:h-28 lg:w-28">
-              <Image
-                src="/imgs/home/aboutmit/mit-main-log-no-bg.png"
-                alt="MIT"
-                width={120}
-                height={120}
-                quality={85}
-                sizes="120px"
-                className="h-auto w-full object-contain"
-              />
-            </div>
+ 
 
           </Reveal>
         </div>

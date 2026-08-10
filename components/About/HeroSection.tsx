@@ -24,9 +24,12 @@ const HeroSection = () => {
       accentFrom={words - 1}
       lede={t("description")}
       image={{ src: "/imgs/about/femynso-mit.jpg" }}
-      inset={{ src: "/imgs/about/one-year-mit.jpg" }}
+      inset={{ src: "/imgs/icons/icon.jpg" }}
       actions={
-        <Link href={`/${locale}/join-mit`} className="btn btn-ink btn-sheen group">
+        <Link
+          href={`/${locale}/join-mit`}
+          className="btn btn-ink btn-sheen group"
+        >
           {tNav("join mit")}
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
         </Link>
