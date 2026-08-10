@@ -5,9 +5,10 @@ import type { BadgeData } from "@/lib/types";
 export function DetailPageBadge({ icon: Icon, text, color }: BadgeData) {
   return (
     <span
-      className={`px-3 py-1 rounded-full ${color} text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.75rem] font-semibold ${color}`}
     >
-      <Icon className="text-sm" /> {text}
+      <Icon className="h-3.5 w-3.5 shrink-0" />
+      {text}
     </span>
   );
 }

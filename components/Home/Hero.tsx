@@ -2,21 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-const MOBILE_HERO_IMAGES = [
+import RevealText from "@/components/reusable/RevealText";
+import { EyebrowRule } from "@/components/reusable/Ornament";
+import Reveal, { prefersReducedMotion } from "@/components/reusable/Reveal";
+
+const STAGE = [
   "/imgs/home/hero/picnic2.jpg",
-  "/imgs/home/aboutmit/hero-sm-bg.jpg",
+  "/imgs/home/hero/5.jpg",
+  "/imgs/home/hero/hero-bg-3.jpg",
+  "/imgs/home/hero/workshop.jpg",
   "/imgs/home/hero/picnic.jpg",
 ];
 
-const rise = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0 },
-};
+const SLIDE_MS = 6400;
 
 export default function Hero() {
   const t = useTranslations("home");
@@ -24,110 +27,195 @@ export default function Hero() {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
 
+  const [active, setActive] = useState(0);
+  const [reached, setReached] = useState(0);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  const goTo = useCallback((index: number) => {
+    setActive(index);
+    setReached((max) => (index > max ? index : max));
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const id = window.setInterval(() => {
+      setActive((i) => {
+        const next = (i + 1) % STAGE.length;
+        setReached((max) => (next > max ? next : max));
+        return next;
+      });
+    }, SLIDE_MS);
+
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    if (!window.matchMedia?.("(hover: hover) and (pointer: fine)").matches)
+      return;
+    if (prefersReducedMotion()) return;
+
+    let frame = 0;
+    let nextX = 0;
+    let nextY = 0;
+
+    const apply = () => {
+      frame = 0;
+      el.style.setProperty("--parallax-x", `${nextX}px`);
+      el.style.setProperty("--parallax-y", `${nextY}px`);
+    };
+
+    const onMove = (event: PointerEvent) => {
+      nextX = (event.clientX / window.innerWidth - 0.5) * -22;
+      nextY = (event.clientY / window.innerHeight - 0.5) * -14;
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const titleWords = t("hero.title").trim().split(/\s+/).length;
+
   return (
-    <section className="relative min-h-[88vh] w-full overflow-hidden md:min-h-[90vh]">
-      <div className="absolute inset-0 bg-ink-900" />
-
-      <div className="media-fade hidden h-full lg:block">
-        <Image
-          src="/imgs/home/hero/picnic.jpg"
-          alt=""
-          fill
-          priority
-          quality={72}
-          sizes="(max-width: 1023px) 1px, 100vw"
-          className="animate-ken-burns absolute inset-0 h-full w-full object-cover"
-        />
+    <section
+      style={{ marginTop: "calc(var(--header-height) * -1)" }}
+      className="relative min-h-[94svh] w-full overflow-hidden bg-ink-950"
+    >
+      <div
+        ref={stageRef}
+        className="absolute inset-0 scale-[1.06]"
+        style={{
+          transform:
+            "translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0) scale(1.06)",
+          transition: "transform 900ms var(--ease-out-expo)",
+        }}
+      >
+        {STAGE.map((src, index) =>
+          index > reached + 1 ? null : (
+            <div
+              key={src}
+              aria-hidden={index !== active}
+              className="absolute inset-0 transition-opacity duration-[1600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={{ opacity: index === active ? 1 : 0 }}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                priority={index === 0}
+                quality={74}
+                sizes="100vw"
+                className={`object-cover ${
+                  index === active ? "animate-ken-burns" : "scale-[1.02]"
+                }`}
+              />
+            </div>
+          )
+        )}
       </div>
 
-      <div className="absolute inset-0 flex h-full w-full flex-col lg:hidden">
-        {MOBILE_HERO_IMAGES.map((src, index) => (
-          <div key={src} className="media-fade relative w-full flex-1">
-            <Image
-              src={src}
-              alt=""
-              fill
-              priority={index === 0}
-              quality={70}
-              sizes="(min-width: 1024px) 1px, 100vw"
-              className="object-cover"
-            />
-          </div>
-        ))}
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-b from-ink-900/70 via-ink-900/35 to-ink-900/80" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_45%,rgba(16,20,15,0.55),transparent_70%)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-ink-950/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink-950/80 via-ink-950/25 to-transparent rtl:bg-gradient-to-l" />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_75%_10%,transparent,rgba(10,13,9,0.6))]" />
       <div className="grain absolute inset-0" />
 
-      <motion.div
-        initial="hidden"
-        animate="show"
-        transition={{ staggerChildren: 0.13, delayChildren: 0.15 }}
-        className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center"
-      >
-        <motion.span
-          variants={rise}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="eyebrow mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-white/90 backdrop-blur-md"
-        >
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-gold opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-gold" />
-          </span>
-          {tNav("subtitle")}
-        </motion.span>
-
-        <motion.h1
-          variants={rise}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="display max-w-4xl text-[2.6rem] leading-[1.08] sm:text-5xl md:text-6xl lg:text-7xl"
-        >
-          <span className="text-gradient-brand drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
-            {t("hero.title")}
-          </span>
-        </motion.h1>
-
-        <motion.p
-          variants={rise}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 max-w-md text-base font-medium leading-relaxed text-white/90 drop-shadow-[0_1px_12px_rgba(0,0,0,0.6)] md:max-w-xl md:text-xl"
-        >
-          {t("hero.subtitle1")}
-        </motion.p>
-
-        <motion.div
-          variants={rise}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
-        >
-          <Link
-            href={`/${locale}/join-mit`}
-            className="btn-sheen group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-brand-gold px-7 py-3.5 text-[0.95rem] font-semibold text-ink-900 shadow-[0_8px_28px_-8px_rgba(249,188,21,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-gold-dark active:translate-y-0"
+      <div className="relative mx-auto flex min-h-[94svh] max-w-7xl flex-col justify-end px-5 pb-14 pt-36 sm:px-8 md:pb-20 lg:px-12">
+        <div className="max-w-3xl">
+          <Reveal
+            as="span"
+            y={0}
+            className="eyebrow mb-7 flex items-center gap-3 text-brand-gold"
           >
-            <span className="relative z-10">{tNav("join mit")}</span>
-            <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
+            <EyebrowRule />
+            {tNav("subtitle")}
+          </Reveal>
 
-          <Link
-            href={`/${locale}/events`}
-            className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-[0.95rem] font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/20"
+          <RevealText
+            as="h1"
+            text={t("hero.title")}
+            accentFrom={titleWords - 1}
+            accentClassName="text-brand-gold"
+            delay={120}
+            className="display display-2 text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+          />
+
+          <Reveal
+            as="p"
+            y={16}
+            delay={560}
+            className="lede mt-7 max-w-lg text-white/85 drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]"
           >
-            {tNav("events")}
-          </Link>
-        </motion.div>
-      </motion.div>
+            {t("hero.subtitle1")}
+          </Reveal>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 md:block"
-      >
-        <div className="flex h-9 w-[22px] items-start justify-center rounded-full border border-white/40 p-1.5">
-          <span className="animate-scroll-cue h-1.5 w-1 rounded-full bg-white/80" />
+          <Reveal
+            y={16}
+            delay={700}
+            className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            <Link
+              href={`/${locale}/join-mit`}
+              className="btn btn-gold btn-sheen group"
+            >
+              {tNav("join mit")}
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+            </Link>
+
+            <Link
+              href={`/${locale}/events`}
+              className="btn btn-ghost-light"
+            >
+              {tNav("events")}
+            </Link>
+          </Reveal>
         </div>
-      </motion.div>
+
+        <Reveal
+          y={12}
+          delay={900}
+          className="mt-14 flex items-end justify-between gap-6 border-t border-white/15 pt-6"
+        >
+          <span className="numeral text-sm text-white/55">
+            <span className="text-white">
+              {String(active + 1).padStart(2, "0")}
+            </span>
+            <span className="mx-1.5 opacity-40">/</span>
+            {String(STAGE.length).padStart(2, "0")}
+          </span>
+
+          <div className="flex items-center gap-2">
+            {STAGE.map((src, index) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => goTo(index)}
+                aria-label={`${index + 1}`}
+                className="group h-6 py-2.5"
+              >
+                <span
+                  className={`block h-[2px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    index === active
+                      ? "w-10 bg-brand-gold"
+                      : "w-5 bg-white/30 group-hover:bg-white/60"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+
+      <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block">
+        <div className="flex h-9 w-[22px] items-start justify-center rounded-full border border-white/30 p-1.5">
+          <span className="animate-scroll-cue h-1.5 w-1 rounded-full bg-white/70" />
+        </div>
+      </div>
     </section>
   );
 }

@@ -3,35 +3,25 @@
 import { useTranslations } from "next-intl";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
-interface SocialLink {
-  name: string;
-  url: string;
-  icon: React.ReactNode;
-  bgColor: string;
-  hoverColor: string;
-}
+import Reveal from "../reusable/Reveal";
+import RevealText from "../reusable/RevealText";
+import { StarMark } from "../reusable/Ornament";
 
-const SOCIAL_LINKS: SocialLink[] = [
+const SOCIAL_LINKS = [
   {
     name: "Facebook",
     url: "https://www.facebook.com/muszlimifjusag/",
-    icon: <FaFacebook className="w-5 h-5" />,
-    bgColor: "bg-[#1877F2]",
-    hoverColor: "hover:brightness-110",
+    icon: <FaFacebook className="h-4 w-4" />,
   },
   {
     name: "Instagram",
     url: "https://www.instagram.com/muszlimifjusag/",
-    icon: <FaInstagram className="w-5 h-5" />,
-    bgColor: "bg-[#E1306C]",
-    hoverColor: "hover:brightness-110",
+    icon: <FaInstagram className="h-4 w-4" />,
   },
   {
     name: "YouTube",
     url: "https://www.youtube.com/@muszlimifjusagitarsasag/",
-    icon: <FaYoutube className="w-5 h-5" />,
-    bgColor: "bg-[#FF0000]",
-    hoverColor: "hover:brightness-110",
+    icon: <FaYoutube className="h-4 w-4" />,
   },
 ];
 
@@ -39,29 +29,41 @@ export default function ArchiveNote() {
   const t = useTranslations("highlights");
 
   return (
-    <div className="px-4 md:px-10 text-center max-w-4xl mx-auto">
-      <div className="surface rounded-3xl p-8 md:p-10">
-        <h3 className="display mb-4 text-xl text-ink-900 md:text-2xl">
-          {t("archiveTitle")}
-        </h3>
-        <p className="lede mx-auto mb-8 max-w-xl">
-          {t("archiveDescription")}
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          {SOCIAL_LINKS.map((link) => (
-            <a
-              key={link.name}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_16px_-6px_rgba(16,20,15,0.5)] transition-all duration-300 hover:-translate-y-0.5 ${link.bgColor} ${link.hoverColor}`}
-            >
-              {link.icon}
-              <span>{link.name}</span>
-            </a>
-          ))}
-        </div>
+    <Reveal
+      y={20}
+      className="surface relative mx-auto flex max-w-3xl flex-col items-center overflow-hidden rounded-[1.75rem] px-8 py-12 text-center md:px-12 md:py-14"
+    >
+      <div className="pattern-star mask-radial pointer-events-none absolute -end-16 -top-16 h-56 w-56 opacity-[0.06]" />
+
+      <span className="h-9 w-9 text-brand-gold/70">
+        <StarMark />
+      </span>
+
+      <RevealText
+        as="h3"
+        text={t("archiveTitle")}
+        delay={80}
+        className="display display-6 mt-7 text-ink-900"
+      />
+
+      <p className="prose-body mx-auto mt-5 max-w-lg">
+        {t("archiveDescription")}
+      </p>
+
+      <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+        {SOCIAL_LINKS.map((link) => (
+          <a
+            key={link.name}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-paper px-5 py-2.5 text-[0.82rem] font-semibold text-ink-700 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-ink-900 hover:bg-ink-900 hover:text-paper"
+          >
+            {link.icon}
+            {link.name}
+          </a>
+        ))}
       </div>
-    </div>
+    </Reveal>
   );
 }

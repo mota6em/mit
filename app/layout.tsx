@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import { Cairo, Inter } from "next/font/google";
+import { Cairo, Fraunces, Inter } from "next/font/google";
 
 import JsonLd from "@/components/seo/JsonLd";
 import { DEFAULT_LOCALE, LOCALE_META } from "@/lib/i18n";
@@ -15,14 +15,15 @@ import {
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-inter",
+  variable: "--font-body",
   display: "swap",
 });
 
-const cairo = Cairo({
+const fraunces = Fraunces({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-cairo",
+  variable: "--font-display",
   display: "swap",
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
 const cairoArabic = Cairo({
@@ -62,8 +63,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9faf6" },
-    { media: "(prefers-color-scheme: dark)", color: "#10140f" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfaf6" },
+    { media: "(prefers-color-scheme: dark)", color: "#12160f" },
   ],
   colorScheme: "light",
 };
@@ -77,8 +78,15 @@ export default function RootLayout({
     <html
       lang={DEFAULT_LOCALE}
       dir={LOCALE_META[DEFAULT_LOCALE].dir}
-      className={`${inter.variable} ${cairo.variable} ${cairoArabic.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${cairoArabic.variable}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("js")`,
+          }}
+        />
+      </head>
       <body>
         <JsonLd data={graph([organizationJsonLd(), websiteJsonLd()])} />
         {children}

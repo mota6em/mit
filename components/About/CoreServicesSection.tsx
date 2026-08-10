@@ -1,7 +1,6 @@
 "use client";
 import { BookOpen, Users, Megaphone, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { RiServiceLine } from "react-icons/ri";
 import SectionHeader from "../reusable/SectionHeader";
 import Section from "../reusable/Section";
 import Reveal from "../reusable/Reveal";
@@ -24,9 +23,9 @@ const CoreServicesSection = () => {
     <Section tone="tinted" width="wide" deferPaint>
       <SectionHeader
         title={t("title")}
-        icon={<RiServiceLine className="h-7 w-7" />}
-        className="mb-14"
-        underLine
+        topText={t("label")}
+        align="start"
+        className="mb-14 max-w-2xl"
       />
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">

@@ -1,6 +1,7 @@
 import EventsSection from "@/components/Events/EventsSection";
 import Hero from "@/components/Events/Hero";
 import DataPreload from "@/components/providers/DataPreload";
+import JoinCtaBand from "@/components/reusable/JoinCtaBand";
 import JsonLd from "@/components/seo/JsonLd";
 import { getAllEvents } from "@/lib/eventService";
 import { localizedField, toLocale } from "@/lib/i18n";
@@ -43,13 +44,14 @@ export default async function EventsPage({ params }: Props) {
       />
       <div className="flex flex-col">
         <Hero />
-        <div className="border-t border-ink-200 bg-ink-50">
-          <EventsSection type="upcoming" searchable />
+        <div className="border-y border-ink-200 bg-paper-tint">
+          <EventsSection type="upcoming" />
           <div className="mx-auto max-w-6xl px-6">
             <div className="rule-fade" />
           </div>
           <EventsSection type="past" searchable />
         </div>
+        <JoinCtaBand />
       </div>
     </DataPreload>
   );

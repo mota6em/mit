@@ -32,8 +32,8 @@ const VisionMissionSection = () => {
       <SectionHeader
         title={t("title")}
         topText={t("coreFoundations")}
-        className="mb-14"
-        underLine
+        align="start"
+        className="mb-14 max-w-2xl"
       />
 
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
@@ -52,14 +52,14 @@ const VisionMissionSection = () => {
                 className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl ${card.glow}`}
               />
 
-              <div className="relative z-10 flex flex-col">
+              <div className="relative z-10 flex flex-1 flex-col">
                 <div
                   className={`mb-7 grid h-14 w-14 place-items-center rounded-2xl ${card.tile} ${card.accent}`}
                 >
                   <Icon className="h-7 w-7" />
                 </div>
 
-                <h3 className="display mb-4 text-2xl text-ink-900 md:text-3xl">
+                <h3 className="display display-5 mb-4 text-ink-900">
                   {t(`${card.key}.title`)}
                 </h3>
 

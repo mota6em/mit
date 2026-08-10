@@ -1,56 +1,60 @@
-// components/Events/EventMap.tsx
-import { HiLocationMarker } from "react-icons/hi";
+import { MapPin } from "lucide-react";
+
+import { mapSource, placeLabel } from "@/lib/eventTime";
 
 interface EventMapProps {
   location?: string;
 }
 
 export function EventMap({ location }: EventMapProps) {
-  if (!location) return null;
+  const source = mapSource(location);
+  const place = placeLabel(location);
 
-  let mapUrl = location.trim();
+  if (!source && !place) return null;
 
-  // Extract URL if the user pasted a full <iframe> tag
-  const iframeRegex = /src=["']([^"']+)["']/;
-  const match = mapUrl.match(iframeRegex);
-  if (match && match[1]) {
-    mapUrl = match[1];
+  const isEmbed =
+    !!source &&
+    (source.includes("google.com/maps/embed") ||
+      source.includes("maps.google.com"));
+
+  if (isEmbed) {
+    return (
+      <div className="surface relative overflow-hidden rounded-[1.5rem]">
+        <span className="pointer-events-none absolute start-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-white text-brand-gold-dark shadow-[0_4px_12px_rgba(18,22,15,0.18)]">
+          <MapPin className="h-5 w-5" />
+        </span>
+        <iframe
+          src={source}
+          title="Location"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="block h-[22rem] w-full md:h-[26rem]"
+        />
+      </div>
+    );
   }
 
-  // Identify if it's an embeddable Google Maps URL
-  const isEmbed =
-    mapUrl.includes("google.com/maps/embed") ||
-    mapUrl.includes("maps.google.com");
-
   return (
-    <div className="mt-12 space-y-4">
-      <h3 className="text-xl font-bold flex items-center gap-2">
-        <HiLocationMarker className="text-red-500 w-6 h-6" /> Location
-      </h3>
+    <div className="surface flex items-center gap-3 rounded-[1.5rem] px-6 py-5">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-gold-soft text-brand-gold-dark">
+        <MapPin className="h-5 w-5" />
+      </span>
 
-      {isEmbed ? (
-        <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-sm border border-border">
-          <iframe
-            src={mapUrl}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
+      {source ? (
+        <a
+          href={source}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-underline font-semibold text-ink-800 transition-colors hover:text-brand-green-dark"
+        >
+          {place ?? source}
+        </a>
       ) : (
-        <div className="p-6 bg-secondary rounded-2xl border border-border">
-          <a
-            href={mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary font-bold hover:underline text-lg"
-          >
-            Open in Google Maps <HiLocationMarker className="w-5 h-5" />
-          </a>
-        </div>
+        <span className="font-semibold text-ink-800">{place}</span>
       )}
     </div>
   );

@@ -23,7 +23,11 @@ function rememberLocale(code: string) {
   }
 }
 
-export default function LanguageSwitch() {
+export default function LanguageSwitch({
+  tone = "ink",
+}: {
+  tone?: "ink" | "light";
+}) {
   const pathname = usePathname();
   const t = useTranslations("common");
   const [open, setOpen] = useState(false);
@@ -43,16 +47,26 @@ export default function LanguageSwitch() {
         <button
           type="button"
           aria-label={t("changeLanguage")}
-          className="group inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-ink-200 bg-white py-1.5 pe-2 ps-2.5 text-ink-600 transition-all duration-300 hover:border-ink-300 hover:text-ink-900"
+          className={`group inline-flex cursor-pointer items-center gap-1.5 rounded-full border py-1.5 pe-2 ps-2.5 transition-all duration-500 ${
+            tone === "light"
+              ? "border-white/25 bg-white/10 text-white/90 backdrop-blur-md hover:border-white/50"
+              : "border-ink-200 bg-white text-ink-600 hover:border-ink-300 hover:text-ink-900"
+          }`}
         >
-          <Globe className="h-4 w-4 text-ink-400 transition-colors duration-300 group-hover:text-brand-green" />
+          <Globe
+            className={`h-4 w-4 transition-colors duration-300 ${
+              tone === "light"
+                ? "text-white/70"
+                : "text-ink-400 group-hover:text-brand-green"
+            }`}
+          />
           <span className="text-xs font-bold tracking-wider">
             {LOCALE_META[currentLocale].shortLabel}
           </span>
           <ChevronDown
-            className={`h-3.5 w-3.5 text-ink-400 transition-transform duration-300 ${
-              open ? "rotate-180" : ""
-            }`}
+            className={`h-3.5 w-3.5 transition-transform duration-300 ${
+              tone === "light" ? "text-white/60" : "text-ink-400"
+            } ${open ? "rotate-180" : ""}`}
           />
         </button>
       </DropdownMenuTrigger>

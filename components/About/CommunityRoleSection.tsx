@@ -1,7 +1,6 @@
 "use client";
 import { Building2, Heart, Link as LinkIcon, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { RiUserCommunityFill } from "react-icons/ri";
 import SectionHeader from "../reusable/SectionHeader";
 import Section from "../reusable/Section";
 import Reveal from "../reusable/Reveal";
@@ -20,9 +19,8 @@ const CommunityRoleSection = () => {
     <Section tone="plain" width="default" deferPaint>
       <SectionHeader
         title={t("title")}
-        icon={<RiUserCommunityFill className="h-7 w-7" />}
-        className="mb-14"
-        underLine
+        align="start"
+        className="mb-14 max-w-2xl"
       />
 
       {/**

@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import LanguageSwitch from "./LanguageSwitch";
 import ScrollProgress from "@/components/reusable/ScrollProgress";
+import { StarMark } from "@/components/reusable/Ornament";
 import { isRtl, localeFromPathname } from "@/lib/i18n";
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
@@ -26,12 +27,15 @@ export default function NavBar() {
   const locale = localeFromPathname(pathname);
   const rtl = isRtl(locale);
 
+  const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+  const overlay = isHome && !scrolled;
+
   useEffect(() => {
     let frame = 0;
 
     const read = () => {
       frame = 0;
-      setScrolled(window.scrollY > 12);
+      setScrolled(window.scrollY > 24);
     };
 
     const onScroll = () => {
@@ -89,33 +93,41 @@ export default function NavBar() {
 
   return (
     <header
-      className={`glass sticky top-0 z-50 transition-[padding,box-shadow,background-color] duration-500 ${
-        scrolled
-          ? "shadow-[0_1px_0_rgba(16,20,15,0.08),0_8px_24px_-16px_rgba(16,20,15,0.25)]"
-          : ""
+      className={`sticky top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
+        overlay
+          ? "bg-transparent"
+          : "glass shadow-[0_1px_0_rgba(18,22,15,0.07),0_8px_24px_-18px_rgba(18,22,15,0.3)]"
       }`}
     >
-      <div className="h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
+      <div
+        className={`h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky transition-opacity duration-500 ${
+          overlay ? "opacity-0" : "opacity-100"
+        }`}
+      />
 
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[padding] duration-500 md:px-8 ${
-          scrolled ? "py-1" : "py-2"
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[height] duration-500 md:px-8 ${
+          scrolled ? "h-[52px]" : "h-[61px]"
         }`}
       >
         <Link
           href={`/${locale}`}
-          className="group flex items-center"
+          className="group relative flex items-center"
           aria-label={`MIT — ${tCommon("home")}`}
         >
           <Image
-            src="/imgs/icons/mit-nav-logo.png"
+            src={
+              overlay
+                ? "/imgs/icons/mit-nav-logo-light.png"
+                : "/imgs/icons/mit-nav-logo.png"
+            }
             alt="MIT"
             width={120}
-            height={40}
+            height={43}
             priority
             sizes="120px"
-            className={`object-contain transition-[height,transform] duration-500 group-hover:scale-[1.03] ${
-              scrolled ? "h-9 w-auto" : "h-11 w-auto"
+            className={`w-auto object-contain transition-[height,transform] duration-500 group-hover:scale-[1.03] ${
+              scrolled ? "h-8" : "h-10"
             }`}
           />
         </Link>
@@ -130,8 +142,14 @@ export default function NavBar() {
                 href={link.href}
                 data-active={isActive}
                 aria-current={isActive ? "page" : undefined}
-                className={`link-underline relative rounded-full px-3 py-2 text-[0.9rem] font-medium tracking-wide transition-colors duration-300 ${
-                  isActive ? "text-ink-900" : "text-ink-600 hover:text-ink-900"
+                className={`link-underline relative rounded-full px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors duration-500 ${
+                  overlay
+                    ? isActive
+                      ? "text-white"
+                      : "text-white/70 hover:text-white"
+                    : isActive
+                    ? "text-ink-900"
+                    : "text-ink-600 hover:text-ink-900"
                 }`}
               >
                 <span className="inline-flex items-center gap-1">
@@ -167,7 +185,7 @@ export default function NavBar() {
                       transition={{ duration: 0.22, ease: EASE_OUT_EXPO }}
                       className="absolute start-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 rtl:translate-x-1/2"
                     >
-                      <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white p-1.5 shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)]">
+                      <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white p-1.5 shadow-[0_4px_8px_rgba(18,22,15,0.06),0_24px_48px_-12px_rgba(18,22,15,0.18)]">
                         {eventsMenu.map((item) => (
                           <Link
                             key={item.href}
@@ -190,17 +208,25 @@ export default function NavBar() {
             );
           })}
 
-          <span className="mx-3 h-5 w-px bg-ink-200" />
-          <LanguageSwitch />
+          <span
+            className={`mx-3 h-5 w-px transition-colors duration-500 ${
+              overlay ? "bg-white/25" : "bg-ink-200"
+            }`}
+          />
+          <LanguageSwitch tone={overlay ? "light" : "ink"} />
         </nav>
 
-        <div className="flex items-center gap-1 md:hidden">
-          <LanguageSwitch />
+        <div className="flex items-center gap-1.5 md:hidden">
+          <LanguageSwitch tone={overlay ? "light" : "ink"} />
           <button
             onClick={() => setIsMenuOpen(true)}
             aria-label={tCommon("openMenu")}
             aria-expanded={isMenuOpen}
-            className="rounded-full p-2 text-ink-700 transition-colors hover:bg-ink-100 active:scale-95"
+            className={`rounded-full p-2 transition-colors duration-500 active:scale-95 ${
+              overlay
+                ? "text-white hover:bg-white/15"
+                : "text-ink-700 hover:bg-ink-100"
+            }`}
           >
             <Menu className="h-6 w-6" />
           </button>
@@ -213,25 +239,27 @@ export default function NavBar() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={() => setIsMenuOpen(false)}
-                  className="fixed inset-0 z-50 bg-ink-900/30 backdrop-blur-sm"
+                  className="fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-sm"
                 />
 
                 <motion.div
                   initial={{ x: rtl ? "-100%" : "100%" }}
                   animate={{ x: 0 }}
                   exit={{ x: rtl ? "-100%" : "100%" }}
-                  transition={{ type: "spring", damping: 28, stiffness: 260 }}
-                  className="fixed top-0 z-51 flex h-full w-[82vw] max-w-xs flex-col bg-white shadow-2xl ltr:right-0 rtl:left-0"
+                  transition={{ type: "spring", damping: 30, stiffness: 280 }}
+                  className="fixed top-0 z-51 flex h-full w-[84vw] max-w-xs flex-col overflow-hidden bg-paper shadow-2xl ltr:right-0 rtl:left-0"
                 >
-                  <div className="h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
+                  <div className="h-[3px] w-full shrink-0 bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
 
-                  <div className="flex flex-col p-6">
-                    <div className="mb-8 flex items-center justify-between">
+                  <div className="pattern-star mask-radial pointer-events-none absolute -end-16 top-16 h-56 w-56 opacity-[0.05]" />
+
+                  <div className="relative flex flex-col p-6">
+                    <div className="mb-9 flex items-center justify-between">
                       <Image
                         src="/imgs/icons/mit-nav-logo.png"
                         alt="MIT"
                         width={100}
-                        height={34}
+                        height={36}
                         className="h-9 w-auto object-contain"
                       />
                       <button
@@ -260,10 +288,10 @@ export default function NavBar() {
                               href={link.href}
                               aria-current={isActive ? "page" : undefined}
                               onClick={() => setIsMenuOpen(false)}
-                              className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg font-medium transition-all duration-300 ${
+                              className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-[1.05rem] font-semibold transition-all duration-300 ${
                                 isActive
                                   ? "bg-brand-gold-soft text-ink-900"
-                                  : "text-ink-600 hover:bg-ink-50 hover:text-ink-900"
+                                  : "text-ink-600 hover:bg-ink-100 hover:text-ink-900"
                               }`}
                             >
                               <span>{link.label}</span>
@@ -281,11 +309,16 @@ export default function NavBar() {
                     </div>
                   </div>
 
-                  <div className="mt-auto p-6">
-                    <div className="rule-fade mb-5" />
-                    <p className="text-center text-xs tracking-wide text-ink-400">
-                      © {new Date().getFullYear()} MIT
-                    </p>
+                  <div className="relative mt-auto p-6">
+                    <div className="rule-fade mb-6" />
+                    <div className="flex items-center justify-between">
+                      <span className="h-5 w-5 text-brand-gold/60">
+                        <StarMark />
+                      </span>
+                      <p className="text-xs tracking-wide text-ink-400">
+                        © {new Date().getFullYear()} MIT
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               </>

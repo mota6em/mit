@@ -86,6 +86,7 @@
   "home": {
     "statistics": {
       "title": "Növekvő Hatásunk",
+      "eyebrow": "Számokban",
       "socialLabel": "Közösségi média követők",
       "yearsLabel": "Év a közösségért",
       "eventsLabel": "Sikeres esemény"
@@ -94,6 +95,18 @@
       "title": "Muszlim Ifjúsági Társaság",
       "subtitle1": "Események, workshopok és közösségi programok muszlimoknak Magyarországon"
     },
+    "ayah": {
+      "translation": "Segítsétek egymást a jóságban és az istenfélelemben.",
+      "reference": "Korán 5:2"
+    },
+    "values": [
+      "Őszinteség",
+      "Közösség",
+      "Kiválóság",
+      "Ihszán",
+      "Önkéntesség",
+      "Testvériség"
+    ],
     "whoWeAre": {
       "title": "Kik Vagyunk",
       "description": {
@@ -115,7 +128,8 @@
       "search": "Események keresése",
       "searchEmpty": "Nincs a keresésnek megfelelő esemény.",
       "clearSearch": "Keresés törlése",
-      "resultCount": "esemény"
+      "resultCount": "esemény",
+      "viewEvent": "Esemény megtekintése"
     }
   },
   "joinMIT": {
@@ -258,6 +272,13 @@
       "joinStats": "Csatlakozz a következő eseményen!",
       "badgeJoin": "Tarts Velünk",
       "badgeWeekly": "Heti Összejövetelek"
+    },
+    "countdown": {
+      "eyebrow": "Következő alkalom",
+      "live": "Most zajlik",
+      "days": "nap",
+      "hours": "óra",
+      "minutes": "perc"
     },
     "eventDetails": {
       "back": "Vissza az eseményekhez",

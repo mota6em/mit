@@ -2,6 +2,7 @@ import HighlightsSection from "@/components/Highlights/HighlightsSection";
 import Hero from "@/components/Highlights/Hero";
 import ArchiveNote from "@/components/Highlights/ArchiveNote";
 import DataPreload from "@/components/providers/DataPreload";
+import JoinCtaBand from "@/components/reusable/JoinCtaBand";
 import JsonLd from "@/components/seo/JsonLd";
 import { getAllHighlights } from "@/lib/highlightService";
 import { localizedField, toLocale } from "@/lib/i18n";
@@ -46,12 +47,13 @@ export default async function HighlightsPage({ params }: Props) {
       />
       <div className="flex flex-col">
         <Hero />
-        <div className="border-t border-ink-200 bg-ink-50">
+        <div className="border-y border-ink-200 bg-paper-tint">
           <HighlightsSection />
-          <div className="mx-auto max-w-6xl px-6 pb-16 md:pb-20">
+          <div className="mx-auto max-w-6xl px-5 pb-20 sm:px-8 md:pb-28 lg:px-12">
             <ArchiveNote />
           </div>
         </div>
+        <JoinCtaBand />
       </div>
     </DataPreload>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, memo } from "react";
 import { useParams } from "next/navigation";
+
 import { useCounter } from "@/app/hooks/useCounter";
 import { STATS_CONFIG } from "@/data/constants/statistics";
 import Reveal from "@/components/reusable/Reveal";
@@ -44,24 +45,26 @@ export const StatItem = memo(({ stat, label, index = 0 }: StatItemProps) => {
 
   return (
     <Reveal
-      y={28}
-      delay={index * 120}
-      className="group relative flex flex-col items-center px-4 text-center"
+      y={26}
+      delay={index * 130}
+      className="group relative flex flex-col items-center px-4 text-center md:items-start md:text-start"
     >
-      <div
-        className={`mb-6 grid h-16 w-16 place-items-center rounded-2xl border border-ink-200 bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1.5 group-hover:shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)] ${stat.color}`}
-      >
-        <stat.icon className="text-2xl" aria-hidden="true" />
-      </div>
+      <span className="mb-7 h-[3px] w-12 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold/0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-20" />
 
       <span
         ref={ref}
-        className="display text-5xl tabular-nums text-ink-900 md:text-6xl"
+        className="numeral display-1 block leading-none text-ink-900"
       >
         {display}
       </span>
 
-      <p className="eyebrow mt-3 text-ink-400">{label}</p>
+      <span className="mt-6 flex items-center gap-2.5 text-ink-500">
+        <stat.icon
+          className={`text-base transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 ${stat.color}`}
+          aria-hidden="true"
+        />
+        <span className="eyebrow">{label}</span>
+      </span>
     </Reveal>
   );
 });

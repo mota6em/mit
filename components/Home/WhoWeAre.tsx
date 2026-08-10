@@ -3,81 +3,112 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import ViewMoreButton from "../reusable/ViewMoreButton";
+
 import Reveal from "../reusable/Reveal";
+import RevealText from "../reusable/RevealText";
+import ViewMoreButton from "../reusable/ViewMoreButton";
+import Marquee from "../reusable/Marquee";
+import { EyebrowRule } from "../reusable/Ornament";
 
 export default function WhoWeAre() {
   const t = useTranslations("home");
   const params = useParams();
   const locale = params.locale as string;
 
+  const rawValues = t.raw("values");
+  const values: string[] = Array.isArray(rawValues) ? rawValues : [];
+
   return (
-    <section className="defer-paint relative overflow-hidden px-6 py-20 md:px-12 md:py-28 lg:px-20">
-      {/* Faint tilework wash, clipped to the top-right corner */}
-      <div className="pattern-geo pointer-events-none absolute -right-20 -top-20 h-80 w-80 opacity-[0.045] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
+    <>
+      <section className="defer-paint relative overflow-hidden bg-paper px-5 py-20 sm:px-8 md:py-28 lg:px-12">
+        <div className="pattern-star mask-radial pointer-events-none absolute -end-24 -top-24 h-80 w-80 opacity-[0.05]" />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-24">
-        {/** * Content Section */}
-        <Reveal
-          y={32}
-          className="order-2 flex flex-col text-center lg:order-1 lg:text-start"
-        >
-          <span className="eyebrow mb-4 inline-flex items-center justify-center gap-2 text-brand-green-dark lg:justify-start">
-            <span className="h-px w-6 bg-brand-gold" />
-            MIT
-          </span>
+        <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
+          <div className="order-2 flex flex-col lg:order-1">
+            <Reveal
+              as="span"
+              y={0}
+              className="eyebrow mb-6 inline-flex items-center gap-3 text-brand-green-dark"
+            >
+              <EyebrowRule />
+              MIT
+            </Reveal>
 
-          <h2 className="display text-[2rem] text-ink-900 sm:text-4xl md:text-[2.75rem]">
-            {t("whoWeAre.title")}
-            <span className="text-brand-gold">{"?"}</span>
-          </h2>
-
-          <div className="mt-7 space-y-5">
-            {/* Lead paragraph gets an accent rule to anchor the column */}
-            <p className="lede relative text-ink-700 lg:border-s-2 lg:border-brand-gold lg:ps-6">
-              {t("whoWeAre.description.intro")}
-            </p>
-            <p className="lede lg:ps-6">{t("whoWeAre.description.mission")}</p>
-          </div>
-
-          <div className="mt-10 flex justify-center lg:justify-start">
-            <ViewMoreButton
-              href={`/${locale}/about`}
-              label={t("whoWeAre.learnMore")}
-              variant="inline"
+            <RevealText
+              as="h2"
+              text={t("whoWeAre.title")}
+              delay={80}
+              className="display display-4 text-ink-900"
             />
+
+            <div className="relative mt-8 ps-6">
+              <span className="absolute inset-y-1 start-0 w-[2px] rounded-full bg-gradient-to-b from-brand-gold via-brand-gold/60 to-transparent" />
+              <Reveal as="p" y={16} delay={220} className="lede text-ink-700">
+                {t("whoWeAre.description.intro")}
+              </Reveal>
+              <Reveal
+                as="p"
+                y={16}
+                delay={320}
+                className="prose-body mt-5"
+              >
+                {t("whoWeAre.description.mission")}
+              </Reveal>
+            </div>
+
+            <Reveal y={16} delay={420} className="mt-10">
+              <ViewMoreButton
+                href={`/${locale}/about`}
+                label={t("whoWeAre.learnMore")}
+                variant="inline"
+              />
+            </Reveal>
           </div>
-        </Reveal>
 
-        {/** * Visual Assets Section */}
-        <Reveal
-          y={0}
-          scale={0.94}
-          delay={120}
-          className="order-1 mx-auto w-full max-w-md lg:order-2"
-        >
-          <div className="relative">
-            {/**
-             * Brand-colored ambient wash. This was three separately animated
-             * 256px blurred circles; a blur that large is re-rasterized on
-             * every frame it moves, and three of them ran forever whether or
-             * not the section was on screen. A single static gradient reads
-             * the same at a fraction of the cost.
-             */}
-            <div className="pointer-events-none absolute inset-0 -m-10 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(0,173,239,0.20),transparent_55%),radial-gradient(circle_at_75%_70%,rgba(45,155,74,0.20),transparent_55%),radial-gradient(circle_at_55%_45%,rgba(249,188,21,0.22),transparent_60%)] blur-2xl" />
-
-            <Image
-              src="/imgs/home/aboutmit/mit-main-log-no-bg.png"
-              alt="MIT Visual"
-              width={900}
-              height={900}
-              sizes="(max-width: 1024px) 90vw, 448px"
-              quality={80}
-              className="relative z-10 h-auto w-full drop-shadow-[0_20px_40px_rgba(16,20,15,0.15)]"
+          <Reveal
+            y={24}
+            scale={0.97}
+            delay={160}
+            className="relative order-1 mx-auto w-full max-w-md lg:order-2"
+          >
+            <span
+              aria-hidden="true"
+              className="absolute -inset-4 rounded-[2rem] border border-brand-green/25 md:-inset-6"
             />
-          </div>
-        </Reveal>
-      </div>
-    </section>
+
+            <div className="media-zoom group relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-ink-100 shadow-[0_4px_8px_rgba(18,22,15,0.06),0_28px_56px_-14px_rgba(18,22,15,0.2)]">
+              <Image
+                src="/imgs/home/hero/3.jpg"
+                alt=""
+                fill
+                quality={76}
+                sizes="(max-width: 1024px) 92vw, 440px"
+                className="object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/50 via-transparent to-transparent" />
+            </div>
+
+            <div className="absolute -bottom-7 -start-5 grid h-24 w-24 place-items-center rounded-full border border-ink-200 bg-paper p-3 shadow-[0_18px_36px_-14px_rgba(18,22,15,0.35)] lg:-start-9 lg:h-28 lg:w-28">
+              <Image
+                src="/imgs/home/aboutmit/mit-main-log-no-bg.png"
+                alt="MIT"
+                width={120}
+                height={120}
+                quality={85}
+                sizes="120px"
+                className="h-auto w-full object-contain"
+              />
+            </div>
+
+          </Reveal>
+        </div>
+      </section>
+
+      {values.length > 0 && (
+        <div className="relative overflow-hidden border-y border-ink-200 bg-paper-tint py-6">
+          <Marquee items={values} duration={46} />
+        </div>
+      )}
+    </>
   );
 }

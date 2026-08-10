@@ -1,5 +1,4 @@
 import type React from "react";
-import type { ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
 
 export interface ApiEvent {
@@ -33,6 +32,8 @@ export interface EventDisplayData extends ApiEvent {
   displayDesc: string;
   displayNote?: string;
   displayDate: string;
+  displayDay?: string;
+  displayMonth?: string;
   eventId: string;
 }
 
@@ -107,23 +108,6 @@ export interface FeaturedAnnouncementProps {
   locale: string;
 }
 
-export interface HighlightBadgeProps {
-  type: "announcement" | "date";
-  text: string;
-}
-
-export interface HighlightContentProps {
-  title: string;
-  description: string;
-  ctaLabel: string;
-  children?: ReactNode;
-}
-
-export interface HighlightImageProps {
-  images?: string[];
-  title: string;
-}
-
 export interface GalleryConfig {
   dragMultiplier: number;
   mobileBreakpoint: number;
@@ -169,10 +153,6 @@ export interface DotsProps {
 export interface ImageCounterProps {
   current: number;
   total: number;
-}
-
-export interface StackedPreviewProps {
-  images: string[];
 }
 
 export interface HighlightListProps {

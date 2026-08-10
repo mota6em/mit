@@ -50,7 +50,7 @@ function generateEventBadges(event: ApiEvent, locale: Locale): BadgeData[] {
   const note = localizedFieldOptional(event, "note", locale);
 
   if (note) {
-    badges.push({ icon: CgDanger, text: note, color: "bg-amber-500" });
+    badges.push({ icon: CgDanger, text: note, color: "border-brand-gold/35 bg-brand-gold-soft text-brand-gold-dark" });
   }
 
   if (!event.isRecurring && event.date) {
@@ -60,11 +60,11 @@ function generateEventBadges(event: ApiEvent, locale: Locale): BadgeData[] {
       day: "numeric",
     }).format(new Date(event.date));
 
-    badges.push({ icon: HiClock, text: dateFormatted, color: "bg-green-500" });
+    badges.push({ icon: HiClock, text: dateFormatted, color: "border-brand-green/30 bg-brand-green-soft text-brand-green-dark" });
   }
 
   if (event.time) {
-    badges.push({ icon: HiClock, text: event.time, color: "bg-blue-500" });
+    badges.push({ icon: HiClock, text: event.time, color: "border-brand-sky/30 bg-brand-sky-soft text-brand-sky" });
   }
 
   if (event.isRecurring && event.recurringDays?.length) {
@@ -72,7 +72,7 @@ function generateEventBadges(event: ApiEvent, locale: Locale): BadgeData[] {
       .map((day: string) => dayMap[day]?.[locale] || day)
       .join(", ");
 
-    badges.push({ icon: HiRefresh, text: daysText, color: "bg-indigo-500" });
+    badges.push({ icon: HiRefresh, text: daysText, color: "border-ink-200 bg-ink-100 text-ink-600" });
   }
 
   return badges;

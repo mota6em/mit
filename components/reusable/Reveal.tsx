@@ -2,16 +2,19 @@
 
 import { useEffect, useRef, type ElementType, type ReactNode } from "react";
 
-/**
- * A single IntersectionObserver shared by every `<Reveal>` on the page.
- *
- * The previous approach mounted a Framer Motion `whileInView` element per card
- * and per heading; each one ran its own observer plus a JS-driven animation
- * loop, and several animated `filter: blur()`, which forces a full repaint of
- * the element on every frame. Here the observer's only job is to flip an
- * attribute — the transition itself is CSS, and it runs on the compositor.
- */
+const REVEAL_ATTRS = [
+  "data-reveal",
+  "data-reveal-rule",
+  "data-reveal-words",
+] as const;
+
 let observer: IntersectionObserver | null = null;
+
+function markIn(el: HTMLElement) {
+  for (const attr of REVEAL_ATTRS) {
+    if (el.hasAttribute(attr)) el.setAttribute(attr, "in");
+  }
+}
 
 function getObserver() {
   if (observer || typeof window === "undefined") return observer;
@@ -20,37 +23,65 @@ function getObserver() {
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        const el = entry.target as HTMLElement;
-        // Reveals play once — re-animating on every scroll-by reads as noise.
-        el.setAttribute(
-          el.hasAttribute("data-reveal-rule") ? "data-reveal-rule" : "data-reveal",
-          "in"
-        );
-        observer?.unobserve(el);
+        markIn(entry.target as HTMLElement);
+        observer?.unobserve(entry.target);
       }
     },
-    // Start slightly before the element is on screen so the motion finishes
-    // as the reader arrives at it rather than after.
     { rootMargin: "0px 0px -12% 0px", threshold: 0.01 }
   );
 
   return observer;
 }
 
+export function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true
+  );
+}
+
+let sweepTimer: ReturnType<typeof setTimeout> | null = null;
+
+function scheduleSweep() {
+  if (sweepTimer) clearTimeout(sweepTimer);
+
+  sweepTimer = setTimeout(() => {
+    sweepTimer = null;
+    const pending = document.querySelectorAll<HTMLElement>(
+      '[data-reveal=""],[data-reveal-rule=""],[data-reveal-words=""]'
+    );
+
+    for (const el of pending) {
+      if (el.getBoundingClientRect().top < window.innerHeight * 1.25) {
+        markIn(el);
+      }
+    }
+  }, 1600);
+}
+
+export function observeReveal(el: HTMLElement | null) {
+  if (!el) return () => {};
+
+  if (typeof IntersectionObserver === "undefined" || prefersReducedMotion()) {
+    markIn(el);
+    return () => {};
+  }
+
+  const io = getObserver();
+  io?.observe(el);
+  scheduleSweep();
+
+  return () => io?.unobserve(el);
+}
+
 type RevealProps = {
   children?: ReactNode;
-  /** Element to render. Use the semantically correct tag, not always a div. */
   as?: ElementType;
   className?: string;
-  /** Stagger, in milliseconds — pass `index * 80` for a list. */
   delay?: number;
-  /** Vertical travel. `0` gives a pure fade. */
   y?: number;
-  /** Horizontal travel, for side-entering columns. */
   x?: number;
-  /** Starting scale, for imagery that should settle rather than slide. */
   scale?: number;
-  /** Renders as a horizontal wipe instead of a fade — for accent rules. */
   variant?: "fade" | "rule";
   style?: React.CSSProperties;
 } & Record<string, unknown>;
@@ -69,26 +100,7 @@ export default function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    // No observer support, or reduced motion: show the content immediately.
-    if (
-      typeof IntersectionObserver === "undefined" ||
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    ) {
-      el.setAttribute(
-        variant === "rule" ? "data-reveal-rule" : "data-reveal",
-        "in"
-      );
-      return;
-    }
-
-    const io = getObserver();
-    io?.observe(el);
-    return () => io?.unobserve(el);
-  }, [variant]);
+  useEffect(() => observeReveal(ref.current), []);
 
   const attr =
     variant === "rule" ? { "data-reveal-rule": "" } : { "data-reveal": "" };

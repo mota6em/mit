@@ -47,20 +47,29 @@ export function useEventsSection({
 
   const displayedPrograms: EventDisplayData[] = useMemo(() => {
     const sliced = limit ? filteredPrograms.slice(0, limit) : filteredPrograms;
-    const dateFormatter = new Intl.DateTimeFormat(LOCALE_META[locale].intl, {
+    const intl = LOCALE_META[locale].intl;
+    const dateFormatter = new Intl.DateTimeFormat(intl, {
       day: "numeric",
       month: "short",
       year: "numeric",
     });
+    const dayFormatter = new Intl.DateTimeFormat(intl, { day: "numeric" });
+    const monthFormatter = new Intl.DateTimeFormat(intl, { month: "short" });
 
     return sliced.map((p) => {
       let displayDate = "";
+      let displayDay: string | undefined;
+      let displayMonth: string | undefined;
+
       if (p.isRecurring && p.recurringDays?.length) {
         displayDate = p.recurringDays
           .map((day: string) => dayMap[day]?.[locale] || day)
           .join(", ");
       } else if (p.date) {
-        displayDate = dateFormatter.format(new Date(p.date));
+        const parsed = new Date(p.date);
+        displayDate = dateFormatter.format(parsed);
+        displayDay = dayFormatter.format(parsed);
+        displayMonth = monthFormatter.format(parsed).replace(".", "");
       }
 
       return {
@@ -70,6 +79,8 @@ export function useEventsSection({
         displayNote: localizedFieldOptional(p, "note", locale),
         eventId: p.slug || p._id || p.id || "",
         displayDate,
+        displayDay,
+        displayMonth,
       };
     });
   }, [filteredPrograms, limit, locale]);

@@ -2,14 +2,16 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, X, CalendarX } from "lucide-react";
-import { FaArrowRight } from "react-icons/fa";
+import { Search, X, CalendarX, ArrowRight } from "lucide-react";
+
 import BlogCard from "./BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
 import SectionHeader from "../reusable/SectionHeader";
 import ViewMoreButton from "../reusable/ViewMoreButton";
+import Reveal from "../reusable/Reveal";
+import { placeLabel } from "@/lib/eventTime";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -32,16 +34,11 @@ export default function EventsSection(props: EventsSectionProps) {
 
   const [query, setQuery] = useState("");
 
-  /**
-   * Client-side filter over the already-fetched list. Only offered on the full
-   * events page, where the list is unbounded — on the home page the sections
-   * are capped at three cards and a search box would be noise.
-   */
   const visiblePrograms = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!searchable || !q) return displayedPrograms;
     return displayedPrograms.filter((p) =>
-      [p.displayTitle, p.displayDesc, p.displayDate]
+      [p.displayTitle, p.displayDesc, p.displayDate, placeLabel(p.location)]
         .filter(Boolean)
         .some((field) => String(field).toLowerCase().includes(q))
     );
@@ -49,22 +46,54 @@ export default function EventsSection(props: EventsSectionProps) {
 
   const isSearching = searchable && query.trim().length > 0;
   const showEmptyState = !loading && visiblePrograms.length === 0;
+  const showAllLabel =
+    type === "upcoming"
+      ? t("latestPrograms.showAllUpcoming")
+      : t("latestPrograms.showAllPast");
 
   return (
     <section
       id={sectionId}
-      /* Deliberately not `defer-paint`: the nav dropdown links straight to
-         #upcoming-events / #past-events, and a section whose height is still
-         an estimate when the browser resolves the hash lands at the wrong
-         scroll offset. */
-      className="mx-auto flex w-full max-w-6xl scroll-mt-24 flex-col items-center gap-y-10 px-5 py-16 sm:px-8 md:py-20"
+      className="mx-auto w-full max-w-6xl scroll-mt-28 px-5 py-16 sm:px-8 md:py-24 lg:px-12"
     >
-      <SectionHeader title={titleText} underLine />
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeader
+          title={titleText}
+          topText={t("latestPrograms.title")}
+          align="start"
+          className="md:max-w-xl"
+        />
 
-      {/** Search — full events page only */}
+        {!loading && visiblePrograms.length > 0 && (
+          <Reveal
+            y={0}
+            delay={200}
+            className="hidden shrink-0 items-center gap-4 md:flex"
+          >
+            <span
+              aria-label={`${visiblePrograms.length} ${t(
+                "latestPrograms.resultCount"
+              )}`}
+              className="numeral inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-ink-200 bg-white px-2.5 text-sm text-ink-500"
+            >
+              {visiblePrograms.length}
+            </span>
+            {limit && showViewAll && filterMode === "all" && (
+              <Link
+                href={linkHref}
+                className="link-underline inline-flex items-center gap-2 text-sm font-semibold text-ink-800 transition-colors hover:text-brand-green-dark"
+              >
+                {showAllLabel}
+                <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
+              </Link>
+            )}
+          </Reveal>
+        )}
+      </div>
+
       {searchable && !loading && displayedPrograms.length > 0 && (
-        <div className="flex w-full max-w-md flex-col items-center gap-2">
-          <div className="group relative w-full">
+        <Reveal y={12} delay={120} className="mt-10 flex flex-col gap-2">
+          <div className="group relative w-full max-w-md">
             <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 transition-colors group-focus-within:text-brand-green" />
             <input
               type="search"
@@ -72,7 +101,7 @@ export default function EventsSection(props: EventsSectionProps) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("latestPrograms.search")}
               aria-label={t("latestPrograms.search")}
-              className="w-full rounded-full border border-ink-200 bg-white py-3 pe-11 ps-11 text-sm text-ink-800 shadow-[0_1px_2px_rgba(16,20,15,0.04)] outline-none transition-all duration-300 placeholder:text-ink-400 focus:border-brand-green focus:shadow-[0_4px_16px_-6px_rgba(45,155,74,0.4)]"
+              className="w-full rounded-full border border-ink-200 bg-white py-3 pe-11 ps-11 text-sm text-ink-800 shadow-[0_1px_2px_rgba(18,22,15,0.04)] outline-none transition-all duration-300 placeholder:text-ink-400 focus:border-brand-green focus:shadow-[0_4px_16px_-6px_rgba(45,155,74,0.4)]"
             />
             {isSearching && (
               <button
@@ -86,18 +115,16 @@ export default function EventsSection(props: EventsSectionProps) {
             )}
           </div>
 
-          {/* Live result count keeps the filter's effect legible */}
           {isSearching && (
             <p aria-live="polite" className="text-xs font-medium text-ink-500">
               {visiblePrograms.length} {t("latestPrograms.resultCount")}
             </p>
           )}
-        </div>
+        </Reveal>
       )}
 
-      {/** Cards Grid */}
       {!showEmptyState && (
-        <div className="scrollbar-hide flex w-full snap-x snap-mandatory items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-4 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible">
+        <div className="scrollbar-hide mt-12 flex w-full snap-x snap-mandatory items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-4 md:grid md:grid-cols-3 md:gap-7 md:overflow-visible md:pb-0">
           {loading
             ? Array.from({ length: limit || 3 }).map((_, i) => (
                 <div
@@ -114,8 +141,6 @@ export default function EventsSection(props: EventsSectionProps) {
                 >
                   <BlogCard
                     bgImg={p.img}
-                    authorImg="/imgs/icons/icon.jpg"
-                    authorName={t("latestPrograms.authorName")}
                     readTime={p.displayDate}
                     title={p.displayTitle}
                     desc={p.displayDesc}
@@ -124,28 +149,22 @@ export default function EventsSection(props: EventsSectionProps) {
                     index={index}
                     isPastEvent={type === "past"}
                     event={p}
+                    ctaLabel={t("latestPrograms.viewEvent")}
                   />
                 </div>
               ))}
 
-          {/** Mobile "View All" Card */}
           {!loading && limit && showViewAll && visiblePrograms.length > 0 && (
             <div className="flex w-[46vw] shrink-0 snap-start items-center justify-center md:hidden">
               <Link
                 href={linkHref}
-                className={`group flex h-full min-h-[280px] w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed px-4 text-center transition-all duration-500 ${
-                  type === "upcoming"
-                    ? "border-brand-green/40 hover:border-brand-green hover:bg-brand-green-soft"
-                    : "border-ink-300 bg-ink-50 hover:border-ink-500 hover:bg-ink-100"
-                }`}
+                className="group flex h-full min-h-[280px] w-full flex-col items-center justify-center gap-4 rounded-[1.5rem] border border-dashed border-ink-300 bg-white/50 px-4 text-center transition-colors duration-500 hover:border-brand-green hover:bg-brand-green-soft"
               >
-                <div className="grid h-12 w-12 place-items-center rounded-full bg-white text-ink-800 shadow-md transition-transform duration-500 group-hover:scale-110">
-                  <FaArrowRight size={20} />
-                </div>
-                <span className="text-sm font-semibold text-ink-700 transition-colors group-hover:text-ink-900">
-                  {type === "upcoming"
-                    ? t("latestPrograms.showAllUpcoming")
-                    : t("latestPrograms.showAllPast")}
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-white text-ink-800 shadow-md transition-transform duration-500 group-hover:scale-110">
+                  <ArrowRight className="h-5 w-5 rtl:-scale-x-100" />
+                </span>
+                <span className="text-sm font-semibold text-ink-700">
+                  {showAllLabel}
                 </span>
               </Link>
             </div>
@@ -153,7 +172,6 @@ export default function EventsSection(props: EventsSectionProps) {
         </div>
       )}
 
-      {/** Desktop "View All" Button */}
       {!loading &&
         limit &&
         showViewAll &&
@@ -161,18 +179,16 @@ export default function EventsSection(props: EventsSectionProps) {
         filterMode === "all" && (
           <ViewMoreButton
             href={linkHref}
-            label={
-              type === "upcoming"
-                ? t("latestPrograms.showAllUpcoming")
-                : t("latestPrograms.showAllPast")
-            }
-            variant="default"
+            label={showAllLabel}
+            className="mt-14 hidden md:flex"
           />
         )}
 
-      {/** Empty state — an illustrated, localised card rather than a bare line */}
       {showEmptyState && (
-        <div className="flex w-full max-w-md flex-col items-center rounded-3xl border border-dashed border-ink-300 bg-white/60 px-8 py-14 text-center">
+        <Reveal
+          y={16}
+          className="mx-auto mt-12 flex w-full max-w-md flex-col items-center rounded-[1.5rem] border border-dashed border-ink-300 bg-white/60 px-8 py-14 text-center"
+        >
           <span className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-ink-100 text-ink-400">
             <CalendarX className="h-6 w-6" />
           </span>
@@ -187,12 +203,12 @@ export default function EventsSection(props: EventsSectionProps) {
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="mt-5 rounded-full border border-ink-300 bg-white px-5 py-2 text-xs font-semibold text-ink-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900 hover:text-ink-900"
+              className="mt-6 rounded-full border border-ink-300 bg-white px-5 py-2 text-xs font-semibold text-ink-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900 hover:text-ink-900"
             >
               {t("latestPrograms.clearSearch")}
             </button>
           )}
-        </div>
+        </Reveal>
       )}
     </section>
   );

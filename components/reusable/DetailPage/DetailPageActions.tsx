@@ -1,7 +1,8 @@
 "use client";
 
 import { FaInstagram } from "react-icons/fa";
-import { HiLink } from "react-icons/hi";
+import { Check, ExternalLink, Share2 } from "lucide-react";
+
 import type { DetailPageActionsProps } from "@/lib/types";
 
 export function DetailPageActions({
@@ -12,37 +13,50 @@ export function DetailPageActions({
   translations,
 }: DetailPageActionsProps) {
   return (
-    <div className="pt-2 flex flex-col gap-3">
+    <div className="mt-8 flex flex-col gap-3">
       {registrationUrl && (
         <a
           href={registrationUrl}
           target="_blank"
-          className="py-3 rounded-lg font-bold bg-green-600 text-white flex items-center justify-center gap-2 hover:bg-green-700 transition-all"
+          rel="noopener noreferrer"
+          className="btn btn-green btn-sheen w-full"
         >
-          <HiLink className="w-5 h-5" />
-          <span>{translations.register || "Register"}</span>
+          <ExternalLink className="h-4 w-4" />
+          {translations.register || "Register"}
         </a>
       )}
-      <div className="flex flex-col sm:flex-row gap-3">
+
+      <div className="flex flex-col gap-3 sm:flex-row">
         {showDmButton && (
           <a
             href="https://ig.me/m/muszlimifjusag"
             target="_blank"
-            className="flex-1 py-3 rounded-lg bg-linear-to-r from-purple-500 to-orange-500 text-white flex items-center justify-center gap-2"
+            rel="noopener noreferrer"
+            className="btn btn-outline flex-1 hover:!border-[#E1306C] hover:!text-[#E1306C]"
           >
-            <FaInstagram className="w-5 h-5" />
-            <span>{translations.dm || "Send Message"}</span>
+            <FaInstagram className="h-4 w-4" />
+            {translations.dm || "Send Message"}
           </a>
         )}
+
         <button
+          type="button"
           onClick={onShare}
-          className={`flex-1 py-3 rounded-lg font-bold text-white transition-all ${
-            isCopied ? "bg-green-600" : "bg-blue-600"
+          className={`btn flex-1 transition-colors ${
+            isCopied ? "btn-green" : "btn-outline"
           }`}
         >
-          {isCopied
-            ? translations.copied || "Copied!"
-            : translations.share || "Share"}
+          {isCopied ? (
+            <>
+              <Check className="h-4 w-4" />
+              {translations.copied || "Copied!"}
+            </>
+          ) : (
+            <>
+              <Share2 className="h-4 w-4" />
+              {translations.share || "Share"}
+            </>
+          )}
         </button>
       </div>
     </div>

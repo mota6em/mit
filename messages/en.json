@@ -86,6 +86,7 @@
   "home": {
     "statistics": {
       "title": "Our Growing Impact",
+      "eyebrow": "By the numbers",
       "socialLabel": "Social Media Followers",
       "yearsLabel": "Years of Community",
       "eventsLabel": "Events Completed"
@@ -94,6 +95,18 @@
       "title": "Muslim Youth Association of Hungary",
       "subtitle1": "Events, workshops and community programs for Muslims in Hungary"
     },
+    "ayah": {
+      "translation": "Cooperate with one another in goodness and righteousness.",
+      "reference": "Qur'an 5:2"
+    },
+    "values": [
+      "Sincerity",
+      "Community",
+      "Excellence",
+      "Ihsan",
+      "Volunteering",
+      "Brotherhood"
+    ],
     "whoWeAre": {
       "title": "Who We Are",
       "description": {
@@ -115,7 +128,8 @@
       "search": "Search events",
       "searchEmpty": "No events match your search.",
       "clearSearch": "Clear search",
-      "resultCount": "events"
+      "resultCount": "events",
+      "viewEvent": "View event"
     }
   },
   "joinMIT": {
@@ -258,6 +272,13 @@
       "joinStats": "See you at our next event!",
       "badgeJoin": "Join Us",
       "badgeWeekly": "Weekly Gatherings"
+    },
+    "countdown": {
+      "eyebrow": "Next gathering",
+      "live": "Happening now",
+      "days": "days",
+      "hours": "hrs",
+      "minutes": "min"
     },
     "eventDetails": {
       "back": "Back to Events",
