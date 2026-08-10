@@ -1,29 +1,23 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import dbConnect from "@/lib/mongodb";
 import Highlight from "@/models/Highlight";
-import { isValidObjectId } from "mongoose";
 import { auth } from "@/auth";
+import { getAllHighlights, getHighlightServerSide } from "@/lib/highlightService";
+import {
+  CACHE_TAGS,
+  PUBLIC_CACHE_CONTROL,
+  PURGE_IMMEDIATELY,
+} from "@/lib/cache";
 
-const LIST_PROJECTION = { __v: 0 } as const;
-
+/** Reads are served from the tagged cache, so they cost no DB round-trip. */
 export async function GET(request: Request) {
   try {
-    await dbConnect();
     const { searchParams } = new URL(request.url);
     const identifier = searchParams.get("id");
 
     if (identifier) {
-      let highlight = await Highlight.findOne({ slug: identifier })
-        .select(LIST_PROJECTION)
-        .lean()
-        .exec();
-
-      if (!highlight && isValidObjectId(identifier)) {
-        highlight = await Highlight.findById(identifier)
-          .select(LIST_PROJECTION)
-          .lean()
-          .exec();
-      }
+      const highlight = await getHighlightServerSide(identifier);
 
       if (!highlight) {
         return NextResponse.json(
@@ -32,17 +26,17 @@ export async function GET(request: Request) {
         );
       }
 
-      return NextResponse.json(highlight);
+      return NextResponse.json(highlight, {
+        headers: { "Cache-Control": PUBLIC_CACHE_CONTROL },
+      });
     }
 
-    const highlights = await Highlight.find({})
-      .select(LIST_PROJECTION)
-      .sort({ createdAt: -1 })
-      .lean()
-      .exec();
+    const highlights = await getAllHighlights();
 
-    return NextResponse.json(highlights);
-  } catch (error) {
+    return NextResponse.json(highlights, {
+      headers: { "Cache-Control": PUBLIC_CACHE_CONTROL },
+    });
+  } catch {
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -62,6 +56,7 @@ export async function POST(req: Request) {
 
     if (body.action === "delete") {
       await Highlight.findByIdAndDelete(body.id);
+      revalidateTag(CACHE_TAGS.highlights, PURGE_IMMEDIATELY);
       return NextResponse.json({ success: true });
     }
 
@@ -75,10 +70,14 @@ export async function POST(req: Request) {
     } else {
       await Highlight.create(body);
     }
+
+    // Drop the cached list/detail entries so the next read reflects the write.
+    revalidateTag(CACHE_TAGS.highlights, PURGE_IMMEDIATELY);
+
     // Return the updated list to refresh UI
     const highlights = await Highlight.find({}).sort({ createdAt: -1 }).lean();
     return NextResponse.json({ success: true, highlights });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Database Error" },
       { status: 500 }

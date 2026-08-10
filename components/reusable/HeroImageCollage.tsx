@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface HeroImageCollageProps {
@@ -26,58 +25,46 @@ export default function HeroImageCollage({
   floatLeft = false,
   floatRight = false,
 }: HeroImageCollageProps) {
-  const [leftLoaded, setLeftLoaded] = useState(false);
-  const [rightLoaded, setRightLoaded] = useState(false);
-
   return (
     <div
       className={cn("relative h-[400px] md:h-[500px] w-full", wrapperClassName)}
     >
-      {/* LEFT IMAGE */}
       <div
         className={cn(
-          "absolute top-0 left-4 md:left-20 lg:left-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] -rotate-6 z-10",
+          "absolute top-0 start-4 md:start-20 lg:start-6 w-64 md:w-72 h-80 md:h-88 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] -rotate-6 z-10",
+          "media-fade",
           leftClassName,
           floatLeft && "animate-[float_6s_ease-in-out_infinite]"
         )}
       >
-        {!leftLoaded && (
-          <div className="absolute inset-0 bg-ink-100 animate-pulse" />
-        )}
+        <div className="absolute inset-0 bg-ink-100" />
         <Image
           src={leftImage}
-          alt="Hero Left"
+          alt=""
           fill
-          className={`object-cover transition-opacity ${
-            leftLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setLeftLoaded(true)}
+          sizes="(max-width: 768px) 16rem, 18rem"
+          className="object-cover"
         />
       </div>
 
-      {/* RIGHT IMAGE */}
       <div
         className={cn(
-          "absolute bottom-0 right-4 md:right-20 lg:right-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] rotate-8 z-20",
+          "absolute bottom-0 end-4 md:end-20 lg:end-6 w-60 md:w-64 h-72 md:h-80 rounded-3xl overflow-hidden border-[5px] border-white shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.25)] rotate-8 z-20",
+          "media-fade",
           rightClassName,
           floatRight && "animate-[float_7s_ease-in-out_1s_infinite]"
         )}
       >
-        {!rightLoaded && (
-          <div className="absolute inset-0 bg-ink-100 animate-pulse" />
-        )}
+        <div className="absolute inset-0 bg-ink-100" />
         <Image
           src={rightImage}
-          alt="Hero Right"
+          alt=""
           fill
-          className={`object-cover transition-opacity ${
-            rightLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setRightLoaded(true)}
+          sizes="(max-width: 768px) 15rem, 16rem"
+          className="object-cover"
         />
       </div>
 
-      {/* OPTIONAL CENTER ICON */}
       {centerIcon && (
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -88,7 +75,7 @@ export default function HeroImageCollage({
         >
           <Image
             src={centerIcon}
-            alt="Center Icon"
+            alt=""
             width={80}
             height={80}
             className="object-contain"
@@ -96,9 +83,9 @@ export default function HeroImageCollage({
         </motion.div>
       )}
 
-      {/* Ambient brand blobs (keyframes live in globals.css) */}
-      <div className="animate-blob absolute right-20 top-10 h-72 w-72 rounded-full bg-brand-gold/50 opacity-25 blur-3xl" />
-      <div className="animate-blob animation-delay-2000 absolute bottom-10 left-10 h-72 w-72 rounded-full bg-brand-green/50 opacity-20 blur-3xl" />
+      {/* Static ambient wash — see the note in WhoWeAre: animating a 288px
+          blur re-rasterizes it every frame, for the whole life of the page. */}
+      <div className="pointer-events-none absolute inset-0 opacity-25 blur-3xl bg-[radial-gradient(circle_at_80%_15%,var(--color-brand-gold)_0,transparent_35%),radial-gradient(circle_at_15%_85%,var(--color-brand-green)_0,transparent_35%)]" />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {
   HiPhotograph,
 } from "react-icons/hi";
 import { useHighlights } from "@/app/hooks/useHighlights";
-import { HighlightData, HighlightListProps } from "@/lib/types";
+import { HighlightListProps } from "@/lib/types";
 
 export default function HighlightList({
   highlights,

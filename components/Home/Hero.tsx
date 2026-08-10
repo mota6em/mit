@@ -4,21 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-function ImageSkeleton() {
-  return (
-    <div className="absolute inset-0 bg-ink-300 animate-pulse">
-      <div className="absolute inset-0 bg-gradient-to-r from-ink-300 via-ink-200 to-ink-300 animate-shimmer" />
-    </div>
-  );
-}
+const MOBILE_HERO_IMAGES = [
+  "/imgs/home/hero/picnic2.jpg",
+  "/imgs/home/aboutmit/hero-sm-bg.jpg",
+  "/imgs/home/hero/picnic.jpg",
+];
 
 const rise = {
-  hidden: { opacity: 0, y: 28, filter: "blur(6px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0 },
 };
 
 export default function Hero() {
@@ -27,76 +24,42 @@ export default function Hero() {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
 
-  const [desktopLoaded, setDesktopLoaded] = useState(false);
-  const [mobileTopLoaded, setMobileTopLoaded] = useState(false);
-  const [mobileMiddleLoaded, setMobileMiddleLoaded] = useState(false);
-  const [mobileBottomLoaded, setMobileBottomLoaded] = useState(false);
-
   return (
     <section className="relative min-h-[88vh] w-full overflow-hidden md:min-h-[90vh]">
-      {/** * Desktop Background Slider */}
-      <div className="hidden h-full lg:block">
-        {!desktopLoaded && <ImageSkeleton />}
+      <div className="absolute inset-0 bg-ink-900" />
+
+      <div className="media-fade hidden h-full lg:block">
         <Image
-          src={"/imgs/home/hero/picnic.jpg"}
-          alt="hero"
+          src="/imgs/home/hero/picnic.jpg"
+          alt=""
           fill
           priority
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-out ${
-            desktopLoaded ? "animate-ken-burns opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setDesktopLoaded(true)}
+          quality={72}
+          sizes="(max-width: 1023px) 1px, 100vw"
+          className="animate-ken-burns absolute inset-0 h-full w-full object-cover"
         />
       </div>
 
-      {/** * Mobile Image Stack */}
       <div className="absolute inset-0 flex h-full w-full flex-col lg:hidden">
-        {[
-          {
-            src: "/imgs/home/hero/picnic2.jpg",
-            alt: "top",
-            loaded: mobileTopLoaded,
-            set: setMobileTopLoaded,
-          },
-          {
-            src: "/imgs/home/aboutmit/hero-sm-bg.jpg",
-            alt: "middle-fixed",
-            loaded: mobileMiddleLoaded,
-            set: setMobileMiddleLoaded,
-          },
-          {
-            src: "/imgs/home/hero/picnic.jpg",
-            alt: "bottom",
-            loaded: mobileBottomLoaded,
-            set: setMobileBottomLoaded,
-          },
-        ].map((img) => (
-          <div key={img.alt} className="relative w-full flex-1">
-            {!img.loaded && <ImageSkeleton />}
+        {MOBILE_HERO_IMAGES.map((src, index) => (
+          <div key={src} className="media-fade relative w-full flex-1">
             <Image
-              src={img.src}
-              alt={img.alt}
+              src={src}
+              alt=""
               fill
-              priority={img.alt === "top"}
-              className={`object-cover transition-opacity duration-700 ${
-                img.loaded ? "opacity-100" : "opacity-0"
-              }`}
-              onLoad={() => img.set(true)}
+              priority={index === 0}
+              quality={70}
+              sizes="(min-width: 1024px) 1px, 100vw"
+              className="object-cover"
             />
           </div>
         ))}
       </div>
 
-      {/**
-       * Cinematic scrim — a vertical darkening plus a warm radial pool behind
-       * the copy, so the text reads at any image brightness without a flat
-       * gray wash over the photography.
-       */}
       <div className="absolute inset-0 bg-gradient-to-b from-ink-900/70 via-ink-900/35 to-ink-900/80" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_45%,rgba(16,20,15,0.55),transparent_70%)]" />
       <div className="grain absolute inset-0" />
 
-      {/** * Content Overlay */}
       <motion.div
         initial="hidden"
         animate="show"
@@ -155,7 +118,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/** Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

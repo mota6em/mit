@@ -13,28 +13,31 @@ import type {
   ApiEvent,
 } from "@/lib/types";
 import { dayMap } from "@/lib/types";
+import {
+  LOCALE_META,
+  localizedField,
+  localizedFieldOptional,
+  toLocale,
+  type Locale,
+} from "@/lib/i18n";
 import { useEventData } from "@/app/hooks/useEventData";
 
 interface EventClientPageProps {
   initialEvent: ApiEvent | null;
 }
 
-/**
- * Transform API event data to DetailPageData format
- */
 function transformEventToDetailData(
   event: ApiEvent,
-  locale: string
+  locale: Locale
 ): DetailPageData {
-  const isHu = locale === "hu";
   return {
     id: event._id,
-    title: isHu ? event.title_hu : event.title_en,
-    description: isHu ? event.desc_hu : event.desc_en,
+    title: localizedField(event, "title", locale),
+    description: localizedField(event, "desc", locale),
     images: event.img ? [event.img] : [],
     date: event.date,
     time: event.time,
-    note: isHu ? event.note_hu : event.note_en,
+    note: localizedFieldOptional(event, "note", locale),
     isRecurring: event.isRecurring,
     recurringDays: event.recurringDays,
     registrationUrl: event.registrationUrl,
@@ -42,59 +45,34 @@ function transformEventToDetailData(
   };
 }
 
-/**
- * Generate badges for event display
- */
-function generateEventBadges(event: ApiEvent, locale: string): BadgeData[] {
+function generateEventBadges(event: ApiEvent, locale: Locale): BadgeData[] {
   const badges: BadgeData[] = [];
-  const isHu = locale === "hu";
-  const note = isHu ? event.note_hu : event.note_en;
+  const note = localizedFieldOptional(event, "note", locale);
 
-  // Note badge
   if (note) {
-    badges.push({
-      icon: CgDanger,
-      text: note,
-      color: "bg-amber-500",
-    });
+    badges.push({ icon: CgDanger, text: note, color: "bg-amber-500" });
   }
 
-  // Date badge (for non-recurring events)
   if (!event.isRecurring && event.date) {
-    const dateFormatted = new Date(event.date).toLocaleDateString(
-      isHu ? "hu-HU" : "en-US",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }
-    );
-    badges.push({
-      icon: HiClock,
-      text: dateFormatted,
-      color: "bg-green-500",
-    });
+    const dateFormatted = new Intl.DateTimeFormat(LOCALE_META[locale].intl, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(event.date));
+
+    badges.push({ icon: HiClock, text: dateFormatted, color: "bg-green-500" });
   }
 
-  // Time badge
   if (event.time) {
-    badges.push({
-      icon: HiClock,
-      text: event.time,
-      color: "bg-blue-500",
-    });
+    badges.push({ icon: HiClock, text: event.time, color: "bg-blue-500" });
   }
 
-  // Recurring days badge
-  if (event.isRecurring && event.recurringDays) {
+  if (event.isRecurring && event.recurringDays?.length) {
     const daysText = event.recurringDays
-      .map((day: string) => dayMap[day]?.[locale as "en" | "hu"] || day)
+      .map((day: string) => dayMap[day]?.[locale] || day)
       .join(", ");
-    badges.push({
-      icon: HiRefresh,
-      text: daysText,
-      color: "bg-indigo-500",
-    });
+
+    badges.push({ icon: HiRefresh, text: daysText, color: "bg-indigo-500" });
   }
 
   return badges;
@@ -105,11 +83,10 @@ export default function EventClientPage({
 }: EventClientPageProps) {
   const t = useTranslations("events.eventDetails");
   const { locale: rawLocale } = useParams();
-  const locale = rawLocale === "hu" ? "hu" : "en";
+  const locale = toLocale(rawLocale);
 
   const { event, loading, error, views } = useEventData(initialEvent);
 
-  // Build config
   const config: DetailPageConfig = {
     type: "event",
     locale,
@@ -132,7 +109,6 @@ export default function EventClientPage({
     },
   };
 
-  // Transform event data
   const data = event ? transformEventToDetailData(event, locale) : null;
   const badges = event ? generateEventBadges(event, locale) : [];
 

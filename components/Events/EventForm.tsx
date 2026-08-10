@@ -80,6 +80,9 @@ export default function EventForm({
             title_hu={form.title_hu ?? ""}
             desc_hu={form.desc_hu ?? ""}
             note_hu={form.note_hu ?? ""}
+            title_ar={form.title_ar ?? ""}
+            desc_ar={form.desc_ar ?? ""}
+            note_ar={form.note_ar ?? ""}
             setForm={setForm}
           />
 

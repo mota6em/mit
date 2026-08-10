@@ -1,75 +1,51 @@
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
-import { getHighlights } from "@/lib/highlightClient";
-import { HighlightDisplayData, HighlightsSectionProps } from "@/lib/types";
-
-/** Cache key for consistent SWR caching */
-const HIGHLIGHTS_CACHE_KEY = "highlights-data";
-
-/** SWR configuration for aggressive caching - prevents refetch on reload */
-const SWR_CONFIG = {
-  revalidateOnFocus: false,
-  revalidateOnReconnect: false,
-  revalidateIfStale: false,
-  revalidateOnMount: true,
-  dedupingInterval: 1000 * 60 * 10, // 10 minutes deduplication
-  keepPreviousData: true,
-} as const;
+import { SWR_KEYS } from "@/lib/swrKeys";
+import { LOCALE_META, localizedField, toLocale } from "@/lib/i18n";
+import {
+  ApiHighlight,
+  HighlightDisplayData,
+  HighlightsSectionProps,
+} from "@/lib/types";
 
 export function useHighlightsSection({ limit }: HighlightsSectionProps) {
   const params = useParams();
-  const locale = (params?.locale as string) || "en";
+  const locale = toLocale(params?.locale);
+  const t = useTranslations("highlights");
   const sectionId = "highlights-section";
 
-  // Fetch with aggressive caching to prevent unnecessary refetches
-  const { data, isLoading } = useSWR(
-    HIGHLIGHTS_CACHE_KEY,
-    () => getHighlights(),
-    SWR_CONFIG
-  );
+  const { data, isLoading } = useSWR<ApiHighlight[]>(SWR_KEYS.highlights);
 
-  // Ensure highlights is always an array (SWR can return null)
-  const highlights = data ?? [];
+  const highlights = useMemo(() => (Array.isArray(data) ? data : []), [data]);
 
-  // Presentation Logic (Slicing & Formatting)
   const displayedHighlights: HighlightDisplayData[] = useMemo(() => {
-    if (!Array.isArray(highlights)) return [];
-
     const sliced = limit ? highlights.slice(0, limit) : highlights;
+    const dateFormatter = new Intl.DateTimeFormat(LOCALE_META[locale].intl, {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
 
     return sliced.map((h) => {
-      let displayDate = "";
-      if (h.date) {
-        displayDate = new Date(h.date).toLocaleDateString(
-          locale === "hu" ? "hu-HU" : "en-US"
-        );
-      } else if (h.createdAt) {
-        displayDate = new Date(h.createdAt).toLocaleDateString(
-          locale === "hu" ? "hu-HU" : "en-US"
-        );
-      }
+      const rawDate = h.date || (h as { createdAt?: string }).createdAt;
 
       return {
         ...h,
-        displayTitle: locale === "hu" ? h.title_hu : h.title_en,
-        displayDesc: locale === "hu" ? h.desc_hu : h.desc_en,
-        highlightId: h.slug || h._id || h.id,
-        displayDate,
+        displayTitle: localizedField(h, "title", locale),
+        displayDesc: localizedField(h, "desc", locale),
+        highlightId: h.slug || h._id || h.id || "",
+        displayDate: rawDate ? dateFormatter.format(new Date(rawDate)) : "",
       };
     });
   }, [highlights, limit, locale]);
 
-  // Title & Links
-  const titleText = "Highlights & Announcements";
-
-  const linkHref = `/${locale}/highlights`;
-
   return {
-    loading: isLoading,
+    loading: isLoading && data === undefined,
     displayedHighlights,
-    titleText,
-    linkHref,
+    titleText: t("heroTitle"),
+    linkHref: `/${locale}/highlights`,
     sectionId,
     locale,
   };

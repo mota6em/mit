@@ -6,7 +6,6 @@ import { HiArrowLeft } from "react-icons/hi2";
 import type { DetailPageNotFoundProps } from "@/lib/types";
 
 export function DetailPageNotFound({
-  locale,
   title,
   description,
   backHref,

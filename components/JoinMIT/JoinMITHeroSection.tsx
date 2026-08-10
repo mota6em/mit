@@ -1,8 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import HeroImageCollage from "../reusable/HeroImageCollage";
 import { SectionTag } from "../Events/SectionTag";
+import Reveal from "../reusable/Reveal";
 
 export default function JoinMITHeroSection() {
   const t = useTranslations("joinMIT");
@@ -11,10 +11,9 @@ export default function JoinMITHeroSection() {
     <div className="max-w-7xl relative md:w-full lg:max-w-7xl md:mt-32 lg:mt-0 md:ms-2 mx-auto px-2 sm:px-6 lg:px-20">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         {/* Text Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+        <Reveal
+          y={0}
+          x={-30}
           className="text-center  z-10 mt-10 md:mt-0"
         >
           <SectionTag text={t("joinUsTag") || "Be Part of Us"} color="green" />
@@ -57,7 +56,7 @@ export default function JoinMITHeroSection() {
               {t("connect") || "Connect With Us"}
             </a>
           </div>
-        </motion.div>
+        </Reveal>
         {/* Image Collage - big screens view */}
         <HeroImageCollage
           wrapperClassName="hidden md:flex"
@@ -67,9 +66,11 @@ export default function JoinMITHeroSection() {
           rightClassName="absolute top-45 left-26 md:left-72 lg:left-50 w-72 h-72 lg:w-64 lg:h-68 rotate-[12deg] z-20"
         />
       </div>
-      <div className="absolute top-10 right-20 md:right-40 w-72 h-72 bg-brand-green/50 md:bg-brand-sky/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-      <div className="absolute bottom-20 left-40 w-72 h-72 bg-brand-green/50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-      <div className="absolute top-40 left-40 w-72 h-72 bg-brand-gold rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+      {/* Ambient brand wash. This was three separately animated 288px blurred
+          circles; each frame of that motion re-rasterizes a large blur, which
+          is one of the most expensive things a browser can do while the user
+          is scrolling. A static multi-stop gradient reads the same. */}
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-20 mix-blend-multiply blur-3xl bg-[radial-gradient(circle_at_78%_12%,var(--color-brand-sky)_0,transparent_38%),radial-gradient(circle_at_22%_82%,var(--color-brand-green)_0,transparent_38%),radial-gradient(circle_at_28%_35%,var(--color-brand-gold)_0,transparent_38%)]" />
     </div>
   );
 }

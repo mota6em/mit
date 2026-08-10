@@ -17,6 +17,12 @@ interface SectionProps {
   space?: SectionSpace;
   className?: string;
   innerClassName?: string;
+  /**
+   * Skips layout and paint for this section until it nears the viewport.
+   * Opt-in rather than automatic: it also applies paint containment, which
+   * clips decoration deliberately positioned outside the section box.
+   */
+  deferPaint?: boolean;
 }
 
 const toneClasses: Record<SectionTone, string> = {
@@ -47,6 +53,7 @@ export default function Section({
   space = "default",
   className,
   innerClassName,
+  deferPaint = false,
 }: SectionProps) {
   return (
     <section
@@ -55,6 +62,7 @@ export default function Section({
         "relative w-full",
         toneClasses[tone],
         spaceClasses[space],
+        deferPaint && "defer-paint",
         className
       )}
     >

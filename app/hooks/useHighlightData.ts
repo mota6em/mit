@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import type { ApiHighlight } from "@/lib/types";
+import { recordView } from "@/lib/views";
 
 /**
  * Get cached highlight data from sessionStorage
@@ -37,13 +38,11 @@ export function useHighlightData(initialHighlight: ApiHighlight | null) {
   const [views, setViews] = useState(0);
   const hasIncremented = useRef(false);
 
-  // Fetch highlight if not provided
+  // Only reached when neither the server render nor the session cache had it.
   useEffect(() => {
-    if (highlight) return;
-    const id = params?.id as string;
-    if (!id) return;
+    if (highlight || !id) return;
 
-    fetch(`/api/highlights?id=${id}`)
+    fetch(`/api/highlights?id=${encodeURIComponent(id)}`)
       .then((res) => (res.ok ? res.json() : Promise.reject()))
       .then((data) => {
         setHighlight(data);
@@ -53,23 +52,15 @@ export function useHighlightData(initialHighlight: ApiHighlight | null) {
         setError(true);
         setLoading(false);
       });
-  }, [params?.id, highlight]);
+  }, [id, highlight]);
 
-  // Increment views
   useEffect(() => {
-    const id = (params?.id as string) || highlight?._id;
-    if (!id || hasIncremented.current) return;
+    const viewId = id || highlight?._id;
+    if (!viewId || hasIncremented.current) return;
     hasIncremented.current = true;
 
-    fetch("/api/views", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, type: "highlight" }),
-    })
-      .then((res) => res.json())
-      .then((data) => data.views && setViews(data.views))
-      .catch(console.error);
-  }, [params?.id, highlight?._id]);
+    recordView(viewId, "highlight", setViews);
+  }, [id, highlight?._id]);
 
   return { highlight, loading, error, views };
 }

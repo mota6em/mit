@@ -25,6 +25,14 @@
     "join": {
       "title": "Join Us | MIT Hungary",
       "description": "Become an active member of Muslim Youth Association of Hungary. Volunteer, grow with us, and be part of an amazing community."
+    },
+    "about": {
+      "title": "About Us | MIT - Muslim Youth Association of Hungary",
+      "description": "Learn about the vision, mission, core services, community role and achievements of the Muslim Youth Association of Hungary (MIT)."
+    },
+    "highlights": {
+      "title": "Highlights & Announcements | MIT Hungary",
+      "description": "The latest news, announcements and community moments from the Muslim Youth Association of Hungary (MIT)."
     }
   },
   "nav": {
@@ -43,6 +51,16 @@
     "copied": "Email Copied!",
     "copyright": "All rights reserved.",
     "developedBy": "Developed by"
+  },
+  "common": {
+    "language": "Language",
+    "changeLanguage": "Change language",
+    "backToTop": "Back to top",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "readingProgress": "Reading progress",
+    "home": "Home"
   },
   "highlights": {
     "highlights_2026_title": "2026 Highlights",
@@ -92,32 +110,6 @@
       "showAllPast": "Show all past events",
       "authorName": "MIT",
       "newProgram": "New Program",
-      "programs": {
-        "youthLeadership": {
-          "title": "Youth Leadership Workshop",
-          "desc": "Empowering young minds ✨ Learn leadership, teamwork, public speaking, and more."
-        },
-        "communityFootball": {
-          "title": "Community Football Day",
-          "desc": "Teamwork, vibes, good energy ⚽ Bring friends and join local mini-tournaments."
-        },
-        "winterCharity": {
-          "title": "Winter Charity Drive",
-          "desc": "Small acts, big impact ❄️ Collect donations for families in need."
-        },
-        "ramadanIftar": {
-          "title": "Ramadan Iftar Gathering",
-          "desc": "Breaking fast together 🌙 Join us for a blessed Iftar meal with the community."
-        },
-        "quranStudy": {
-          "title": "Quran Study Circle",
-          "desc": "Deepen your understanding 📖 Weekly Quran study sessions with scholars and peers."
-        },
-        "charityDrive": {
-          "title": "Autumn Charity Drive",
-          "desc": "Giving back to community 🍂 Collecting essentials for those in need."
-        }
-      },
       "emptyUpcoming": "No upcoming events right now — check back soon.",
       "emptyPast": "No past events to show yet.",
       "search": "Search events",

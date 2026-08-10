@@ -4,16 +4,18 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { fadeInUp } from "@/data/constants/const";
 import type { DateFooterProps } from "@/lib/types";
+import { LOCALE_META, toLocale } from "@/lib/i18n";
 
 export function DetailPageDateFooter({ date, locale }: DateFooterProps) {
-  const formattedDate = useMemo(() => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString(locale === "hu" ? "hu-HU" : "en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }, [date, locale]);
+  const formattedDate = useMemo(
+    () =>
+      new Intl.DateTimeFormat(LOCALE_META[toLocale(locale)].intl, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(new Date(date)),
+    [date, locale]
+  );
 
   return (
     <motion.footer

@@ -1,7 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
 import React from "react";
+import Reveal from "./Reveal";
 
 interface SectionHeaderProps {
   title: string;
@@ -12,8 +10,11 @@ interface SectionHeaderProps {
   align?: "center" | "start";
 }
 
-const ease = [0.16, 1, 0.3, 1] as const;
-
+/**
+ * Every section on the site is introduced the same way, so this is the single
+ * place the entrance choreography is defined: icon, eyebrow, heading and rule
+ * arrive in that order, ~90ms apart, on the shared reveal observer.
+ */
 export default function SectionHeader({
   title,
   icon,
@@ -27,50 +28,43 @@ export default function SectionHeader({
   return (
     <div
       className={`flex flex-col ${
-        centered ? "items-center text-center" : "items-start text-left"
+        centered ? "items-center text-center" : "items-start text-start"
       } ${className}`}
     >
       {icon && (
-        <motion.div
-          initial={{ scale: 0.6, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease }}
+        <Reveal
+          y={0}
+          scale={0.7}
           className="mb-5 grid h-14 w-14 place-items-center rounded-2xl border border-ink-200 bg-white text-brand-green shadow-[0_1px_2px_rgba(16,20,15,0.04),0_4px_12px_rgba(16,20,15,0.05)]"
         >
           {icon}
-        </motion.div>
+        </Reveal>
       )}
 
       {topText && (
-        <motion.span
-          initial={{ opacity: 0, y: -8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease }}
+        <Reveal
+          as="span"
+          y={-8}
+          delay={60}
           className="eyebrow mb-4 inline-flex items-center gap-2 text-brand-green-dark"
         >
           <span className="h-px w-6 bg-brand-gold" />
           {topText}
-        </motion.span>
+        </Reveal>
       )}
 
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.7, ease }}
+      <Reveal
+        as="h2"
+        delay={topText ? 120 : 0}
         className="display text-[1.85rem] text-ink-900 sm:text-4xl md:text-[2.6rem]"
       >
         {title}
-      </motion.h2>
+      </Reveal>
 
       {underLine && (
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.15, ease }}
+        <Reveal
+          variant="rule"
+          delay={220}
           style={{ transformOrigin: centered ? "center" : "left" }}
           className="mt-5 h-[3px] w-20 rounded-full bg-gradient-to-r from-brand-gold via-brand-gold to-brand-green"
         />

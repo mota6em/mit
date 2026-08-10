@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { SectionTag } from "../Events/SectionTag";
+import Reveal from "../reusable/Reveal";
 
 const socialLinks = [
   {
@@ -119,18 +119,11 @@ export default function JoinMITSocialSection() {
           );
 
           return (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="h-full"
-            >
+            <Reveal key={index} delay={index * 100} className="h-full">
               {isEmail ? (
                 <button
                   onClick={handleEmailCopy}
-                  className="w-full h-full block text-left"
+                  className="w-full h-full block text-start"
                 >
                   {content}
                 </button>
@@ -144,7 +137,7 @@ export default function JoinMITSocialSection() {
                   {content}
                 </a>
               )}
-            </motion.div>
+            </Reveal>
           );
         })}
       </div>

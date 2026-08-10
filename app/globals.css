@@ -4,25 +4,33 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 72px;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* All headings h1-h6 use Cairo */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Cairo", sans-serif;
+  font-family: var(--font-cairo), "Cairo", sans-serif;
 }
 
-/* All other text uses Inter */
-body,
-p,
-span,
-div {
-  font-family: "Inter", sans-serif;
+body {
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+}
+
+:where([dir="rtl"]),
+:where([dir="rtl"]) h1,
+:where([dir="rtl"]) h2,
+:where([dir="rtl"]) h3,
+:where([dir="rtl"]) h4,
+:where([dir="rtl"]) h5,
+:where([dir="rtl"]) h6,
+:where([dir="rtl"]) .display {
+  font-family: var(--font-cairo-ar), var(--font-cairo), "Cairo", system-ui,
+    sans-serif;
 }
 
 @theme inline {
@@ -248,7 +256,21 @@ body {
   background-color: #f9faf6;
   color: #1c221b;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  /* `optimizeLegibility` forces ligature/kerning work on every text node and
+     showed up as layout cost while scrolling; the default is visually
+     identical here. */
+  text-rendering: auto;
+  overflow-x: hidden;
+}
+
+/**
+ * Sections below the fold are skipped by layout, style and paint until they
+ * scroll close to the viewport. The reserved height keeps the scrollbar
+ * honest so nothing jumps as each one is realized.
+ */
+.defer-paint {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
 }
 
 ::selection {
@@ -265,7 +287,7 @@ body {
 
 /* ── Typography primitives ───────────────────────────────────────── */
 .display {
-  font-family: "Cairo", sans-serif;
+  font-family: var(--font-cairo), "Cairo", sans-serif;
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.05;
@@ -277,6 +299,29 @@ body {
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+:where([dir="rtl"]) .display {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+:where([dir="rtl"]) .eyebrow {
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+:where([dir="rtl"]) h1,
+:where([dir="rtl"]) h2,
+:where([dir="rtl"]) h3,
+:where([dir="rtl"]) h4,
+:where([dir="rtl"]) h5,
+:where([dir="rtl"]) h6 {
+  letter-spacing: 0;
+}
+
+:where([dir="rtl"]) .lede {
+  line-height: 1.9;
 }
 
 .lede {
@@ -306,22 +351,40 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+/**
+ * No `will-change` here on purpose. It promoted every card on the page to its
+ * own compositor layer permanently, which is what made long lists feel heavy
+ * to scroll. The hover transition is smooth without it.
+ */
 .surface-lift {
   transition: transform 0.45s var(--ease-out-expo),
     box-shadow 0.45s var(--ease-out-expo), border-color 0.45s ease;
-  will-change: transform;
 }
 
-.surface-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-float);
-  border-color: #d0d3c9;
+@media (hover: hover) {
+  .surface-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-float);
+    border-color: #d0d3c9;
+  }
 }
 
+/**
+ * The sticky header sits over everything that scrolls, so its backdrop filter
+ * is re-rasterized continuously. A smaller radius and no `saturate()` keep the
+ * frosted look at a fraction of the per-frame cost.
+ */
 .glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or
+  (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 255, 255, 0.96);
+  }
 }
 
 /* Hairline separator that fades at both ends */
@@ -383,8 +446,12 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-14px);
+    transform: translateY(-10px);
   }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
 /* Slow cinematic zoom for hero imagery */
@@ -456,8 +523,7 @@ body {
 .link-underline::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   bottom: -4px;
   height: 2px;
   border-radius: 2px;
@@ -473,7 +539,150 @@ body {
   transform-origin: left;
 }
 
+:where([dir="rtl"]) .link-underline::after {
+  transform-origin: left;
+}
+
+:where([dir="rtl"]) .link-underline:hover::after,
+:where([dir="rtl"]) .link-underline[data-active="true"]::after {
+  transform-origin: right;
+}
+
+@keyframes media-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.media-fade {
+  animation: media-fade 0.9s ease-out both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.42s var(--ease-out-expo) both;
+}
+
+.skip-link {
+  position: fixed;
+  inset-inline-start: 1rem;
+  top: -100%;
+  z-index: 100;
+  border-radius: 9999px;
+  background: #10140f;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  transition: top 0.3s var(--ease-out-expo);
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
+@keyframes route-progress-grow {
+  0% {
+    transform: scaleX(0);
+  }
+  60% {
+    transform: scaleX(0.72);
+  }
+  100% {
+    transform: scaleX(0.9);
+  }
+}
+
+.route-progress[data-phase="loading"] {
+  animation: route-progress-grow 2.4s var(--ease-out-expo) forwards;
+}
+
+.route-progress[data-phase="done"] {
+  transform: scaleX(1);
+  opacity: 0;
+  transition: transform 0.2s ease-out, opacity 0.3s ease-out 0.15s;
+}
+
+:where([dir="rtl"]) .route-progress {
+  transform-origin: right;
+}
+
+.back-to-top {
+  inset-inline-end: 1.25rem;
+}
+
+.back-to-top[data-visible="false"] {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+}
+
+.back-to-top[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── Scroll reveal ───────────────────────────────────────────────
+   One shared entrance for every section, driven by an IntersectionObserver
+   that only toggles an attribute. Animating opacity and transform alone keeps
+   the whole thing on the compositor — no blur filters, no per-element JS
+   animation loop, so a long page scrolls at full frame rate. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 20px), 0)
+    scale(var(--reveal-scale, 1));
+  transition: opacity 0.75s var(--ease-out-expo),
+    transform 0.75s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+:where([dir="rtl"]) [data-reveal] {
+  transform: translate3d(
+      calc(var(--reveal-x, 0px) * -1),
+      var(--reveal-y, 20px),
+      0
+    )
+    scale(var(--reveal-scale, 1));
+}
+
+[data-reveal="in"],
+:where([dir="rtl"]) [data-reveal="in"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* A rule that draws itself in under a heading. */
+[data-reveal-rule] {
+  transform: scaleX(0);
+  transition: transform 0.85s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal-rule="in"] {
+  transform: scaleX(1);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-rule] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
   *,
   *::before,
   *::after {

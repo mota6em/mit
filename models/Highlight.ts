@@ -6,8 +6,10 @@ const highlightSchema = new Schema(
     images: [{ type: String }],
     title_en: { type: String, required: true },
     title_hu: { type: String, required: true },
+    title_ar: { type: String, required: false },
     desc_en: { type: String, required: true },
     desc_hu: { type: String, required: true },
+    desc_ar: { type: String, required: false },
     status: { type: String, required: false, default: "active" },
     date: { type: Date, required: false },
   },
@@ -15,15 +17,18 @@ const highlightSchema = new Schema(
 );
 
 // Indexes
-highlightSchema.index({ slug: 1 });
+// `slug` already gets a unique index from the field definition above —
+// declaring it again made Mongoose build a duplicate on every cold start.
 highlightSchema.index({ createdAt: -1 });
 highlightSchema.index({ date: -1 });
 highlightSchema.index({ status: 1, createdAt: -1 });
 highlightSchema.index({
   title_en: "text",
   title_hu: "text",
+  title_ar: "text",
   desc_en: "text",
   desc_hu: "text",
+  desc_ar: "text",
 });
 
 // Auto-generate slug

@@ -27,7 +27,7 @@ export default function Footer() {
       <div className="pattern-geo pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 opacity-[0.04] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
 
       <div className="relative mx-auto max-w-6xl px-6 py-12 md:px-8">
-        <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-start md:justify-between md:text-left">
+        <div className="flex flex-col items-center gap-10 text-center md:flex-row md:items-start md:justify-between md:text-start">
           {/* Brand */}
           <div className="flex max-w-xs flex-col items-center gap-3 md:items-start">
             <Link href={`/${locale}`} aria-label="MIT — home">

@@ -3,12 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
-import { X, ChevronDown, ArrowUpRight } from "lucide-react";
-import LanguageSwitch from "./LanguageSwitch";
-import { CgMenuRight } from "react-icons/cg";
+import { X, ChevronDown, ArrowUpRight, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+
+import LanguageSwitch from "./LanguageSwitch";
+import ScrollProgress from "@/components/reusable/ScrollProgress";
+import { isRtl, localeFromPathname } from "@/lib/i18n";
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,25 +20,47 @@ export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
 
   const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const pathname = usePathname();
 
-  // Extract locale from pathname
-  const locale = pathname.split("/")[1] || "en";
+  const locale = localeFromPathname(pathname);
+  const rtl = isRtl(locale);
 
-  // Header condenses and gains a hairline once the page leaves the top
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let frame = 0;
+
+    const read = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 12);
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(read);
+    };
+
+    read();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
-  // Lock body scroll while the mobile drawer is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [isMenuOpen]);
 
   const navLinks = useMemo(
@@ -48,6 +74,19 @@ export default function NavBar() {
     [locale, t]
   );
 
+  const eventsMenu = [
+    {
+      href: `/${locale}/events#upcoming-events`,
+      label: t("upcoming events"),
+      dot: "bg-brand-green",
+    },
+    {
+      href: `/${locale}/events#past-events`,
+      label: t("past events"),
+      dot: "bg-ink-400",
+    },
+  ];
+
   return (
     <header
       className={`glass sticky top-0 z-50 transition-[padding,box-shadow,background-color] duration-500 ${
@@ -56,132 +95,114 @@ export default function NavBar() {
           : ""
       }`}
     >
-      {/* Brand accent hairline */}
       <div className="h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
 
       <div
-        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-all duration-500 md:px-8 ${
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[padding] duration-500 md:px-8 ${
           scrolled ? "py-1" : "py-2"
         }`}
       >
         <Link
           href={`/${locale}`}
           className="group flex items-center"
-          aria-label="MIT — home"
+          aria-label={`MIT — ${tCommon("home")}`}
         >
           <Image
             src="/imgs/icons/mit-nav-logo.png"
-            alt="MIT Logo"
+            alt="MIT"
             width={120}
             height={40}
             priority
-            className={`object-contain transition-all duration-500 group-hover:scale-[1.03] ${
+            sizes="120px"
+            className={`object-contain transition-[height,transform] duration-500 group-hover:scale-[1.03] ${
               scrolled ? "h-9 w-auto" : "h-11 w-auto"
             }`}
           />
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
-          <div className="flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              const isEvents = link.label === t("events");
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            const isEvents = link.href.endsWith("/events");
 
-              const linkEl = (
-                <Link
-                  href={link.href}
-                  data-active={isActive}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`link-underline relative rounded-full px-3 py-2 text-[0.9rem] font-medium tracking-wide transition-colors duration-300 ${
-                    isActive
-                      ? "text-ink-900"
-                      : "text-ink-600 hover:text-ink-900"
-                  }`}
-                >
-                  <span className="inline-flex items-center gap-1">
-                    {link.label}
-                    {isEvents && (
-                      <ChevronDown
-                        className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                          isEventsDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    )}
-                  </span>
-                </Link>
-              );
+            const linkEl = (
+              <Link
+                href={link.href}
+                data-active={isActive}
+                aria-current={isActive ? "page" : undefined}
+                className={`link-underline relative rounded-full px-3 py-2 text-[0.9rem] font-medium tracking-wide transition-colors duration-300 ${
+                  isActive ? "text-ink-900" : "text-ink-600 hover:text-ink-900"
+                }`}
+              >
+                <span className="inline-flex items-center gap-1">
+                  {link.label}
+                  {isEvents && (
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                        isEventsDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
+                </span>
+              </Link>
+            );
 
-              if (isEvents) {
-                return (
-                  <div
-                    key={link.label}
-                    className="relative"
-                    onMouseEnter={() => setIsEventsDropdownOpen(true)}
-                    onMouseLeave={() => setIsEventsDropdownOpen(false)}
-                  >
-                    {linkEl}
+            if (!isEvents) return <div key={link.href}>{linkEl}</div>;
 
-                    <AnimatePresence>
-                      {isEventsDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                          className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3"
-                        >
-                          <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white p-1.5 shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)]">
-                            {[
-                              {
-                                href: `/${locale}/events#upcoming-events`,
-                                label: t("upcoming events"),
-                                dot: "bg-brand-green",
-                              },
-                              {
-                                href: `/${locale}/events#past-events`,
-                                label: t("past events"),
-                                dot: "bg-ink-400",
-                              },
-                            ].map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setIsEventsDropdownOpen(false)}
-                                className="group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm text-ink-700 transition-colors hover:bg-ink-50 hover:text-ink-900"
-                              >
-                                <span
-                                  className={`h-1.5 w-1.5 shrink-0 rounded-full ${item.dot}`}
-                                />
-                                <span className="flex-1">{item.label}</span>
-                                <ArrowUpRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
+            return (
+              <div
+                key={link.href}
+                className="relative"
+                onMouseEnter={() => setIsEventsDropdownOpen(true)}
+                onMouseLeave={() => setIsEventsDropdownOpen(false)}
+              >
+                {linkEl}
 
-              return <div key={link.label}>{linkEl}</div>;
-            })}
-          </div>
+                <AnimatePresence>
+                  {isEventsDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                      transition={{ duration: 0.22, ease: EASE_OUT_EXPO }}
+                      className="absolute start-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 rtl:translate-x-1/2"
+                    >
+                      <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white p-1.5 shadow-[0_4px_8px_rgba(16,20,15,0.06),0_24px_48px_-12px_rgba(16,20,15,0.18)]">
+                        {eventsMenu.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsEventsDropdownOpen(false)}
+                            className="group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm text-ink-700 transition-colors hover:bg-ink-50 hover:text-ink-900"
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 shrink-0 rounded-full ${item.dot}`}
+                            />
+                            <span className="flex-1">{item.label}</span>
+                            <ArrowUpRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 rtl:-scale-x-100" />
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
 
           <span className="mx-3 h-5 w-px bg-ink-200" />
           <LanguageSwitch />
         </nav>
 
-        {/* Mobile nav trigger  */}
         <div className="flex items-center gap-1 md:hidden">
           <LanguageSwitch />
           <button
             onClick={() => setIsMenuOpen(true)}
-            aria-label="Open menu"
+            aria-label={tCommon("openMenu")}
+            aria-expanded={isMenuOpen}
             className="rounded-full p-2 text-ink-700 transition-colors hover:bg-ink-100 active:scale-95"
           >
-            <CgMenuRight className="h-6 w-6" />
+            <Menu className="h-6 w-6" />
           </button>
 
           <AnimatePresence>
@@ -195,47 +216,44 @@ export default function NavBar() {
                   className="fixed inset-0 z-50 bg-ink-900/30 backdrop-blur-sm"
                 />
 
-                {/* Sliding Drawer Panel */}
                 <motion.div
-                  initial={{ x: "100%" }}
+                  initial={{ x: rtl ? "-100%" : "100%" }}
                   animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
+                  exit={{ x: rtl ? "-100%" : "100%" }}
                   transition={{ type: "spring", damping: 28, stiffness: 260 }}
-                  className="fixed right-0 top-0 z-51 flex h-full w-[82vw] max-w-xs flex-col bg-white shadow-2xl"
+                  className="fixed top-0 z-51 flex h-full w-[82vw] max-w-xs flex-col bg-white shadow-2xl ltr:right-0 rtl:left-0"
                 >
                   <div className="h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
 
                   <div className="flex flex-col p-6">
-                    {/* Header */}
                     <div className="mb-8 flex items-center justify-between">
                       <Image
                         src="/imgs/icons/mit-nav-logo.png"
-                        alt="MIT Logo"
+                        alt="MIT"
                         width={100}
                         height={34}
                         className="h-9 w-auto object-contain"
                       />
                       <button
                         onClick={() => setIsMenuOpen(false)}
-                        aria-label="Close menu"
+                        aria-label={tCommon("closeMenu")}
                         className="rounded-full bg-ink-100 p-2 transition-colors hover:bg-ink-200 active:scale-95"
                       >
                         <X className="h-5 w-5 text-ink-600" />
                       </button>
                     </div>
 
-                    {/* Nav Links */}
                     <div className="flex flex-col gap-1">
                       {navLinks.map((link, i) => {
                         const isActive = pathname === link.href;
                         return (
                           <motion.div
-                            key={link.label}
-                            initial={{ opacity: 0, x: 24 }}
+                            key={link.href}
+                            initial={{ opacity: 0, x: rtl ? -24 : 24 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{
                               delay: 0.08 + i * 0.05,
-                              ease: [0.16, 1, 0.3, 1],
+                              ease: EASE_OUT_EXPO,
                             }}
                           >
                             <Link
@@ -250,7 +268,7 @@ export default function NavBar() {
                             >
                               <span>{link.label}</span>
                               <ArrowUpRight
-                                className={`h-4 w-4 transition-all duration-300 ${
+                                className={`h-4 w-4 transition-all duration-300 rtl:-scale-x-100 ${
                                   isActive
                                     ? "text-brand-gold-dark"
                                     : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
@@ -275,6 +293,8 @@ export default function NavBar() {
           </AnimatePresence>
         </div>
       </div>
+
+      <ScrollProgress />
     </header>
   );
 }

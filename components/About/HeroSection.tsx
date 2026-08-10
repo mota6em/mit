@@ -1,8 +1,8 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 import SectionHeader from "../reusable/SectionHeader";
 import HeroImageCollage from "../reusable/HeroImageCollage";
+import Reveal from "../reusable/Reveal";
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
@@ -21,21 +21,16 @@ const HeroSection = () => {
         />
 
         {/* Right COLUMN: Text Content */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-start">
           <SectionHeader
             title={t("title")}
             align="start"
             underLine
-            className="mb-6 items-center text-center lg:items-start lg:text-left"
+            className="mb-6 items-center text-center lg:items-start lg:text-start"
           />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="lede mb-8 max-w-xl"
-          >
+          <Reveal as="p" y={12} delay={140} className="lede mb-8 max-w-xl">
             {t("description")}
-          </motion.p>
+          </Reveal>
         </div>
       </div>
     </section>

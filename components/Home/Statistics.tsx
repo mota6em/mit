@@ -9,7 +9,7 @@ const Statistics = () => {
   const t = useTranslations("home.statistics");
 
   return (
-    <section className="relative overflow-hidden border-y border-ink-200 bg-white py-24 md:py-28">
+    <section className="defer-paint relative overflow-hidden border-y border-ink-200 bg-white py-24 md:py-28">
       {/* Soft brand light pooling behind the numbers */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gold/[0.06] blur-3xl" />

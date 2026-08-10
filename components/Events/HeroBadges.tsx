@@ -1,6 +1,5 @@
 "use client";
 import { HiSparkles } from "react-icons/hi";
-import { motion } from "framer-motion";
 
 type BadgeType = "stats" | "mobileFloating" | "desktopFloating";
 
@@ -23,12 +22,12 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
   }
 
   if (type === "mobileFloating") {
-    // Mobile floating badge
+    // Mobile floating badge. The float used to be a Framer loop, which keeps a
+    // JS animation running for as long as the page is open; as a CSS keyframe
+    // it lives on the compositor and pauses itself when off screen.
     return (
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="absolute top-12 right-0 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
+      <div
+        className="animate-float absolute top-12 right-0 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
       >
         <div className="flex items-start gap-3">
           <div>
@@ -41,16 +40,14 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
           </div>
         </div>
 
-      </motion.div>
+      </div>
     );
   }
 
   // Desktop floating badge
   return (
-    <motion.div
-      animate={{ y: [0, -10, 0] }}
-      transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-      className="absolute top-20 right-10 md:right-20 lg:right-10 lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
+    <div
+      className="animate-float absolute top-20 right-10 md:right-20 lg:right-10 lg:top-28 z-30 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-lg border border-white/50 max-w-200"
     >
       <div className="flex items-start gap-3">
         <div className="rounded-lg bg-brand-gold-soft p-2 text-brand-gold-dark">
@@ -66,6 +63,6 @@ export const HeroBadges = ({ t, type = "stats" }: HeroBadgesProps) => {
         </div>
       </div>
 
-    </motion.div>
+    </div>
   );
 };

@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { HiOutlineMail, HiSparkles } from "react-icons/hi";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Reveal from "../reusable/Reveal";
 
 export default function JoinMITNewsletterSection() {
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -36,12 +36,10 @@ export default function JoinMITNewsletterSection() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 pb-20 ">
-      <motion.div
+      <Reveal
         id="subscribe"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="relative bg-ink-900 rounded-[2.5rem] p-6 md:p-16 overflow-hidden text-center md:text-left"
+        y={40}
+        className="relative bg-ink-900 rounded-[2.5rem] p-6 md:p-16 overflow-hidden text-center md:text-start"
       >
         {/* Background Patterns for the dark card */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold-dark/10 rounded-full blur-3xl" />
@@ -83,16 +81,12 @@ export default function JoinMITNewsletterSection() {
           <div className="relative">
             <div className="md:bg-white/5 backdrop-blur-sm md:border md:border-white/10 rounded-3xl md:p-8 relative">
               {status === "success" ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-10"
-                >
+                <div className="text-center py-10">
                   <HiSparkles className="text-brand-gold-dark text-5xl mx-auto mb-4" />
                   <h3 className="text-white text-xl font-semibold">
                     {t("successMessage")}
                   </h3>
-                </motion.div>
+                </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="space-y-4">
                   <input
@@ -137,7 +131,7 @@ export default function JoinMITNewsletterSection() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </Reveal>
     </div>
   );
 }

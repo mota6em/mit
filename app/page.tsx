@@ -1,38 +1,13 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import QuranQuote from "@/components/Home/QuranQuote";
-import { motion } from "framer-motion";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function RootPage() {
-  const router = useRouter();
+import { isLocale, localeFromAcceptLanguage } from "@/lib/i18n";
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const savedLocale = localStorage.getItem("lang");
-      if (savedLocale) {
-        router.push(`/${savedLocale}`);
-      } else {
-        router.push("/en");
-      }
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, [router]);
+export default async function RootPage() {
+  const saved = (await cookies()).get("lang")?.value;
 
-  return (
-    <motion.div
-      initial={{ opacity: 0.85, y: 0 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        delay: 0.3,
-        duration: 0.8,
-        ease: "easeInOut",
-      }}
-      className="fixed inset-0 z-[9999] flex items-center overflow-hidden justify-center bg-white"
-      style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
-    >
-      <QuranQuote />
-    </motion.div>
-  );
+  if (isLocale(saved)) redirect(`/${saved}`);
+
+  const acceptLanguage = (await headers()).get("accept-language");
+  redirect(`/${localeFromAcceptLanguage(acceptLanguage)}`);
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { HiSparkles, HiPhoto } from "react-icons/hi2";
 import {
   HighlightImageProps,
@@ -16,11 +15,8 @@ function StackedPreview({ images }: StackedPreviewProps) {
   return (
     <div className="absolute bottom-4 right-4 flex items-end gap-1 z-20">
       {previewImages.map((img, i) => (
-        <motion.div
+        <div
           key={i}
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.1, duration: 0.3 }}
           className="relative shadow-lg"
           style={{
             width: i === 0 ? 48 : 40,
@@ -36,17 +32,14 @@ function StackedPreview({ images }: StackedPreviewProps) {
             sizes="48px"
             className="object-cover rounded-lg border-2 border-white"
           />
-        </motion.div>
+        </div>
       ))}
       {remainingCount > 0 && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.2 }}
+        <div
           className="flex items-center justify-center w-10 h-10 rounded-lg bg-black/70 backdrop-blur-sm text-white text-xs font-bold border-2 border-white shadow-lg"
         >
           +{remainingCount}
-        </motion.div>
+        </div>
       )}
     </div>
   );
@@ -54,33 +47,26 @@ function StackedPreview({ images }: StackedPreviewProps) {
 
 function ImageCountBadge({ current }: Omit<ImageCounterProps, "total">) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
+    <div
       className="absolute top-4 left-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg z-20"
     >
       <HiPhoto className="w-4 h-4 text-ink-700" />
       <span className="text-sm font-semibold text-ink-800">
         {current} photos
       </span>
-    </motion.div>
+    </div>
   );
 }
 
 export default function HighlightImage({
   images,
   title,
-  variants,
 }: HighlightImageProps) {
   const hasImages = images && images.length > 0;
   const hasMultipleImages = images && images.length > 1;
 
   return (
-    <motion.div
-      variants={variants}
-      className="relative h-48 md:h-64 lg:h-full lg:min-h-80 order-1 lg:order-2 overflow-hidden"
-    >
+    <div className="relative h-48 md:h-64 lg:h-full lg:min-h-80 order-1 lg:order-2 overflow-hidden">
       {hasImages ? (
         <>
           <Image
@@ -112,6 +98,6 @@ export default function HighlightImage({
       {/* Decorative corner accent */}
       <div className="absolute top-4 right-4 w-20 h-20 border-t-2 border-r-2 border-white/30 rounded-tr-3xl pointer-events-none" />
       <div className="absolute bottom-4 left-4 lg:hidden w-20 h-20 border-b-2 border-l-2 border-white/30 rounded-bl-3xl pointer-events-none" />
-    </motion.div>
+    </div>
   );
 }

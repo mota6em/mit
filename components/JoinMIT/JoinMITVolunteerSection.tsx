@@ -1,9 +1,9 @@
 "use client";
-import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { SectionTag } from "../Events/SectionTag";
 import ViewMoreButton from "../reusable/ViewMoreButton";
+import Reveal from "../reusable/Reveal";
 
 export default function JoinMITVolunteerSection() {
   const t = useTranslations("joinMIT");
@@ -17,10 +17,8 @@ export default function JoinMITVolunteerSection() {
         </h2>
       </div>
 
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
+      <Reveal
+        y={50}
         className="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-ink-100 relative overflow-hidden"
       >
         {/* Decorative Corner Icon */}
@@ -31,7 +29,7 @@ export default function JoinMITVolunteerSection() {
             <FaHeart className="text-3xl" />
           </div>
 
-          <div className="flex-grow text-center md:text-left">
+          <div className="flex-grow text-center md:text-start">
             <p className="lede mb-8 md:mb-7">
               {t("volunteer.description")}
             </p>
@@ -46,7 +44,7 @@ export default function JoinMITVolunteerSection() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </Reveal>
     </div>
   );
 }

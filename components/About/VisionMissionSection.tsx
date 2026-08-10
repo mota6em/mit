@@ -1,9 +1,9 @@
 "use client";
 import { Target, Rocket } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 import SectionHeader from "../reusable/SectionHeader";
 import Section from "../reusable/Section";
+import Reveal from "../reusable/Reveal";
 
 const CARDS = [
   {
@@ -28,7 +28,7 @@ const VisionMissionSection = () => {
   const t = useTranslations("aboutMIT.visionMission");
 
   return (
-    <Section tone="plain" width="wide">
+    <Section tone="plain" width="wide" deferPaint>
       <SectionHeader
         title={t("title")}
         topText={t("coreFoundations")}
@@ -40,12 +40,11 @@ const VisionMissionSection = () => {
         {CARDS.map((card, i) => {
           const Icon = card.icon;
           return (
-            <motion.article
+            <Reveal
+              as="article"
               key={card.key}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              y={28}
+              delay={i * 120}
               className={`surface group relative flex flex-col overflow-hidden rounded-[2rem] p-9 transition-colors duration-500 md:p-12 ${card.hover}`}
             >
               {/* Ambient accent that warms the card corner */}
@@ -76,7 +75,7 @@ const VisionMissionSection = () => {
                   </span>
                 </div>
               </div>
-            </motion.article>
+            </Reveal>
           );
         })}
       </div>

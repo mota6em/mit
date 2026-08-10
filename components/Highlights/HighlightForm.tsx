@@ -65,6 +65,8 @@ export default function HighlightForm({
             desc_en={form.desc_en}
             title_hu={form.title_hu ?? ""}
             desc_hu={form.desc_hu ?? ""}
+            title_ar={form.title_ar ?? ""}
+            desc_ar={form.desc_ar ?? ""}
             date={form.date}
             setForm={setForm}
           />

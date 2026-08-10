@@ -25,6 +25,14 @@
     "join": {
       "title": "Csatlakozz hozzánk | MIT",
       "description": "Légy te is a Muszlim Ifjúság Társaság aktív tagja! Önkénteskedj, fejlődj velünk és tartozz egy szuper közösséghez."
+    },
+    "about": {
+      "title": "Rólunk | MIT - Muszlim Ifjúság Társaság",
+      "description": "Ismerd meg a Muszlim Ifjúság Társaság (MIT) vízióját, misszióját, fő szolgáltatásait, közösségi szerepét és eredményeit."
+    },
+    "highlights": {
+      "title": "Kiemeltek és Bejelentések | MIT Magyarország",
+      "description": "A Muszlim Ifjúság Társaság (MIT) legfrissebb hírei, bejelentései és közösségi pillanatai."
     }
   },
   "nav": {
@@ -43,6 +51,16 @@
     "copied": "Email Másolva!",
     "copyright": "Minden jog fenntartva.",
     "developedBy": "Fejlesztette:"
+  },
+  "common": {
+    "language": "Nyelv",
+    "changeLanguage": "Nyelv váltása",
+    "backToTop": "Vissza a tetejére",
+    "skipToContent": "Ugrás a tartalomra",
+    "openMenu": "Menü megnyitása",
+    "closeMenu": "Menü bezárása",
+    "readingProgress": "Olvasási haladás",
+    "home": "Főoldal"
   },
   "highlights": {
     "highlights_2026_title": "2026 Kiemeltek",
@@ -91,6 +109,7 @@
       "showAllUpcoming": "Összes következő Események megtekintése",
       "showAllPast": "Összes koróbbi Események megtekintése",
       "authorName": "MIT",
+      "newProgram": "Új Program",
       "emptyUpcoming": "Jelenleg nincsenek közelgő események — nézz vissza hamarosan.",
       "emptyPast": "Még nincsenek megjeleníthető korábbi események.",
       "search": "Események keresése",

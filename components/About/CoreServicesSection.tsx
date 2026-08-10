@@ -1,10 +1,10 @@
 "use client";
 import { BookOpen, Users, Megaphone, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 import { RiServiceLine } from "react-icons/ri";
 import SectionHeader from "../reusable/SectionHeader";
 import Section from "../reusable/Section";
+import Reveal from "../reusable/Reveal";
 
 /**
  * Each service carries its own accent so the four cards are scannable as
@@ -20,17 +20,8 @@ const SERVICES = [
 const CoreServicesSection = () => {
   const t = useTranslations("aboutMIT.coreServices");
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.12 } },
-  };
-  const item = {
-    hidden: { opacity: 0, y: 28 },
-    show: { opacity: 1, y: 0 },
-  };
-
   return (
-    <Section tone="tinted" width="wide">
+    <Section tone="tinted" width="wide" deferPaint>
       <SectionHeader
         title={t("title")}
         icon={<RiServiceLine className="h-7 w-7" />}
@@ -38,20 +29,15 @@ const CoreServicesSection = () => {
         underLine
       />
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
-      >
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {SERVICES.map((service, index) => {
           const Icon = service.icon;
           return (
-            <motion.article
+            <Reveal
+              as="article"
               key={index}
-              variants={item}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              y={28}
+              delay={index * 120}
               className="surface surface-lift group relative flex h-full flex-col overflow-hidden rounded-3xl p-7"
             >
               {/* Accent bar reveals on hover — colour identifies the service */}
@@ -76,10 +62,10 @@ const CoreServicesSection = () => {
               <p className="text-sm leading-relaxed text-ink-600">
                 {t(`services.${index}.description`)}
               </p>
-            </motion.article>
+            </Reveal>
           );
         })}
-      </motion.div>
+      </div>
     </Section>
   );
 };

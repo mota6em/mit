@@ -19,7 +19,7 @@ export default function AdminLogin() {
         password,
         callbackUrl: "/admin",
       });
-    } catch (err) {
+    } catch {
       setError("Invalid credentials");
     } finally {
       setLoading(false);

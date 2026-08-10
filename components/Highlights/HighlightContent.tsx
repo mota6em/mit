@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import { HighlightContentProps } from "@/lib/types";
 
@@ -8,14 +7,10 @@ export default function HighlightContent({
   title,
   description,
   ctaLabel,
-  variants,
   children,
 }: HighlightContentProps) {
   return (
-    <motion.div
-      variants={variants}
-      className="relative p-6 md:p-8 lg:p-10 flex flex-col justify-center order-2 lg:order-1 z-20"
-    >
+    <div className="relative p-6 md:p-8 lg:p-10 flex flex-col justify-center order-2 lg:order-1 z-20">
       {children}
 
       <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-ink-900 mb-4 leading-tight tracking-tight">
@@ -33,6 +28,6 @@ export default function HighlightContent({
           <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 }

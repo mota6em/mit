@@ -53,6 +53,10 @@ export default function EventsSection(props: EventsSectionProps) {
   return (
     <section
       id={sectionId}
+      /* Deliberately not `defer-paint`: the nav dropdown links straight to
+         #upcoming-events / #past-events, and a section whose height is still
+         an estimate when the browser resolves the hash lands at the wrong
+         scroll offset. */
       className="mx-auto flex w-full max-w-6xl scroll-mt-24 flex-col items-center gap-y-10 px-5 py-16 sm:px-8 md:py-20"
     >
       <SectionHeader title={titleText} underLine />
@@ -61,7 +65,7 @@ export default function EventsSection(props: EventsSectionProps) {
       {searchable && !loading && displayedPrograms.length > 0 && (
         <div className="flex w-full max-w-md flex-col items-center gap-2">
           <div className="group relative w-full">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 transition-colors group-focus-within:text-brand-green" />
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 transition-colors group-focus-within:text-brand-green" />
             <input
               type="search"
               value={query}
@@ -75,7 +79,7 @@ export default function EventsSection(props: EventsSectionProps) {
                 type="button"
                 onClick={() => setQuery("")}
                 aria-label={t("latestPrograms.clearSearch")}
-                className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
+                className="absolute end-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
               >
                 <X className="h-4 w-4" />
               </button>

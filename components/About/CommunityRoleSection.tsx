@@ -1,10 +1,10 @@
 "use client";
 import { Building2, Heart, Link as LinkIcon, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 import { RiUserCommunityFill } from "react-icons/ri";
 import SectionHeader from "../reusable/SectionHeader";
 import Section from "../reusable/Section";
+import Reveal from "../reusable/Reveal";
 
 const ROLES = [
   { icon: Building2, accent: "text-brand-green", tile: "bg-brand-green-soft" },
@@ -17,7 +17,7 @@ const CommunityRoleSection = () => {
   const t = useTranslations("aboutMIT.communityRole");
 
   return (
-    <Section tone="plain" width="default">
+    <Section tone="plain" width="default" deferPaint>
       <SectionHeader
         title={t("title")}
         icon={<RiUserCommunityFill className="h-7 w-7" />}
@@ -34,12 +34,10 @@ const CommunityRoleSection = () => {
         {ROLES.map((role, index) => {
           const Icon = role.icon;
           return (
-            <motion.li
+            <Reveal
+              as="li"
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              delay={index * 80}
               className="group flex items-center gap-5 py-7 transition-colors duration-300 md:gap-8"
             >
               <span className="display w-10 shrink-0 text-xl text-ink-300 transition-colors duration-300 group-hover:text-brand-gold md:text-2xl">
@@ -55,7 +53,7 @@ const CommunityRoleSection = () => {
               <p className="text-base font-medium leading-relaxed text-ink-800 md:text-lg">
                 {t(`roles.${index}`)}
               </p>
-            </motion.li>
+            </Reveal>
           );
         })}
       </ul>

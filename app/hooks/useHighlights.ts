@@ -5,8 +5,10 @@ const INITIAL_FORM_STATE: HighlightData = {
   images: [],
   title_en: "",
   title_hu: "",
+  title_ar: "",
   desc_en: "",
   desc_hu: "",
+  desc_ar: "",
   status: "active",
   date: "",
 };
@@ -38,8 +40,10 @@ export function useHighlights() {
       return false;
     }
 
-    const refresh = await fetch("/api/highlights");
-    setHighlights(await refresh.json());
+    // The write already returns the updated list — no second round-trip, and
+    // no chance of reading back through a cache that hasn't been purged yet.
+    const { highlights: updated } = await res.json();
+    if (Array.isArray(updated)) setHighlights(updated);
     setLoading(false);
     return true;
   };
@@ -57,14 +61,17 @@ export function useHighlights() {
       alert("Wrong Password!");
       return false;
     }
+    // Removing the row locally is enough; the full-page reload this used to do
+    // threw away the whole app and re-downloaded every asset.
     setHighlights(highlights.filter((h) => (h._id || h.id) !== id));
-    window.location.reload();
     return true;
   };
 
   const handleEdit = (highlight: HighlightData) => {
     setForm({
       ...highlight,
+      title_ar: highlight.title_ar || "",
+      desc_ar: highlight.desc_ar || "",
       status: highlight.status || "active",
       date: highlight.date || "",
       images: highlight.images || [],
