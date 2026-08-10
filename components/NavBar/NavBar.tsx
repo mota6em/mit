@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, ChevronDown, ArrowUpRight, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,7 @@ export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
@@ -29,6 +31,10 @@ export default function NavBar() {
 
   const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
   const overlay = isHome && !scrolled;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     let frame = 0;
@@ -230,16 +236,22 @@ export default function NavBar() {
           >
             <Menu className="h-6 w-6" />
           </button>
+        </div>
+      </div>
 
+      <ScrollProgress />
+
+      {mounted &&
+        createPortal(
           <AnimatePresence>
             {isMenuOpen && (
-              <>
+              <div className="md:hidden">
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={() => setIsMenuOpen(false)}
-                  className="fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-sm"
+                  className="fixed inset-0 z-[80] bg-ink-950/40 backdrop-blur-sm"
                 />
 
                 <motion.div
@@ -247,7 +259,7 @@ export default function NavBar() {
                   animate={{ x: 0 }}
                   exit={{ x: rtl ? "-100%" : "100%" }}
                   transition={{ type: "spring", damping: 30, stiffness: 280 }}
-                  className="fixed top-0 z-51 flex h-full w-[84vw] max-w-xs flex-col overflow-hidden bg-paper shadow-2xl ltr:right-0 rtl:left-0"
+                  className="fixed top-0 z-[81] flex h-full w-[84vw] max-w-xs flex-col overflow-hidden bg-paper shadow-2xl ltr:right-0 rtl:left-0"
                 >
                   <div className="h-[3px] w-full shrink-0 bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
 
@@ -321,13 +333,11 @@ export default function NavBar() {
                     </div>
                   </div>
                 </motion.div>
-              </>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <ScrollProgress />
+          </AnimatePresence>,
+          document.body
+        )}
     </header>
   );
 }
