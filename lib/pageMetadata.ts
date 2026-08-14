@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 
 import { DEFAULT_LOCALE, LOCALES, LOCALE_META, toLocale } from "@/lib/i18n";
-import { SITE_NAME, TITLE_SUFFIX, localeAlternates } from "@/lib/seo";
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  TITLE_SUFFIX,
+  localeAlternates,
+} from "@/lib/seo";
 
 type MetadataKey = "root" | "events" | "join" | "about" | "highlights";
 
@@ -32,7 +37,7 @@ export async function buildPageMetadata({
   const t = messages[key] ?? messages.root;
 
   const alternates = localeAlternates(locale, path);
-  const ogImage = image ?? "/imgs/icons/mit-logo-full-resized.png";
+  const ogImage = image ?? DEFAULT_OG_IMAGE;
 
   return {
     title: {
@@ -52,7 +57,7 @@ export async function buildPageMetadata({
         (l) => LOCALE_META[l].openGraph
       ),
       type: "website",
-      images: [{ url: ogImage, width: 1200, height: 630, alt: t.title }],
+      images: [{ url: ogImage, alt: t.title }],
     },
     twitter: {
       card: "summary_large_image",

@@ -8,6 +8,7 @@ import { CalendarDays, History } from "lucide-react";
 import PageHero from "../reusable/PageHero";
 import NextEventStrip from "./NextEventStrip";
 import { toLocale } from "@/lib/i18n";
+import { PHOTO } from "@/lib/media";
 
 const Hero = () => {
   const t = useTranslations("events");
@@ -23,8 +24,8 @@ const Hero = () => {
       title={title}
       accentFrom={words - 1}
       lede={t("hero.subtitle")}
-      image={{ src: "/imgs/events/mehdi.jpg" }}
-      inset={{ src: "/imgs/events/event-group.jpg" }}
+      image={{ src: PHOTO.summerProgram, position: "50% 72%" }}
+      inset={{ src: PHOTO.parkPicnic }}
       caption={t("hero.joinStats")}
       actions={
         <>

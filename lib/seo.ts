@@ -36,7 +36,9 @@ export const SOCIAL_PROFILES = [
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
-export const DEFAULT_OG_IMAGE = "/imgs/icons/mit-logo-full-resized.png";
+export const BRAND_LOGO = "/imgs/icons/mit-logo-full-resized.png";
+
+export const DEFAULT_OG_IMAGE = "/imgs/community/mosque-talk.jpg";
 
 /** Search engines cut descriptions around 160 characters; give them a clean cut. */
 export function metaDescription(text: string, limit = 158): string {
@@ -83,11 +85,17 @@ export function organizationJsonLd() {
     email: CONTACT_EMAIL,
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl("/imgs/icons/mit-logo-full-resized.png"),
+      url: absoluteUrl(BRAND_LOGO),
       caption: SITE_NAME,
     },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     sameAs: SOCIAL_PROFILES,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "volunteering",
+      email: CONTACT_EMAIL,
+      availableLanguage: ["en", "hu", "ar"],
+    },
     areaServed: {
       "@type": "Country",
       name: "Hungary",

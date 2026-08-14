@@ -20,7 +20,7 @@ export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
 
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
@@ -32,9 +32,10 @@ export default function NavBar() {
   const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
   const overlay = isHome && !scrolled;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const openMenu = () => {
+    setPortalReady(true);
+    setIsMenuOpen(true);
+  };
 
   useEffect(() => {
     let frame = 0;
@@ -225,7 +226,7 @@ export default function NavBar() {
         <div className="flex items-center gap-1.5 md:hidden">
           <LanguageSwitch tone={overlay ? "light" : "ink"} />
           <button
-            onClick={() => setIsMenuOpen(true)}
+            onClick={openMenu}
             aria-label={tCommon("openMenu")}
             aria-expanded={isMenuOpen}
             className={`rounded-full p-2 transition-colors duration-500 active:scale-95 ${
@@ -241,7 +242,7 @@ export default function NavBar() {
 
       <ScrollProgress />
 
-      {mounted &&
+      {portalReady &&
         createPortal(
           <AnimatePresence>
             {isMenuOpen && (

@@ -7,6 +7,7 @@ import { Megaphone } from "lucide-react";
 
 import PageHero from "../reusable/PageHero";
 import { toLocale } from "@/lib/i18n";
+import { PHOTO } from "@/lib/media";
 
 const Hero = () => {
   const t = useTranslations("highlights");
@@ -23,7 +24,8 @@ const Hero = () => {
       title={title}
       accentFrom={words - 1}
       lede={t("stayUpdated")}
-      image={{ src: "/imgs/events/one-year-mit-layout.jpg" }}
+      image={{ src: PHOTO.internshipGraduation }}
+      inset={{ src: PHOTO.techWorkshop }}
       actions={
         <Link href={`/${locale}/events`} className="btn btn-ink btn-sheen">
           <Megaphone className="h-4 w-4" />

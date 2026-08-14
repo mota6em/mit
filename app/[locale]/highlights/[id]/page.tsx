@@ -10,6 +10,7 @@ import {
 import { LOCALE_META, localizedField, toLocale } from "@/lib/i18n";
 import {
   ORGANIZATION_ID,
+  DEFAULT_OG_IMAGE,
   SITE_NAME,
   absoluteUrl,
   breadcrumbJsonLd,
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = localizedField(highlight, "title", locale);
   const description = localizedField(highlight, "desc", locale);
-  const image = highlight.images?.[0] || "/imgs/icons/mit-logo-full-resized.png";
+  const image = highlight.images?.[0] || DEFAULT_OG_IMAGE;
   const alternates = localeAlternates(
     locale,
     `/highlights/${highlight.slug || id}`
@@ -105,7 +106,7 @@ export default async function HighlightPageServer({ params }: Props) {
               (highlight as { updatedAt?: string }).updatedAt ?? published,
             image: highlight.images?.length
               ? highlight.images.map((src) => absoluteUrl(src))
-              : [absoluteUrl("/imgs/icons/mit-logo-full-resized.png")],
+              : [absoluteUrl(DEFAULT_OG_IMAGE)],
             author: { "@id": ORGANIZATION_ID },
             publisher: { "@id": ORGANIZATION_ID },
           },

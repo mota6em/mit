@@ -7,6 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import PageHero from "../reusable/PageHero";
 import { toLocale } from "@/lib/i18n";
+import { PHOTO } from "@/lib/media";
 
 const HeroSection = () => {
   const t = useTranslations("aboutMIT.hero");
@@ -23,8 +24,9 @@ const HeroSection = () => {
       title={title}
       accentFrom={words - 1}
       lede={t("description")}
-      image={{ src: "/imgs/about/femynso-mit.jpg" }}
-      inset={{ src: "/imgs/icons/icon.jpg" }}
+      image={{ src: PHOTO.femysoAward, alt: t("photoAlt") }}
+      inset={{ src: PHOTO.mitBadgePecs }}
+      caption={t("photoCaption")}
       actions={
         <Link
           href={`/${locale}/join-mit`}

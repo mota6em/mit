@@ -13,8 +13,8 @@ type PageHeroProps = {
   lede?: string;
   actions?: ReactNode;
   meta?: ReactNode;
-  image: { src: string; alt?: string };
-  inset?: { src: string; alt?: string };
+  image: { src: string; alt?: string; position?: string };
+  inset?: { src: string; alt?: string; position?: string };
   caption?: string;
   className?: string;
   priority?: boolean;
@@ -105,6 +105,7 @@ export default function PageHero({
               priority={priority}
               quality={78}
               sizes="(max-width: 1024px) 92vw, 480px"
+              style={{ objectPosition: image.position }}
               className="object-cover"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-transparent" />
@@ -124,6 +125,7 @@ export default function PageHero({
                 fill
                 quality={70}
                 sizes="160px"
+                style={{ objectPosition: inset.position }}
                 className="object-cover"
               />
             </div>

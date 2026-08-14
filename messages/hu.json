@@ -44,9 +44,6 @@
     "join mit": "CSATLAKOZZ",
     "upcoming events": "Közelgő Események",
     "past events": "Korábbi Események",
-    "highlights 2026": "2026 Kiemeltek",
-    "highlights 2025": "2025 Kiemeltek",
-    "highlights archive": "2024 és Korábbi (Archívum)",
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Másolva!",
     "copyright": "Minden jog fenntartva.",
@@ -59,14 +56,9 @@
     "skipToContent": "Ugrás a tartalomra",
     "openMenu": "Menü megnyitása",
     "closeMenu": "Menü bezárása",
-    "readingProgress": "Olvasási haladás",
     "home": "Főoldal"
   },
   "highlights": {
-    "highlights_2026_title": "2026 Kiemeltek",
-    "highlights_2025_title": "2025 Kiemeltek",
-    "highlights_archive_title": "Archívum (2024 és Korábbi)",
-    "archive_note": "Ez a tartalom a közösségi médiánkban van dokumentálva, mivel a weboldal 2025 végén indult.",
     "viewAllHighlights": "Összes Megtekintése",
     "latestAnnouncement": "Legfrissebb Kiemelt / Bejelentés",
     "readMore": "Tovább Olvasom",
@@ -79,7 +71,6 @@
     "copied": "Link Másolva!",
     "stayUpdated": "Maradj naprakész a legfrissebb híreinkkel",
     "heroTitle": "Kiemeltek & Bejelentések",
-    "noImages": "Nincs elérhető kép",
     "archiveTitle": "A weboldal 2025 végén indult",
     "archiveDescription": "A 2025-es és korábbi tartalmak a közösségi média felületeinken találhatóak."
   },
@@ -93,36 +84,40 @@
     },
     "hero": {
       "title": "Muszlim Ifjúsági Társaság",
-      "subtitle1": "Események, workshopok és közösségi programok muszlimoknak Magyarországon"
+      "subtitle1": "Események, workshopok és közösségi programok muszlimoknak Magyarországon",
+      "frames": {
+        "mosqueTalk": "Megtelt terem egy előadáson",
+        "parkPicnic": "Együtt egy nyári pikniken",
+        "springOuting": "Egy nap a szabadban",
+        "techWorkshop": "Gyakorlati munka workshopon",
+        "studyCircle": "Figyelem egy alkalmon"
+      }
     },
     "ayah": {
       "translation": "Segítsétek egymást a jóságban és az istenfélelemben.",
       "reference": "Korán 5:2"
     },
     "values": [
-      "Őszinteség",
-      "Közösség",
-      "Kiválóság",
-      "Ihszán",
-      "Önkéntesség",
-      "Testvériség"
+      "Hit · Iman",
+      "Őszinteség · Ikhlász",
+      "Kiválóság · Ihszán",
+      "Egység · Ittihád"
     ],
     "whoWeAre": {
       "title": "Kik Vagyunk",
       "description": {
-        "intro": "A Magyarországi Ifjúsági Muszlimok (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát.",
-        "mission": "Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez. Az iszlám alapelvei – az őszinteség, a közösség és a kiválóság (ihsan) – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel szolgálja mind az Ummát, mind a társadalmat."
+        "intro": "A Muszlim Ifjúsági Társaság (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát.",
+        "mission": "Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez. Az iszlám alapelvei – a hit, az őszinteség, a kiválóság és az egység – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel szolgálja mind az Ummát, mind a társadalmat."
       },
-      "learnMore": "Tudj meg többet a MIT-ről"
+      "learnMore": "Tudj meg többet a MIT-ről",
+      "photoAlt": "Egy önkéntes hozzászól egy nyílt beszélgetésen"
     },
     "latestPrograms": {
       "title": "Legfrissebb Programjaink",
       "upcomingTitle": "Következő Események",
       "pastTitle": "Korábbi Események",
-      "showAllUpcoming": "Összes következő Események megtekintése",
-      "showAllPast": "Összes koróbbi Események megtekintése",
-      "authorName": "MIT",
-      "newProgram": "Új Program",
+      "showAllUpcoming": "Összes közelgő esemény megtekintése",
+      "showAllPast": "Összes korábbi esemény megtekintése",
       "emptyUpcoming": "Jelenleg nincsenek közelgő események — nézz vissza hamarosan.",
       "emptyPast": "Még nincsenek megjeleníthető korábbi események.",
       "search": "Események keresése",
@@ -136,16 +131,9 @@
     "title": "Csatlakozz az MIT-hez",
     "subtitle": "Kapcsolódj hozzánk és légy részese élénk közösségünknek",
     "joinUsTag": "Tarts Velünk",
-    "impactTag": "Valódi Hatás",
     "socialTag": "Közösségi Média",
     "connect": "Kapcsolatfelvétel",
-    "stats": {
-      "members": "Aktív Tagok",
-      "events": "Éves Események",
-      "dedication": "Elkötelezettség"
-    },
     "connectWithUs": "Kapcsolódj Hozzánk",
-    "followTag": "Maradj Kapcsolatban",
     "socialDescription": "Kövess minket a közösségi médiában, hogy értesülj a legfrissebb eseményeinkről, programjainkról és közösségi tevékenységeinkről.",
     "followUs": "Kövess Minket",
     "copyEmail": "Email Másolása",
@@ -153,7 +141,7 @@
     "socialText": {
       "facebook": "Csatlakozz Facebook közösségünkhöz a napi frissítésekért",
       "instagram": "Kövesd utunkat fotókon és történeteken keresztül",
-      "whatsapp": "Csatlakozz a szakmai közösségünkhöz WhatsAppon",
+      "whatsapp": "Csatlakozz a közösségi WhatsApp-csoportunkhoz",
       "email": "Lépj velünk kapcsolatba közvetlenül emailen"
     },
     "stayUpdated": "Maradj Naprakész",
@@ -165,23 +153,71 @@
     "emailPlaceholder": "E-mail címed",
     "subscribe": "Feliratkozás Most",
     "subscribing": "Feliratkozás...",
-    "subscribed": "Feliratkozva!",
     "privacyNote": "Tiszteletben tartjuk az adataidat. Bármikor leiratkozhatsz.",
-    "callToAction": "Csatlakozz hozzánk egy erősebb, összetartóbb közösség építésében",
-    "tag1": "Egység",
-    "tag2": "Fejlődés",
-    "tag3": "Közösség",
     "finalMessage": "Együtt értelmes élményeket és tartós kapcsolatokat teremtünk, amelyek erősítik hitünket és közösségünket.",
-    "scrollTop": "Görgess fel és fedezz fel többet",
     "volunteer": {
-      "title": "Légy Önkéntes",
-      "description": "Csatlakozz szenvedélyes önkénteseink csapatához és segíts nekünk értelmes eseményeket szervezni, közösségi kapcsolatokat építeni, és tartós hatást gyakorolni a magyarországi muszlim diákokra.",
+      "eyebrow": "Önkénteskedj velünk",
+      "title": "Szeretnél önkénteskedni?",
+      "description": "A MIT teljes egészében önkéntesekkel működik. Nincs űrlap és nincs várólista — írj nekünk, és minden levelet elolvas egy valódi ember.",
       "button": "Jelentkezz Önkéntesnek",
       "note": "48 órán belül válaszolunk",
-      "benefits": {
-        "impact": "Valódi Hatás",
-        "network": "Kapcsolatépítés",
-        "leadership": "Vezetői Lehetőségek"
+      "emailLabel": "Írj nekünk ide",
+      "stepsTitle": "Mit írj meg nekünk",
+      "steps": [
+        {
+          "title": "Mesélj magadról néhány szóban",
+          "text": "A neved, hogy mit tanulsz vagy mivel foglalkozol, és hol élsz Magyarországon."
+        },
+        {
+          "title": "Miért szeretnél csatlakozni?",
+          "text": "Mi vonz a MIT-ben, és mit remélsz a közös munkától."
+        },
+        {
+          "title": "Mivel járulnál hozzá?",
+          "text": "Milyen területek érdekelnek, és mennyi időt tudsz reálisan rászánni."
+        },
+        {
+          "title": "Küldd el az önéletrajzod",
+          "text": "Csatold a levélhez — a PDF a legjobb. Egy rövid összefoglaló is elég."
+        }
+      ],
+      "compose": {
+        "title": "Írd meg az üzeneted",
+        "lede": "Töltsd ki, és összeállítjuk helyetted a levelet. Utána már csak csatold az önéletrajzod és küldd el.",
+        "subject": "Önkéntes jelentkezés",
+        "nameLabel": "A neved",
+        "namePlaceholder": "Vezeték- és keresztnév",
+        "interestsLabel": "Mihez járulnál hozzá szívesen?",
+        "interestsHint": "Annyit választhatsz, amennyit szeretnél.",
+        "messageLabel": "Miért szeretnél csatlakozni?",
+        "messagePlaceholder": "Néhány mondat magadról és arról, miben segítenél.",
+        "charactersLeft": "még {count} karakter",
+        "previewLabel": "A leveled",
+        "subjectLabel": "Tárgy",
+        "toLabel": "Címzett",
+        "mailto": "Megnyitás a levelezőben",
+        "copy": "Üzenet másolása",
+        "copied": "Üzenet másolva",
+        "copyEmail": "Cím másolása",
+        "emailCopied": "Cím másolva",
+        "copyFailed": "A másolás nem sikerült — jelöld ki a fenti szöveget.",
+        "cvNote": "Küldés előtt csatold az önéletrajzod. Ezt a levelezőprogram nem teszi meg helyetted.",
+        "interests": {
+          "events": "Események és közösségi programok",
+          "education": "Oktatás és tanulókörök",
+          "media": "Média, design és kommunikáció",
+          "people": "Önkéntesek koordinálása",
+          "other": "Valami más"
+        },
+        "body": {
+          "greeting": "Sziasztok MIT csapat!",
+          "intro": "Szeretnék önkénteskedni a MIT-nél.",
+          "name": "Név",
+          "interests": "Ezekhez járulnék hozzá",
+          "why": "Miért szeretnék csatlakozni",
+          "cv": "Az önéletrajzomat csatoltam.",
+          "signOff": "Köszönöm,"
+        }
       }
     },
     "namePlaceholder": "Neved",
@@ -191,21 +227,55 @@
   "aboutMIT": {
     "hero": {
       "title": "Kik Vagyunk",
-      "description": "A Magyarországi Ifjúsági Muszlimok (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát. Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám alapelvei – az őszinteség, a közösség és a kiválóság (ihsan) – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel és céltudatosan szolgálja mind az Ummát, mind a társadalmat."
+      "description": "A Muszlim Ifjúsági Társaság (MIT) egy önkéntes alapú szervezet, amely a magyarországi muszlim fiatalok egyesítésének és megerősítésének szenteli magát. Teret biztosítunk a tanuláshoz, az együttműködéshez és a személyes fejlődéshez, ahol a fiatal muszlimok erősíthetik hitüket és vezetői képességeiket. Az iszlám alapelvei – a hit, az őszinteség, a kiválóság és az egység – mentén törekszünk egy olyan generáció felépítésére, amely tisztességgel és céltudatosan szolgálja mind az Ummát, mind a társadalmat.",
+      "photoAlt": "A MIT átveszi a FEMYSO Legtöbbet Fejlődött Szervezet díját",
+      "photoCaption": "FEMYSO — Legtöbbet fejlődött szervezet"
     },
     "visionMission": {
       "title": "MIT VÍZIÓ ÉS MISSZIÓ",
       "coreFoundations": "Alappillérek",
       "vision": {
         "title": "MIT Vízió",
-        "description": "Megerősíteni a magyarországi muszlim fiatalokat, hogy aktív, magabiztos és egységes vezetőivé váljanak a hitüknek és a társadalomnak.",
-        "tagline": "Fókusz és Tisztánlátás"
+        "description": "Egy önfenntartó központ Magyarországon, ahol a muszlim fiatalok találkoznak, fejlődnek, és azokká a magabiztos vezetőkké válnak, akikre a közösségüknek – az Ummának – és a társadalomnak szüksége van, hogy a következő nemzedékeket is szolgálhassák.",
+        "tagline": "Hová tartunk"
       },
       "mission": {
         "title": "MIT Misszió",
-        "description": "Küldetésünk, hogy Allahot szolgáljuk csapatmunka, fejlődés és közösségünk szolgálata által. Oktatással, rendezvényekkel és közösségi munkával a MIT a muszlim vezetők következő generációját neveli.",
-        "tagline": "Növekedés és Cselekvés"
+        "description": "Megerősíteni a magyarországi fiatal muszlimokat, hogy hitükben növekedjenek, tisztességgel vezessenek, együttérzéssel szolgáljanak, és hidakat építsenek, amelyek erősítik a muszlim közösséget és a magyar társadalmat egyaránt.",
+        "tagline": "Hogyan jutunk el oda"
       }
+    },
+    "values": {
+      "eyebrow": "Amiben hiszünk",
+      "title": "Értékeink",
+      "lede": "Négy elköteleződés, amely meghatározza, hogyan találkozunk, hogyan szolgálunk és hogyan bánunk egymással.",
+      "closing": "Hit, őszinteség, kiválóság, egység",
+      "items": [
+        {
+          "name": "Hit",
+          "term": "Iman",
+          "script": "إيمان",
+          "description": "Az iszlám értékeiben gyökerezve."
+        },
+        {
+          "name": "Őszinteség",
+          "term": "Ikhlász",
+          "script": "إخلاص",
+          "description": "Őszinte szándékkal és tiszta szívvel szolgálunk."
+        },
+        {
+          "name": "Kiválóság",
+          "term": "Ihszán",
+          "script": "إحسان",
+          "description": "Minőségi szolgálat, szakmaiság, tisztesség és hitelesség — nem a tökéletesség."
+        },
+        {
+          "name": "Egység",
+          "term": "Ittihád",
+          "script": "اتحاد",
+          "description": "Nyitottak vagyunk mindenkire, aki tanulni szeretne, kapcsolatokat építene az Ummán belül, és szívesen osztozik értékes élményekben és jó hangulatban."
+        }
+      ]
     },
     "coreServices": {
       "title": "FŐ SZOLGÁLTATÁSAINK",
@@ -224,7 +294,7 @@
           "description": "Kampányok, tudatosság projektek, online da'wah."
         },
         {
-          "title": "Emberierőforrás",
+          "title": "Emberi Erőforrás",
           "description": "Önkéntes programok és vezetői képzések."
         }
       ]
@@ -269,9 +339,7 @@
       "subtitle": "Workshopok, piknikek és még sok más-ami összehoz minket.",
       "primaryBtn": "Következő Események",
       "secondaryBtn": "Korábbi Események",
-      "joinStats": "Csatlakozz a következő eseményen!",
-      "badgeJoin": "Tarts Velünk",
-      "badgeWeekly": "Heti Összejövetelek"
+      "joinStats": "Csatlakozz a következő eseményen!"
     },
     "countdown": {
       "eyebrow": "Következő alkalom",
@@ -282,14 +350,12 @@
     },
     "eventDetails": {
       "back": "Vissza az eseményekhez",
-      "dateLabel": "Dátum",
       "notFoundTitle": "Esemény nem található",
       "notFoundDesc": "A keresett esemény nem létezik, vagy törölve lett.",
       "loading": "Esemény betöltése...",
       "organizer": "Szervező",
       "share": "Megosztás",
       "copied": "Link Másolva!",
-      "repeats": "Ismétlődik:",
       "dm": "Üzenj Instagramon",
       "views": "Megtekintés",
       "register": "Regisztrálj most"
