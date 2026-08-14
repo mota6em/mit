@@ -1,42 +1,59 @@
-# MIT Website
+# MIT — Muszlim Ifjúság Társaság
 
-A modern, multilingual web platform built with **Next.js 16** and **React 19**. This project is designed for community engagement, featuring event management, newsletter distribution, and a secure administrative backend.
+The website of the Muslim Youth Association of Hungary: a volunteer-run community
+organisation in Budapest. Built with **Next.js 16** and **React 19**, it publishes the
+association's events, highlights and volunteer programme in three languages.
 
-## 🚀 Tech Stack
+**Live:** [mit-hu.eu](https://mit-hu.eu)
 
-- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/)
-- **Core Library:** [React 19](https://react.dev/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
+## Tech Stack
+
+- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/) with Turbopack
+- **Language:** [TypeScript](https://www.typescriptlang.org/) (strict)
 - **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Animation:** CSS-driven reveals with an IntersectionObserver, [Framer Motion](https://www.framer.com/motion/) for the mobile menu
 - **Database:** [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/)
-- **Caching/KV:** [Upstash Redis](https://upstash.com/)
-- **Authentication:** [NextAuth.js (v5 Beta)](https://authjs.dev/)
-- **Internationalization:** [next-intl](https://next-intl-docs.vercel.app/)
-- **Media Hosting:** [Cloudinary](https://cloudinary.com/)
+- **Caching / view counts:** [Upstash Redis](https://upstash.com/)
+- **Auth:** [NextAuth.js v5](https://authjs.dev/) (admin only)
+- **i18n:** [next-intl](https://next-intl-docs.vercel.app/) — English, Hungarian, Arabic (RTL)
+- **Media:** [Cloudinary](https://cloudinary.com/) for admin uploads
 
-## ✨ Key Features
+## Features
 
-- **Multilingual Support:** Fully localized experience for English and Hungarian users.
-- **Event Management:** Dynamic event listings with dedicated detail pages and location mapping.
-- **Admin Dashboard:** Secure interface for managing events, newsletters, and viewing site analytics.
-- **Newsletter System:** Integrated subscription service with automated management.
-- **Modern UI:** Responsive design using Radix UI primitives and custom interactive components like Aurora backgrounds and infinite moving cards.
+- **Three locales, one layout.** English, Hungarian and Arabic share the same components;
+  direction-aware utilities handle the RTL flip.
+- **Events & highlights.** Editable through the admin dashboard, rendered as statically
+  generated pages that revalidate hourly, with search, countdowns and per-event detail pages.
+- **Volunteer flow.** `/join-mit` guides an applicant through what to tell us, then composes
+  a ready-to-send email to `muszlimifjusag@gmail.com` — no third-party form, no fake backend.
+- **Newsletter.** Subscription endpoint backed by MongoDB with duplicate handling.
+- **Admin dashboard.** Protected routes for events, highlights and newsletter subscribers.
 
-## Live Demo
+## Project Structure
 
-[MIT](https://mit-hu.eu)
+- **`app/[locale]`** — public routes (home, about, events, highlights, join)
+- **`app/admin`** — protected admin dashboard
+- **`app/api`** — auth, events, highlights, newsletter, uploads, view counts
+- **`components`** — feature sections plus shared building blocks in `components/reusable`
+- **`lib`** — services, SEO helpers, i18n utilities and the `media` registry of site photography
+- **`messages`** — `en` / `hu` / `ar` translation files, kept at key parity
+- **`models`** — Mongoose schemas
+- **`public/imgs/community`** — the association's own photography
 
-## 📁 Project Structure
+## Development
 
-- **`/app/[locale]`**: Localized application routes for the frontend (About, Events, Join MIT).
-- **`/app/admin`**: Protected administrative dashboard routes.
-- **`/app/api`**: Backend API routes for auth, events, newsletters, and uploads.
-- **`/components`**: Organized UI components including feature-specific sections.
-- **`/messages`**: JSON translation files for English and Hungarian.
-- **`/models`**: Mongoose data schemas for Events and Newsletters.
-- **`/lib`**: Shared utility functions and service layers.
+Requires Node.js 20.9 or newer.
 
-## 📄 License
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build
+npm run lint
+```
 
-This project is private and intended for the MIT community.
+Environment variables (see `.env.local`): MongoDB, Upstash Redis, Cloudinary and NextAuth
+credentials.
+
+## License
+
+Private, for the MIT community.

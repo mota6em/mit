@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: "/events",
     key: "events",
-    image: "/imgs/events/one-year-mit-layout.jpg",
+    image: "/imgs/community/summer-program.jpg",
     keywords: [
       "MIT events",
       "MIT Hungary events",

@@ -1,8 +1,8 @@
-import { FaUsers, FaCalendarAlt, FaHashtag } from "react-icons/fa";
+import { FaUsers, FaCalendarAlt, FaSeedling } from "react-icons/fa";
 
 export const STATS_CONFIG = [
   {
-    icon: FaUsers,
+    icon: FaSeedling,
     target: 10,
     suffix: "+",
     key: "years",
@@ -16,7 +16,7 @@ export const STATS_CONFIG = [
     color: "text-brand-gold",
   },
   {
-    icon: FaHashtag,
+    icon: FaUsers,
     target: 1500,
     suffix: "+",
     key: "social",

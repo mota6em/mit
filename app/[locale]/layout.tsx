@@ -9,7 +9,12 @@ import PageTransition from "@/components/reusable/PageTransition";
 import RouteProgress from "@/components/reusable/RouteProgress";
 import { SWRProvider } from "@/components/providers/SWRProvider";
 import { LOCALE_META, LOCALES, isLocale, type Locale } from "@/lib/i18n";
-import { SITE_NAME, TITLE_SUFFIX, localeAlternates } from "@/lib/seo";
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  TITLE_SUFFIX,
+  localeAlternates,
+} from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -56,20 +61,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         (l) => LOCALE_META[l].openGraph
       ),
       siteName: SITE_NAME,
-      images: [
-        {
-          url: "/imgs/icons/mit-logo-full-resized.png",
-          width: 1200,
-          height: 630,
-          alt: SITE_NAME,
-        },
-      ],
+      images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }],
     },
     twitter: {
       card: "summary_large_image",
       title: t.title,
       description: t.description,
-      images: ["/imgs/icons/mit-logo-full-resized.png"],
+      images: [DEFAULT_OG_IMAGE],
     },
   };
 }

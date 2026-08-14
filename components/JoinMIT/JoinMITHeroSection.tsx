@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Heart, Share2 } from "lucide-react";
 
 import PageHero from "../reusable/PageHero";
+import { PHOTO } from "@/lib/media";
 
 export default function JoinMITHeroSection() {
   const t = useTranslations("joinMIT");
@@ -17,8 +18,8 @@ export default function JoinMITHeroSection() {
       title={title}
       accentFrom={words - 1}
       lede={t("subtitle")}
-      image={{ src: "/imgs/join/join-mit-2.jpg" }}
-      inset={{ src: "/imgs/join/mit-pecs.jpg" }}
+      image={{ src: PHOTO.winterMeetup }}
+      inset={{ src: PHOTO.quranSession }}
       actions={
         <>
           <a href="#volunteer" className="btn btn-green btn-sheen">

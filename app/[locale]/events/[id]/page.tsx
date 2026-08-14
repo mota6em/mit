@@ -10,6 +10,7 @@ import {
 import { LOCALE_META, localizedField, toLocale } from "@/lib/i18n";
 import {
   ORGANIZATION_ID,
+  DEFAULT_OG_IMAGE,
   SITE_NAME,
   absoluteUrl,
   breadcrumbJsonLd,
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = localizedField(event, "title", locale);
   const description = localizedField(event, "desc", locale);
-  const image = event.img || "/imgs/icons/mit-logo-full-resized.png";
+  const image = event.img || DEFAULT_OG_IMAGE;
   const alternates = localeAlternates(locale, `/events/${event.slug || id}`);
 
   return {

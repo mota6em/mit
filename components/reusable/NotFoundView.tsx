@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { StarMark } from "./Ornament";
+import { BRAND } from "@/lib/media";
 
 type NotFoundViewProps = {
   locale: string;
@@ -42,7 +43,7 @@ export default function NotFoundView({
       <div className="relative flex max-w-lg flex-col items-center text-center">
         <Link href={`/${locale}`} aria-label="MIT" className="group">
           <Image
-            src="/imgs/home/aboutmit/mit-main-log-light.png"
+            src={BRAND.logoLight}
             alt="MIT"
             width={110}
             height={90}
