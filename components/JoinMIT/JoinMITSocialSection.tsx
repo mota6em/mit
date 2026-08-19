@@ -1,153 +1,141 @@
 "use client";
+
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { SectionTag } from "../Events/SectionTag";
+import { ArrowUpRight, Check } from "lucide-react";
 
-const socialLinks = [
+import Section from "../reusable/Section";
+import SectionHeader from "../reusable/SectionHeader";
+import Reveal from "../reusable/Reveal";
+
+const EMAIL = "muszlimifjusag@gmail.com";
+
+const SOCIALS = [
   {
+    id: "facebook",
     icon: FaFacebookF,
     href: "https://www.facebook.com/muszlimifjusag/",
-    color: "text-blue-800",
-    bg: "bg-blue-50",
-    name: "MIT - Facebook",
-    id: "facebook",
+    name: "Facebook",
+    hover: "group-hover:bg-[#1877F2]",
   },
   {
+    id: "instagram",
     icon: FaInstagram,
     href: "https://www.instagram.com/muszlimifjusag/",
-    color: "text-pink-800",
-    bg: "bg-pink-50",
-    name: "MIT - Instagram",
-    id: "instagram",
+    name: "Instagram",
+    hover: "group-hover:bg-[#E1306C]",
   },
   {
-    icon: HiOutlineMail,
-    href: "#",
-    color: "text-yellow-800",
-    bg: "bg-yellow-50",
-    name: "MIT - Email",
-    id: "email",
-  },
-  {
+    id: "whatsapp",
     icon: FaWhatsapp,
     href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
-    color: "text-green-800",
-    bg: "bg-green-50",
-    name: "MIT - Professional community ",
-    id: "whatsapp",
+    name: "WhatsApp",
+    hover: "group-hover:bg-[#25D366]",
   },
-];
+  {
+    id: "email",
+    icon: HiOutlineMail,
+    href: "#",
+    name: "Email",
+    hover: "group-hover:bg-brand-gold-dark",
+  },
+] as const;
 
 export default function JoinMITSocialSection() {
-  const [emailCopied, setEmailCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
   const t = useTranslations("joinMIT");
   const tNav = useTranslations("nav");
 
-  const handleEmailCopy = async () => {
+  const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("muszlimifjusag@gmail.com");
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy email:", err);
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      setCopied(false);
     }
   };
 
   return (
-    <div
-      id="socials"
-      className="max-w-7xl mx-auto px-4 py-14 md:py-10 bg-white/50 rounded-[2rem] md:rounded-[3rem] my-6 md:my-10"
-    >
-      <div className="text-center mb-6 md:mb-10">
-        <SectionTag text={t("socialTag") || "Stay Connected"} color="gray" />
-        <h2 className="text-3xl md:text-5xl font-semibold   text-gray-600">
-          {t("connectWithUs")}
-        </h2>
-      </div>
+    <Section id="socials" tone="tinted" width="default" deferPaint>
+      <SectionHeader
+        title={t("connectWithUs")}
+        topText={t("socialTag")}
+        description={t("socialDescription")}
+        align="start"
+        className="mb-14 max-w-2xl"
+      />
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-        {socialLinks.map((social, index) => {
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        {SOCIALS.map((social, index) => {
           const Icon = social.icon;
           const isEmail = social.id === "email";
           const isWhatsApp = social.id === "whatsapp";
-          const cardStyles =
-            "bg-white hover:shadow-xl hover:-translate-y-2 cursor-pointer border-gray-100";
 
-          const iconWrapperStyles = `${social.bg} group-hover:scale-110`;
+          const actionLabel = isWhatsApp
+            ? t("whatsapp-join")
+            : isEmail
+            ? copied
+              ? tNav("copied")
+              : t("copyEmail")
+            : t("followUs");
 
-          const content = (
-            <div
-              className={`h-full rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] md:shadow-[0_4px_20px_rgba(0,0,0,0.03)] border transition-all duration-300 group flex flex-col items-center justify-center ${cardStyles}`}
-            >
-              {/* Compact Icon Container */}
-              <div
-                className={`w-10 h-10 md:w-16 md:h-16 mx-auto rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 transition-transform ${iconWrapperStyles}`}
+          const inner = (
+            <>
+              <span
+                className={`mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-ink-100 text-ink-700 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:text-white ${social.hover}`}
               >
-                <Icon className={`text-lg md:text-3xl ${social.color}`} />
-              </div>
+                <Icon className="text-lg" />
+              </span>
 
-              {/* Compact Title */}
-              <h3
-                className={`text-md md:text-xl font-semibold mb-1 md:mb-2  text-gray-800 `}
-              >
+              <h3 className="display text-[1.05rem] text-ink-900">
                 {social.name}
               </h3>
 
-              {/* Compact Description */}
-              <p className="text-gray-500 text-[12px] md:text-sm mb-2 md:mb-4 line-clamp-2 leading-relaxed">
-                {t(`socialText.${social.id.toLowerCase()}`)}
+              <p className="mt-2.5 line-clamp-2 text-[0.85rem] leading-relaxed text-ink-500">
+                {t(`socialText.${social.id}`)}
               </p>
 
-              {/* Action Text */}
-              <div
-                className={`text-[12px] md:text-sm font-semibold mt-auto transition-opacity ${`${social.color} opacity-80 group-hover:opacity-100`}`}
-              >
-                {isWhatsApp ? (
-                  <span>{t("whatsapp-join")}</span>
-                ) : isEmail && emailCopied ? (
-                  tNav("copied")
-                ) : isEmail ? (
-                  <span>{t("copyEmail")}</span>
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-[0.78rem] font-semibold text-ink-700 transition-colors duration-300 group-hover:text-brand-green-dark">
+                {actionLabel}
+                {isEmail && copied ? (
+                  <Check className="h-3.5 w-3.5 text-brand-green" />
                 ) : (
-                  <span>{t("followUs")}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
                 )}
-              </div>
-            </div>
+              </span>
+            </>
           );
 
+          const cardClass =
+            "surface surface-lift group flex h-full flex-col rounded-[1.5rem] p-6 text-start";
+
           return (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="h-full"
-            >
+            <Reveal key={social.id} y={24} delay={index * 90} className="h-full">
               {isEmail ? (
                 <button
-                  onClick={handleEmailCopy}
-                  className="w-full h-full block text-left"
+                  type="button"
+                  onClick={copyEmail}
+                  className={`${cardClass} w-full`}
                 >
-                  {content}
+                  {inner}
                 </button>
               ) : (
                 <a
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block h-full"
+                  className={cardClass}
                 >
-                  {content}
+                  {inner}
                 </a>
               )}
-            </motion.div>
+            </Reveal>
           );
         })}
       </div>
-    </div>
+    </Section>
   );
 }

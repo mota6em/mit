@@ -1,14 +1,17 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { FaArrowRight } from "react-icons/fa";
+import { Search, X, CalendarX, ArrowRight } from "lucide-react";
+
 import BlogCard from "./BlogCard";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton";
 import { EventsSectionProps } from "@/lib/types";
 import { useEventsSection } from "@/app/hooks/useEventsSection";
 import SectionHeader from "../reusable/SectionHeader";
 import ViewMoreButton from "../reusable/ViewMoreButton";
+import Reveal from "../reusable/Reveal";
+import { placeLabel } from "@/lib/eventTime";
 
 export default function EventsSection(props: EventsSectionProps) {
   const {
@@ -21,98 +24,191 @@ export default function EventsSection(props: EventsSectionProps) {
     t,
   } = useEventsSection(props);
 
-  const { type, limit, showViewAll = true, filterMode = "all" } = props;
+  const {
+    type,
+    limit,
+    showViewAll = true,
+    filterMode = "all",
+    searchable = false,
+  } = props;
+
+  const [query, setQuery] = useState("");
+
+  const visiblePrograms = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!searchable || !q) return displayedPrograms;
+    return displayedPrograms.filter((p) =>
+      [p.displayTitle, p.displayDesc, p.displayDate, placeLabel(p.location)]
+        .filter(Boolean)
+        .some((field) => String(field).toLowerCase().includes(q))
+    );
+  }, [displayedPrograms, query, searchable]);
+
+  const isSearching = searchable && query.trim().length > 0;
+  const showEmptyState = !loading && visiblePrograms.length === 0;
+  const showAllLabel =
+    type === "upcoming"
+      ? t("latestPrograms.showAllUpcoming")
+      : t("latestPrograms.showAllPast");
 
   return (
     <section
       id={sectionId}
-      className="mt-12 px-4 md:px-10 flex flex-col items-center gap-y-6"
+      className="mx-auto w-full max-w-6xl scroll-mt-28 px-5 py-16 sm:px-8 md:py-24 lg:px-12"
     >
-      <SectionHeader
-        title={titleText}
-        className="text-3xl md:text-4xl text-center tracking-wide mb-2 md:mb-4"
-      />
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeader
+          title={titleText}
+          topText={t("latestPrograms.title")}
+          align="start"
+          className="md:max-w-xl"
+        />
 
-      {/** Cards Grid */}
-      <div className="flex overflow-x-auto  items-center overflow-y-hidden md:grid md:grid-cols-3 gap-6 w-full md:w-fit md:gap-10 snap-x snap-mandatory scrollbar-hide pb-4 px-2">
-        {loading
-          ? Array.from({ length: limit || 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="min-w-[75vw] md:min-w-2xs snap-start h-full"
-              >
-                <BlogCardSkeleton />
-              </div>
-            ))
-          : displayedPrograms.map((p, index) => (
-              <div
-                key={p.eventId}
-                className="min-w-[75vw] md:min-w-0 snap-start h-full"
-              >
-                <BlogCard
-                  bgImg={p.img}
-                  authorImg="/imgs/icons/icon.jpg"
-                  authorName={t("latestPrograms.authorName")}
-                  readTime={p.displayDate}
-                  title={p.displayTitle}
-                  desc={p.displayDesc}
-                  note={p.displayNote}
-                  eventUrl={`/${locale}/events/${p.eventId}`}
-                  index={index}
-                  isPastEvent={type === "past"}
-                  event={p}
-                />
-              </div>
-            ))}
-
-        {/** Mobile "View All" Card */}
-        {!loading && limit && showViewAll && displayedPrograms.length > 0 && (
-          <div className="min-w-[40vw] md:hidden snap-start h-full flex items-center justify-center">
-            <Link
-              href={linkHref}
-              className={`group h-[300px] w-full flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-all duration-300 px-4 text-center cursor-pointer ${
-                type === "upcoming"
-                  ? "border-gray-300 hover:bg-green-50"
-                  : "bg-gray-50 border-gray-300 hover:border-gray-500 hover:bg-gray-100"
-              }`}
+        {!loading && visiblePrograms.length > 0 && (
+          <Reveal
+            y={0}
+            delay={200}
+            className="hidden shrink-0 items-center gap-4 md:flex"
+          >
+            <span
+              aria-label={`${visiblePrograms.length} ${t(
+                "latestPrograms.resultCount"
+              )}`}
+              className="numeral inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-ink-200 bg-white px-2.5 text-sm text-ink-500"
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform text-gray-800 group-hover:text-gray-900">
-                <FaArrowRight size={20} />
-              </div>
-              <span className="font-semibold transition-colors text-gray-800 group-hover:text-gray-900">
-                {type === "upcoming"
-                  ? t("latestPrograms.showAllUpcoming")
-                  : t("latestPrograms.showAllPast")}
-              </span>
-            </Link>
-          </div>
+              {visiblePrograms.length}
+            </span>
+            {limit && showViewAll && filterMode === "all" && (
+              <Link
+                href={linkHref}
+                className="link-underline inline-flex items-center gap-2 text-sm font-semibold text-ink-800 transition-colors hover:text-brand-green-dark"
+              >
+                {showAllLabel}
+                <ArrowRight className="h-4 w-4 rtl:-scale-x-100" />
+              </Link>
+            )}
+          </Reveal>
         )}
       </div>
 
-      {/** Desktop "View All" Button */}
+      {searchable && !loading && displayedPrograms.length > 0 && (
+        <Reveal y={12} delay={120} className="mt-10 flex flex-col gap-2">
+          <div className="group relative w-full max-w-md">
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400 transition-colors group-focus-within:text-brand-green" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t("latestPrograms.search")}
+              aria-label={t("latestPrograms.search")}
+              className="w-full rounded-full border border-ink-200 bg-white py-3 pe-11 ps-11 text-sm text-ink-800 shadow-[0_1px_2px_rgba(18,22,15,0.04)] outline-none transition-all duration-300 placeholder:text-ink-400 focus:border-brand-green focus:shadow-[0_4px_16px_-6px_rgba(45,155,74,0.4)]"
+            />
+            {isSearching && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label={t("latestPrograms.clearSearch")}
+                className="absolute end-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
+          {isSearching && (
+            <p aria-live="polite" className="text-xs font-medium text-ink-500">
+              {visiblePrograms.length} {t("latestPrograms.resultCount")}
+            </p>
+          )}
+        </Reveal>
+      )}
+
+      {!showEmptyState && (
+        <div className="scrollbar-hide mt-12 flex w-full snap-x snap-mandatory items-stretch gap-5 overflow-x-auto overflow-y-hidden pb-4 md:grid md:grid-cols-3 md:gap-7 md:overflow-visible md:pb-0">
+          {loading
+            ? Array.from({ length: limit || 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-[78vw] shrink-0 snap-start md:w-auto md:shrink"
+                >
+                  <BlogCardSkeleton />
+                </div>
+              ))
+            : visiblePrograms.map((p, index) => (
+                <div
+                  key={p.eventId}
+                  className="w-[78vw] shrink-0 snap-start md:w-auto md:shrink"
+                >
+                  <BlogCard
+                    bgImg={p.img}
+                    readTime={p.displayDate}
+                    title={p.displayTitle}
+                    desc={p.displayDesc}
+                    note={p.displayNote}
+                    eventUrl={`/${locale}/events/${p.eventId}`}
+                    index={index}
+                    isPastEvent={type === "past"}
+                    event={p}
+                    ctaLabel={t("latestPrograms.viewEvent")}
+                  />
+                </div>
+              ))}
+
+          {!loading && limit && showViewAll && visiblePrograms.length > 0 && (
+            <div className="flex w-[46vw] shrink-0 snap-start items-center justify-center md:hidden">
+              <Link
+                href={linkHref}
+                className="group flex h-full min-h-[280px] w-full flex-col items-center justify-center gap-4 rounded-[1.5rem] border border-dashed border-ink-300 bg-white/50 px-4 text-center transition-colors duration-500 hover:border-brand-green hover:bg-brand-green-soft"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-white text-ink-800 shadow-md transition-transform duration-500 group-hover:scale-110">
+                  <ArrowRight className="h-5 w-5 rtl:-scale-x-100" />
+                </span>
+                <span className="text-sm font-semibold text-ink-700">
+                  {showAllLabel}
+                </span>
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+
       {!loading &&
         limit &&
         showViewAll &&
-        displayedPrograms.length > 0 &&
+        visiblePrograms.length > 0 &&
         filterMode === "all" && (
           <ViewMoreButton
             href={linkHref}
-            label={
-              type === "upcoming"
-                ? t("latestPrograms.showAllUpcoming")
-                : t("latestPrograms.showAllPast")
-            }
-            variant="default"
+            label={showAllLabel}
+            className="mt-14 hidden md:flex"
           />
         )}
 
-      {/** Empty State */}
-      {!loading && displayedPrograms.length === 0 && (
-        <p className="text-gray-500 text-center py-8">
-          {type === "upcoming"
-            ? "No upcoming events found."
-            : "No past events found."}
-        </p>
+      {showEmptyState && (
+        <Reveal
+          y={16}
+          className="mx-auto mt-12 flex w-full max-w-md flex-col items-center rounded-[1.5rem] border border-dashed border-ink-300 bg-white/60 px-8 py-14 text-center"
+        >
+          <span className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-ink-100 text-ink-400">
+            <CalendarX className="h-6 w-6" />
+          </span>
+          <p className="text-[0.95rem] font-medium text-ink-600">
+            {isSearching
+              ? t("latestPrograms.searchEmpty")
+              : type === "upcoming"
+              ? t("latestPrograms.emptyUpcoming")
+              : t("latestPrograms.emptyPast")}
+          </p>
+          {isSearching && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="mt-6 rounded-full border border-ink-300 bg-white px-5 py-2 text-xs font-semibold text-ink-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-900 hover:text-ink-900"
+            >
+              {t("latestPrograms.clearSearch")}
+            </button>
+          )}
+        </Reveal>
       )}
     </section>
   );

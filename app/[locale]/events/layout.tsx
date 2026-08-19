@@ -1,68 +1,37 @@
 import type { Metadata } from "next";
 
+import { LOCALES } from "@/lib/i18n";
+import { buildPageMetadata } from "@/lib/pageMetadata";
+
+type Props = { params: Promise<{ locale: string }> };
+
 export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "hu" }];
+  return LOCALES.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
-  let messages;
-  try {
-    messages = (await import(`../../../messages/${locale}.json`)).default;
-  } catch (e) {
-    messages = (await import(`../../../messages/en.json`)).default;
-  }
-
-  const t = messages.metadata.events;
-
-  return {
-    title: t.title,
-    description: t.description,
+  return buildPageMetadata({
+    locale,
+    path: "/events",
+    key: "events",
+    image: "/imgs/community/summer-program.jpg",
     keywords: [
       "MIT events",
-      "Join MIT Hungary",
-      "Muslim Youth Society events",
+      "MIT Hungary events",
       "Muszlim Ifjúság Társaság programok",
-      "Muslim student community",
-      "Budapest Islamic events",
-      "Join us MIT",
-      "Muslim youth community",
-      "Events for Muslim students",
-      "Events in Hungary for Muslim students",
-      "Muslim youth events",
-      "Muslim youth activities",
-      "Muslim youth activities in Hungary",
-      "Muslim youth activities in Budapest",
+      "Muslim youth events Budapest",
+      "Islamic events Hungary",
+      "Muslim student community Budapest",
+      "halal events Budapest",
+      "Ramadan iftar Budapest",
+      "Quran circle Budapest",
+      "فعاليات إسلامية بودابست",
     ],
-
-    openGraph: {
-      title: t.title,
-      description: t.description,
-      url: `https://mit-hu.eu/${locale}/events`,
-      siteName: "MIT - Muszlim Ifjúság Társaság",
-      images: [
-        {
-          url: "/imgs/events/one-year-mit-layout.jpg",
-          width: 1200,
-          height: 630,
-          alt: "MIT - Muszlim Ifjúság Társaság",
-        },
-      ],
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t.title,
-      description: t.description,
-      images: ["/imgs/events/one-year-mit-layout.jpg"],
-    },
-    icons: {
-      icon: [{ url: "/imgs/icon.jpg" }],
-      apple: [{ url: "/imgs/icon.jpg" }],
-    },
-  };
+  });
 }
+
 export default function EventsLayout({
   children,
 }: {

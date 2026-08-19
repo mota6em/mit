@@ -1,6 +1,5 @@
 import type React from "react";
-import type { ReactNode } from "react";
-import type { Variants } from "framer-motion";
+import type { Locale } from "@/lib/i18n";
 
 export interface ApiEvent {
   slug?: string;
@@ -9,10 +8,13 @@ export interface ApiEvent {
   img: string;
   title_en: string;
   title_hu: string;
+  title_ar?: string;
   desc_en: string;
   desc_hu: string;
+  desc_ar?: string;
   note_en?: string;
   note_hu?: string;
+  note_ar?: string;
   location?: string;
   date?: string;
   time?: string;
@@ -30,6 +32,8 @@ export interface EventDisplayData extends ApiEvent {
   displayDesc: string;
   displayNote?: string;
   displayDate: string;
+  displayDay?: string;
+  displayMonth?: string;
   eventId: string;
 }
 
@@ -38,16 +42,18 @@ export interface EventsSectionProps {
   limit?: number;
   showViewAll?: boolean;
   filterMode?: "all" | "recurring_only" | "single_only";
+  /** Enables client-side search over the section's events. */
+  searchable?: boolean;
 }
 
-export const dayMap: Record<string, { en: string; hu: string }> = {
-  Monday: { en: "Mon", hu: "Hé" },
-  Tuesday: { en: "Tue", hu: "Ke" },
-  Wednesday: { en: "Wed", hu: "Sze" },
-  Thursday: { en: "Thu", hu: "Csü" },
-  Friday: { en: "Fri", hu: "Pé" },
-  Saturday: { en: "Sat", hu: "Szo" },
-  Sunday: { en: "Sun", hu: "Va" },
+export const dayMap: Record<string, Record<Locale, string>> = {
+  Monday: { en: "Mon", hu: "Hé", ar: "الإثنين" },
+  Tuesday: { en: "Tue", hu: "Ke", ar: "الثلاثاء" },
+  Wednesday: { en: "Wed", hu: "Sze", ar: "الأربعاء" },
+  Thursday: { en: "Thu", hu: "Csü", ar: "الخميس" },
+  Friday: { en: "Fri", hu: "Pé", ar: "الجمعة" },
+  Saturday: { en: "Sat", hu: "Szo", ar: "السبت" },
+  Sunday: { en: "Sun", hu: "Va", ar: "الأحد" },
 };
 
 export interface NewsletterSubscriber {
@@ -64,8 +70,10 @@ export interface ApiHighlight {
   images: string[];
   title_en: string;
   title_hu: string;
+  title_ar?: string;
   desc_en: string;
   desc_hu: string;
+  desc_ar?: string;
   status?: string;
   date?: string;
 }
@@ -93,31 +101,11 @@ export interface DateFooterProps {
   locale: string;
 }
 
-/** Extends HighlightDisplayData for caching support */
-export interface FeaturedAnnouncementData extends HighlightDisplayData {}
+export type FeaturedAnnouncementData = HighlightDisplayData;
 
 export interface FeaturedAnnouncementProps {
   announcement: FeaturedAnnouncementData;
   locale: string;
-}
-
-export interface HighlightBadgeProps {
-  type: "announcement" | "date";
-  text: string;
-}
-
-export interface HighlightContentProps {
-  title: string;
-  description: string;
-  ctaLabel: string;
-  variants?: Variants;
-  children?: ReactNode;
-}
-
-export interface HighlightImageProps {
-  images?: string[];
-  title: string;
-  variants?: Variants;
 }
 
 export interface GalleryConfig {
@@ -167,49 +155,10 @@ export interface ImageCounterProps {
   total: number;
 }
 
-export interface StackedPreviewProps {
-  images: string[];
-}
-
 export interface HighlightListProps {
   highlights: HighlightData[];
   onEdit: (highlight: HighlightData) => void;
 }
-
-export const HIGHLIGHT_ANIMATION_VARIANTS = {
-  container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
-    },
-  },
-  item: {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  },
-  image: {
-    hidden: { opacity: 0, scale: 1.1 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  },
-} as const;
 
 export type DetailPageType = "event" | "highlight";
 

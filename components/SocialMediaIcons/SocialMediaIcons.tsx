@@ -11,91 +11,100 @@ import {
 import { HiOutlineMail } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 
-export default function SocialMediaIcons() {
+import { cn } from "@/lib/utils";
+
+const EMAIL = "muszlimifjusag@gmail.com";
+
+const SOCIAL_LINKS = [
+  {
+    icon: FaFacebookF,
+    href: "https://www.facebook.com/muszlimifjusag/",
+    label: "Facebook",
+    hover: "hover:bg-[#1877F2] hover:border-[#1877F2]",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://www.instagram.com/muszlimifjusag/",
+    label: "Instagram",
+    hover: "hover:bg-[#E1306C] hover:border-[#E1306C]",
+  },
+  {
+    icon: FaYoutube,
+    href: "https://www.youtube.com/@muszlimifjusagitarsasag/",
+    label: "YouTube",
+    hover: "hover:bg-[#FF0000] hover:border-[#FF0000]",
+  },
+  {
+    icon: FaWhatsapp,
+    href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
+    label: "WhatsApp",
+    hover: "hover:bg-[#25D366] hover:border-[#25D366]",
+  },
+];
+
+export default function SocialMediaIcons({
+  tone = "light",
+}: {
+  tone?: "light" | "ink";
+}) {
   const [showCopied, setShowCopied] = useState(false);
   const t = useTranslations("nav");
 
-  const copyEmailToClipboard = () => {
-    navigator.clipboard.writeText("muszlimifjusag@gmail.com");
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
+  const copyEmailToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
+    } catch {
+      setShowCopied(false);
+    }
   };
 
-  const socialLinks = [
-    {
-      icon: FaFacebookF,
-      href: "https://www.facebook.com/muszlimifjusag/",
-      bg: "bg-blue-600",
-    },
-    {
-      icon: FaInstagram,
-      href: "https://www.instagram.com/muszlimifjusag/",
-      bg: "bg-pink-600",
-    },
-
-    {
-      icon: FaYoutube,
-      href: "https://www.youtube.com/@muszlimifjusagitarsasag/",
-      bg: "bg-red-600",
-    },
-
-    {
-      icon: HiOutlineMail,
-      href: "mailto:muszlimifjusag@gmail.com",
-      bg: "bg-orange-600",
-      isEmail: true,
-    },
-    {
-      icon: FaWhatsapp,
-      href: "https://chat.whatsapp.com/IyKhrvmcp65FCGfHJdiJUm",
-      bg: "bg-green-600",
-    },
-
-  ];
+  const base = cn(
+    "relative grid h-10 w-10 place-items-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:text-white",
+    tone === "light"
+      ? "border-white/15 bg-white/[0.06] text-white/70"
+      : "border-ink-200 bg-white text-ink-600"
+  );
 
   return (
-    <div className="flex gap-5 mt-2">
-      {socialLinks.map((s, i) => {
-        const Icon = s.icon;
-
-        if (s.isEmail) {
-          return (
-            <div key={i} className="relative">
-              {showCopied && (
-                <span className="absolute  -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full whitespace-nowrap z-20">
-                  {t("copied")}
-                </span>
-              )}
-              <button
-                onClick={copyEmailToClipboard}
-                className="relative p-2 cursor-pointer rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
-              >
-                <div
-                  className={`absolute inset-0 rounded-full bg-bg-to-r ${s.bg} animate-bg-x`}
-                ></div>
-                {showCopied ? (
-                  <FaCheck size={20} className="relative z-10" />
-                ) : (
-                  <Icon size={20} className="relative z-10" />
-                )}
-              </button>
-            </div>
-          );
-        }
-
+    <div className="flex flex-wrap gap-2.5">
+      {SOCIAL_LINKS.map((social) => {
+        const Icon = social.icon;
         return (
           <a
-            key={i}
-            href={s.href}
+            key={social.label}
+            href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative p-2 rounded-full shadow-lg text-white hover:scale-110 transition-all duration-300 overflow-hidden"
+            aria-label={social.label}
+            title={social.label}
+            className={cn(base, social.hover)}
           >
-            <div className={`absolute inset-0 rounded-full ${s.bg}`}></div>
-            <Icon size={20} className="relative z-10" />
+            <Icon size={16} />
           </a>
         );
       })}
+
+      <div className="relative">
+        {showCopied && (
+          <span className="absolute -top-11 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand-gold px-3 py-1.5 text-xs font-semibold text-ink-900 shadow-lg">
+            {t("copied")}
+          </span>
+        )}
+        <button
+          type="button"
+          onClick={copyEmailToClipboard}
+          aria-label={EMAIL}
+          title={EMAIL}
+          className={cn(
+            base,
+            "cursor-pointer hover:border-brand-gold hover:bg-brand-gold hover:!text-ink-900"
+          )}
+        >
+          {showCopied ? <FaCheck size={15} /> : <HiOutlineMail size={17} />}
+        </button>
+      </div>
     </div>
   );
 }

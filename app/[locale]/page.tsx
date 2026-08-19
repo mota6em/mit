@@ -1,20 +1,50 @@
 import EventsSection from "@/components/Events/EventsSection";
 import HighlightsSection from "@/components/Highlights/HighlightsSection";
+import AyahBand from "@/components/Home/AyahBand";
 import Hero from "@/components/Home/Hero";
 import Statistics from "@/components/Home/Statistics";
 import WhoWeAre from "@/components/Home/WhoWeAre";
+import DataPreload from "@/components/providers/DataPreload";
+import JoinCtaBand from "@/components/reusable/JoinCtaBand";
+import { getAllEvents } from "@/lib/eventService";
+import { getAllHighlights } from "@/lib/highlightService";
+import { SWR_KEYS } from "@/lib/swrKeys";
 
-const page = () => {
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const [events, highlights] = await Promise.all([
+    getAllEvents(),
+    getAllHighlights(),
+  ]);
+
   return (
-    <div className="block w-full overflow-hidden md:px-10">
-      <Hero />
-      <WhoWeAre />
-      <HighlightsSection limit={1} />
-      <EventsSection type="upcoming" limit={3} />
-      <EventsSection type="past" limit={3} />
-      <Statistics />
-    </div>
-  );
-};
+    <DataPreload
+      fallback={{
+        [SWR_KEYS.events]: events,
+        [SWR_KEYS.highlights]: highlights,
+      }}
+    >
+      <div className="w-full">
+        <Hero />
+        <WhoWeAre />
+        <AyahBand />
 
-export default page;
+        <div className="border-b border-ink-200 bg-paper-tint">
+          <HighlightsSection limit={1} />
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="rule-fade" />
+          </div>
+          <EventsSection type="upcoming" limit={3} />
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="rule-fade" />
+          </div>
+          <EventsSection type="past" limit={3} />
+        </div>
+
+        <Statistics />
+        <JoinCtaBand />
+      </div>
+    </DataPreload>
+  );
+}

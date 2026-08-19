@@ -6,7 +6,7 @@ import {
   HiPhotograph,
 } from "react-icons/hi";
 import { useHighlights } from "@/app/hooks/useHighlights";
-import { HighlightData, HighlightListProps } from "@/lib/types";
+import { HighlightListProps } from "@/lib/types";
 
 export default function HighlightList({
   highlights,
@@ -16,17 +16,17 @@ export default function HighlightList({
 
   return (
     <div className="space-y-6 pb-20">
-      <h2 className="text-xl font-bold text-gray-800">
+      <h2 className="text-xl font-bold text-ink-800">
         Active Highlights ({highlights.length})
       </h2>
       <div className="grid gap-4">
         {highlights.map((highlight) => (
           <div
             key={highlight._id || highlight.id}
-            className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+            className="bg-white p-4 rounded-2xl shadow-sm border border-ink-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
           >
             <div className="flex gap-4 items-center">
-              <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+              <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-ink-100 shrink-0">
                 {highlight.images && highlight.images.length > 0 ? (
                   <>
                     <Image
@@ -43,15 +43,15 @@ export default function HighlightList({
                   </>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <HiPhotograph className="w-6 h-6 text-gray-300" />
+                    <HiPhotograph className="w-6 h-6 text-ink-300" />
                   </div>
                 )}
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">
+                <h3 className="font-bold text-ink-900">
                   {highlight.title_en}
                 </h3>
-                <p className="text-sm text-gray-500 line-clamp-1 max-w-md">
+                <p className="text-sm text-ink-500 line-clamp-1 max-w-md">
                   {highlight.desc_en}
                 </p>
 
@@ -70,7 +70,7 @@ export default function HighlightList({
                         highlight.status === "active"
                           ? "text-green-600 bg-green-50 border-green-100"
                           : highlight.status === "archived"
-                          ? "text-gray-600 bg-gray-50 border-gray-100"
+                          ? "text-ink-600 bg-ink-50 border-ink-100"
                           : "text-amber-600 bg-amber-50 border-amber-100"
                       }`}
                     >

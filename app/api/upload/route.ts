@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
 import { auth } from "@/auth";
 
 cloudinary.config({
@@ -22,18 +22,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false }, { status: 400 });
     }
 
-    // Convert file to Buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Upload to Cloudinary
-    const uploadResponse: any = await new Promise((resolve, reject) => {
+    const uploadResponse = await new Promise<UploadApiResponse>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "mit-events",
         },
         (error, result) => {
-          if (error) reject(error);
+          if (error || !result) reject(error);
           else resolve(result);
         }
       );

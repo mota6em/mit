@@ -9,24 +9,21 @@ import type {
   DetailPageConfig,
   ApiHighlight,
 } from "@/lib/types";
+import { localizedField, toLocale, type Locale } from "@/lib/i18n";
 import { useHighlightData } from "@/app/hooks/useHighlightData";
 
 interface HighlightClientPageProps {
   initialHighlight: ApiHighlight | null;
 }
 
-/**
- * Transform API highlight data to DetailPageData format
- */
 function transformHighlightToDetailData(
   highlight: ApiHighlight,
-  locale: string
+  locale: Locale
 ): DetailPageData {
-  const isHu = locale === "hu";
   return {
     id: highlight._id,
-    title: isHu ? highlight.title_hu : highlight.title_en,
-    description: isHu ? highlight.desc_hu : highlight.desc_en,
+    title: localizedField(highlight, "title", locale),
+    description: localizedField(highlight, "desc", locale),
     images: highlight.images || [],
     date: highlight.date,
   };
@@ -36,13 +33,12 @@ export default function HighlightClientPage({
   initialHighlight,
 }: HighlightClientPageProps) {
   const { locale: rawLocale } = useParams();
-  const locale = (rawLocale as string) === "hu" ? "hu" : "en";
+  const locale = toLocale(rawLocale);
   const t = useTranslations("highlights");
 
   const { highlight, loading, error, views } =
     useHighlightData(initialHighlight);
 
-  // Build config
   const config: DetailPageConfig = {
     type: "highlight",
     locale,
@@ -57,13 +53,12 @@ export default function HighlightClientPage({
     showOrganizer: false,
     showDmButton: false,
     translations: {
-      loading: t("loading") || "Loading...",
+      loading: t("loading"),
       share: t("share"),
       copied: t("copied"),
     },
   };
 
-  // Transform highlight data
   const data = highlight
     ? transformHighlightToDetailData(highlight, locale)
     : null;

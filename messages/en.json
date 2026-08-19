@@ -25,6 +25,14 @@
     "join": {
       "title": "Join Us | MIT Hungary",
       "description": "Become an active member of Muslim Youth Association of Hungary. Volunteer, grow with us, and be part of an amazing community."
+    },
+    "about": {
+      "title": "About Us | MIT - Muslim Youth Association of Hungary",
+      "description": "Learn about the vision, mission, core services, community role and achievements of the Muslim Youth Association of Hungary (MIT)."
+    },
+    "highlights": {
+      "title": "Highlights & Announcements | MIT Hungary",
+      "description": "The latest news, announcements and community moments from the Muslim Youth Association of Hungary (MIT)."
     }
   },
   "nav": {
@@ -36,19 +44,21 @@
     "join mit": "JOIN MIT",
     "upcoming events": "Upcoming Events",
     "past events": "Past Events",
-    "highlights 2026": "2026 Highlights",
-    "highlights 2025": "2025 Highlights",
-    "highlights archive": "2024 & Before (Archive)",
     "subtitle": "Muszlim Ifjúsági Társaság",
     "copied": "Email Copied!",
     "copyright": "All rights reserved.",
     "developedBy": "Developed by"
   },
+  "common": {
+    "language": "Language",
+    "changeLanguage": "Change language",
+    "backToTop": "Back to top",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "Home"
+  },
   "highlights": {
-    "highlights_2026_title": "2026 Highlights",
-    "highlights_2025_title": "2025 Highlights",
-    "highlights_archive_title": "Archive (2024 & Before)",
-    "archive_note": "This content is documented in our social media as the website was launched in late 2025.",
     "viewAllHighlights": "View All Highlights",
     "latestAnnouncement": "Latest Highlight / Announcement",
     "readMore": "Read More",
@@ -61,28 +71,46 @@
     "copied": "Link Copied!",
     "stayUpdated": "Stay updated with our latest news and community moments",
     "heroTitle": "Highlights & Announcements",
-    "noImages": "No images available",
     "archiveTitle": "Website Launched in Late 2025",
     "archiveDescription": "Content from 2025 and earlier years is documented on our social media platforms."
   },
   "home": {
     "statistics": {
       "title": "Our Growing Impact",
+      "eyebrow": "By the numbers",
       "socialLabel": "Social Media Followers",
       "yearsLabel": "Years of Community",
       "eventsLabel": "Events Completed"
     },
     "hero": {
       "title": "Muslim Youth Association of Hungary",
-      "subtitle1": "Events, workshops and community programs for Muslims in Hungary"
+      "subtitle1": "Events, workshops and community programs for Muslims in Hungary",
+      "frames": {
+        "mosqueTalk": "A full hall for a talk",
+        "parkPicnic": "Sitting together at a picnic",
+        "springOuting": "A day outdoors together",
+        "techWorkshop": "Hands-on at a workshop",
+        "studyCircle": "Listening in at a session"
+      }
     },
+    "ayah": {
+      "translation": "Cooperate with one another in goodness and righteousness.",
+      "reference": "Qur'an 5:2"
+    },
+    "values": [
+      "Faith · Iman",
+      "Sincerity · Ikhlas",
+      "Excellence · Ihsan",
+      "Unity · Ittihad"
+    ],
     "whoWeAre": {
       "title": "Who We Are",
       "description": {
         "intro": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary.",
-        "mission": "We provide a space for learning, collaboration, and personal growth. Rooted in Islamic principles of sincerity, community, and excellence (ihsan), we strive to build a generation that serves both the Ummah and society with integrity."
+        "mission": "We provide a space for learning, collaboration, and personal growth. Rooted in the Islamic principles of faith, sincerity, excellence and unity, we strive to build a generation that serves both the Ummah and society with integrity."
       },
-      "learnMore": "Learn More About MIT"
+      "learnMore": "Learn More About MIT",
+      "photoAlt": "A volunteer speaking up during an open discussion"
     },
     "latestPrograms": {
       "title": "Our Latest Programs",
@@ -90,57 +118,29 @@
       "pastTitle": "Past Events",
       "showAllUpcoming": "Show all upcoming events",
       "showAllPast": "Show all past events",
-      "authorName": "MIT",
-      "newProgram": "New Program",
-      "programs": {
-        "youthLeadership": {
-          "title": "Youth Leadership Workshop",
-          "desc": "Empowering young minds ✨ Learn leadership, teamwork, public speaking, and more."
-        },
-        "communityFootball": {
-          "title": "Community Football Day",
-          "desc": "Teamwork, vibes, good energy ⚽ Bring friends and join local mini-tournaments."
-        },
-        "winterCharity": {
-          "title": "Winter Charity Drive",
-          "desc": "Small acts, big impact ❄️ Collect donations for families in need."
-        },
-        "ramadanIftar": {
-          "title": "Ramadan Iftar Gathering",
-          "desc": "Breaking fast together 🌙 Join us for a blessed Iftar meal with the community."
-        },
-        "quranStudy": {
-          "title": "Quran Study Circle",
-          "desc": "Deepen your understanding 📖 Weekly Quran study sessions with scholars and peers."
-        },
-        "charityDrive": {
-          "title": "Autumn Charity Drive",
-          "desc": "Giving back to community 🍂 Collecting essentials for those in need."
-        }
-      }
+      "emptyUpcoming": "No upcoming events right now — check back soon.",
+      "emptyPast": "No past events to show yet.",
+      "search": "Search events",
+      "searchEmpty": "No events match your search.",
+      "clearSearch": "Clear search",
+      "resultCount": "events",
+      "viewEvent": "View event"
     }
   },
   "joinMIT": {
     "title": "Join MIT Family",
     "subtitle": "Connect with us and become part of our vibrant community",
     "joinUsTag": "Be Part of Us",
-    "impactTag": "Make an Impact",
     "socialTag": "Stay Connected",
     "connect": "Connect With Us",
-    "stats": {
-      "members": "Active Members",
-      "events": "Events Yearly",
-      "dedication": "Dedication"
-    },
     "connectWithUs": "Connect With Us",
-    "followTag": "Stay Connected",
     "socialDescription": "Follow us on social media to stay updated with our latest events, programs, and community activities.",
     "followUs": "Follow Us",
     "whatsapp-join": "Join Us",
     "socialText": {
       "facebook": "Join our Facebook community for daily updates and discussions",
       "instagram": "Follow our journey through photos and stories",
-      "whatsapp": "Join our proffisional community on WhatsApp",
+      "whatsapp": "Join our community WhatsApp group",
       "email": "Reach out to us directly via email"
     },
     "stayUpdated": "Stay In The Loop",
@@ -151,45 +151,131 @@
     "errorMessage": "Something went wrong. Please try again.",
     "subscribe": "Subscribe Now",
     "subscribing": "Subscribing...",
-    "subscribed": "Subscribed!",
     "privacyNote": "We respect your privacy. Unsubscribe anytime.",
-    "callToAction": "Join us in building a stronger, more connected community",
-    "tag1": "Unity",
-    "tag2": "Growth",
-    "tag3": "Community",
     "finalMessage": "Together, we create meaningful experiences and lasting bonds that strengthen our faith and community.",
-    "scrollTop": "Scroll to top to explore more",
     "copyEmail": "Copy Email",
     "volunteer": {
-      "title": "Become a Volunteer",
-      "description": "Join our team of passionate volunteers and help us organize meaningful events, build community connections, and make a lasting impact on Muslim students in Hungary.",
+      "eyebrow": "Volunteer with us",
+      "title": "Want to volunteer?",
+      "description": "MIT runs entirely on volunteers. There is no form to fill in and no waiting list — you write to us, and a real person reads it.",
       "button": "Apply to Volunteer",
       "note": "We'll respond within 48 hours",
-      "benefits": {
-        "impact": "Make Real Impact",
-        "network": "Build Your Network",
-        "leadership": "Leadership Opportunities"
+      "emailLabel": "Write to us at",
+      "stepsTitle": "What to tell us",
+      "steps": [
+        {
+          "title": "Tell us a little about yourself",
+          "text": "Your name, what you study or do, and where in Hungary you are based."
+        },
+        {
+          "title": "Why would you like to join?",
+          "text": "What draws you to MIT and what you hope to take away from it."
+        },
+        {
+          "title": "What would you like to contribute?",
+          "text": "The areas that interest you and the time you can realistically give."
+        },
+        {
+          "title": "Send us your CV",
+          "text": "Attach it to your email — a PDF is perfect. A short summary of your experience works too."
+        }
+      ],
+      "compose": {
+        "title": "Write your message",
+        "lede": "Fill this in and we will put the email together for you. Then attach your CV and send it.",
+        "subject": "Volunteer application",
+        "nameLabel": "Your name",
+        "namePlaceholder": "First and last name",
+        "interestsLabel": "What would you like to contribute to?",
+        "interestsHint": "Pick as many as you like.",
+        "messageLabel": "Why would you like to join?",
+        "messagePlaceholder": "A few sentences about you and how you would like to help.",
+        "charactersLeft": "{count} characters left",
+        "previewLabel": "Your email",
+        "subjectLabel": "Subject",
+        "toLabel": "To",
+        "mailto": "Open in your email app",
+        "copy": "Copy the message",
+        "copied": "Message copied",
+        "copyEmail": "Copy address",
+        "emailCopied": "Address copied",
+        "copyFailed": "Copying did not work — select the text above instead.",
+        "cvNote": "Attach your CV before you send. Email apps cannot do that for you.",
+        "interests": {
+          "events": "Events & community programs",
+          "education": "Education & study circles",
+          "media": "Media, design & outreach",
+          "people": "Volunteer coordination",
+          "other": "Something else"
+        },
+        "body": {
+          "greeting": "Hello MIT team,",
+          "intro": "I would like to volunteer with MIT.",
+          "name": "Name",
+          "interests": "I would like to contribute to",
+          "why": "Why I would like to join",
+          "cv": "My CV is attached.",
+          "signOff": "Thank you,"
+        }
       }
-    }
+    },
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your email address",
+    "benefit1": "Weekly community updates",
+    "benefit2": "Exclusive event registrations"
   },
   "aboutMIT": {
     "hero": {
       "title": "Who We Are",
-      "description": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of sincerity, community, and excellence (ihsan), MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose."
+      "description": "Muslim Youth Association of Hungary (MIT) is a volunteer-driven organization dedicated to uniting and empowering Muslim youth across Hungary. We provide a space for learning, collaboration, and personal growth, where young Muslims can strengthen their faith and leadership skills. Rooted in the Islamic principles of faith, sincerity, excellence and unity, MIT strives to build a generation that serves both the Ummah and wider society with integrity and purpose.",
+      "photoAlt": "MIT receiving the FEMYSO Most Improved Organisation award",
+      "photoCaption": "FEMYSO — Most Improved Organisation"
     },
     "visionMission": {
       "title": "Our Vision & Mission",
       "coreFoundations": "Core Foundations",
       "vision": {
         "title": "MIT Vision",
-        "description": "To empower Muslim youth in Hungary to become active, confident, and united leaders in faith and society.",
-        "tagline": "Focus & Clarity"
+        "description": "A self-sustaining hub in Hungary where Muslim youth meet, grow, and become the confident leaders their community — the Ummah, and society need — to serve generations to come.",
+        "tagline": "Where we are heading"
       },
       "mission": {
         "title": "MIT Mission",
-        "description": "Our mission is to serve Allah through teamwork, growth, and service to our community. Through education, events, and community service, MIT nurtures the next generation of Muslim leaders.",
-        "tagline": "Growth & Action"
+        "description": "To empower young Muslims in Hungary to grow in faith, lead with integrity, serve with compassion, and build bridges that strengthen both the Muslim community and Hungarian society.",
+        "tagline": "How we get there"
       }
+    },
+    "values": {
+      "eyebrow": "What we stand for",
+      "title": "Our Values",
+      "lede": "Four commitments that shape how we gather, how we serve, and how we treat each other.",
+      "closing": "Faith, sincerity, excellence, unity",
+      "items": [
+        {
+          "name": "Faith",
+          "term": "Iman",
+          "script": "إيمان",
+          "description": "Rooted in Islamic values."
+        },
+        {
+          "name": "Sincerity",
+          "term": "Ikhlas",
+          "script": "إخلاص",
+          "description": "Serving with genuine intention and sincerity."
+        },
+        {
+          "name": "Excellence",
+          "term": "Ihsan",
+          "script": "إحسان",
+          "description": "Quality of service, professionalism, integrity, and authenticity — not perfection."
+        },
+        {
+          "name": "Unity",
+          "term": "Ittihad",
+          "script": "اتحاد",
+          "description": "Welcoming everyone who is interested in learning, building connections within the Ummah, and sharing meaningful experiences and fun together."
+        }
+      ]
     },
     "coreServices": {
       "title": "Our Core Services",
@@ -236,7 +322,6 @@
         "Helped build a successful, empowered Muslim generation."
       ]
     },
-
     "callToAction": {
       "title": "Call to Action:",
       "subtitle": "Together for Allah's Cause",
@@ -254,23 +339,32 @@
       "subtitle": "Workshops, picnics, and more—bringing us together.",
       "primaryBtn": "Upcoming Events",
       "secondaryBtn": "Past Events",
-      "joinStats": "See you at our next event!",
-      "badgeJoin": "Join Us",
-      "badgeWeekly": "Weekly Gatherings"
+      "joinStats": "See you at our next event!"
+    },
+    "countdown": {
+      "eyebrow": "Next gathering",
+      "live": "Happening now",
+      "days": "days",
+      "hours": "hrs",
+      "minutes": "min"
     },
     "eventDetails": {
       "back": "Back to Events",
-      "dateLabel": "Date",
       "notFoundTitle": "Event Not Found",
       "notFoundDesc": "The event you are looking for does not exist or has been removed.",
       "loading": "Loading event details...",
       "organizer": "Organizer",
       "share": "Share Event",
       "copied": "Link Copied!",
-      "repeats": "Repeats on:",
       "dm": "DM on Instagram",
       "views": "Views",
       "register": "Register Now"
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "cta": "Back to home",
+    "code": "404"
   }
 }

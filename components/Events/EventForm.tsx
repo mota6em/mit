@@ -52,7 +52,7 @@ export default function EventForm({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-xl shadow-ink-200/50 overflow-hidden border border-ink-100">
       <div
         className={`p-1 h-2 w-full ${
           isEditing ? "bg-amber-400" : "bg-blue-500"
@@ -80,6 +80,9 @@ export default function EventForm({
             title_hu={form.title_hu ?? ""}
             desc_hu={form.desc_hu ?? ""}
             note_hu={form.note_hu ?? ""}
+            title_ar={form.title_ar ?? ""}
+            desc_ar={form.desc_ar ?? ""}
+            note_ar={form.note_ar ?? ""}
             setForm={setForm}
           />
 

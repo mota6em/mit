@@ -6,10 +6,13 @@ const eventSchema = new Schema(
     img: { type: String, required: false },
     title_en: { type: String, required: true },
     title_hu: { type: String, required: true },
+    title_ar: { type: String, required: false },
     desc_en: { type: String, required: true },
     desc_hu: { type: String, required: true },
+    desc_ar: { type: String, required: false },
     note_en: { type: String, required: false },
     note_hu: { type: String, required: false },
+    note_ar: { type: String, required: false },
     location: { type: String, required: false },
     date: { type: Date, required: false },
     time: { type: String, required: false },
@@ -21,15 +24,18 @@ const eventSchema = new Schema(
 );
 
 // Indexes
-eventSchema.index({ slug: 1 });
+// `slug` already gets a unique index from the field definition above —
+// declaring it again made Mongoose build a duplicate on every cold start.
 eventSchema.index({ date: -1 });
 eventSchema.index({ isRecurring: 1, date: -1 });
 eventSchema.index({ createdAt: -1 });
 eventSchema.index({
   title_en: "text",
   title_hu: "text",
+  title_ar: "text",
   desc_en: "text",
   desc_hu: "text",
+  desc_ar: "text",
   location: "text",
 });
 

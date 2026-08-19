@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { ArrowRight } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 interface ViewMoreButtonProps {
   href: string;
@@ -20,24 +22,23 @@ export default function ViewMoreButton({
   linkClassName = "",
   external = false,
 }: ViewMoreButtonProps) {
-  const baseClasses =
-    "group inline-flex items-center gap-2 text-md rounded-full font-medium transition-all duration-300 text-gray-700 hover:text-gray-900";
-
-  const variantClasses = {
-    default: "flex mb-8",
-    inline: "",
-    centered: "flex justify-center mb-8",
-  };
+  const wrapper = variant === "inline" ? "" : "flex justify-center";
 
   const linkProps = external
     ? { href, target: "_blank", rel: "noopener noreferrer" }
     : { href };
 
   return (
-    <div className={`${variantClasses[variant]} ${className}`}>
-      <Link {...linkProps} className={linkClassName || baseClasses}>
-        <span>{label}</span>
-        <FaArrowRightLong className="group-hover:translate-x-1 transition-transform duration-100 ease-in-out" />
+    <div className={cn(wrapper, className)}>
+      <Link
+        {...linkProps}
+        className={
+          linkClassName ||
+          "btn btn-outline group hover:!bg-ink-900 hover:!text-paper"
+        }
+      >
+        <span className="relative z-10">{label}</span>
+        <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 rtl:-scale-x-100" />
       </Link>
     </div>
   );

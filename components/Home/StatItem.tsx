@@ -1,46 +1,71 @@
 "use client";
 
-import { useRef, memo } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState, memo } from "react";
+import { useParams } from "next/navigation";
+
 import { useCounter } from "@/app/hooks/useCounter";
 import { STATS_CONFIG } from "@/data/constants/statistics";
+import Reveal from "@/components/reusable/Reveal";
+import { toLocale } from "@/lib/i18n";
 
 interface StatItemProps {
   stat: (typeof STATS_CONFIG)[number];
   label: string;
+  index?: number;
 }
 
-export const StatItem = memo(({ stat, label }: StatItemProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+export const StatItem = memo(({ stat, label, index = 0 }: StatItemProps) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const params = useParams();
+  const locale = toLocale(params?.locale);
+  const [isInView, setIsInView] = useState(false);
 
-  // display is a MotionValue object
-  const display = useCounter(stat.target, stat.suffix, isInView);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      const timer = setTimeout(() => setIsInView(true), 0);
+      return () => clearTimeout(timer);
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const display = useCounter(stat.target, stat.suffix, isInView, locale);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="flex flex-col items-center text-center px-4 group"
+    <Reveal
+      y={26}
+      delay={index * 130}
+      className="group relative flex flex-col items-center px-4 text-center md:items-start md:text-start"
     >
-      <div
-        className={`mb-6 p-5 rounded-2xl bg-gray-50 transition-all duration-300 
-                      group-hover:bg-white group-hover:shadow-xl group-hover:-translate-y-1 
-                      ${stat.color}`}
+      <span className="mb-7 h-[3px] w-12 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold/0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-20" />
+
+      <span
+        ref={ref}
+        className="numeral display-1 block leading-none text-ink-900"
       >
-        <stat.icon className="text-3xl" aria-hidden="true" />
-      </div>
-
-      <motion.span className="text-4xl md:text-5xl text-gray-900 tabular-nums tracking-tight mb-2">
         {display}
-      </motion.span>
+      </span>
 
-      <p className="text-xs md:text-sm font-semibold text-gray-400 uppercase tracking-[0.2em]">
-        {label}
-      </p>
-    </motion.div>
+      <span className="mt-6 flex items-center gap-2.5 text-ink-500">
+        <stat.icon
+          className={`text-base transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 ${stat.color}`}
+          aria-hidden="true"
+        />
+        <span className="eyebrow">{label}</span>
+      </span>
+    </Reveal>
   );
 });
 

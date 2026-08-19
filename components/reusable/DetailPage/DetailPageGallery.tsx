@@ -74,7 +74,7 @@ function MobileNavButton({
       } top-1/2 -translate-y-1/2 z-10 
         bg-slate-700/60 hover:bg-slate-800/80 cursor-pointer backdrop-blur-sm p-3 rounded-full shadow-lg 
         opacity-0 group-hover:opacity-100 transition-all duration-300 
-        hover:scale-110 border border-gray-100`}
+        hover:scale-110 border border-ink-100`}
       aria-label={`${isLeft ? "Previous" : "Next"} image`}
     >
       <Icon className="w-5 h-5 text-white" />
@@ -99,8 +99,8 @@ function Dots({
           onClick={() => onDotClick(index)}
           className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
             index === activeIndex
-              ? "bg-gray-800 w-4"
-              : "bg-gray-300 hover:bg-gray-400"
+              ? "bg-ink-800 w-4"
+              : "bg-ink-300 hover:bg-ink-400"
           }`}
           aria-label={`Go to image ${index + 1}`}
         />
@@ -133,7 +133,7 @@ function SingleImageWithArrows({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative w-full aspect-4/5 lg:aspect-4/5 lg:max-h-[80vh] rounded-2xl overflow-hidden shadow-xl bg-gray-100 cursor-zoom-in group"
+      className="relative w-full aspect-4/5 lg:aspect-4/5 lg:max-h-[80vh] rounded-2xl overflow-hidden shadow-xl bg-ink-100 cursor-zoom-in group"
       onClick={() => onImageClick(currentIndex)}
     >
       <div className="relative w-full h-full group/img">
@@ -178,7 +178,7 @@ function MobileGalleryImage({
 
   return (
     <div
-      className={`relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden ${snapClass} bg-gray-50 cursor-zoom-in`}
+      className={`relative flex-shrink-0 max-w-[90vw] md:max-w-[600px] max-h-[70vh] rounded-2xl overflow-hidden ${snapClass} bg-ink-50 cursor-zoom-in`}
       style={{ opacity, transition: "opacity 0.3s ease" }}
       onClick={onClick}
     >

@@ -1,33 +1,31 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion } from "framer-motion";
-import { fadeInUp } from "@/data/constants/const";
+
 import type { DateFooterProps } from "@/lib/types";
+import { LOCALE_META, toLocale } from "@/lib/i18n";
+import { StarMark } from "@/components/reusable/Ornament";
 
 export function DetailPageDateFooter({ date, locale }: DateFooterProps) {
-  const formattedDate = useMemo(() => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString(locale === "hu" ? "hu-HU" : "en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }, [date, locale]);
+  const formattedDate = useMemo(
+    () =>
+      new Intl.DateTimeFormat(LOCALE_META[toLocale(locale)].intl, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(new Date(date)),
+    [date, locale]
+  );
 
   return (
-    <motion.footer
-      variants={fadeInUp}
-      initial="hidden"
-      animate="visible"
-      custom={0.5}
-      className="mt-12 pt-8 border-t border-gray-100"
-    >
-      <div className="flex items-center justify-center gap-3 text-gray-400 text-sm">
-        <div className="w-8 h-px bg-gray-200" />
-        <time dateTime={date}>{formattedDate}</time>
-        <div className="w-8 h-px bg-gray-200" />
-      </div>
-    </motion.footer>
+    <footer className="mt-10 flex items-center gap-3 text-sm text-ink-400">
+      <span className="h-3 w-3 shrink-0 text-brand-gold/70">
+        <StarMark strokeWidth={2.5} />
+      </span>
+      <time dateTime={date} className="tracking-wide">
+        {formattedDate}
+      </time>
+      <span className="h-px flex-1 bg-gradient-to-r from-ink-200 to-transparent" />
+    </footer>
   );
 }

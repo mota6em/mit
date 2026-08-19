@@ -1,13 +1,60 @@
 import HighlightsSection from "@/components/Highlights/HighlightsSection";
 import Hero from "@/components/Highlights/Hero";
 import ArchiveNote from "@/components/Highlights/ArchiveNote";
+import DataPreload from "@/components/providers/DataPreload";
+import JoinCtaBand from "@/components/reusable/JoinCtaBand";
+import JsonLd from "@/components/seo/JsonLd";
+import { getAllHighlights } from "@/lib/highlightService";
+import { localizedField, toLocale } from "@/lib/i18n";
+import { SWR_KEYS } from "@/lib/swrKeys";
+import { graph, localeAlternates } from "@/lib/seo";
 
-export default function HighlightsPage() {
+export const revalidate = 3600;
+
+type Props = { params: Promise<{ locale: string }> };
+
+export default async function HighlightsPage({ params }: Props) {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const highlights = await getAllHighlights();
+
+  const listItems = highlights.slice(0, 30).map((highlight, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: localizedField(highlight, "title", locale),
+    url: localeAlternates(
+      locale,
+      `/highlights/${highlight.slug || highlight._id}`
+    ).canonical,
+  }));
+
   return (
-    <div className="flex flex-col gap-8 mb-16">
-      <Hero />
-      <HighlightsSection />
-      <ArchiveNote />
-    </div>
+    <DataPreload fallback={{ [SWR_KEYS.highlights]: highlights }}>
+      <JsonLd
+        data={graph([
+          {
+            "@type": "CollectionPage",
+            name: "MIT Highlights & Announcements",
+            url: localeAlternates(locale, "/highlights").canonical,
+            inLanguage: locale,
+            mainEntity: {
+              "@type": "ItemList",
+              numberOfItems: listItems.length,
+              itemListElement: listItems,
+            },
+          },
+        ])}
+      />
+      <div className="flex flex-col">
+        <Hero />
+        <div className="border-y border-ink-200 bg-paper-tint">
+          <HighlightsSection />
+          <div className="mx-auto max-w-6xl px-5 pb-20 sm:px-8 md:pb-28 lg:px-12">
+            <ArchiveNote />
+          </div>
+        </div>
+        <JoinCtaBand />
+      </div>
+    </DataPreload>
   );
 }

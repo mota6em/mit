@@ -1,32 +1,80 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+
+import NotFoundView from "@/components/reusable/NotFoundView";
+import { LOCALE_META, localeFromPathname, type Locale } from "@/lib/i18n";
+
+const COPY: Record<
+  Locale,
+  {
+    title: string;
+    description: string;
+    cta: string;
+    links: { path: string; label: string }[];
+  }
+> = {
+  en: {
+    title: "Page not found",
+    description:
+      "The page you are looking for does not exist or has been moved.",
+    cta: "Back to home",
+    links: [
+      { path: "events", label: "Events" },
+      { path: "highlights", label: "Highlights" },
+      { path: "about", label: "About MIT" },
+      { path: "join-mit", label: "Join MIT" },
+    ],
+  },
+  hu: {
+    title: "Az oldal nem található",
+    description: "A keresett oldal nem létezik, vagy áthelyezték.",
+    cta: "Vissza a főoldalra",
+    links: [
+      { path: "events", label: "Események" },
+      { path: "highlights", label: "Kiemeltek" },
+      { path: "about", label: "Rólunk" },
+      { path: "join-mit", label: "Csatlakozz" },
+    ],
+  },
+  ar: {
+    title: "الصفحة غير موجودة",
+    description: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    cta: "العودة إلى الرئيسية",
+    links: [
+      { path: "events", label: "الفعاليات" },
+      { path: "highlights", label: "المستجدات" },
+      { path: "about", label: "من نحن" },
+      { path: "join-mit", label: "انضم إلينا" },
+    ],
+  },
+};
 
 export default function NotFound() {
+  const pathname = usePathname() || "";
+  const locale = localeFromPathname(pathname);
+  const { dir } = LOCALE_META[locale];
+  const copy = COPY[locale];
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = dir;
+  }, [locale, dir]);
+
   return (
-    <section className="min-h-screen">
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="flex flex-col items-center gap-8">
-          <Image
-            src="/imgs/hero/mit-logo-full.png"
-            alt="MIT Logo"
-            width={200}
-            height={200}
-            priority
-          />
-          <h1 className="text-4xl md:text-6xl font-bold text-center bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent">
-            404 - Page Not Found
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 text-center max-w-md">
-            The page you are looking for does not exist
-          </p>
-          <Link
-            href="/en"
-            className="mt-6 px-8 py-3 bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 text-white font-semibold rounded-full hover:scale-105 transition-transform duration-200 shadow-lg"
-          >
-            Go Back to Home
-          </Link>
-        </div>
-      </div>
-    </section>
+    <NotFoundView
+      locale={locale}
+      dir={dir}
+      fullHeight
+      code="404"
+      title={copy.title}
+      description={copy.description}
+      cta={copy.cta}
+      links={copy.links.map((link) => ({
+        href: `/${locale}/${link.path}`,
+        label: link.label,
+      }))}
+    />
   );
 }

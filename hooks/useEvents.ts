@@ -8,10 +8,13 @@ export function useEvents() {
     img: "",
     title_en: "",
     title_hu: "",
+    title_ar: "",
     desc_en: "",
     desc_hu: "",
+    desc_ar: "",
     note_en: "",
     note_hu: "",
+    note_ar: "",
     date: "",
     time: "",
     isRecurring: false,
@@ -41,8 +44,10 @@ export function useEvents() {
       return false;
     }
 
-    const refresh = await fetch("/api/events");
-    setEvents(await refresh.json());
+    // The write already returns the updated list — no second round-trip, and
+    // no chance of reading back through a cache that hasn't been purged yet.
+    const { events: updated } = await res.json();
+    if (Array.isArray(updated)) setEvents(updated);
     setLoading(false);
     return true;
   };
@@ -60,15 +65,19 @@ export function useEvents() {
       alert("Wrong Password!");
       return false;
     }
+    // Removing the row locally is enough; the full-page reload this used to do
+    // threw away the whole app and re-downloaded every asset.
     setEvents(events.filter((e) => (e._id || e.id) !== id));
-    window.location.reload();
     return true;
   };
   const handleEdit = (event: EventData) => {
     setForm({
       ...event,
+      title_ar: event.title_ar || "",
+      desc_ar: event.desc_ar || "",
       note_en: event.note_en || "",
       note_hu: event.note_hu || "",
+      note_ar: event.note_ar || "",
       time: event.time || "",
       isRecurring: event.isRecurring || false,
       recurringDays: event.recurringDays || [],

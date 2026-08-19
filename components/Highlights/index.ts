@@ -1,7 +1,5 @@
-export { default as HighlightBadge } from "./HighlightBadge";
-export { default as HighlightImage } from "./HighlightImage";
-export { default as HighlightContent } from "./HighlightContent";
 export { default as FeaturedAnnouncement } from "./FeaturedAnnouncement";
+export { default as HighlightCard } from "./HighlightCard";
 export { default as HighlightsSection } from "./HighlightsSection";
 export { default as HighlightClientPage } from "./HighlightClientPage";
 export { default as Hero } from "./Hero";

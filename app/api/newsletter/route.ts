@@ -12,7 +12,7 @@ export async function GET() {
     await dbConnect();
     const subscribers = await Newsletter.find({}).sort({ createdAt: -1 });
     return NextResponse.json(subscribers);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: "Database Error" }, { status: 500 });
   }
 }

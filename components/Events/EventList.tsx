@@ -24,34 +24,34 @@ export default function EventList({ events, onEdit }: EventListProps) {
 
   return (
     <div className="space-y-6 pb-20">
-      <h2 className="text-xl font-bold text-gray-800">
+      <h2 className="text-xl font-bold text-ink-800">
         Active Events ({events.length})
       </h2>
       <div className="grid gap-4">
         {events.map((event) => (
           <div
             key={event._id || event.id}
-            className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+            className="bg-white p-4 rounded-2xl shadow-sm border border-ink-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
           >
             <div className="flex gap-4 items-center">
-              <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+              <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-ink-100 shrink-0">
                 {event.img && (
                   <Image src={event.img} alt="" fill className="object-cover" />
                 )}
               </div>
               <div>
-                <h3 className="font-bold text-gray-900">{event.title_en}</h3>
+                <h3 className="font-bold text-ink-900">{event.title_en}</h3>
 
                 <div className="flex flex-wrap gap-2 mt-1">
                   {/* Show date only if NOT recurring */}
                   {!event.isRecurring && event.date && (
-                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-xs font-semibold text-ink-500 bg-ink-100 px-2 py-0.5 rounded flex items-center gap-1">
                       <HiCalendar /> {event.date}
                     </span>
                   )}
 
                   {event.time && (
-                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-xs font-semibold text-ink-500 bg-ink-100 px-2 py-0.5 rounded flex items-center gap-1">
                       <HiClock /> {event.time}
                     </span>
                   )}

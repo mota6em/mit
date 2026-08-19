@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import { HiEye } from "react-icons/hi";
+import { ArrowLeft, Eye } from "lucide-react";
+
 import type { DetailPageHeaderProps } from "@/lib/types";
 
 export function DetailPageHeader({
@@ -12,19 +12,21 @@ export function DetailPageHeader({
   showViews = true,
 }: DetailPageHeaderProps) {
   return (
-    <div className="flex flex-row items-center justify-between w-full">
+    <div className="flex w-full flex-row items-center justify-between gap-4">
       <Link
         href={backHref}
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+        className="group inline-flex items-center gap-2.5 text-ink-500 transition-colors duration-300 hover:text-ink-900"
       >
-        <span className="p-1.5 rounded-full bg-secondary group-hover:bg-secondary/80 transition-colors">
-          <IoIosArrowRoundBack className="w-5 h-5" />
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-ink-200 bg-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-0.5 group-hover:border-ink-900">
+          <ArrowLeft className="h-4 w-4 rtl:-scale-x-100" />
         </span>
-        <span className="font-medium tracking-wide text-sm">{backLabel}</span>
+        <span className="text-sm font-semibold tracking-wide">{backLabel}</span>
       </Link>
+
       {showViews && (
-        <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 font-bold text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
-          <HiEye className="w-4 h-4" /> {views && views > 0 ? views : "-"}
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink-500">
+          <Eye className="h-3.5 w-3.5" />
+          <span className="numeral">{views && views > 0 ? views : "—"}</span>
         </span>
       )}
     </div>

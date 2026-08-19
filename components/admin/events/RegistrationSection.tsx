@@ -25,7 +25,7 @@ export default function RegistrationSection({
           }))
         }
         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none"
-        placeholder="https://forms.gle/..."
+        placeholder="https://..."
       />
       <p className="text-[12px] text-gray-400 mt-1">
         If provided, a &quot;Register Now&quot; button will appear on the event

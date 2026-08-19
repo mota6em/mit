@@ -1,6 +1,9 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import type { ApiEvent } from "@/lib/types";
+import { recordView } from "@/lib/views";
 
 /**
  * Get cached event data from sessionStorage
@@ -31,13 +34,11 @@ export function useEventData(initialEvent: ApiEvent | null) {
   const [views, setViews] = useState(0);
   const hasIncremented = useRef(false);
 
-  // Fetch event
+  // Only reached when neither the server render nor the session cache had it.
   useEffect(() => {
-    if (event) return; // Already have event from initial or cache
-    const id = params?.id as string;
-    if (!id) return;
+    if (event || !id) return;
 
-    fetch(`/api/events?id=${id}`)
+    fetch(`/api/events?id=${encodeURIComponent(id)}`)
       .then((res) => (res.ok ? res.json() : Promise.reject()))
       .then((data) => {
         setEvent(data);
@@ -47,23 +48,15 @@ export function useEventData(initialEvent: ApiEvent | null) {
         setError(true);
         setLoading(false);
       });
-  }, [params?.id, event]);
+  }, [id, event]);
 
-  // Increment views
   useEffect(() => {
-    const id = (params?.id as string) || event?._id;
-    if (!id || hasIncremented.current) return;
+    const viewId = id || event?._id;
+    if (!viewId || hasIncremented.current) return;
     hasIncremented.current = true;
 
-    fetch("/api/views", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    })
-      .then((res) => res.json())
-      .then((data) => data.views && setViews(data.views))
-      .catch(console.error);
-  }, [params?.id, event?._id]);
+    recordView(viewId, "event", setViews);
+  }, [id, event?._id]);
 
   return { event, loading, error, views };
 }

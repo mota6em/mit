@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 import ImageLightbox, {
   useImageLightbox,
 } from "@/components/reusable/ImageLightbox";
 import { EventMap } from "@/components/Events/EventMap";
+import Reveal from "@/components/reusable/Reveal";
+import RevealText from "@/components/reusable/RevealText";
+import { StarMark } from "@/components/reusable/Ornament";
 
 import { DetailPageHeader } from "./DetailPageHeader";
 import { DetailPageGallery } from "./DetailPageGallery";
@@ -40,9 +42,11 @@ export default function DetailPageClient({
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
-        <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent" />
-        <p className="text-primary font-semibold Carena-font tracking-wide">
+      <div className="flex min-h-[70vh] flex-col items-center justify-center gap-5 bg-paper">
+        <span className="h-10 w-10 animate-pulse text-brand-gold">
+          <StarMark />
+        </span>
+        <p className="eyebrow text-ink-400">
           {config.translations?.loading || "Loading..."}
         </p>
       </div>
@@ -68,7 +72,9 @@ export default function DetailPageClient({
   };
 
   return (
-    <div className="min-h-screen  overflow-x-hidden bg-background text-foreground pt-4 pb-8 px-4 md:px-6">
+    <div className="relative min-h-screen overflow-x-hidden bg-paper px-5 pb-20 pt-8 sm:px-8 md:pb-28 lg:px-12">
+      <div className="pattern-star mask-radial pointer-events-none absolute -end-24 top-0 h-[24rem] w-[24rem] opacity-[0.04]" />
+
       <ImageLightbox
         images={data.images}
         initialIndex={initialIndex}
@@ -77,66 +83,67 @@ export default function DetailPageClient({
         alt={data.title}
       />
 
-      <div className="max-w-5xl mx-auto">
-        <div className="md:mb-4 md:px-6">
-          <DetailPageHeader
-            backHref={config.backHref}
-            backLabel={config.backLabel}
-            views={views}
-            showViews={config.showViews}
-          />
-        </div>
+      <div className="relative mx-auto max-w-6xl">
+        <DetailPageHeader
+          backHref={config.backHref}
+          backLabel={config.backLabel}
+          views={views}
+          showViews={config.showViews}
+        />
 
-        <div className="grid grid-cols-1 items-start lg:grid-cols-2 pt-2 gap-4 lg:gap-10">
-          <h1 className="text-3xl md:hidden pt-4 font-bold text-center Carena-font leading-tight">
-            {data.title}
-          </h1>
+        <RevealText
+          as="h1"
+          text={data.title}
+          className="display display-4 mt-10 max-w-3xl text-ink-900 lg:hidden"
+        />
 
-          <DetailPageGallery
-            images={data.images}
-            title={data.title}
-            onImageClick={openLightbox}
-          />
+        <div className="mt-8 grid grid-cols-1 items-start gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <DetailPageGallery
+              images={data.images}
+              title={data.title}
+              onImageClick={openLightbox}
+            />
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-5 sticky top-0 md:top-24"
+          <Reveal
+            y={20}
+            delay={120}
+            className="flex flex-col lg:sticky lg:top-28 lg:col-span-5"
           >
-            <div className="space-y-1.5 border-b border-border pb-3">
-              {badges.length > 0 && (
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                  {badges.map((badge, index) => (
-                    <DetailPageBadge key={index} {...badge} />
-                  ))}
-                </div>
-              )}
+            {badges.length > 0 && (
+              <div className="mb-6 flex flex-wrap items-center gap-2">
+                {badges.map((badge, index) => (
+                  <DetailPageBadge key={index} {...badge} />
+                ))}
+              </div>
+            )}
 
-              <h1 className="text-3xl md:text-3xl pt-2 font-bold hidden md:block Carena-font leading-tight">
-                {data.title}
-              </h1>
+            <h1 className="display display-4 hidden text-ink-900 lg:block">
+              {data.title}
+            </h1>
 
-              {config.showOrganizer !== false && (
-                <div className="flex items-center gap-2 pt-3">
-                  <Image
-                    src="/imgs/icons/icon.jpg"
-                    alt="Logo"
-                    width={40}
-                    height={40}
-                    className="rounded-full object-cover"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-semibold">
-                      {config.translations?.organizer || "Organized by"}
-                    </span>
-                    <span className="text-[13px] text-muted-foreground leading-none">
-                      MIT
-                    </span>
-                  </div>
+            {config.showOrganizer !== false && (
+              <div className="mt-7 flex items-center gap-3">
+                <Image
+                  src="/imgs/icons/icon.jpg"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-ink-100"
+                />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink-400">
+                    {config.translations?.organizer || "Organized by"}
+                  </span>
+                  <span className="display text-[1.05rem] text-ink-900">
+                    MIT
+                  </span>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            <div className="rule-fade my-7" />
 
             <DetailPageDescription description={data.description} />
 
@@ -158,13 +165,13 @@ export default function DetailPageClient({
             {config.showDateFooter && data.date && (
               <DetailPageDateFooter date={data.date} locale={config.locale} />
             )}
-          </motion.div>
+          </Reveal>
         </div>
 
         {config.showMap && data.location && (
-          <div className="mt-8">
+          <Reveal y={20} className="mt-14 overflow-hidden rounded-[1.5rem]">
             <EventMap location={data.location} />
-          </div>
+          </Reveal>
         )}
       </div>
     </div>

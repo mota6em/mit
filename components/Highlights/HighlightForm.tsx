@@ -39,7 +39,7 @@ export default function HighlightForm({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-xl shadow-ink-200/50 overflow-hidden border border-ink-100">
       <div
         className={`p-1 h-2 w-full ${
           isEditing ? "bg-amber-400" : "bg-blue-500"
@@ -65,6 +65,8 @@ export default function HighlightForm({
             desc_en={form.desc_en}
             title_hu={form.title_hu ?? ""}
             desc_hu={form.desc_hu ?? ""}
+            title_ar={form.title_ar ?? ""}
+            desc_ar={form.desc_ar ?? ""}
             date={form.date}
             setForm={setForm}
           />

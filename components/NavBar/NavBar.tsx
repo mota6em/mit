@@ -2,23 +2,77 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { X } from "lucide-react";
-import LanguageSwitch from "./LanguageSwitch";
-import { CgMenuRight } from "react-icons/cg";
+import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { X, ChevronDown, ArrowUpRight, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
+import LanguageSwitch from "./LanguageSwitch";
+import ScrollProgress from "@/components/reusable/ScrollProgress";
+import { StarMark } from "@/components/reusable/Ornament";
+import { isRtl, localeFromPathname } from "@/lib/i18n";
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
 
   const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const pathname = usePathname();
 
-  // Extract locale from pathname
-  const locale = pathname.split("/")[1] || "en";
+  const locale = localeFromPathname(pathname);
+  const rtl = isRtl(locale);
+
+  const isHome = pathname === `/${locale}` || pathname === `/${locale}/`;
+  const overlay = isHome && !scrolled;
+
+  const openMenu = () => {
+    setPortalReady(true);
+    setIsMenuOpen(true);
+  };
+
+  useEffect(() => {
+    let frame = 0;
+
+    const read = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 24);
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(read);
+    };
+
+    read();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isMenuOpen]);
 
   const navLinks = useMemo(
     () => [
@@ -30,184 +84,261 @@ export default function NavBar() {
     ],
     [locale, t]
   );
+
+  const eventsMenu = [
+    {
+      href: `/${locale}/events#upcoming-events`,
+      label: t("upcoming events"),
+      dot: "bg-brand-green",
+    },
+    {
+      href: `/${locale}/events#past-events`,
+      label: t("past events"),
+      dot: "bg-ink-400",
+    },
+  ];
+
   return (
-    <header className="md:backdrop-blur-md bg-white md:bg-white/80 sticky top-0 z-50 px-2 md:px-10">
-      <div className="container flex justify-between items-center px-0 py-1 md:py-0.5">
-        <Link href={`/${locale}`} className="flex items-center p-0.5">
+    <header
+      className={`sticky top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
+        overlay
+          ? "bg-transparent"
+          : "glass shadow-[0_1px_0_rgba(18,22,15,0.07),0_8px_24px_-18px_rgba(18,22,15,0.3)]"
+      }`}
+    >
+      <div
+        className={`h-[3px] w-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky transition-opacity duration-500 ${
+          overlay ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 transition-[height] duration-500 md:px-8 ${
+          scrolled ? "h-[52px]" : "h-[61px]"
+        }`}
+      >
+        <Link
+          href={`/${locale}`}
+          className="group relative flex items-center"
+          aria-label={`MIT — ${tCommon("home")}`}
+        >
           <Image
-            src="/imgs/icons/mit-nav-logo.png"
-            alt="MIT Logo"
+            src={
+              overlay
+                ? "/imgs/icons/mit-nav-logo-light.png"
+                : "/imgs/icons/mit-nav-logo.png"
+            }
+            alt="MIT"
             width={120}
-            height={40}
-            className="object-cover"
+            height={43}
+            priority
+            sizes="120px"
+            className={`w-auto object-contain transition-[height,transform] duration-500 group-hover:scale-[1.03] ${
+              scrolled ? "h-8" : "h-10"
+            }`}
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center space-x-1 md:me-3">
-          <LanguageSwitch />
-          <div className="flex items-center space-x-6">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+        <nav className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            const isEvents = link.href.endsWith("/events");
 
-              // Special handling for events dropdown
-              if (link.label === t("events")) {
-                return (
-                  <div
-                    key={link.label}
-                    className="relative"
-                    onMouseEnter={() => setIsEventsDropdownOpen(true)}
-                    onMouseLeave={() => setIsEventsDropdownOpen(false)}
-                  >
-                    <Link
-                      href={link.href}
-                      className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
-                        isActive
-                          ? "text-yellow-700 font-medium"
-                          : "text-black hover:text-yellow-700"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-
-                    {/* Events Dropdown */}
-                    <AnimatePresence>
-                      {isEventsDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
-                        >
-                          <Link
-                            href={`/${locale}/events#upcoming-events`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
-                            onClick={() => setIsEventsDropdownOpen(false)}
-                          >
-                            {t("upcoming events")}
-                          </Link>
-                          <Link
-                            href={`/${locale}/events#past-events`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-yellow-700 transition-colors"
-                            onClick={() => setIsEventsDropdownOpen(false)}
-                          >
-                            {t("past events")}
-                          </Link>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-
-              // Special handling for highlights dropdown
-              if (link.label === t("highlights")) {
-                return (
-                  <div key={link.label} className="relative">
-                    <Link
-                      href={link.href}
-                      className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
-                        isActive
-                          ? "text-yellow-700 font-medium"
-                          : "text-black hover:text-yellow-700"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={`poppins.className text-sm pt-1 tracking-wider rounded-4xl px-2 ${
-                    isActive
-                      ? "text-yellow-700 font-medium"
-                      : "text-black hover:text-yellow-700"
-                  }`}
-                >
+            const linkEl = (
+              <Link
+                href={link.href}
+                data-active={isActive}
+                aria-current={isActive ? "page" : undefined}
+                className={`link-underline relative rounded-full px-3 py-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-colors duration-500 ${
+                  overlay
+                    ? isActive
+                      ? "text-white"
+                      : "text-white/70 hover:text-white"
+                    : isActive
+                    ? "text-ink-900"
+                    : "text-ink-600 hover:text-ink-900"
+                }`}
+              >
+                <span className="inline-flex items-center gap-1">
                   {link.label}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
-        {/* Mobile nav trigger  */}
-        <div className="md:hidden flex items-center">
-          <LanguageSwitch />
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="p-2 -ml-1 text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            <CgMenuRight className="w-7 h-7" />
-          </button>
+                  {isEvents && (
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                        isEventsDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
+                </span>
+              </Link>
+            );
 
+            if (!isEvents) return <div key={link.href}>{linkEl}</div>;
+
+            return (
+              <div
+                key={link.href}
+                className="relative"
+                onMouseEnter={() => setIsEventsDropdownOpen(true)}
+                onMouseLeave={() => setIsEventsDropdownOpen(false)}
+              >
+                {linkEl}
+
+                <AnimatePresence>
+                  {isEventsDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                      transition={{ duration: 0.22, ease: EASE_OUT_EXPO }}
+                      className="absolute start-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 rtl:translate-x-1/2"
+                    >
+                      <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white p-1.5 shadow-[0_4px_8px_rgba(18,22,15,0.06),0_24px_48px_-12px_rgba(18,22,15,0.18)]">
+                        {eventsMenu.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsEventsDropdownOpen(false)}
+                            className="group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm text-ink-700 transition-colors hover:bg-ink-50 hover:text-ink-900"
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 shrink-0 rounded-full ${item.dot}`}
+                            />
+                            <span className="flex-1">{item.label}</span>
+                            <ArrowUpRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 rtl:-scale-x-100" />
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+
+          <span
+            className={`mx-3 h-5 w-px transition-colors duration-500 ${
+              overlay ? "bg-white/25" : "bg-ink-200"
+            }`}
+          />
+          <LanguageSwitch tone={overlay ? "light" : "ink"} />
+        </nav>
+
+        <div className="flex items-center gap-1.5 md:hidden">
+          <LanguageSwitch tone={overlay ? "light" : "ink"} />
+          <button
+            onClick={openMenu}
+            aria-label={tCommon("openMenu")}
+            aria-expanded={isMenuOpen}
+            className={`rounded-full p-2 transition-colors duration-500 active:scale-95 ${
+              overlay
+                ? "text-white hover:bg-white/15"
+                : "text-ink-700 hover:bg-ink-100"
+            }`}
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
+      </div>
+
+      <ScrollProgress />
+
+      {portalReady &&
+        createPortal(
           <AnimatePresence>
             {isMenuOpen && (
-              <>
+              <div className="md:hidden">
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={() => setIsMenuOpen(false)}
-                  className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
+                  className="fixed inset-0 z-[80] bg-ink-950/40 backdrop-blur-sm"
                 />
 
-                {/* Sliding Drawer Panel */}
                 <motion.div
-                  initial={{ x: "100%" }}
+                  initial={{ x: rtl ? "-100%" : "100%" }}
                   animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
-                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed top-0 right-0 h-full w-70 bg-white shadow-2xl z-51 flex flex-col p-6"
+                  exit={{ x: rtl ? "-100%" : "100%" }}
+                  transition={{ type: "spring", damping: 30, stiffness: 280 }}
+                  className="fixed top-0 z-[81] flex h-full w-[84vw] max-w-xs flex-col overflow-hidden bg-paper shadow-2xl ltr:right-0 rtl:left-0"
                 >
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-8">
-                    <span className="text-lg font-bold text-gray-900">
-                      Menu
-                    </span>
-                    <button
-                      onClick={() => setIsMenuOpen(false)}
-                      className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
-                    >
-                      <X className="w-5 h-5 text-gray-600" />
-                    </button>
+                  <div className="h-[3px] w-full shrink-0 bg-gradient-to-r from-brand-green via-brand-gold to-brand-sky" />
+
+                  <div className="pattern-star mask-radial pointer-events-none absolute -end-16 top-16 h-56 w-56 opacity-[0.05]" />
+
+                  <div className="relative flex flex-col p-6">
+                    <div className="mb-9 flex items-center justify-between">
+                      <Image
+                        src="/imgs/icons/mit-nav-logo.png"
+                        alt="MIT"
+                        width={100}
+                        height={36}
+                        className="h-9 w-auto object-contain"
+                      />
+                      <button
+                        onClick={() => setIsMenuOpen(false)}
+                        aria-label={tCommon("closeMenu")}
+                        className="rounded-full bg-ink-100 p-2 transition-colors hover:bg-ink-200 active:scale-95"
+                      >
+                        <X className="h-5 w-5 text-ink-600" />
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      {navLinks.map((link, i) => {
+                        const isActive = pathname === link.href;
+                        return (
+                          <motion.div
+                            key={link.href}
+                            initial={{ opacity: 0, x: rtl ? -24 : 24 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{
+                              delay: 0.08 + i * 0.05,
+                              ease: EASE_OUT_EXPO,
+                            }}
+                          >
+                            <Link
+                              href={link.href}
+                              aria-current={isActive ? "page" : undefined}
+                              onClick={() => setIsMenuOpen(false)}
+                              className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-[1.05rem] font-semibold transition-all duration-300 ${
+                                isActive
+                                  ? "bg-brand-gold-soft text-ink-900"
+                                  : "text-ink-600 hover:bg-ink-100 hover:text-ink-900"
+                              }`}
+                            >
+                              <span>{link.label}</span>
+                              <ArrowUpRight
+                                className={`h-4 w-4 transition-all duration-300 rtl:-scale-x-100 ${
+                                  isActive
+                                    ? "text-brand-gold-dark"
+                                    : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                                }`}
+                              />
+                            </Link>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  {/* Nav Links */}
-                  <div className="flex flex-col gap-2">
-                    {navLinks.map((link) => {
-                      const isActive = pathname === link.href;
-                      return (
-                        <Link
-                          key={link.label}
-                          href={link.href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className={`px-4 py-3 rounded-xl text-lg font-medium transition-all duration-200 ${
-                            isActive
-                              ? "bg-yellow-50 text-yellow-800 border-l-4 border-yellow-600"
-                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-auto border-t pt-6">
-                    <p className="text-xs text-gray-400 text-center">
-                      © {new Date().getFullYear()} MIT
-                    </p>
+                  <div className="relative mt-auto p-6">
+                    <div className="rule-fade mb-6" />
+                    <div className="flex items-center justify-between">
+                      <span className="h-5 w-5 text-brand-gold/60">
+                        <StarMark />
+                      </span>
+                      <p className="text-xs tracking-wide text-ink-400">
+                        © {new Date().getFullYear()} MIT
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
-              </>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
-      </div>
+          </AnimatePresence>,
+          document.body
+        )}
     </header>
   );
 }

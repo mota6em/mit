@@ -1,69 +1,71 @@
 "use client";
 import { BookOpen, Users, Megaphone, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
-import { RiServiceLine } from "react-icons/ri";
 import SectionHeader from "../reusable/SectionHeader";
+import Section from "../reusable/Section";
+import Reveal from "../reusable/Reveal";
+
+/**
+ * Each service carries its own accent so the four cards are scannable as
+ * distinct offerings rather than reading as one repeated tile.
+ */
+const SERVICES = [
+  { icon: BookOpen, accent: "text-brand-green", tile: "bg-brand-green-soft", bar: "bg-brand-green" },
+  { icon: Users, accent: "text-brand-sky", tile: "bg-brand-sky-soft", bar: "bg-brand-sky" },
+  { icon: Megaphone, accent: "text-brand-gold-dark", tile: "bg-brand-gold-soft", bar: "bg-brand-gold" },
+  { icon: UserPlus, accent: "text-brand-green-dark", tile: "bg-brand-green-soft", bar: "bg-brand-green-dark" },
+] as const;
 
 const CoreServicesSection = () => {
   const t = useTranslations("aboutMIT.coreServices");
 
-  const serviceIcons = [BookOpen, Users, Megaphone, UserPlus];
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0 },
-  };
-
   return (
-    <section className="py-24 px-4 md:px-12 lg:px-20 ">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader
-          title={t("title")}
-          icon={<RiServiceLine className="w-8 h-8" />}
-          className="mb-5 md:mb-14"
-        />
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
-        >
-          {[0, 1, 2, 3].map((index) => {
-            const Icon = serviceIcons[index];
-            return (
-              <motion.div
-                key={index}
-                variants={item}
-                className="bg-white border-t-slate-600! p-4 md:p-8 rounded-4xl shadow-xl border border-gray-100 relative overflow-hidden flex flex-col items-center text-center h-full"
-                style={{ borderTop: `6px solid` }}
-              >
+    <Section tone="tinted" width="wide" deferPaint>
+      <SectionHeader
+        title={t("title")}
+        topText={t("label")}
+        align="start"
+        className="mb-14 max-w-2xl"
+      />
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        {SERVICES.map((service, index) => {
+          const Icon = service.icon;
+          return (
+            <Reveal
+              as="article"
+              key={index}
+              y={28}
+              delay={index * 120}
+              className="surface surface-lift group relative flex h-full flex-col overflow-hidden rounded-3xl p-7"
+            >
+              {/* Accent bar reveals on hover — colour identifies the service */}
+              <span
+                className={`absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${service.bar}`}
+              />
+
+              <div className="mb-6 flex items-center justify-between">
                 <div
-                  className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6   shadow-sm`}
+                  className={`grid h-14 w-14 place-items-center rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 ${service.tile} ${service.accent}`}
                 >
-                  <Icon className="w-10 h-10" />
+                  <Icon className="h-7 w-7" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-900">
-                  {t(`services.${index}.title`)}
-                </h3>
-                <p className="text-gray-900 leading-relaxed mb-2 text-sm md:text-base">
-                  {t(`services.${index}.description`)}
-                </p>
-                <div className="absolute -bottom-10 -right-10 w-24 h-24 rounded-full opacity-5 pointer-events-none bg-gray-600" />
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                <span className="display text-3xl text-ink-200 transition-colors duration-500 group-hover:text-ink-300">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <h3 className="display mb-3 text-lg text-ink-900">
+                {t(`services.${index}.title`)}
+              </h3>
+              <p className="text-sm leading-relaxed text-ink-600">
+                {t(`services.${index}.description`)}
+              </p>
+            </Reveal>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 };
 

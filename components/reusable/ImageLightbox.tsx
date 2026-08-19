@@ -70,20 +70,14 @@ export default function ImageLightbox({
     setPosition({ x: 0, y: 0 });
   }, []);
 
-  // Reset state when opening or changing images
   useEffect(() => {
-    if (isOpen) {
+    if (!isOpen) return;
+    const frame = requestAnimationFrame(() => {
       setCurrentIndex(initialIndex);
-      setZoomIndex(0);
-      setPosition({ x: 0, y: 0 });
-    }
-  }, [isOpen, initialIndex]);
-
-  // Reset zoom when changing images
-  useEffect(() => {
-    setZoomIndex(0);
-    setPosition({ x: 0, y: 0 });
-  }, [currentIndex]);
+      resetZoom();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [isOpen, initialIndex, resetZoom]);
 
   // Handle keyboard navigation
   useEffect(() => {

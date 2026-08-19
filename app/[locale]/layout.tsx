@@ -1,64 +1,75 @@
-import I18nProvider from "../i18n-provider";
 import { notFound } from "next/navigation";
-import "../globals.css";
 import type { Metadata } from "next";
+
+import I18nProvider from "../i18n-provider";
 import Footer from "@/components/Footer/Footer";
 import NavBar from "@/components/NavBar/NavBar";
+import BackToTop from "@/components/reusable/BackToTop";
+import PageTransition from "@/components/reusable/PageTransition";
+import RouteProgress from "@/components/reusable/RouteProgress";
 import { SWRProvider } from "@/components/providers/SWRProvider";
+import { LOCALE_META, LOCALES, isLocale, type Locale } from "@/lib/i18n";
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  TITLE_SUFFIX,
+  localeAlternates,
+} from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-
-  let messages;
+async function loadMessages(locale: string) {
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch (error) {
-    return { title: "MIT" };
+    return (await import(`../../messages/${locale}.json`)).default;
+  } catch {
+    return null;
   }
-
-  const t = messages.metadata;
-
-  return {
-    title: t.root.title,
-    description: t.root.description,
-    keywords: t.root.keywords,
-    authors: [{ name: "MIT - Muszlim Ifjúság Társaság" }],
-
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        en: "/en",
-        hu: "/hu",
-      },
-    },
-
-    openGraph: {
-      title: t.root.title,
-      description: t.root.description,
-      type: "website",
-      locale: locale === "hu" ? "hu_HU" : "en_US",
-      siteName: "MIT - Muszlim Ifjúság Társaság",
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: t.root.title,
-      description: t.root.description,
-    },
-
-    icons: {
-      icon: [{ url: "/imgs/icons/icon.jpg" }],
-      apple: [{ url: "/imgs/icons/icon.jpg" }],
-    },
-  };
 }
 
 export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "hu" }];
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const messages = isLocale(locale) ? await loadMessages(locale) : null;
+
+  if (!messages) return { title: SITE_NAME };
+
+  const t = messages.metadata.root;
+
+  return {
+    title: {
+      default: t.title,
+      template: `%s | ${TITLE_SUFFIX[locale as Locale]}`,
+    },
+    description: t.description,
+    keywords: t.keywords,
+    authors: [{ name: SITE_NAME, url: "https://mit-hu.eu" }],
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
+    alternates: localeAlternates(locale as Locale),
+    openGraph: {
+      title: t.title,
+      description: t.description,
+      type: "website",
+      url: localeAlternates(locale as Locale).canonical,
+      locale: LOCALE_META[locale as Locale].openGraph,
+      alternateLocale: LOCALES.filter((l) => l !== locale).map(
+        (l) => LOCALE_META[l].openGraph
+      ),
+      siteName: SITE_NAME,
+      images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t.title,
+      description: t.description,
+      images: [DEFAULT_OG_IMAGE],
+    },
+  };
 }
 
 export default async function LocaleLayout({
@@ -70,24 +81,38 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  let messages;
-  try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch {
-    return notFound();
-  }
+  if (!isLocale(locale)) notFound();
+
+  const messages = await loadMessages(locale);
+  if (!messages) notFound();
+
+  const { dir } = LOCALE_META[locale];
 
   return (
-    <html lang={locale}>
-      <body className="flex flex-col min-h-screen">
-        <I18nProvider messages={messages} locale={locale}>
-          <SWRProvider>
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.lang=${JSON.stringify(
+            locale
+          )};document.documentElement.dir=${JSON.stringify(dir)}`,
+        }}
+      />
+      <I18nProvider messages={messages} locale={locale}>
+        <SWRProvider>
+          <div lang={locale} dir={dir} className="flex min-h-screen flex-col">
+            <a href="#main-content" className="skip-link">
+              {messages.common.skipToContent}
+            </a>
+            <RouteProgress />
             <NavBar />
-            <div className="flex-1">{children}</div>
+            <main id="main-content" className="flex-1">
+              <PageTransition>{children}</PageTransition>
+            </main>
             <Footer />
-          </SWRProvider>
-        </I18nProvider>
-      </body>
-    </html>
+            <BackToTop />
+          </div>
+        </SWRProvider>
+      </I18nProvider>
+    </>
   );
 }
